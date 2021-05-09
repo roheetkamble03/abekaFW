@@ -8,9 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="QA-Automation" />
+        <module name="AbekaAutomationFW" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="AbekaAutomationFW" target="8" />
       <module name="QA-Automation" target="8" />
     </bytecodeTargetLevel>
   </component>

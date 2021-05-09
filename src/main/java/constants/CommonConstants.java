@@ -7,4 +7,7 @@ public class CommonConstants {
     public static String commonWait = "CommonWait";
     public static String pollingTimeOut = "PollingTimeOut";
     public static String grid = "Grid";
+    public static final String local = "local";
+    public static final String crossBrowser = "crossbrowser";
+    public static final String crossBrowserUrl = "@hub.crossbrowsertesting.com:80/wd/hub";
 }

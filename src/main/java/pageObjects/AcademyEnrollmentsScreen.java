@@ -7,7 +7,7 @@ import org.testng.Assert;
 public class AcademyEnrollmentsScreen extends GenericAction {
 
     @Override
-    protected void setUp(String browserName) {
+    protected void setUp(String browserName, String platform) {
         
     }
 

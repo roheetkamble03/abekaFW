@@ -1,6 +1,7 @@
 package base;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideDriver;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import constants.EnumUtil;
@@ -8,11 +9,12 @@ import elementConstants.AbekaHome;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.openqa.selenium.WebElement;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -22,16 +24,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public abstract class SelenideExtended extends BaseClass {
     String textXpath = "(//*[normalize-space(text())='%s' or normalize-space(@value)='%s']|//text()[normalize-space()='%s'])[1]";
     String textContainsXpath = "(//*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|//text()[contains(normalize-space(),'%s')])[1]";
+    public static String childTextXpath = "xpath=./*[normalize-space(text())='%s' or normalize-space(@value)='%s']|./text()[normalize-space()='%s']";
+    protected static String childTextContainsXpath = "xpath./*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|./text()[contains(normalize-space(),'%s')]";
 
     public void click(String identifier){
         waitForElementTobeExist(identifier);
-        getElement(identifier).click();
+        getElements(identifier).get(0).click();
     }
 
     public boolean isElementDisplayed(String identifier) {
@@ -84,22 +87,49 @@ public abstract class SelenideExtended extends BaseClass {
         return getElementText(identifier).equals(expectedText);
     }
 
-    public String getElementText(String identifier){
-        try {
-            SelenideElement element = getElement(identifier);
-            if(element.text().length()!=0){
-                return element.text();
-            }else if(element.getText().length()!=0){
-                return element.getText();
-            }else if(element.innerText().length()!=0){
-                return element.innerText();
-            }else {
-                return "";
-            }
-        }catch (NullPointerException e){
-            return "";
-        }
+    public boolean isElementTextEquals(SelenideElement element, String expectedText){
+        return getElementText(element).equals(expectedText);
+    }
 
+    public boolean isElementValueEquals(SelenideElement element, String expectedText){
+        return getElementValue(element).equals(expectedText);
+    }
+
+    public String getElementText(String identifier){
+        return getElementText(getElement(identifier));
+    }
+
+    public String getElementValue(SelenideElement element){
+        return element.getValue();
+    }
+    public String getElementText(SelenideElement element){
+        for(int i=0;i<4;i++){
+                try{
+                switch (i) {
+                    case 0:
+                        if (element.text().length() != 0) {
+                            return element.text();
+                        }
+                    case 1:
+                        if (element.getText().length() != 0) {
+                            return element.getText();
+                        }
+                    case 2:
+                        if (element.innerText().length() != 0) {
+                            return element.innerText();
+                        }
+                    case 3:
+                        String javaScript = "return arguments[0].innerText;";
+                        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+                        if(js.executeScript(javaScript, element).toString().length()!=0){
+                            return js.executeScript(javaScript, element).toString();
+                        }
+                 }
+                }catch (NullPointerException e){
+                    continue;
+                }
+        }
+        return "";
     }
 
     /**
@@ -419,7 +449,7 @@ public abstract class SelenideExtended extends BaseClass {
      */
     public void waitForElementTobeVisible(String identifier) {
         try {
-            getElement(identifier).shouldBe(Condition.visible, Duration.ofSeconds(elementLoadWait));
+            getElements(identifier).get(0).shouldBe(Condition.visible, Duration.ofSeconds(elementLoadWait));
         }catch (InvalidSelectorException e){
 
         }
@@ -430,12 +460,12 @@ public abstract class SelenideExtended extends BaseClass {
      * @param identifier
      */
     public void waitForElementTobeExist(String identifier) {
-        getElement(identifier).shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
+        getElements(identifier).get(0).shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
     }
 
     public void waitForElementTobeEnabled(String identifier){
         waitForElementTobeVisible(identifier);
-        getElement(identifier).shouldBe(Condition.enabled,Duration.ofSeconds(elementLoadWait));
+        getElements(identifier).get(0).shouldBe(Condition.enabled,Duration.ofSeconds(elementLoadWait));
     }
 
     /**
@@ -500,7 +530,7 @@ public abstract class SelenideExtended extends BaseClass {
     }
 
     public SelenideElement getChildElement(SelenideElement parentElement, String childIdentifier){
-        return parentElement.find(getByClause(childIdentifier));
+        return $(parentElement.findElement(getByClause(childIdentifier)));
     }
 
     @SneakyThrows
@@ -553,7 +583,7 @@ public abstract class SelenideExtended extends BaseClass {
     public void waitForElementTobeDisappear(String identifier) {
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime stopTime = currentTime.plusSeconds(elementLoadWait);
-
+        implicitWaitInSeconds(3);
         while (stopTime.isAfter(currentTime)) {
                 try {
                     if (!isElementDisplayed(identifier)) {
@@ -565,7 +595,6 @@ public abstract class SelenideExtended extends BaseClass {
                 }
                 currentTime = LocalDateTime.now();
             }
-        implicitWaitInSeconds(3);
         }
 //                 WebDriverWait webDriverWait = (WebDriverWait) new WebDriverWait(getDriver(), 60).pollingEvery(Duration.ofMillis(500))
 //                    .ignoring(NoSuchElementException.class).ignoring(TimeoutException.class);

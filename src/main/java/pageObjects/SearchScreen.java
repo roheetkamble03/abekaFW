@@ -4,7 +4,7 @@ import base.GenericAction;
 
 public class SearchScreen extends GenericAction {
     @Override
-    protected void setUp(String browserName) {
+    protected void setUp(String browserName, String platform) {
 
     }
 

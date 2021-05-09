@@ -12,9 +12,8 @@ import java.util.Locale;
 public abstract class GenericAction extends SelenideExtended{
 
     @BeforeMethod
-    protected void setUp(String browserName) {
-        super.setUp();
-        launchApp(browserName);
+    protected void setUp(String browserName, String platform) {
+        super.setUp(browserName,platform);
         //Allure report writing will be done letter
     }
 
@@ -22,7 +21,6 @@ public abstract class GenericAction extends SelenideExtended{
     public void tearDown(){
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();
-        softAssertions.assertAll();
     }
     public AbekaHomeScreen loginToAbeka(String userName, String password){
         waitAndCloseSignUpPop();

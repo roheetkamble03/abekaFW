@@ -22,7 +22,7 @@ public class AbekaHomeScreen extends GenericAction {
     }
 
     @Override
-    protected void setUp(String browserName) {
+    protected void setUp(String browserName, String platform) {
 
     }
 }

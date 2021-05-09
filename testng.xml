@@ -3,6 +3,7 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="D:/Automation/Framework/AbekaAutomationFW">
         <parameter name="browser" value="Chrome"></parameter>
+        <parameter name= "platform" value="Windows 10"></parameter>
         <classes>
             <class name="abekaUISuite.LoginTestSuite">
                 <methods><include name="enrollmentPurchase"/>

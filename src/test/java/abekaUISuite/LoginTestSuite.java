@@ -19,10 +19,10 @@ import java.util.Arrays;
 public class LoginTestSuite extends GenericAction {
     AbekaHomeScreen abekaHomeScreen;
 
-    @Parameters("browser")
+    @Parameters({"browser","platform"})
     @BeforeMethod
-    public void setUp(String browserName) {
-        super.setUp(browserName);
+    public void setUp(String browserName, String platform) {
+        super.setUp(browserName,platform);
     }
 
     @Test(dataProvider = "credentials", dataProviderClass = DataProviders.class)

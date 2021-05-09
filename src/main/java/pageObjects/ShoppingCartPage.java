@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ShoppingCartPage extends GenericAction {
     @Override
-    protected void setUp(String browserName) {
+    protected void setUp(String browserName, String platform) {
 
     }
 
@@ -19,18 +19,21 @@ public class ShoppingCartPage extends GenericAction {
     }
 
     public ShoppingCartPage validateProductInCart(List<Product> productList){
+        String price = formatCurrencyToDollar(productList.get(0).getPrice());
+        String quantity = Integer.toString(productList.get(0).getQuantity());
+        String subTotal = formatCurrencyToDollar(productList.get(0).getSubtotal());
         softAssertions.assertThat(isElementTextEquals(ShoppingCart.shoppingCartTitle,String.format(ShoppingCart.shoppingCartTitleText,productList.size())))
                 .as("Shopping cart actual header ["+getElementText(ShoppingCart.shoppingCartTitle)+"] is not matching with expected header ["
                         +String.format(ShoppingCart.shoppingCartTitleText,productList.size())).isTrue();
-        softAssertions.assertThat(isElementDisplayed(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber()))
-                ,ShoppingCart.gradeOneVideoBookAccredited+"\\n\\nItem No. "+productList.get(0).getItemNumber())).
-                as(ShoppingCart.gradeOneVideoBookAccredited+"\\n\\nItem No. "+productList.get(0).getItemNumber() + "Product title is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
-        softAssertions.assertThat(isElementDisplayed(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber()))
-                ,formatCurrencyToDollar(productList.get(0).getPrice()))).as(formatCurrencyToDollar(productList.get(0).getPrice()) + "Product price is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
-        softAssertions.assertThat(isElementDisplayed(getElement(String.format(ShoppingCart.productRow,productList.get(0).getQuantity()))
-                ,Integer.toString(productList.get(0).getQuantity()))).as(Integer.toString(productList.get(0).getQuantity()) + "Product quantity is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
-        softAssertions.assertThat(isElementDisplayed(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber()))
-                ,formatCurrencyToDollar(productList.get(0).getSubtotal()))).as(formatCurrencyToDollar(productList.get(0).getSubtotal()) + "Product subtotal is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+        softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,
+                productList.get(0).getItemNumber())),ShoppingCart.productTitle),
+                ShoppingCart.gradeOneVideoBookAccredited+"\nItem No. "+productList.get(0).getItemNumber())).as("Product title is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+        softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.productPrice),price))
+                .as(price + "Product price is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+        softAssertions.assertThat(isElementValueEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.quantityTextBox),quantity))
+                .as( "Product quantity ["+ quantity+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+        softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.subTotal),subTotal))
+                .as("Product subtotal ["+formatCurrencyToDollar(productList.get(0).getSubtotal())+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
         return this;
     }
 }

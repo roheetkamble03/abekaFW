@@ -7,7 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 public class LoginScreen extends GenericAction {
 
     @Override
-    protected void setUp(String browserName) {
+    protected void setUp(String browserName, String platform) {
 
     }
 }
