@@ -12,6 +12,7 @@ public class AcademyEnrollmentsScreen extends GenericAction {
     }
 
     public void validateNewlyEnrolledCourses(String courseName){
-        Assert.assertTrue(isElementDisplayed(String.format(AcademyEnrollments.newEnrolledCourse,courseName)));
+        softAssertions.assertThat(isElementDisplayed(String.format(AcademyEnrollments.newEnrolledCourse,courseName)))
+                .as(courseName + " course is not appeared in new section").isTrue();
     }
 }

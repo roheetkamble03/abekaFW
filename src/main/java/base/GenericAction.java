@@ -51,4 +51,8 @@ public abstract class GenericAction extends SelenideExtended{
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(usa);
         return numberFormat.format(amount);
     }
+
+    public double getCalculatedSubTotal(int quantity, double price){
+        return quantity*price;
+    }
 }

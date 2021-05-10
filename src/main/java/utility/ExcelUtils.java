@@ -1,5 +1,6 @@
 package utility;
 
+import base.BaseClass;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -7,8 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Calendar;
 
-public class ExcelUtils {
-    public static String path = System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\TestData.xlsx";
+public class ExcelUtils extends BaseClass {
+    public String path = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\TestData.xlsx");
 
     //	public  String path;
     public FileInputStream fis = null;
@@ -19,8 +20,6 @@ public class ExcelUtils {
     private XSSFCell cell = null;
 
     public ExcelUtils() {
-
-        this.path=path;
         try {
             fis = new FileInputStream(path);
             workbook = new XSSFWorkbook(fis);

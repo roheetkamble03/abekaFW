@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -53,8 +53,6 @@
     <orderEntry type="library" name="Maven: org.apache.maven:maven-settings-builder:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-builder-support:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-repository-metadata:3.3.9" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven:maven-artifact:3.3.9" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model-builder:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-aether-provider:3.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.aether:aether-spi:1.0.2.v20150114" level="project" />
@@ -84,7 +82,6 @@
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: classworlds:classworlds:1.1-alpha-2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-shared-utils:0.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.doxia:doxia-sink-api:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.doxia:doxia-logging-api:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.doxia:doxia-core:1.6" level="project" />
@@ -175,5 +172,19 @@
     <orderEntry type="library" name="Maven: org.glassfish.jaxb:txw2:2.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.activation:jakarta.activation:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.assertj:assertj-core:3.19.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven.plugins:maven-compiler-plugin:maven-plugin:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.sisu:sisu-inject-plexus:1.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.sisu:sisu-inject-bean:1.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.sisu:sisu-guice:noaop:2.1.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-artifact:3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-shared-utils:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-shared-incremental:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-java:0.9.10" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm:6.2" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.qdox:qdox:2.0-M8" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-compiler-api:2.8.4" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-compiler-manager:2.8.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-compiler-javac:2.8.4" level="project" />
   </component>
 </module>

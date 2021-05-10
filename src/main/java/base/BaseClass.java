@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -82,7 +84,7 @@ public abstract class BaseClass {
         try {
             log("Loading config properties");
             properties = new Properties();
-            FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\configuration\\config.properties");
+            FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + implementPath("\\src\\main\\java\\configuration\\config.properties"));
             properties.load(fileInputStream);
             pageLoadTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.pageLoadTimeOut));
             elementLoadWait = Integer.parseInt(properties.getProperty(CommonConstants.elementLoadWait));
@@ -220,5 +222,10 @@ public abstract class BaseClass {
                 .field("description", description)
                 .asJson();
         return response.getBody();
+    }
+
+    public String implementPath(String path){
+        String fp = File.separator;
+        return path.replaceAll("\\\\",fp+fp);
     }
 }

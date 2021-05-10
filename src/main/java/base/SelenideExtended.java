@@ -33,8 +33,12 @@ public abstract class SelenideExtended extends BaseClass {
     protected static String childTextContainsXpath = "xpath./*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|./text()[contains(normalize-space(),'%s')]";
 
     public void click(String identifier){
-        waitForElementTobeExist(identifier);
-        getElements(identifier).get(0).click();
+        try {
+            waitForElementTobeExist(identifier);
+            getElement(identifier).click();
+        }catch (ElementClickInterceptedException e){
+            getElement(identifier).click();
+        }
     }
 
     public boolean isElementDisplayed(String identifier) {
@@ -473,7 +477,11 @@ public abstract class SelenideExtended extends BaseClass {
      * @param timeOutInSeconds
      */
     public void implicitWaitInSeconds(int timeOutInSeconds) {
-        getDriver().manage().timeouts().implicitlyWait(timeOutInSeconds, TimeUnit.SECONDS);
+        try {
+            Thread.sleep(timeOutInSeconds*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -583,7 +591,6 @@ public abstract class SelenideExtended extends BaseClass {
     public void waitForElementTobeDisappear(String identifier) {
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime stopTime = currentTime.plusSeconds(elementLoadWait);
-        implicitWaitInSeconds(3);
         while (stopTime.isAfter(currentTime)) {
                 try {
                     if (!isElementDisplayed(identifier)) {
@@ -595,7 +602,8 @@ public abstract class SelenideExtended extends BaseClass {
                 }
                 currentTime = LocalDateTime.now();
             }
-        }
+        implicitWaitInSeconds(3);
+    }
 //                 WebDriverWait webDriverWait = (WebDriverWait) new WebDriverWait(getDriver(), 60).pollingEvery(Duration.ofMillis(500))
 //                    .ignoring(NoSuchElementException.class).ignoring(TimeoutException.class);
 //            webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(getByClause(identifier)));

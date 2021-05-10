@@ -8,7 +8,7 @@ public @Data class Product {
 
     private String productTitle = "";
     private String itemNumber = "";
-    private double price = 1;
+    private double price = 0;
     private int quantity=1;
-    private double subtotal = price*quantity;
+    private double subtotal = 0;
 }

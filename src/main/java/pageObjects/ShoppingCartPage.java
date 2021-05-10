@@ -33,7 +33,7 @@ public class ShoppingCartPage extends GenericAction {
         softAssertions.assertThat(isElementValueEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.quantityTextBox),quantity))
                 .as( "Product quantity ["+ quantity+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.subTotal),subTotal))
-                .as("Product subtotal ["+formatCurrencyToDollar(productList.get(0).getSubtotal())+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+                .as("Product subtotal ["+subTotal+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
         return this;
     }
 }
