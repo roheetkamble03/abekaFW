@@ -56,6 +56,8 @@ public abstract class BaseClass {
     String testResult = "unset";
     boolean isLocalRun = false;
     String testMethodName;
+    public static String domainURL;
+    public static String afterLoginURL;
 
     public void log(String message){
         getLogger().info(message);
@@ -91,6 +93,8 @@ public abstract class BaseClass {
             commonWait = Integer.parseInt(properties.getProperty(CommonConstants.commonWait));
             pollingTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.pollingTimeOut));
             grid = properties.getProperty(CommonConstants.grid);
+            domainURL = properties.getProperty(CommonConstants.URL);
+            afterLoginURL = properties.getProperty(CommonConstants.afterLoginURL);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -112,7 +116,7 @@ public abstract class BaseClass {
         getDriver().manage().timeouts().pageLoadTimeout
                 (pageLoadTimeOut, TimeUnit.SECONDS);
         //Launching the URL
-        getDriver().get(properties.getProperty(CommonConstants.URL));
+        getDriver().get(domainURL);
         sessionMap.put("DefaultSession",getDriver());
     }
 

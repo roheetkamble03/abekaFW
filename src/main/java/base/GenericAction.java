@@ -1,5 +1,6 @@
 package base;
 
+import constants.CommonConstants;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
 import org.testng.annotations.AfterMethod;
@@ -7,7 +8,9 @@ import org.testng.annotations.BeforeMethod;
 import pageObjects.AbekaHomeScreen;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Set;
 
 public abstract class GenericAction extends SelenideExtended{
 
@@ -34,9 +37,14 @@ public abstract class GenericAction extends SelenideExtended{
         return new AbekaHomeScreen();
     }
 
-    public AbekaHomeScreen logoutFromAbeka(){
+    public AbekaHomeScreen navigateToAccountGreetingSubMenu(String submenu){
         click(AbekaHome.accountGreeting);
-        click(AbekaHome.logout);
+        click(CommonConstants.LINK_TEXT + submenu);
+        return new AbekaHomeScreen();
+    }
+
+    public AbekaHomeScreen logoutFromAbeka(){
+        navigateToAccountGreetingSubMenu(AbekaHome.logout);
         waitForElementTobeVisible(AbekaHome.account);
         return new AbekaHomeScreen();
     }
@@ -54,5 +62,9 @@ public abstract class GenericAction extends SelenideExtended{
 
     public double getCalculatedSubTotal(int quantity, double price){
         return quantity*price;
+    }
+
+    public ArrayList getAllAvailableBrowserTab(){
+        return new ArrayList<>(getDriver().getWindowHandles());
     }
 }

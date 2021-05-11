@@ -5,19 +5,19 @@ import constants.CheckoutCriteria;
 import constants.CommonTexts;
 import constants.Product;
 import dataProvider.DataProviders;
-import elementConstants.BookDescription;
-import elementConstants.Search;
-import elementConstants.ShoppingCart;
+import elementConstants.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.AbekaHomeScreen;
+import pageObjects.DashboardScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LoginTestSuite extends GenericAction {
     AbekaHomeScreen abekaHomeScreen;
+    DashboardScreen dashboardScreen;
 
     @Parameters({"browser", "platform"})
     @BeforeMethod
@@ -39,7 +39,7 @@ public class LoginTestSuite extends GenericAction {
 
 
         abekaHomeScreen = loginToAbeka(userId, password);
-        abekaHomeScreen.navigateToShopByGrade().selectProduct(Search.gradeOneEnrollment).
+        abekaHomeScreen.navigateToShopByGrade().searchProduct(Search.gradeOneEnrollment).selectProduct(Search.gradeOneEnrollment).
                 selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
         abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
@@ -49,11 +49,10 @@ public class LoginTestSuite extends GenericAction {
     }
 
     @Test(dataProvider = "credentials", dataProviderClass = DataProviders.class)
-    public void test2(String userId, String password) {
-        Product product = Product.builder().build();
-        product.setProductTitle(ShoppingCart.gradeOneVideoBookAccredited);
-        product.setItemNumber(ShoppingCart.itemNumber);
-        product.setPrice(ShoppingCart.price);
-        product.setQuantity(ShoppingCart.quantity);
+    public void validateAccessControlForParent(String userId, String password) {
+        dashboardScreen = new DashboardScreen();
+        abekaHomeScreen = loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
+        dashboardScreen.validateDashboardNewTab();
+
     }
 }

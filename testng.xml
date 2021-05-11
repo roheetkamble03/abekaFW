@@ -6,7 +6,9 @@
         <parameter name= "platform" value="Windows 10"></parameter>
         <classes>
             <class name="abekaUISuite.LoginTestSuite">
-                <methods><include name="enrollmentPurchase"/>
+                <methods>
+                <!--<include name="enrollmentPurchase"/>-->
+                <include name="validateAccessControlForParent"></include>
                 </methods>
             </class>
         </classes>

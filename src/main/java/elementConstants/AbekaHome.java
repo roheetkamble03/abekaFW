@@ -9,6 +9,7 @@ public class AbekaHome {
     public static String closeSignup = "xpath=//div[@id='newsLetterSignup']//button[@onclick='dockEmailSubscribe()']";
     public static String abekaBGProcessLogo = "xpath=//i[@class='abekaLogoLoading']";
     public static String accountGreeting = "xpath=//*[@id='AccountGreeting']/a";
-    public static String logout = "linkText=Log out";
+    public static String logout = "Log out";
+    public static String dashboard = "Dashboard";
     public static String account = "text=Account";
 }

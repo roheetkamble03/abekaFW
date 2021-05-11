@@ -1,6 +1,7 @@
 package pageObjects;
 
 import base.GenericAction;
+import elementConstants.Search;
 
 public class SearchScreen extends GenericAction {
     @Override
@@ -13,5 +14,11 @@ public class SearchScreen extends GenericAction {
         softAssertions.assertThat(isElementExists(productName));
         click(productName);
         return new BookDescriptionScreen();
+    }
+
+    public SearchScreen searchProduct(String productName){
+        type(Search.searchBox,productName);
+        click(Search.searchBtn);
+        return this;
     }
 }
