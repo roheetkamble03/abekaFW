@@ -25,7 +25,7 @@ public class LoginTestSuite extends GenericAction {
         super.setUp(browserName, platform);
     }
 
-    @Test(dataProvider = "credentials", dataProviderClass = DataProviders.class)
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
     public void enrollmentPurchase(String userId, String password) {
         Product product = Product.builder().build();
         product.setProductTitle(ShoppingCart.gradeOneVideoBookAccredited);
@@ -52,7 +52,34 @@ public class LoginTestSuite extends GenericAction {
     public void validateAccessControlForParent(String userId, String password) {
         dashboardScreen = new DashboardScreen();
         abekaHomeScreen = loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
-        dashboardScreen.validateDashboardNewTab();
+        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardNewTab();
+    }
 
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
+    public void validateDashboardMyOrderWidgetsLinks(String userId, String password) {
+        dashboardScreen = new DashboardScreen();
+        abekaHomeScreen = loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
+        dashboardScreen.waitAndCloseWidgetTourPopup().validateMyOrdersWidgetLinks();
+    }
+
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
+    public void validateDashboardVideoManualPdfsWidgetLinks(String userId, String password) {
+        dashboardScreen = new DashboardScreen();
+        abekaHomeScreen = loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
+        dashboardScreen.waitAndCloseWidgetTourPopup().validateVideoManualPdfsLinks();
+    }
+
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
+    public void validateDashboardNotificationWidgetLinks(String userId, String password) {
+        dashboardScreen = new DashboardScreen();
+        abekaHomeScreen = loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
+        dashboardScreen.waitAndCloseWidgetTourPopup().validateNotificationRows();
+    }
+
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
+    public void validateDashboardMyStudentsWidgetLinks(String userId, String password) {
+        dashboardScreen = new DashboardScreen();
+        abekaHomeScreen = loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
+        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardMyStudentLink();
     }
 }

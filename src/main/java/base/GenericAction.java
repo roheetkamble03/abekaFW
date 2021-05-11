@@ -10,7 +10,6 @@ import pageObjects.AbekaHomeScreen;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Set;
 
 public abstract class GenericAction extends SelenideExtended{
 
@@ -40,6 +39,9 @@ public abstract class GenericAction extends SelenideExtended{
     public AbekaHomeScreen navigateToAccountGreetingSubMenu(String submenu){
         click(AbekaHome.accountGreeting);
         click(CommonConstants.LINK_TEXT + submenu);
+        if(submenu.equalsIgnoreCase(AbekaHome.dashboard))
+            switchToLastOrNewWindow();
+        waitForPageTobLoaded();
         return new AbekaHomeScreen();
     }
 

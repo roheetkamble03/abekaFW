@@ -8,7 +8,11 @@
             <class name="abekaUISuite.LoginTestSuite">
                 <methods>
                 <!--<include name="enrollmentPurchase"/>-->
-                <include name="validateAccessControlForParent"></include>
+                <!--<include name="validateAccessControlForParent"></include>-->
+                    <!--<include name="validateDashboardMyOrderWidgetsLinks"/>-->
+                    <!--<include name="validateDashboardVideoManualPdfsWidgetLinks"/>-->
+                    <!--<include name="validateDashboardNotificationWidgetLinks"/>-->
+                    <include name="validateDashboardMyStudentsWidgetLinks"/>
                 </methods>
             </class>
         </classes>

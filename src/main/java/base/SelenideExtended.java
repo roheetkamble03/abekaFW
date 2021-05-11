@@ -8,6 +8,7 @@ import constants.EnumUtil;
 import elementConstants.AbekaHome;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.ElementNameAndAttributeQualifier;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -136,6 +137,14 @@ public abstract class SelenideExtended extends BaseClass {
         return "";
     }
 
+    public String getHrefLink(SelenideElement element){
+        try {
+            return element.getAttribute("href").trim();
+        }catch (NullPointerException e){
+            return "";
+        }
+    }
+
     /**
      *
      * @param identifier element identifier
@@ -258,11 +267,20 @@ public abstract class SelenideExtended extends BaseClass {
      * @param identifier
      * @return
      */
-    public void bringElementIntoView(String identifier) {
+    public SelenideElement bringElementIntoView(String identifier) {
             JavascriptExecutor executor = (JavascriptExecutor) getDriver();
             executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", getElement(identifier));
             Actions actions = new Actions(getDriver());
             actions.moveToElement(getElement(identifier)).build().perform();
+            return getElement(identifier);
+    }
+
+    public SelenideElement bringElementIntoView(SelenideElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", element);
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(element).build().perform();
+        return element;
     }
 
     /**
@@ -339,10 +357,10 @@ public abstract class SelenideExtended extends BaseClass {
     /**
      * Switching to new window
      */
-    public void switchToNewWindow() {
+    public void switchToLastOrNewWindow() {
             Set<String> s=getDriver().getWindowHandles();
             Object popup[]=s.toArray();
-            getDriver().switchTo().window(popup[1].toString());
+            getDriver().switchTo().window(popup[popup.length-1].toString());
     }
 
     /**
@@ -352,6 +370,15 @@ public abstract class SelenideExtended extends BaseClass {
          Set<String> s=getDriver().getWindowHandles();
          Object popup[]=s.toArray();
          getDriver().switchTo().window(popup[0].toString());
+    }
+
+    /**
+     * Switching to old window
+     */
+    public void switchToFirstWindow() {
+        Set<String> s=getDriver().getWindowHandles();
+        Object popup[]=s.toArray();
+        getDriver().switchTo().window(popup[0].toString());
     }
 
     /**
@@ -604,16 +631,13 @@ public abstract class SelenideExtended extends BaseClass {
             }
         implicitWaitInSeconds(3);
     }
-//                 WebDriverWait webDriverWait = (WebDriverWait) new WebDriverWait(getDriver(), 60).pollingEvery(Duration.ofMillis(500))
-//                    .ignoring(NoSuchElementException.class).ignoring(TimeoutException.class);
-//            webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(getByClause(identifier)));
-        //}
-//            FluentWait<WebDriver> wait = new FluentWait<>(getDriver()).withTimeout(Duration.ofSeconds(elementLoadWait)).
-//                    pollingEvery(Duration.ofMillis(500)).ignoring(NoSuchElementException.class).ignoring(TimeoutException.class);
-//            wait.until(ExpectedConditions.invisibilityOf(getElement(identifier)));
-    //}
 
     public void waitForAbekaBGProcessLogoDisappear(){
         waitForElementTobeDisappear(AbekaHome.abekaBGProcessLogo);
+    }
+
+    public void waitForPageTobLoaded(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
+        wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
     }
 }

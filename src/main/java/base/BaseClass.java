@@ -76,10 +76,10 @@ public abstract class BaseClass {
     @AfterMethod
     public void tearDown(){
         log("Tearing down the test");
-        softAssertions.assertAll();
-        SelenideLogger.removeListener("allure");
         quitEachDriver(sessionMap);
+        SelenideLogger.removeListener("allure");
         log("Tearing down test finished");
+        softAssertions.assertAll();
     }
     @BeforeSuite
     public void loadConfig(){
