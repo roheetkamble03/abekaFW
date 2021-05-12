@@ -42,22 +42,22 @@ public abstract class BaseClass {
     @Getter
     public Logger logger = LoggerFactory.getLogger(this.getClass());
     public static SoftAssertions softAssertions;
+    public static WebDriver driver;
+    public static String domainURL;
+    public static String afterLoginURL;
     protected Map<String,WebDriver> sessionMap = new HashMap<>();
-    DesiredCapabilities desiredCapabilities;
+    protected DesiredCapabilities desiredCapabilities;
     int pageLoadTimeOut;
     int elementLoadWait;
     int commonWait;
     int pollingTimeOut;
     String grid;
     String platform;
-    public static WebDriver driver;
-    static String username = "rohit.kamble%40pcci.edu";
-    static String authkey = "u26c428039154c57";
-    String testResult = "unset";
     boolean isLocalRun = false;
     String testMethodName;
-    public static String domainURL;
-    public static String afterLoginURL;
+    static String username = "rohit.kamble%40pcci.edu";
+    static String authkey = "u26c428039154c57";
+
 
     public void log(String message){
         getLogger().info(message);
@@ -67,7 +67,7 @@ public abstract class BaseClass {
     protected void setUp(String browserName, String platform){
         log("Setting up the test");
         softAssertions = new SoftAssertions();
-        SelenideLogger.addListener("allure", new AllureSelenide());
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
         launchApp(grid,browserName, this.platform);
         //Allure report writing will be done letter
         log("Setting up test finished");
@@ -200,12 +200,12 @@ public abstract class BaseClass {
         return response.getBody();
     }
 
+    /**
+     * Takes a snapshot of the screen for the specified test.
+     * The output of this function can be used as a parameter for setDescription()
+     */
     public String takeSnapshot(String seleniumTestId) throws UnirestException {
-        /*
-         * Takes a snapshot of the screen for the specified test.
-         * The output of this function can be used as a parameter for setDescription()
-         */
-        HttpResponse<JsonNode> response = Unirest.post("http://crossbrowsertesting.com/api/v3/selenium/{seleniumTestId}/snapshots")
+               HttpResponse<JsonNode> response = Unirest.post("http://crossbrowsertesting.com/api/v3/selenium/{seleniumTestId}/snapshots")
                 .basicAuth(username, authkey)
                 .routeParam("seleniumTestId", seleniumTestId)
                 .asJson();
@@ -215,10 +215,10 @@ public abstract class BaseClass {
         return snapshotHash;
     }
 
+    /**
+     * sets the description for the given seleniemTestId and snapshotHash
+     */
     public JsonNode setDescription(String seleniumTestId, String snapshotHash, String description) throws UnirestException{
-        /*
-         * sets the description for the given seleniemTestId and snapshotHash
-         */
         HttpResponse<JsonNode> response = Unirest.put("http://crossbrowsertesting.com/api/v3/selenium/{seleniumTestId}/snapshots/{snapshotHash}")
                 .basicAuth(username, authkey)
                 .routeParam("seleniumTestId", seleniumTestId)

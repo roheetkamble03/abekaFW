@@ -4,10 +4,12 @@ import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import elementConstants.Dashboard;
+import elementConstants.Enrollments;
 import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -25,6 +27,12 @@ public class DashboardScreen extends GenericAction {
         switchToOldWindow();
     }
 
+    public DashboardScreen navigateToMyOrderLink(String link){
+        bringElementIntoView(String.format(Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)).click();
+        waitForPageTobLoaded();
+        return this;
+    }
+
     public void validateMyOrdersWidgetLinks(){
         ArrayList<String> linkList = new ArrayList<>(Arrays.asList(Dashboard.ENROLLMENTS,Dashboard.DIGITAL_CLIP_ART,Dashboard.DIGITAL_ASSESSMENTS,Dashboard.DIGITAL_TEXTBOOKS,Dashboard.DIGITAL_TEACHING_AIDS));
         String pageTitle;
@@ -33,8 +41,7 @@ public class DashboardScreen extends GenericAction {
             bringElementIntoView(Dashboard.MY_ORDERS);
             for(String link:linkList){
                 try {
-                    bringElementIntoView(String.format(Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)).click();
-                    waitForPageTobLoaded();
+                    navigateToMyOrderLink(link);
                     pageTitle = String.format(Dashboard.MY_ABEKA_NAV_PAGE_TITLE, link);
                     pageUrl = String.format(Dashboard.MY_ABEKA_NAV_PAGE_URL, afterLoginURL, link.replaceAll("\\s","").replaceAll("Clip",""));
                     softAssertions.assertThat(getPageTitle().equals(pageTitle))
@@ -107,8 +114,12 @@ public class DashboardScreen extends GenericAction {
     }
 
     public DashboardScreen waitAndCloseWidgetTourPopup(){
-        waitForElementTobeExist(Dashboard.widgetTourPopupClose);
-        getElement(Dashboard.widgetTourPopupClose).click();
+        try {
+            waitForElementTobeExist(Dashboard.widgetTourPopupClose);
+            getElement(Dashboard.widgetTourPopupClose).click();
+        }catch (NoSuchElementException e){
+            log(Dashboard.widgetTourPopupClose + " is not loaded.");
+        }
         return this;
     }
 }

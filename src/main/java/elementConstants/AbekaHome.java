@@ -1,6 +1,10 @@
 package elementConstants;
 
 public class AbekaHome {
+
+    /**
+     * Element xpath
+     */
     public static String login = "text=Log in";
     public static String logInCreateAccount = "text=Log in / Create Account";
     public static String shop = "text=Shop";

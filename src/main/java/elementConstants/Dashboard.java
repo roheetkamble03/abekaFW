@@ -1,6 +1,9 @@
 package elementConstants;
 
 public @interface Dashboard {
+    /**
+     * Text
+     */
     String TAB_TITLE = "Abeka | Dashboard";
     String URL = "/Account/";
     int tabCount = 2;
@@ -18,9 +21,9 @@ public @interface Dashboard {
     String STUDENT_TAB_TITLE = "Abeka | My Students";
     String STUDENT_TAB_URL = URL+"Students/";
 
-
-
-
+    /**
+     * Element xpath
+     */
     String myOrdersLinks = "xpath=//a[@href='/Fulfillment/%s/']//label[normalize-space(text())='%s']";
     String videoManualPdfLink = "xpath=//div[@id='VideoManual']/descendant::li/descendant::a";
     String notificationLinks = "xpath=//div[@id='pnlMessageCenter']/descendant::table/descendant::td/a";

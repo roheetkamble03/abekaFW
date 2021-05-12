@@ -7,12 +7,13 @@
         <classes>
             <class name="abekaUISuite.LoginTestSuite">
                 <methods>
-                <!--<include name="enrollmentPurchase"/>-->
-                <!--<include name="validateAccessControlForParent"></include>-->
-                    <!--<include name="validateDashboardMyOrderWidgetsLinks"/>-->
-                    <!--<include name="validateDashboardVideoManualPdfsWidgetLinks"/>-->
-                    <!--<include name="validateDashboardNotificationWidgetLinks"/>-->
+                    <include name="enrollmentPurchase"/>
+                    <!--<include name="validateAccessControlForParent"></include>
+                    <include name="validateDashboardMyOrderWidgetsLinks"/>
+                    <include name="validateDashboardVideoManualPdfsWidgetLinks"/>
+                    <include name="validateDashboardNotificationWidgetLinks"/>
                     <include name="validateDashboardMyStudentsWidgetLinks"/>
+                    <include name="validateNewStudentCreation"/>-->
                 </methods>
             </class>
         </classes>

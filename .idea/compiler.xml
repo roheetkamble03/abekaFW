@@ -11,7 +11,7 @@
         <module name="AbekaAutomationFW" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="16">
       <module name="AbekaAutomationFW" target="16" />
       <module name="QA-Automation" target="16" />
     </bytecodeTargetLevel>

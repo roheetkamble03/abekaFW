@@ -1,9 +1,12 @@
 package constants;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public @Data class Product {
 
     private String productTitle = "";

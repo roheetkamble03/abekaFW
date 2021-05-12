@@ -8,8 +8,14 @@ import org.testng.annotations.BeforeMethod;
 import pageObjects.AbekaHomeScreen;
 
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static constants.CommonConstants.MINUS;
+import static constants.CommonConstants.PLUS;
+import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
 
 public abstract class GenericAction extends SelenideExtended{
 
@@ -68,5 +74,40 @@ public abstract class GenericAction extends SelenideExtended{
 
     public ArrayList getAllAvailableBrowserTab(){
         return new ArrayList<>(getDriver().getWindowHandles());
+    }
+
+    public String generateStudentBirthDate(String grade){
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        localDate.minusYears(getStudentRangeAge(grade));
+        return localDate.format(formatter);
+    }
+
+    public String getModifiedDate(String dateTobeModified,int daysTobeChangeBy, int monthTobeChangeBy, int yearTobeChangeBy, String action){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate localDate = LocalDate.parse(dateTobeModified, formatter);
+        switch (action.toUpperCase()){
+            case PLUS:
+                localDate = localDate.plusDays(daysTobeChangeBy);
+                localDate = localDate.plusMonths(monthTobeChangeBy);
+                localDate = localDate.plusYears(yearTobeChangeBy);
+                return localDate.format(formatter);
+            case MINUS:
+                localDate = localDate.minusDays(daysTobeChangeBy);
+                localDate = localDate.minusMonths(monthTobeChangeBy);
+                localDate = localDate.minusYears(yearTobeChangeBy);
+                return localDate.format(formatter);
+            default:
+                return "";
+        }
+    }
+
+    public int getStudentRangeAge(String grade){
+        switch (grade){
+            case GRADE_ONE_ACCREDITED:
+                return 6;
+            default:
+                return 0;
+        }
     }
 }

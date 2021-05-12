@@ -34,11 +34,12 @@ public abstract class SelenideExtended extends BaseClass {
     protected static String childTextContainsXpath = "xpath./*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|./text()[contains(normalize-space(),'%s')]";
 
     public void click(String identifier){
+        waitForElementTobeExist(identifier);
         try {
-            waitForElementTobeExist(identifier);
             getElement(identifier).click();
-        }catch (ElementClickInterceptedException e){
-            getElement(identifier).click();
+        }catch (Throwable e){
+            log("Clicked by java script");
+            clickByJavaScript(identifier);
         }
     }
 
@@ -84,8 +85,18 @@ public abstract class SelenideExtended extends BaseClass {
      * @return - true/false
      */
     public void type(String identifier, String text) {
-        SelenideElement ele = getElement(identifier);
-        ele.setValue(text);
+        waitForElementTobeExist(identifier);
+        try {
+            getElement(identifier).setValue(text);
+        }catch (Throwable e){
+            log("Type by java script");
+            typeByJavaScript(identifier,text);
+        }
+    }
+
+    private void typeByJavaScript(String identifier, String text) {
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].value='"+text+";", getElement(identifier));
     }
 
     public boolean isElementTextEquals(String identifier, String expectedText){
