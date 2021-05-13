@@ -1,12 +1,16 @@
 package elementConstants;
 
-public class BookDescription {
-    public static String fullYear = "text=Full Year";
-    public static String oneSemester = "text=One Semester";
-    public static String videoAndBooks = "text=Video & Books";
-    public static String video = "text=Video";
-    public static String accredited = "text=Accredited";
-    public static String independentStudy = "text=Independent Study";
-    public static String addToCart = "id=lbnAddToCart";
-    public static String quantityTxtBox = "id=txtQuantity";
+public @interface BookDescription {
+
+    /**
+     * Element xpath
+     */
+    String fullYear = "text=Full Year";
+    String oneSemester = "text=One Semester";
+    String videoAndBooks = "text=Video & Books";
+    String video = "text=Video";
+    String accredited = "text=Accredited";
+    String independentStudy = "text=Independent Study";
+    String addToCart = "id=lbnAddToCart";
+    String quantityTxtBox = "id=txtQuantity";
 }

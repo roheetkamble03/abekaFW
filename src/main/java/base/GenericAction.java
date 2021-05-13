@@ -45,14 +45,14 @@ public abstract class GenericAction extends SelenideExtended{
     public AbekaHomeScreen navigateToAccountGreetingSubMenu(String submenu){
         click(AbekaHome.accountGreeting);
         click(CommonConstants.LINK_TEXT + submenu);
-        if(submenu.equalsIgnoreCase(AbekaHome.dashboard))
+        if(submenu.equalsIgnoreCase(AbekaHome.DASHBOARD))
             switchToLastOrNewWindow();
         waitForPageTobLoaded();
         return new AbekaHomeScreen();
     }
 
     public AbekaHomeScreen logoutFromAbeka(){
-        navigateToAccountGreetingSubMenu(AbekaHome.logout);
+        navigateToAccountGreetingSubMenu(AbekaHome.LOG_OUT);
         waitForElementTobeVisible(AbekaHome.account);
         return new AbekaHomeScreen();
     }
@@ -79,7 +79,7 @@ public abstract class GenericAction extends SelenideExtended{
     public String generateStudentBirthDate(String grade){
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        localDate.minusYears(getStudentRangeAge(grade));
+        localDate = localDate.minusYears(getStudentRangeAge(grade));
         return localDate.format(formatter);
     }
 

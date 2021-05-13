@@ -22,18 +22,18 @@ public class ShoppingCartPage extends GenericAction {
         String price = formatCurrencyToDollar(productList.get(0).getPrice());
         String quantity = Integer.toString(productList.get(0).getQuantity());
         String subTotal = formatCurrencyToDollar(productList.get(0).getSubtotal());
-        softAssertions.assertThat(isElementTextEquals(ShoppingCart.shoppingCartTitle,String.format(ShoppingCart.shoppingCartTitleText,productList.size())))
+        softAssertions.assertThat(isElementTextEquals(ShoppingCart.shoppingCartTitle,String.format(ShoppingCart.SHOPPING_CART_TITLE_TEXT,productList.size())))
                 .as("Shopping cart actual header ["+getElementText(ShoppingCart.shoppingCartTitle)+"] is not matching with expected header ["
-                        +String.format(ShoppingCart.shoppingCartTitleText,productList.size())).isTrue();
+                        +String.format(ShoppingCart.SHOPPING_CART_TITLE_TEXT,productList.size())).isTrue();
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,
                 productList.get(0).getItemNumber())),ShoppingCart.productTitle),
-                ShoppingCart.gradeOneVideoBookAccredited+"\nItem No. "+productList.get(0).getItemNumber())).as("Product title is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+                ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED +"\nItem No. "+productList.get(0).getItemNumber())).as("Product title is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.productPrice),price))
-                .as(price + "Product price is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+                .as(price + "Product price is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
         softAssertions.assertThat(isElementValueEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.quantityTextBox),quantity))
-                .as( "Product quantity ["+ quantity+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+                .as( "Product quantity ["+ quantity+"] is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.subTotal),subTotal))
-                .as("Product subtotal ["+subTotal+"] is not present for "+ShoppingCart.gradeOneVideoBookAccredited).isTrue();
+                .as("Product subtotal ["+subTotal+"] is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
         return this;
     }
 }

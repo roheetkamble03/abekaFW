@@ -4,7 +4,6 @@ import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import elementConstants.Dashboard;
-import elementConstants.Enrollments;
 import org.testng.Assert;
 
 import java.util.ArrayList;
@@ -14,17 +13,16 @@ import java.util.NoSuchElementException;
 import static com.codeborne.selenide.Selenide.*;
 
 public class DashboardScreen extends GenericAction {
-    public void validateDashboardNewTab(){
+    public DashboardScreen validateDashboardNewTab(){
         ArrayList<String> tabList = getAllAvailableBrowserTab();
         getDriver().switchTo().window(tabList.get(1));
-        softAssertions.assertThat(tabList.size() == Dashboard.tabCount)
-                .as("Actual total tab count ["+tabList.size()+"] is not equal to expected tab count ["+Dashboard.tabCount+"]").isTrue();
+        softAssertions.assertThat(tabList.size() == Dashboard.TAB_COUNT)
+                .as("Actual total tab count ["+tabList.size()+"] is not equal to expected tab count ["+Dashboard.TAB_COUNT +"]").isTrue();
         softAssertions.assertThat(getPageTitle().equals(Dashboard.TAB_TITLE))
                 .as("Actual page title ["+ getDriver().getTitle()+"] is not equal to expected page title ["+Dashboard.TAB_TITLE+"]").isTrue();
         softAssertions.assertThat(getCurrentURL().equals(afterLoginURL+Dashboard.URL))
                 .as("Actual page URL ["+ getCurrentURL()+"] is not equal to expected page URL ["+afterLoginURL+Dashboard.URL+"]").isTrue();
-        closeWindow();
-        switchToOldWindow();
+        return this;
     }
 
     public DashboardScreen navigateToMyOrderLink(String link){
@@ -33,7 +31,7 @@ public class DashboardScreen extends GenericAction {
         return this;
     }
 
-    public void validateMyOrdersWidgetLinks(){
+    public DashboardScreen validateMyOrdersWidgetLinks(){
         ArrayList<String> linkList = new ArrayList<>(Arrays.asList(Dashboard.ENROLLMENTS,Dashboard.DIGITAL_CLIP_ART,Dashboard.DIGITAL_ASSESSMENTS,Dashboard.DIGITAL_TEXTBOOKS,Dashboard.DIGITAL_TEACHING_AIDS));
         String pageTitle;
         String pageUrl;
@@ -57,11 +55,10 @@ public class DashboardScreen extends GenericAction {
         }else{
             Assert.fail(Dashboard.MY_ORDERS + " widget is not present on Dashboard page");
         }
-        closeWindow();
-        switchToOldWindow();
+        return this;
     }
 
-    public void validateVideoManualPdfsLinks(){
+    public DashboardScreen validateVideoManualPdfsLinks(){
         String linkHref;
         String linkText;
 
@@ -84,6 +81,7 @@ public class DashboardScreen extends GenericAction {
         }else{
             Assert.fail(Dashboard.VIDEO_MANUAL_PDFS + " widget is not present on Dashboard page");
         }
+        return this;
     }
 
     public void validateNotificationRows(){

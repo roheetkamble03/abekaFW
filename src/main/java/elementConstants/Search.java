@@ -1,7 +1,16 @@
 package elementConstants;
 
-public class Search {
-    public static String gradeOneEnrollment = "text=Grade 1 Enrollment";
-    public static final String searchBox = "id=txtSearch";
-    public static final String searchBtn = "id=btnSearch";
+public @interface Search {
+
+    /**
+     * Text
+     */
+
+
+    /**
+     * Element xpath
+     */
+    String gradeOneEnrollment = "text=Grade 1 Enrollment";
+    String searchBox = "id=txtSearch";
+    String searchBtn = "id=btnSearch";
 }

@@ -65,4 +65,5 @@ public @interface Enrollments {
     String beginDateLbl = "id=lblMinBeginDate";
     String maxDateLbl = "id=lblMaxBeginDate";
     String agreementSignatureInputBox = "id=txtSignature";
+    String existingGuardianRemove = "id=lbtnRemove";
 }

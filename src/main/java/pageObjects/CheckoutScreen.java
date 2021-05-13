@@ -28,7 +28,7 @@ public class CheckoutScreen extends GenericAction {
     }
 
     public void selectShippingAddress(String shippingAddress){
-        if(shippingAddress.equalsIgnoreCase(Checkout.defaultShippingAddress)) {
+        if(shippingAddress.equalsIgnoreCase(Checkout.DEFAULT_SHIPPING_ADDRESS)) {
             bringElementIntoView(Checkout.shippingAddressMainRadio);
             click(Checkout.shippingAddressMainRadio);
             waitForAbekaBGProcessLogoDisappear();
@@ -52,7 +52,7 @@ public class CheckoutScreen extends GenericAction {
     }
 
     public void selectPaymentMethod(String paymentMethod){
-        if(paymentMethod.equalsIgnoreCase(Checkout.defaultPaymentMethod)){
+        if(paymentMethod.equalsIgnoreCase(Checkout.DEFAULT)){
             bringElementIntoView(Checkout.savedCreditCard);
             click(Checkout.savedCreditCard);
             waitForAbekaBGProcessLogoDisappear();

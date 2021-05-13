@@ -4,13 +4,13 @@ import base.GenericAction;
 import constants.*;
 import dataProvider.DataProviders;
 import elementConstants.*;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.AbekaHomeScreen;
 import pageObjects.DashboardScreen;
 import pageObjects.EnrollmentsScreen;
+import utility.RetryUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,14 +26,14 @@ public class LoginTestSuite extends GenericAction {
         super.setUp(browserName, platform);
     }
 
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchase(String userId, String password) {
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
         Product product = new Product();
-        product.setProductTitle(ShoppingCart.gradeOneVideoBookAccredited);
-        product.setItemNumber(ShoppingCart.itemNumber);
-        product.setPrice(ShoppingCart.price);
-        product.setQuantity(ShoppingCart.quantity);
+        product.setProductTitle(ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED);
+        product.setItemNumber(ShoppingCart.ITEM_NUMBER);
+        product.setPrice(ShoppingCart.PRICE);
+        product.setQuantity(ShoppingCart.QUANTITY);
         product.setSubtotal(getCalculatedSubTotal(product.getQuantity(), product.getPrice()));
 
         ArrayList productList = new ArrayList(Arrays.asList(product));
@@ -48,49 +48,21 @@ public class LoginTestSuite extends GenericAction {
         abekaHomeScreen.logoutFromAbeka();
     }
 
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
-    public void validateAccessControlForParent(String userId, String password) {
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void validateDashBoardWidgets(String userId, String password){
         dashboardScreen = new DashboardScreen();
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardNewTab();
+        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardNewTab().validateMyOrdersWidgetLinks().validateVideoManualPdfsLinks().validateNotificationRows();;
     }
 
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
-    public void validateDashboardMyOrderWidgetsLinks(String userId, String password) {
-        dashboardScreen = new DashboardScreen();
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateMyOrdersWidgetLinks();
-    }
-
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
-    public void validateDashboardVideoManualPdfsWidgetLinks(String userId, String password) {
-        dashboardScreen = new DashboardScreen();
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateVideoManualPdfsLinks();
-    }
-
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
-    public void validateDashboardNotificationWidgetLinks(String userId, String password) {
-        dashboardScreen = new DashboardScreen();
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateNotificationRows();
-    }
-
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
-    public void validateDashboardMyStudentsWidgetLinks(String userId, String password) {
-        dashboardScreen = new DashboardScreen();
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardMyStudentLink();
-    }
-
-    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
+    @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void validateNewStudentCreation(String userId, String password) {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
         StudentDetails studentDetails = new StudentDetails();
         EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
 
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.dashboard);
+        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup().navigateToMyOrderLink(Dashboard.ENROLLMENTS);
         enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_ONE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails).clickOnNextButton().fillEnrollmentOptionsDetails(enrollmentOptions)

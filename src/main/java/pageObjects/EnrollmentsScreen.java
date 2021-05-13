@@ -6,6 +6,7 @@ import constants.EnrollmentOptions;
 import constants.StudentDetails;
 import elementConstants.Enrollments;
 
+import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -94,9 +95,17 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
     }
 
+    public EnrollmentsScreen removeExistingGuardianIfExists(){
+        if(isElementExists(Enrollments.existingGuardianRemove)) {
+            click(Enrollments.existingGuardianRemove);
+        }
+        return this;
+    }
+
     public EnrollmentsScreen fillEnrollmentOptionsDetails(EnrollmentOptions enrollmentOptions){
         bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())).click();
         bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())).click();
+        bringElementIntoView(enrollmentOptions.getGuardians());
         click(enrollmentOptions.getGuardians());
         implicitWaitInSeconds(3);
         if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){

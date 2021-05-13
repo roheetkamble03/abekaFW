@@ -96,7 +96,7 @@ public abstract class SelenideExtended extends BaseClass {
 
     private void typeByJavaScript(String identifier, String text) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-        executor.executeScript("arguments[0].value='"+text+";", getElement(identifier));
+        executor.executeScript("arguments[0].value='"+text+"';", getElement(identifier));
     }
 
     public boolean isElementTextEquals(String identifier, String expectedText){
