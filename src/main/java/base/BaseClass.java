@@ -9,9 +9,9 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import constants.CommonConstants;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
-import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import oracle.jdbc.pool.OracleDataSource;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,6 +30,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -47,17 +49,20 @@ public abstract class BaseClass {
     public static String afterLoginURL;
     protected Map<String,WebDriver> sessionMap = new HashMap<>();
     protected DesiredCapabilities desiredCapabilities;
-    int pageLoadTimeOut;
-    int elementLoadWait;
+    protected int pageLoadTimeOut;
+    protected int elementLoadWait;
     int commonWait;
-    int pollingTimeOut;
+    protected int pollingTimeOut;
     String grid;
     String platform;
     boolean isLocalRun = false;
     String testMethodName;
     static String username = "rohit.kamble%40pcci.edu";
     static String authkey = "u26c428039154c57";
-
+    public static Connection connection;
+    public static String dbUserName;
+    public static String dbUserPassword;
+    public static String dbConnectionURL;
 
     public void log(String message){
         getLogger().info(message);
@@ -82,19 +87,27 @@ public abstract class BaseClass {
         softAssertions.assertAll();
     }
     @BeforeSuite
-    public void loadConfig(){
+    public void prerequisiteSetup(){
+        loadConfig();
+        connection = getDBConnection();
+    }
+
+    private void loadConfig() {
         try {
-            log("Loading config properties");
-            properties = new Properties();
-            FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + implementPath("\\src\\main\\java\\configuration\\config.properties"));
-            properties.load(fileInputStream);
-            pageLoadTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.pageLoadTimeOut));
-            elementLoadWait = Integer.parseInt(properties.getProperty(CommonConstants.elementLoadWait));
-            commonWait = Integer.parseInt(properties.getProperty(CommonConstants.commonWait));
-            pollingTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.pollingTimeOut));
-            grid = properties.getProperty(CommonConstants.grid);
-            domainURL = properties.getProperty(CommonConstants.URL);
-            afterLoginURL = properties.getProperty(CommonConstants.afterLoginURL);
+        log("Loading config properties");
+        properties = new Properties();
+        FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + implementPath("\\src\\main\\java\\configuration\\config.properties"));
+        properties.load(fileInputStream);
+        pageLoadTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.PAGE_LOAD_TIME_OUT));
+        elementLoadWait = Integer.parseInt(properties.getProperty(CommonConstants.ELEMENT_LOAD_WAIT));
+        commonWait = Integer.parseInt(properties.getProperty(CommonConstants.COMMON_WAIT));
+        pollingTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.POLLING_TIME_OUT));
+        grid = properties.getProperty(CommonConstants.GRID);
+        domainURL = properties.getProperty(CommonConstants.URL);
+        afterLoginURL = properties.getProperty(CommonConstants.AFTER_LOGIN_URL);
+        dbConnectionURL = properties.getProperty(CommonConstants.DB_CONNECTION_URL);
+        dbUserName = properties.getProperty(CommonConstants.DB_USER_NAME);
+        dbUserPassword = properties.getProperty(CommonConstants.DB_USER_PASSWORD);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -128,11 +141,11 @@ public abstract class BaseClass {
 
     public void launchApp(String grid, String browser, String platform){
         switch (grid.toLowerCase()){
-            case CommonConstants.local:
+            case CommonConstants.LOCAL:
                 isLocalRun = true;
                 launchAppOnLocalMachine(browser);
                 break;
-            case CommonConstants.crossBrowser:
+            case CommonConstants.CROSS_BROWSER:
                 isLocalRun = false;
                 launchAppOnCrossBrowser(browser,platform);
 
@@ -142,7 +155,7 @@ public abstract class BaseClass {
     @SneakyThrows
     public void launchAppOnCrossBrowser(String browser, String platform){
         setDesiredCapabilities(browser, platform);
-        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey + CommonConstants.crossBrowserUrl), desiredCapabilities);
+        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey + CommonConstants.CROSS_BROWSER_URL), desiredCapabilities);
         setSelenideDriver(driver);
     }
 
@@ -228,6 +241,32 @@ public abstract class BaseClass {
         return response.getBody();
     }
 
+    /**
+     * Connecting to Data base
+     * @param
+     * @return
+     */
+    public Connection getDBConnection(){
+        boolean dbNotConnected = true;
+        int retryCount = 0;
+        while (dbNotConnected && retryCount < 3 && Boolean.getBoolean(properties.getProperty(CommonConstants.IS_CONNECT_TO_DB))){
+            try {
+                OracleDataSource dataSource = new OracleDataSource();
+                dataSource.setServerName("ad.oracle.pcci.edu");
+                dataSource.setUser(dbUserName);
+                dataSource.setPassword(dbUserPassword);
+                dataSource.setDatabaseName("AD");
+                dataSource.setPortNumber(1521);
+                dataSource.setDriverType("thin");
+                dbNotConnected = false;
+                retryCount++;
+                return dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
     public String implementPath(String path){
         String fp = File.separator;
         return path.replaceAll("\\\\",fp+fp);

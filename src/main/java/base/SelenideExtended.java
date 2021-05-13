@@ -1,21 +1,20 @@
 package base;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideDriver;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import constants.EnumUtil;
 import elementConstants.AbekaHome;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.ElementNameAndAttributeQualifier;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
+import utility.DatabaseExtended;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -27,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public abstract class SelenideExtended extends BaseClass {
+public abstract class SelenideExtended extends DatabaseExtended {
     String textXpath = "(//*[normalize-space(text())='%s' or normalize-space(@value)='%s']|//text()[normalize-space()='%s'])[1]";
     String textContainsXpath = "(//*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|//text()[contains(normalize-space(),'%s')])[1]";
     public static String childTextXpath = "xpath=./*[normalize-space(text())='%s' or normalize-space(@value)='%s']|./text()[normalize-space()='%s']";
@@ -88,6 +87,9 @@ public abstract class SelenideExtended extends BaseClass {
         waitForElementTobeExist(identifier);
         try {
             getElement(identifier).setValue(text);
+            if(!getElementText(identifier).equals(text)){
+                getElement(identifier).setValue(text);
+            }
         }catch (Throwable e){
             log("Type by java script");
             typeByJavaScript(identifier,text);
@@ -279,6 +281,7 @@ public abstract class SelenideExtended extends BaseClass {
      * @return
      */
     public SelenideElement bringElementIntoView(String identifier) {
+            waitForElementTobeExist(identifier);
             JavascriptExecutor executor = (JavascriptExecutor) getDriver();
             executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", getElement(identifier));
             Actions actions = new Actions(getDriver());
@@ -648,7 +651,11 @@ public abstract class SelenideExtended extends BaseClass {
     }
 
     public void waitForPageTobLoaded(){
-        WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
-        wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
+            wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
+        }catch (TimeoutException e){
+            log("Page load time out error :"+e.getMessage());
+        }
     }
 }
