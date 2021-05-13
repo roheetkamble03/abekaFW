@@ -27,6 +27,6 @@ public @interface Dashboard {
     String myOrdersLinks = "xpath=//a[@href='/Fulfillment/%s/']//label[normalize-space(text())='%s']";
     String videoManualPdfLink = "xpath=//div[@id='VideoManual']/descendant::li/descendant::a";
     String notificationLinks = "xpath=//div[@id='pnlMessageCenter']/descendant::table/descendant::td/a";
-    String studentLink = "xpath=//li[@id='MyStudents']/descendant::*[@id='listStudent']/descendant::span[normalize-space(text())='autotest']";
+    String studentLink = "xpath=//li[@id='MyStudents']/descendant::*[@id='listStudent']/descendant::span[normalize-space(text())='%s']";
     String widgetTourPopupClose = "xpath=//div[@class='tourClose']/a";
 }

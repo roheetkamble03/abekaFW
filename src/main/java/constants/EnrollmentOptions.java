@@ -12,4 +12,5 @@ public @Data class EnrollmentOptions {
     private String parentName = "Mr. RCG Testing";
     private String relation = "Father";
     private String signature = "RCG Testing";
+    private String studentName = "autotest";
 }

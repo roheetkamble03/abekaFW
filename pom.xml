@@ -107,6 +107,12 @@
             <artifactId>allure-testng</artifactId>
             <version>2.13.10</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc10</artifactId>
+            <version>19.3.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
