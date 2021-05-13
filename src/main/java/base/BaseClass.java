@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -249,7 +248,7 @@ public abstract class BaseClass {
     public Connection getDBConnection(){
         boolean dbNotConnected = true;
         int retryCount = 0;
-        while (dbNotConnected && retryCount < 3 && Boolean.getBoolean(properties.getProperty(CommonConstants.IS_CONNECT_TO_DB))){
+        while (dbNotConnected && retryCount < 3 && Boolean.parseBoolean(properties.getProperty(CommonConstants.IS_CONNECT_TO_DB))){
             try {
                 OracleDataSource dataSource = new OracleDataSource();
                 dataSource.setServerName("ad.oracle.pcci.edu");

@@ -15,8 +15,8 @@ public class DatabaseExtended extends BaseClass {
     ResultSet resultSet;
 
     @SneakyThrows
-    protected ResultSet executeSelectQuery(String selectQuery){
+    public ResultSet executeSelectQuery(String selectQuery){
         statement = connection.createStatement();
-        return statement.executeQuery(selectQuery);
+        return statement.executeQuery("select * from ABADB.agreements");
     }
 }
