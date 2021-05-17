@@ -3,18 +3,14 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.ex.ElementNotFound;
 import constants.CommonConstants;
-import constants.RecentGrades;
+import constants.DataBaseQueryConstant;
 import constants.StudentToDoList;
 import elementConstants.Dashboard;
 import elementConstants.Students;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.codeborne.selenide.Selenide.back;
 
@@ -153,8 +149,8 @@ public class StudentsScreen extends GenericAction {
         click(Students.submitTranScriptBtn);
         implicitWaitInSeconds(10);
         if(isAlertPresent()){
-            softAssertions.assertThat(getDriver().switchTo().alert().getText().equals(Students.TRANSCRIPT_ALER_TEXT))
-                    .as("Transcript success alert text is not equal to "+Students.TRANSCRIPT_ALER_TEXT).isTrue();
+            softAssertions.assertThat(getDriver().switchTo().alert().getText().equals(Students.TRANSCRIPT_ALERT_TEXT))
+                    .as("Transcript success alert text is not equal to "+Students.TRANSCRIPT_ALERT_TEXT).isTrue();
             acceptAlert();
             waitForPageTobLoaded();
         }else {
@@ -163,14 +159,95 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen validateMyRecentGrades(RecentGrades recentGrades){
-        //data needs tobe fetched from dB
+    public StudentsScreen validateMyRecentGrades(String studentName){
+        if(isElementExists(Students.myRecentGradeSection)) {
+            String assignment;
+            String grade;
+            bringElementIntoView(getElements(Students.myRecentGradeRows).get(getElements(Students.myRecentGradeRows).size()-1));
+            int myRecentGradeRowCount = getElements(Students.myRecentGradeRows).size() - 1;
+            //add getStudentIdFromDB(studentName) to string.format
+            ArrayList<HashMap<String, String>> myGrades = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT.replaceAll(Students.ROW_COUNT,Integer.toString(myRecentGradeRowCount)));
+
+            for (HashMap<String, String> rowData : myGrades) {
+                assignment = rowData.get(Students.ASSESSMENT_TBL_COL_NAME);
+                grade = rowData.get(Students.GRADE_TBL_COL_NAME);
+                softAssertions.assertThat(isElementExists(String.format(Students.subjectWithGradeRow, assignment, grade)))
+                        .as(assignment + ":" + grade + " row is not present in My recent grade section").isTrue();
+            }
+        }else {
+            softAssertions.fail("My recent grade section is not present on UI");
+        }
+
         return this;
     }
 
     public StudentsScreen openTranScriptRequestPopUp(){
         click(Students.requestTranScriptBtn);
         waitForElementTobeExist(Students.submitTranScriptBtn);
+        return this;
+    }
+
+    public StudentsScreen verifyLastViewedLessons(){
+        if(isElementExists(Students.lastViewedVideoLessonsSection)) {
+            //Data need to fetch from DB
+//            String assignment;
+//            String grade;
+//            bringElementIntoView(getElements(Students.myRecentGradeRows).get(getElements(Students.myRecentGradeRows).size()-1));
+//            int myRecentGradeRowCount = getElements(Students.myRecentGradeRows).size() - 1;
+//            //add getStudentIdFromDB(studentName) to string.format
+//            ArrayList<HashMap<String, String>> myGrades = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT.replaceAll(Students.ROW_COUNT,Integer.toString(myRecentGradeRowCount)));
+//
+//            for (HashMap<String, String> rowData : myGrades) {
+//                assignment = rowData.get(Students.ASSESSMENT_TBL_COL_NAME);
+//                grade = rowData.get(Students.GRADE_TBL_COL_NAME);
+//                softAssertions.assertThat(isElementExists(String.format(Students.subjectWithGradeRow, assignment, grade)))
+//                        .as(assignment + ":" + grade + " row is not present in My recent grade section").isTrue();
+//            }
+        }else {
+            softAssertions.fail("Last viewed video lessons section is not present on UI");
+        }
+
+        return this;
+    }
+
+    public StudentsScreen navigateToStartWatchingYourLessonsLink(){
+        bringChildElementIntoView(getElement(Students.lastViewedVideoLessonsSection),Students.startWatchingYourLessonsLin);
+        waitForPageTobLoaded();
+        return this;
+    }
+
+    public StudentsScreen validateMyLessonsTodaySectionData(){
+        if(isElementExists(Students.MY_LESSONS_TODAY)) {
+            if (isElementExists(Students.lessonsToday)) {
+                //fetch data from DB for validation.
+                String myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink,"Subject Name","Lesson to be read from db");
+                //for loop
+                bringElementIntoView(myLessonsVideoLink);
+                click(myLessonsVideoLink);
+                validateVideoWithVideoLibrary();
+            } else {
+                softAssertions.fail(Students.MY_LESSONS_TODAY+" is not having any video link on UI");
+            }
+        }else {
+            softAssertions.fail(Students.MY_LESSONS_TODAY+" section is not present on UI");
+        }
+        return this;
+    }
+
+    public StudentsScreen validateVideoWithVideoLibrary(){
+        //Validating video with lesson number
+        return this;
+    }
+
+    public StudentsScreen validateAssessmentsAreLocked(){
+        return this;
+    }
+
+    public StudentsScreen validateWatchedVideoLessonsAreTickedInVideoLibrary(){
+        return this;
+    }
+
+    public StudentsScreen validateStudentIsAbleToWatchNextDayLessonFromVideoLibrary(){
         return this;
     }
 }

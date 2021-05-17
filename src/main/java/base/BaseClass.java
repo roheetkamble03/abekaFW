@@ -39,7 +39,7 @@ import static org.openqa.selenium.remote.BrowserType.*;
 
 public abstract class BaseClass {
 
-    Properties properties;
+    public static Properties properties;
     @Getter
     public Logger logger = LoggerFactory.getLogger(this.getClass());
     public static SoftAssertions softAssertions;
@@ -58,10 +58,6 @@ public abstract class BaseClass {
     String testMethodName;
     static String username = "rohit.kamble%40pcci.edu";
     static String authkey = "u26c428039154c57";
-    public static Connection connection;
-    public static String dbUserName;
-    public static String dbUserPassword;
-    public static String dbConnectionURL;
 
     public void log(String message){
         getLogger().info(message);
@@ -88,7 +84,6 @@ public abstract class BaseClass {
     @BeforeSuite
     public void prerequisiteSetup(){
         loadConfig();
-        connection = getDBConnection();
     }
 
     private void loadConfig() {
@@ -104,9 +99,6 @@ public abstract class BaseClass {
         grid = properties.getProperty(CommonConstants.GRID);
         domainURL = properties.getProperty(CommonConstants.URL);
         afterLoginURL = properties.getProperty(CommonConstants.AFTER_LOGIN_URL);
-        dbConnectionURL = properties.getProperty(CommonConstants.DB_CONNECTION_URL);
-        dbUserName = properties.getProperty(CommonConstants.DB_USER_NAME);
-        dbUserPassword = properties.getProperty(CommonConstants.DB_USER_PASSWORD);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -240,32 +232,6 @@ public abstract class BaseClass {
         return response.getBody();
     }
 
-    /**
-     * Connecting to Data base
-     * @param
-     * @return
-     */
-    public Connection getDBConnection(){
-        boolean dbNotConnected = true;
-        int retryCount = 0;
-        while (dbNotConnected && retryCount < 3 && Boolean.parseBoolean(properties.getProperty(CommonConstants.IS_CONNECT_TO_DB))){
-            try {
-                OracleDataSource dataSource = new OracleDataSource();
-                dataSource.setServerName("ad.oracle.pcci.edu");
-                dataSource.setUser(dbUserName);
-                dataSource.setPassword(dbUserPassword);
-                dataSource.setDatabaseName("AD");
-                dataSource.setPortNumber(1521);
-                dataSource.setDriverType("thin");
-                dbNotConnected = false;
-                retryCount++;
-                return dataSource.getConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
     public String implementPath(String path){
         String fp = File.separator;
         return path.replaceAll("\\\\",fp+fp);

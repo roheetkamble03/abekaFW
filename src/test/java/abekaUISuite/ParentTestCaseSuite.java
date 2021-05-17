@@ -1,7 +1,6 @@
 package abekaUISuite;
 
 import base.GenericAction;
-import constants.RecentGrades;
 import constants.StudentToDoList;
 import dataProvider.DataProviders;
 import elementConstants.AbekaHome;
@@ -23,7 +22,6 @@ public class ParentTestCaseSuite extends GenericAction {
     @BeforeMethod
     public void setUp(String browserName, String platform) {
         super.setUp(browserName, platform);
-        getStudentToDoListFromDB("test");
     }
 
     @Test(testName = "Test-4", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
@@ -50,18 +48,19 @@ public class ParentTestCaseSuite extends GenericAction {
     public void testValidateStudentDashboardData(String userId, String password, String userName){
         StudentsScreen studentsScreen = new StudentsScreen();
         ArrayList<StudentToDoList> studentToDoLists = new ArrayList<>();//getStudentToDoListFromDB(Dashboard.STUDENT_NAME);
-
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
-        studentsScreen.validateMyToDoListData(studentToDoLists).validateAccountInfoPage().validateRequestTranScriptFunctionality(Dashboard.STUDENT_NAME).validateMyRecentGrades(new RecentGrades());
-        //Validation of dashboard page pending
+        studentsScreen.validateMyToDoListData(studentToDoLists).validateAccountInfoPage().
+                validateRequestTranScriptFunctionality(Dashboard.STUDENT_NAME).validateMyRecentGrades(Dashboard.STUDENT_NAME).verifyLastViewedLessons().logoutFromAbeka();
     }
 
     @Test(testName = "Test-8", dataProvider = "studentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAbleToWatchVideoStreaming(String userId, String password, String userName){
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
-        //Validation of dashboard page pending
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData().validateAssessmentsAreLocked()
+                .validateWatchedVideoLessonsAreTickedInVideoLibrary().validateStudentIsAbleToWatchNextDayLessonFromVideoLibrary().logoutFromAbeka();
+        //data need to fetch from DB for validation
     }
 
 

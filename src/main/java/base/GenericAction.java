@@ -1,8 +1,10 @@
 package base;
 
 import constants.CommonConstants;
+import constants.DataBaseQueryConstant;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
+import elementConstants.Students;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pageObjects.AbekaHomeScreen;
@@ -109,5 +111,10 @@ public abstract class GenericAction extends SelenideExtended{
             default:
                 return 0;
         }
+    }
+
+    public String getStudentIdFromDB(String studentName){
+       // return executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT).get(0).get(Students.STUDENT_ID_TBL_COL_NAME);
+        return "";
     }
 }

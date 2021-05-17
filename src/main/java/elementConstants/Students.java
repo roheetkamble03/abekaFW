@@ -22,7 +22,12 @@ public @interface Students {
     String CHANGE_PASSWORD = "Change Password";
     String FORGOT_PASSWORD_MESSAGE = "Forgot your password? Ask your parent to reset it for you.";
     String SELF = "Self";
-    String TRANSCRIPT_ALER_TEXT = "Transcript Request submitted and being processed";
+    String TRANSCRIPT_ALERT_TEXT = "Transcript Request submitted and being processed";
+    String ASSESSMENT_TBL_COL_NAME = "ASSESSMENT";
+    String GRADE_TBL_COL_NAME = "GRADE";
+    String STUDENT_ID_TBL_COL_NAME = "STUDENT_ID";
+    String ROW_COUNT = "rowCount";
+    String MY_LESSONS_TODAY = "My Lessons Today";
 
     /**
      * Element xpath
@@ -53,4 +58,11 @@ public @interface Students {
     String attentionLineTextBox = "id=txtAttention";
     String sendImmediately = "id=rbtnSendImmediately";
     String submitTranScriptBtn = "id=btnSubmitTranscript";
+    String myRecentGradeRows = "xpath=//table[@id='gdvRecentGrades']/descendant::tr";
+    String subjectWithGradeRow = "xpath=//table[@id='gdvRecentGrades']/descendant::tr/descendant::td[normalize-space(text())='%s']/following-sibling::td/descendant::span[@id='lblGrade' and normalize-space(text())='%s']";
+    String myRecentGradeSection = "id=RecentGrades";
+    String lastViewedVideoLessonsSection = "id=VODVideos";
+    String startWatchingYourLessonsLin = "xpath=./descendant::a[@href='/Video2/streaming/']";
+    String lessonsToday = "id=dvLessonsToday";
+    String myLessonsTodayVideoLink = "xpath=//ul[@id='ulDailyLessons']/descendant::h3[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
 }
