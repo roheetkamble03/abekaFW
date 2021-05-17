@@ -5,11 +5,17 @@
         <parameter name="browser" value="Chrome"></parameter>
         <parameter name= "platform" value="Windows 10"></parameter>
         <classes>
-            <class name="abekaUISuite.LoginTestSuite">
+            <!--<class name="abekaUISuite.LoginTestSuite">
                 <methods>
                     <include name="enrollmentPurchase"/>
-                    <!--<include name="validateDashBoardWidgets"/>
-                    <include name="validateNewStudentCreation"/>-->
+                    <include name="validateDashBoardWidgets"/>
+                    <include name="validateNewStudentCreation"/>
+                </methods>
+            </class>
+            -->
+            <class name="abekaUISuite.ParentTestCaseSuite">
+                <methods>
+                    <include name="testValidateStudentDashboardData"/>
                 </methods>
             </class>
         </classes>

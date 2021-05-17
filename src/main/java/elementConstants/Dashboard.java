@@ -20,6 +20,7 @@ public @interface Dashboard {
     String MY_STUDENTS = "My Students";
     String STUDENT_TAB_TITLE = "Abeka | My Students";
     String STUDENT_TAB_URL = URL+"Students/";
+    String STUDENT_NAME = "Syed";
 
     /**
      * Element xpath

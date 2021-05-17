@@ -18,4 +18,6 @@ public @interface CommonConstants {
     String DB_USER_NAME = "DBUserName";
     String DB_USER_PASSWORD = "DBPassword";
     String IS_CONNECT_TO_DB = "IsConnectToDB";
+    String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and @class='close' and normalize-space(text())='×']";
+    String AUTOMATION_TEST = "Automation Test";
 }

@@ -30,15 +30,15 @@ public abstract class GenericAction extends SelenideExtended{
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();
     }
-    public AbekaHomeScreen loginToAbeka(String userName, String password){
+    public AbekaHomeScreen loginToAbeka(String userId, String password, String userName){
         waitAndCloseSignUpPop();
         click(AbekaHome.login);
         click(AbekaHome.logInCreateAccount);
-        type(Login.emailAddress,userName);
+        type(Login.emailAddress,userId);
         type(Login.password,password);
         click(Login.loginBtn);
         waitForAbekaBGProcessLogoDisappear();
-        waitForElementTobeVisible("text=Hello, RCG");
+        waitForElementTobeExist(userName);//"text=Hello, RCG");
         return new AbekaHomeScreen();
     }
 

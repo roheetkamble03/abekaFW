@@ -3,7 +3,9 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
+import constants.CommonConstants;
 import elementConstants.Dashboard;
+import elementConstants.Enrollments;
 import org.testng.Assert;
 
 import java.util.ArrayList;
@@ -101,7 +103,7 @@ public class DashboardScreen extends GenericAction {
     public void validateDashboardMyStudentLink() {
         if (isElementExists(Dashboard.MY_STUDENTS)) {
             bringElementIntoView(Dashboard.MY_STUDENTS);
-            bringElementIntoView(getElement(Dashboard.studentLink)).click();
+            navigateToMyStudentProfile(Dashboard.STUDENT_NAME);
             softAssertions.assertThat(getPageTitle().equals(Dashboard.STUDENT_TAB_TITLE))
                     .as("Actual page title [" + getDriver().getTitle() + "] is not equal to expected page title [" + Dashboard.STUDENT_TAB_TITLE + "]").isTrue();
             softAssertions.assertThat(getCurrentURL().equals(afterLoginURL + Dashboard.STUDENT_TAB_URL))
@@ -119,5 +121,11 @@ public class DashboardScreen extends GenericAction {
             log(Dashboard.widgetTourPopupClose + " is not loaded.");
         }
         return this;
+    }
+
+    public StudentsScreen navigateToMyStudentProfile(String studentName){
+        bringElementIntoView(getElement(String.format(Dashboard.studentLink, studentName))).click();
+        waitForPageTobLoaded();
+        return new StudentsScreen();
     }
 }

@@ -1,0 +1,140 @@
+<html><head>
+        <title>The operation has timed out</title>
+        <meta name="viewport" content="width=device-width">
+        <style>
+         body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} 
+         p {font-family:"Verdana";font-weight:normal;color:black;margin-top: -5px}
+         b {font-family:"Verdana";font-weight:bold;color:black;margin-top: -5px}
+         H1 { font-family:"Verdana";font-weight:normal;font-size:18pt;color:red }
+         H2 { font-family:"Verdana";font-weight:normal;font-size:14pt;color:maroon }
+         pre {font-family:"Consolas","Lucida Console",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}
+         .marker {font-weight: bold; color: black;text-decoration: none;}
+         .version {color: gray;}
+         .error {margin-bottom: 10px;}
+         .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:pointer; }
+         @media screen and (max-width: 639px) {
+          pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }
+         }
+         @media screen and (max-width: 479px) {
+          pre { width: 280px; }
+         }
+        </style>
+    </head>
+
+    <body bgcolor="white">
+
+            <span><h1>Server Error in '/' Application.<hr width="100%" size="1" color="silver"></h1>
+
+            <h2> <i>The operation has timed out</i> </h2></span>
+
+            <font face="Arial, Helvetica, Geneva, SunSans-Regular, sans-serif ">
+
+            <b> Description: </b>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+            <br><br>
+
+            <b> Exception Details: </b>System.Net.WebException: The operation has timed out<br><br>
+
+            <b>Source Error:</b> <br><br>
+
+            <table width="100%" bgcolor="#ffffcc">
+               <tbody><tr>
+                  <td>
+                      <code><pre>
+Line 22562:        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+Line 22563:        public string LoginUser(string userName, string password) {
+<font color="red">Line 22564:            object[] results = this.Invoke("LoginUser", new object[] {
+</font>Line 22565:                        userName,
+Line 22566:                        password});</pre>                      </code>
+
+                  </td>
+               </tr>
+            </tbody></table>
+
+            <br>
+
+            <b> Source File: </b> C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\025656c4\80fb7249\App_WebReferences.swp_2zcl.0.cs<b> &nbsp;&nbsp; Line: </b> 22564
+            <br><br>
+
+            <b>Stack Trace:</b> <br><br>
+
+            <table width="100%" bgcolor="#ffffcc">
+               <tbody><tr>
+                  <td>
+                      <code><pre>
+[WebException: The operation has timed out]
+   System.Web.Services.Protocols.WebClientProtocol.GetWebResponse(WebRequest request) +371
+   System.Web.Services.Protocols.HttpWebClientProtocol.GetWebResponse(WebRequest request) +11
+   System.Web.Services.Protocols.SoapHttpClientProtocol.Invoke(String methodName, Object[] parameters) +220
+   nav.WebWrappers.LoginUser(String userName, String password) in C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\025656c4\80fb7249\App_WebReferences.swp_2zcl.0.cs:22564
+   AbekaCustomer.&lt;IsCorrectPassword&gt;b__14_0() in E:\WebSiteFolders\sso.abeka.com\App_Code\AbekaCustomer.cs:77
+   &lt;&gt;c__DisplayClass16_0`1.&lt;TryDefault&gt;b__0() in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:64
+   WebServiceAttempter.Try(Int32 maxAttempts) in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:135
+
+[WebException: Webwrapper.LoginUser :: rcg@pcci.edu :: The operation has timed out :: 
+   [1 :: 100003ms :: The operation has timed out] 
+   [2 :: 100006ms :: The operation has timed out] 
+   [3 :: 100019ms :: The operation has timed out] 
+   [4 :: 100018ms :: The operation has timed out] 
+   [5 :: 100016ms :: The operation has timed out] ]
+   WebServiceAttempter.Try(Int32 maxAttempts) in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:191
+   WebServiceAttempter.Try() in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:113
+   WebServiceAttempter.TryDefault(Func`1 function, String functionNameForDebug) in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:66
+   AbekaCustomer.IsCorrectPassword() in E:\WebSiteFolders\sso.abeka.com\App_Code\AbekaCustomer.cs:76
+   LoginHelper.AttemptCustomerLogin(String username, String password, PccDirectory directory) in E:\WebSiteFolders\sso.abeka.com\App_Code\Helpers\LoginHelper.cs:72
+   Login.lbnLogin_Click(Object sender, EventArgs e) in E:\WebSiteFolders\sso.abeka.com\Login.aspx.cs:159
+   System.Web.UI.WebControls.LinkButton.OnClick(EventArgs e) +139
+   System.Web.UI.WebControls.LinkButton.RaisePostBackEvent(String eventArgument) +150
+   System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +1890
+</pre>                      </code>
+
+                  </td>
+               </tr>
+            </tbody></table>
+
+            <br>
+
+            <hr width="100%" size="1" color="silver">
+
+            <b>Version Information:</b>&nbsp;Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.8.4330.0
+
+            </font>
+
+    
+
+<!-- 
+[WebException]: The operation has timed out
+   at System.Web.Services.Protocols.WebClientProtocol.GetWebResponse(WebRequest request)
+   at System.Web.Services.Protocols.HttpWebClientProtocol.GetWebResponse(WebRequest request)
+   at System.Web.Services.Protocols.SoapHttpClientProtocol.Invoke(String methodName, Object[] parameters)
+   at nav.WebWrappers.LoginUser(String userName, String password) in C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\025656c4\80fb7249\App_WebReferences.swp_2zcl.0.cs:line 22564
+   at AbekaCustomer.<IsCorrectPassword>b__14_0() in E:\WebSiteFolders\sso.abeka.com\App_Code\AbekaCustomer.cs:line 77
+   at WebServiceAttempter.<>c__DisplayClass16_0`1.<TryDefault>b__0() in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:line 64
+   at WebServiceAttempter.Try(Int32 maxAttempts) in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:line 135
+[WebException]: Webwrapper.LoginUser :: rcg@pcci.edu :: The operation has timed out :: 
+   [1 :: 100003ms :: The operation has timed out] 
+   [2 :: 100006ms :: The operation has timed out] 
+   [3 :: 100019ms :: The operation has timed out] 
+   [4 :: 100018ms :: The operation has timed out] 
+   [5 :: 100016ms :: The operation has timed out] 
+   at WebServiceAttempter.Try(Int32 maxAttempts) in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:line 191
+   at WebServiceAttempter.Try() in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:line 113
+   at WebServiceAttempter.TryDefault[T](Func`1 function, String functionNameForDebug) in E:\WebSiteFolders\sso.abeka.com\App_Code\WebServiceAttempter.cs:line 66
+   at AbekaCustomer.IsCorrectPassword() in E:\WebSiteFolders\sso.abeka.com\App_Code\AbekaCustomer.cs:line 76
+   at LoginHelper.AttemptCustomerLogin(String username, String password, PccDirectory directory) in E:\WebSiteFolders\sso.abeka.com\App_Code\Helpers\LoginHelper.cs:line 72
+   at Login.lbnLogin_Click(Object sender, EventArgs e) in E:\WebSiteFolders\sso.abeka.com\Login.aspx.cs:line 159
+   at System.Web.UI.WebControls.LinkButton.OnClick(EventArgs e)
+   at System.Web.UI.WebControls.LinkButton.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+[HttpUnhandledException]: Exception of type &#39;System.Web.HttpUnhandledException&#39; was thrown.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.login_aspx.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--><!-- 
+This error page might contain sensitive information because ASP.NET is configured to show verbose error messages using &lt;customErrors mode="Off"/&gt;. Consider using &lt;customErrors mode="On"/&gt; or &lt;customErrors mode="RemoteOnly"/&gt; in production environments.--></body></html>

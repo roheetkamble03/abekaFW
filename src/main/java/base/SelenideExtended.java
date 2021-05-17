@@ -35,10 +35,21 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void click(String identifier){
         waitForElementTobeExist(identifier);
         try {
+            bringElementIntoView(identifier);
             getElement(identifier).click();
         }catch (Throwable e){
             log("Clicked by java script");
             clickByJavaScript(identifier);
+        }
+    }
+
+    public void click(SelenideElement element){
+        waitForElementTobeExist(element);
+        try {
+            element.click();
+        }catch (Throwable e){
+            log("Clicked by java script");
+            clickByJavaScript(element);
         }
     }
 
@@ -114,7 +125,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public String getElementText(String identifier){
-        return getElementText(getElement(identifier));
+        try{
+            return getElementText(getElement(identifier));
+        }catch (Throwable e){
+            return "";
+        }
     }
 
     public String getElementValue(SelenideElement element){
@@ -227,6 +242,15 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void clickByJavaScript(String identifier) {
             JavascriptExecutor executor = (JavascriptExecutor) getDriver();
             executor.executeScript("arguments[0].click();", getElement(identifier));
+    }
+
+    /**
+     *
+     * @param element element identifier
+     */
+    public void clickByJavaScript(SelenideElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].click();", element);
     }
 
     /**
@@ -508,6 +532,14 @@ public abstract class SelenideExtended extends DatabaseExtended {
         getElements(identifier).get(0).shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
     }
 
+    /**
+     *
+     * @param element
+     */
+    public void waitForElementTobeExist(SelenideElement element) {
+        element.shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
+    }
+
     public void waitForElementTobeEnabled(String identifier){
         waitForElementTobeVisible(identifier);
         getElements(identifier).get(0).shouldBe(Condition.enabled,Duration.ofSeconds(elementLoadWait));
@@ -579,7 +611,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public SelenideElement getChildElement(SelenideElement parentElement, String childIdentifier){
-        return $(parentElement.findElement(getByClause(childIdentifier)));
+        try{
+            return $(parentElement.findElement(getByClause(childIdentifier)));
+        }catch (Throwable e){
+            return null;
+        }
     }
 
     @SneakyThrows
@@ -654,7 +690,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
             wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
-        }catch (TimeoutException e){
+        }catch (TimeoutException|UnhandledAlertException e){
             log("Page load time out error :"+e.getMessage());
         }
     }
