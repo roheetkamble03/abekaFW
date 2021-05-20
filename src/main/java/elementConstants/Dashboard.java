@@ -21,6 +21,7 @@ public @interface Dashboard {
     String STUDENT_TAB_TITLE = "Abeka | My Students";
     String STUDENT_TAB_URL = URL+"Students/";
     String STUDENT_NAME = "Syed";
+    String FULL_CALENDAR_VIEW = "View Full Calendar";
 
     /**
      * Element xpath

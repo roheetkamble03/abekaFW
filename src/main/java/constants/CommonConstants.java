@@ -14,10 +14,22 @@ public @interface CommonConstants {
     String LINK_TEXT = "linkText=";
     String MINUS = "MINUS";
     String PLUS = "PLUS";
+    String AUTOMATION_TEST = "Automation Test";
+    String LESSON_COMPLETED_CLASS_VALUE = "lessonComplete";
+
     String DB_CONNECTION_URL = "DBConnectionUrl";
     String DB_USER_NAME = "DBUserName";
     String DB_USER_PASSWORD = "DBPassword";
     String IS_CONNECT_TO_DB = "IsConnectToDB";
+    String PORT = "Port";
+    String DRIVER_TYPE = "DriverType";
+    String ADHost = "ADHost";
+    String ADSid = "ADSid";
+    String SDHost = "SDHost";
+    String SDService = "SDService";
+    String AD_DATA_BASE = "AD";
+    String SD_DATA_BASE = "SD";
+
     String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and @class='close' and normalize-space(text())='×']";
-    String AUTOMATION_TEST = "Automation Test";
+    String dropDownOption = "xpath=./ul[@class='dropdown']/descendant::span[normalize-space(text())='%s']";
 }

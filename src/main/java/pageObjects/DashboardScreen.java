@@ -3,6 +3,7 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
+import constants.Calendar;
 import constants.CommonConstants;
 import elementConstants.Dashboard;
 import elementConstants.Enrollments;
@@ -116,8 +117,8 @@ public class DashboardScreen extends GenericAction {
     public DashboardScreen waitAndCloseWidgetTourPopup(){
         try {
             waitForElementTobeExist(Dashboard.widgetTourPopupClose);
-            getElement(Dashboard.widgetTourPopupClose).click();
-        }catch (NoSuchElementException e){
+            click(Dashboard.widgetTourPopupClose);
+        }catch (Throwable e){
             log(Dashboard.widgetTourPopupClose + " is not loaded.");
         }
         return this;
@@ -127,5 +128,11 @@ public class DashboardScreen extends GenericAction {
         bringElementIntoView(getElement(String.format(Dashboard.studentLink, studentName))).click();
         waitForPageTobLoaded();
         return new StudentsScreen();
+    }
+
+    public CalendarScreen navigateToFullCalendarView(){
+        click(Dashboard.FULL_CALENDAR_VIEW);
+        waitForPageTobLoaded();
+        return new CalendarScreen();
     }
 }

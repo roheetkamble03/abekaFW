@@ -1,51 +1,29 @@
 package base;
 
-import base.BaseClass;
-import base.GenericAction;
 import constants.CommonConstants;
-import constants.StudentToDoList;
-import lombok.Data;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import oracle.jdbc.pool.OracleDataSource;
-import org.apache.poi.ss.formula.functions.T;
 
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class DatabaseExtended extends BaseClass {
 
-    Statement statement;
     ResultSet resultSet;
     public static Connection connection;
-    public static String dbUserName;
-    public static String dbUserPassword;
-    public static String dbConnectionURL;
 
     /**
      * Connecting to Data base
      * @param
      * @return
      */
-    public Connection getDBConnection(){
+    private Connection getDBConnection(String dataBase){
         boolean dbNotConnected = true;
         int retryCount = 0;
-        dbConnectionURL = properties.getProperty(CommonConstants.DB_CONNECTION_URL);
-        dbUserName = properties.getProperty(CommonConstants.DB_USER_NAME);
-        dbUserPassword = properties.getProperty(CommonConstants.DB_USER_PASSWORD);
         while (dbNotConnected && retryCount < 3 && Boolean.parseBoolean(properties.getProperty(CommonConstants.IS_CONNECT_TO_DB))){
             try {
-                OracleDataSource dataSource = new OracleDataSource();
-                dataSource.setServerName("ad.oracle.pcci.edu");
-                dataSource.setUser(dbUserName);
-                dataSource.setPassword(dbUserPassword);
-                dataSource.setDatabaseName("AD");
-                dataSource.setPortNumber(1521);
-                dataSource.setDriverType("thin");
+                OracleDataSource dataSource = getOracleDataSource(dataBase);
                 dbNotConnected = false;
                 retryCount++;
                 return dataSource.getConnection();
@@ -57,8 +35,33 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
-    public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery){
-        connection = getDBConnection();
+    private OracleDataSource getOracleDataSource(String dataBase){
+        OracleDataSource dataSource = new OracleDataSource();
+        dataSource.setUser(properties.getProperty(CommonConstants.DB_USER_NAME));
+        dataSource.setPassword(properties.getProperty(CommonConstants.DB_USER_PASSWORD));
+        switch (dataBase){
+            case CommonConstants.AD_DATA_BASE:
+                dataSource.setServerName(properties.getProperty(CommonConstants.ADHost));
+                dataSource.setDatabaseName(CommonConstants.AD_DATA_BASE);
+                dataSource.setPortNumber(Integer.parseInt(properties.getProperty(CommonConstants.PORT)));
+                dataSource.setDriverType(properties.getProperty(CommonConstants.DRIVER_TYPE));
+                break;
+            case CommonConstants.SD_DATA_BASE:
+                dataSource.setServerName(properties.getProperty(CommonConstants.SDHost));
+                dataSource.setDatabaseName(CommonConstants.SD_DATA_BASE);
+                dataSource.setServiceName(properties.getProperty(CommonConstants.SDService));
+                dataSource.setPortNumber(Integer.parseInt(properties.getProperty(CommonConstants.PORT)));
+                dataSource.setDriverType(properties.getProperty(CommonConstants.DRIVER_TYPE));
+                break;
+            default:
+                new Throwable("Wrong data base name provided");
+        }
+        return dataSource;
+    }
+
+    @SneakyThrows
+    public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery, String dataBase){
+        connection = getDBConnection(dataBase);
         resultSet = connection.createStatement().executeQuery(selectQuery);
         ArrayList<HashMap<String,String>> resultSetRowList = convertResultSetToArrayList();
         connection.close();
@@ -66,7 +69,7 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
-    public ArrayList<HashMap<String,String>> convertResultSetToArrayList(){
+    private ArrayList<HashMap<String,String>> convertResultSetToArrayList(){
         //Logic yet to implement
         ArrayList<HashMap<String,String>> resultSetList = new ArrayList<>();
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -91,7 +94,7 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
-    public void executeStoredProcedure(String spQuery){
+    private void executeStoredProcedure(String spQuery){
         CallableStatement callableStatement = connection.prepareCall("{call procedure_name(?, ?, ?)}");
         resultSet = callableStatement.executeQuery();
 

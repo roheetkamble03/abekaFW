@@ -1,30 +1,40 @@
 package base;
 
+import com.google.common.base.CaseFormat;
+import constants.Calendar;
 import constants.CommonConstants;
+import constants.TableColumn;
 import constants.DataBaseQueryConstant;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
 import elementConstants.Students;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import pageObjects.AbekaHomeScreen;
 
 import java.text.NumberFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
-import static constants.CommonConstants.MINUS;
-import static constants.CommonConstants.PLUS;
+import static constants.CommonConstants.*;
 import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
 
 public abstract class GenericAction extends SelenideExtended{
 
+    @Getter@Setter
+    public static HashMap<String,String> userAccountDetails = new HashMap<>();
+
+    @Parameters({"browser", "platform"})
     @BeforeMethod
     protected void setUp(String browserName, String platform) {
         super.setUp(browserName,platform);
-        //Allure report writing will be done letter
+        //Allure report writing will be done later
     }
 
     @AfterMethod
@@ -113,8 +123,59 @@ public abstract class GenericAction extends SelenideExtended{
         }
     }
 
-    public String getStudentIdFromDB(String studentName){
-       // return executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT).get(0).get(Students.STUDENT_ID_TBL_COL_NAME);
-        return "";
+    public void setStudentAccountDetails(String studentName){
+        HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
+                .replaceAll(TableColumn.STUDENT_ID,studentName),SD_DATA_BASE).get(0);
+        userAccountDetails.put(TableColumn.LOGIN_ID,userLoginDetails.get(TableColumn.LOGIN_ID));
+        userAccountDetails.put(TableColumn.STUDENT_ID,userLoginDetails.get(TableColumn.STUDENT_ID));
+        userAccountDetails.put(TableColumn.ACCOUNT_NUMBER,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER));
+    }
+
+    /**
+     * Will group by table data on the basis of one column
+     * @param groupByColumn table data will be grouped on the basis of this column
+     * @param resultSetMapList data to be processed
+     * @param dataColumnOrMergedColumnData If we pass multiple column, data will be merged of all columns
+     * @param delimiter merged data will be separated by this
+     * @return
+     */
+    public Map<String, TreeSet<String>> getGroupedDataAccordingToColumn(String groupByColumn, ArrayList<HashMap<String, String>> resultSetMapList, ArrayList<String> dataColumnOrMergedColumnData, String delimiter) {
+        Map<String, TreeSet<String>> groupByMap = new TreeMap<>();
+        TreeSet<String> columnDataSet = new TreeSet<>();
+        List<String> columnReadDataList = new ArrayList<>();
+        String oldColumnData;
+
+        for(int i=0;i<resultSetMapList.size();i++){
+            oldColumnData = resultSetMapList.get(i).get(groupByColumn);
+            for(String column:dataColumnOrMergedColumnData) {
+                columnReadDataList.add(resultSetMapList.get(i).get(column));
+            }
+            columnDataSet.add(StringUtils.join(columnReadDataList,delimiter));
+            columnReadDataList = new ArrayList<>();
+            if(i+1!=resultSetMapList.size()){
+                if (!oldColumnData.equals(resultSetMapList.get(i+1).get(groupByColumn))) {
+                    groupByMap.put(oldColumnData, columnDataSet);
+                    columnDataSet = new TreeSet<>();
+                }
+            }else {
+
+                groupByMap.put(oldColumnData, columnDataSet);
+            }
+        }
+        return groupByMap;
+    }
+
+    public String getFormattedDate(String date, String actualDateFormat, String expectedDateFormat){
+        DateTimeFormatter actualFormat = DateTimeFormatter.ofPattern(actualDateFormat);
+        DateTimeFormatter expectedFormat = DateTimeFormatter.ofPattern(expectedDateFormat);
+        LocalDate localDate = LocalDate.parse(date,actualFormat);
+        if(expectedDateFormat.equals(Calendar.weekDayMonthDayOfMonth)){
+            String weekDay = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,DayOfWeek.of(localDate.getDayOfWeek().getValue()).name());
+            String month = localDate.getMonth().toString();
+            String dayOfMonth = Integer.toString(localDate.getDayOfMonth());
+            return weekDay+", "+month+" "+dayOfMonth;
+        }else {
+            return localDate.format(expectedFormat);
+        }
     }
 }

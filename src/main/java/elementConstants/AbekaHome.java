@@ -7,6 +7,7 @@ public @interface AbekaHome {
      */
     String LOG_OUT = "Log out";
     String DASHBOARD = "Dashboard";
+    String DIGITAL_ASSESSMENTS = "Digital Assessments";
 
     /**
      * Element xpath
@@ -20,4 +21,6 @@ public @interface AbekaHome {
     String abekaBGProcessLogo = "xpath=//i[@class='abekaLogoLoading']";
     String accountGreeting = "xpath=//*[@id='AccountGreeting']/a";
     String account = "text=Account";
+    String HOME = "Home";
+    String CALENDAR = "Calendar";
 }

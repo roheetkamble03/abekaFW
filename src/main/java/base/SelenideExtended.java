@@ -3,8 +3,10 @@ package base;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
+import constants.CommonConstants;
 import constants.EnumUtil;
 import elementConstants.AbekaHome;
+import elementConstants.Students;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -30,6 +32,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
     String textContainsXpath = "(//*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|//text()[contains(normalize-space(),'%s')])[1]";
     public static String childTextXpath = "xpath=./*[normalize-space(text())='%s' or normalize-space(@value)='%s']|./text()[normalize-space()='%s']";
     protected static String childTextContainsXpath = "xpath./*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|./text()[contains(normalize-space(),'%s')]";
+    SelenideElement element;
+    public static String tempXpath;
+    public static String tempText;
 
     public void click(String identifier){
         waitForElementTobeExist(identifier);
@@ -74,6 +79,15 @@ public abstract class SelenideExtended extends DatabaseExtended {
             getElement(identifier);
             return true;
         }catch (ElementNotFound e){
+            return false;
+        }
+    }
+
+    public boolean isChildElementExists(SelenideElement parentElement, String childIdentifier){
+        try{
+            $(parentElement.findElement(getByClause(childIdentifier)));
+            return true;
+        }catch (Throwable e){
             return false;
         }
     }
@@ -313,10 +327,14 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public SelenideElement bringElementIntoView(SelenideElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-        executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", element);
-        Actions actions = new Actions(getDriver());
-        actions.moveToElement(element).build().perform();
+        try {
+            JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+            executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", element);
+            Actions actions = new Actions(getDriver());
+            actions.moveToElement(element).build().perform();
+        }catch (Throwable t){
+            new Throwable("Element not found "+element.toString());
+        }
         return element;
     }
 
@@ -606,7 +624,8 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     @SneakyThrows
     public SelenideElement getElement(String identifier) {
-        return $(getByClause(identifier));
+        element = $(getByClause(identifier));
+        return element;
     }
 
     public SelenideElement getChildElement(SelenideElement parentElement, String childIdentifier){
@@ -691,6 +710,20 @@ public abstract class SelenideExtended extends DatabaseExtended {
             wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
         }catch (TimeoutException|UnhandledAlertException e){
             log("Page load time out error :"+e.getMessage());
+        }
+    }
+
+    public void selectValueFromDropDown(String dropDownIdentifier, String value){
+        bringElementIntoView(dropDownIdentifier).click();
+        click(getChildElement(getElement(dropDownIdentifier),String.format(CommonConstants.dropDownOption,value)));
+    }
+
+    public String getClassAttributeValue(SelenideElement element){
+        try{
+            return element.getAttribute("class").trim();
+        }catch (Throwable t){
+            softAssertions.fail("Class attribute is not present");
+            return "";
         }
     }
 }

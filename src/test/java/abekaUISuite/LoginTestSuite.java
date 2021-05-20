@@ -20,12 +20,6 @@ public class LoginTestSuite extends GenericAction {
     DashboardScreen dashboardScreen;
     EnrollmentsScreen enrollmentsScreen;
 
-    @Parameters({"browser", "platform"})
-    @BeforeMethod
-    public void setUp(String browserName, String platform) {
-        super.setUp(browserName, platform);
-    }
-
     @Test(testName = "Test-1", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchase(String userId, String password, String userName) {
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();

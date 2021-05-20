@@ -1,5 +1,6 @@
 package elementConstants;
 
+import com.codeborne.selenide.SelenideElement;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STXstringImpl;
 
 public @interface Students {
@@ -23,11 +24,10 @@ public @interface Students {
     String FORGOT_PASSWORD_MESSAGE = "Forgot your password? Ask your parent to reset it for you.";
     String SELF = "Self";
     String TRANSCRIPT_ALERT_TEXT = "Transcript Request submitted and being processed";
-    String ASSESSMENT_TBL_COL_NAME = "ASSESSMENT";
-    String GRADE_TBL_COL_NAME = "GRADE";
-    String STUDENT_ID_TBL_COL_NAME = "STUDENT_ID";
     String ROW_COUNT = "rowCount";
     String MY_LESSONS_TODAY = "My Lessons Today";
+    String YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON = "You have not completed the previous lesson.";
+
 
     /**
      * Element xpath
@@ -65,4 +65,12 @@ public @interface Students {
     String startWatchingYourLessonsLin = "xpath=./descendant::a[@href='/Video2/streaming/']";
     String lessonsToday = "id=dvLessonsToday";
     String myLessonsTodayVideoLink = "xpath=//ul[@id='ulDailyLessons']/descendant::h3[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
+    String videoLibrarySection = "id=VideoLibrary";
+    String videoLibrarySubjectDropDown = "id=subjectsDropDown";
+    String videoLibraryVideoLink = "xpath=./descendant::li[@onclick and @data-evalue='%s' and @data-sub='%s' and @data-lesson='%s']";
+    String nextToNextVideoLink = "xpath=./descendant::li[@class='lessonComplete'][last()]/following-sibling::li[position()=2]";
+    String lessonLockedCloseButton = String.format("xpath=./descendant::div[@id='lessonIncomplete']/descendant::p[normalize-space(text())='%s']/parent::div/parent::div/following-sibling::div/descendant::button",YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON);
+    String videoPlayer = "id=player";
+    String playingVideoTitle = "xpath=./descendant::span[@id='lblTitle' and normalize-space(text())='%s']";
+    String ASSESSMENT_TEST_LOCKED = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/span[@id='lblLockedIcon' and @data-original-title]";
 }
