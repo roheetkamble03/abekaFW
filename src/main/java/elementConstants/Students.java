@@ -24,7 +24,6 @@ public @interface Students {
     String FORGOT_PASSWORD_MESSAGE = "Forgot your password? Ask your parent to reset it for you.";
     String SELF = "Self";
     String TRANSCRIPT_ALERT_TEXT = "Transcript Request submitted and being processed";
-    String ROW_COUNT = "rowCount";
     String MY_LESSONS_TODAY = "My Lessons Today";
     String YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON = "You have not completed the previous lesson.";
 

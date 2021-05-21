@@ -1,13 +1,11 @@
 package base;
 
 import com.google.common.base.CaseFormat;
-import constants.Calendar;
 import constants.CommonConstants;
 import constants.TableColumn;
 import constants.DataBaseQueryConstant;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
-import elementConstants.Students;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
@@ -17,11 +15,11 @@ import org.testng.annotations.Parameters;
 import pageObjects.AbekaHomeScreen;
 
 import java.text.NumberFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
 import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
 
@@ -125,10 +123,10 @@ public abstract class GenericAction extends SelenideExtended{
 
     public void setStudentAccountDetails(String studentName){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
-                .replaceAll(TableColumn.STUDENT_ID,studentName),SD_DATA_BASE).get(0);
+                .replaceAll(TableColumn.STUDENT_ID_DATA,studentName),SD_DATA_BASE).get(0);
         userAccountDetails.put(TableColumn.LOGIN_ID,userLoginDetails.get(TableColumn.LOGIN_ID));
-        userAccountDetails.put(TableColumn.STUDENT_ID,userLoginDetails.get(TableColumn.STUDENT_ID));
-        userAccountDetails.put(TableColumn.ACCOUNT_NUMBER,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER));
+        userAccountDetails.put(TableColumn.STUDENT_ID_DATA,userLoginDetails.get(TableColumn.STUDENT_ID_DATA));
+        userAccountDetails.put(TableColumn.ACCOUNT_NUMBER_DATA,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER_DATA));
     }
 
     /**
@@ -139,27 +137,30 @@ public abstract class GenericAction extends SelenideExtended{
      * @param delimiter merged data will be separated by this
      * @return
      */
-    public Map<String, TreeSet<String>> getGroupedDataAccordingToColumn(String groupByColumn, ArrayList<HashMap<String, String>> resultSetMapList, ArrayList<String> dataColumnOrMergedColumnData, String delimiter) {
-        Map<String, TreeSet<String>> groupByMap = new TreeMap<>();
-        TreeSet<String> columnDataSet = new TreeSet<>();
+    public Map<String, ArrayList<String>> getGroupedDataAccordingToColumn(String groupByColumn, ArrayList<HashMap<String, String>> resultSetMapList, ArrayList<String> dataColumnOrMergedColumnData, String delimiter) {
+        Map<String, ArrayList<String>> groupByMap = new TreeMap<>();
+        ArrayList<String> columnDataList = new ArrayList<>();
         List<String> columnReadDataList = new ArrayList<>();
         String oldColumnData;
 
         for(int i=0;i<resultSetMapList.size();i++){
             oldColumnData = resultSetMapList.get(i).get(groupByColumn);
             for(String column:dataColumnOrMergedColumnData) {
-                columnReadDataList.add(resultSetMapList.get(i).get(column));
+                try {
+                    columnReadDataList.add(resultSetMapList.get(i).get(column).trim());
+                }catch (NullPointerException e){
+                    columnReadDataList.add("");
+                }
             }
-            columnDataSet.add(StringUtils.join(columnReadDataList,delimiter));
+            columnDataList.add(StringUtils.join(columnReadDataList,delimiter));
             columnReadDataList = new ArrayList<>();
-            if(i+1!=resultSetMapList.size()){
+            if(i+1 != resultSetMapList.size()){
                 if (!oldColumnData.equals(resultSetMapList.get(i+1).get(groupByColumn))) {
-                    groupByMap.put(oldColumnData, columnDataSet);
-                    columnDataSet = new TreeSet<>();
+                    groupByMap.put(oldColumnData, columnDataList);
+                    columnDataList = new ArrayList<>();
                 }
             }else {
-
-                groupByMap.put(oldColumnData, columnDataSet);
+                groupByMap.put(oldColumnData, columnDataList);
             }
         }
         return groupByMap;
@@ -167,15 +168,17 @@ public abstract class GenericAction extends SelenideExtended{
 
     public String getFormattedDate(String date, String actualDateFormat, String expectedDateFormat){
         DateTimeFormatter actualFormat = DateTimeFormatter.ofPattern(actualDateFormat);
-        DateTimeFormatter expectedFormat = DateTimeFormatter.ofPattern(expectedDateFormat);
         LocalDate localDate = LocalDate.parse(date,actualFormat);
-        if(expectedDateFormat.equals(Calendar.weekDayMonthDayOfMonth)){
-            String weekDay = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,DayOfWeek.of(localDate.getDayOfWeek().getValue()).name());
-            String month = localDate.getMonth().toString();
-            String dayOfMonth = Integer.toString(localDate.getDayOfMonth());
-            return weekDay+", "+month+" "+dayOfMonth;
-        }else {
-            return localDate.format(expectedFormat);
+
+        switch (expectedDateFormat){
+            case weekDayMonthDayOfMonth:
+                String weekDay = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getDayOfWeek().toString());
+                String month = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getMonth().name());
+                String dayOfMonth = Integer.toString(localDate.getDayOfMonth());
+                return weekDay+", "+month+" "+dayOfMonth;
+            default:
+                DateTimeFormatter expectedFormat = DateTimeFormatter.ofPattern(expectedDateFormat);
+                return localDate.format(expectedFormat);
         }
     }
 }

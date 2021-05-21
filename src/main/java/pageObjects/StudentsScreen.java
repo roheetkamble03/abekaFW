@@ -97,13 +97,13 @@ public class StudentsScreen extends GenericAction {
                     .as("My to do list header is not equal to "+ Students.MY_TO_DO_LIST).isTrue();
 
             String toDoListName;
-            String studentID = userAccountDetails.get(TableColumn.STUDENT_ID);
-            String accountNumber = userAccountDetails.get(TableColumn.ACCOUNT_NUMBER);;
+            String studentID = userAccountDetails.get(TableColumn.STUDENT_ID_DATA);
+            String accountNumber = userAccountDetails.get(TableColumn.ACCOUNT_NUMBER_DATA);;
             String startDate = "";
             String endDate = "";
             ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_AD_DB
-                    .replaceAll(TableColumn.STUDENT_ID,studentID).replaceAll(TableColumn.ACCOUNT_NUMBER,accountNumber)
-                    .replaceAll(TableColumn.START_DATE,startDate).replaceAll(TableColumn.END_DATE,endDate), AD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA,studentID).replaceAll(TableColumn.ACCOUNT_NUMBER_DATA,accountNumber)
+                    .replaceAll(TableColumn.START_DATE_DATA,startDate).replaceAll(TableColumn.END_DATE_DATA,endDate), AD_DATA_BASE);
             for(HashMap<String,String> row:myLessonsToday) {
                 toDoListName = "read data from row";
                 softAssertions.assertThat(isElementExists(String.format(Students.ASSESSMENT_TEST_LOCKED, toDoListName)))
@@ -185,10 +185,13 @@ public class StudentsScreen extends GenericAction {
         if(isElementExists(Students.myRecentGradeSection)) {
             String assignment;
             String grade;
+            String studentID = "427725";//fetch from DB
             bringElementIntoView(getElements(Students.myRecentGradeRows).get(getElements(Students.myRecentGradeRows).size()-1));
             int myRecentGradeRowCount = getElements(Students.myRecentGradeRows).size() - 1;
             //add getStudentIdFromDB(studentName) to string.format
-            ArrayList<HashMap<String, String>> myGrades = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT_AD_DB.replaceAll(Students.ROW_COUNT,Integer.toString(myRecentGradeRowCount)), AD_DATA_BASE);
+            ArrayList<HashMap<String, String>> myGrades = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT_AD_DB
+                    .replaceAll(TableColumn.ROW_COUNT_DATA,Integer.toString(myRecentGradeRowCount)
+                    .replaceAll(TableColumn.STUDENT_ID_DATA,studentID)), AD_DATA_BASE);
 
             for (HashMap<String, String> rowData : myGrades) {
                 assignment = rowData.get(TableColumn.ASSESSMENT);
@@ -243,9 +246,9 @@ public class StudentsScreen extends GenericAction {
     public StudentsScreen validateDigitalAssessmentsAreLockedOrNot(String studentName, boolean isLockedValidation){
         if (isElementExists(Students.lessonsToday)) {
             String subject;
-            String studentID = userAccountDetails.get(TableColumn.STUDENT_ID);;
+            String studentID = userAccountDetails.get(TableColumn.STUDENT_ID_DATA);;
             ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.AVAILABLE_TEST_QUIZZES_AD_DB
-                    .replaceAll(TableColumn.STUDENT_ID,studentID), AD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA,studentID), AD_DATA_BASE);
             for(HashMap<String,String> row:myLessonsToday) {
                 subject = "run query on DB and add column name";
                 if(isLockedValidation) {
@@ -270,9 +273,9 @@ public class StudentsScreen extends GenericAction {
                 String myLessonsVideoLink;
                 String subject;
                 String lesson;
-                String studentID = userAccountDetails.get(TableColumn.STUDENT_ID);
+                String studentID = userAccountDetails.get(TableColumn.STUDENT_ID_DATA);
                 ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
-                        .replaceAll(TableColumn.STUDENT_ID,studentID), CommonConstants.SD_DATA_BASE);
+                        .replaceAll(TableColumn.STUDENT_ID_DATA,studentID), CommonConstants.SD_DATA_BASE);
                 for(HashMap<String,String> row:myLessonsToday) {
                     subject = "run query on DB and add column name";
                     lesson = "run query on DB and add column name";

@@ -15,7 +15,7 @@
             -->
             <class name="abekaUISuite.ParentTestCaseSuite">
                 <methods>
-                    <include name="testModifyStudentAssessmentDetailsOnCalendar"/>
+                    <include name="testValidateStudentAssessmentDetailsOnCalendar"/>
                 </methods>
             </class>
         </classes>

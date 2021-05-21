@@ -23,13 +23,6 @@ public class ParentTestCaseSuite extends GenericAction {
 
     @Test(testName = "Test-5", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAssessmentDetailsOnCalendar(String userId, String password, String userName){
-        loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().navigateToMyStudentProfile(Dashboard.STUDENT_NAME);
-        //need to check navigation part
-    }
-
-    @Test(testName = "Test-6", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void testModifyStudentAssessmentDetailsOnCalendar(String userId, String password, String userName){
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
         CalendarScreen calendarScreen = new CalendarScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
@@ -37,7 +30,14 @@ public class ParentTestCaseSuite extends GenericAction {
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.navigateToFullCalendarView();
         dashboardScreen.waitAndCloseWidgetTourPopup();
-        calendarScreen.selectStudent(Dashboard.STUDENT_NAME).validateStudentCalendarEvents(false);
+        calendarScreen.validateNoStudentIsSelected().selectStudent(Dashboard.STUDENT_NAME).validateStudentCalendarEvents(false).logoutFromAbeka();
+        //need to check navigation part
+    }
+
+    @Test(testName = "Test-6", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testModifyStudentAssessmentDetailsOnCalendar(String userId, String password, String userName){
+        loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        dashboardScreen.waitAndCloseWidgetTourPopup().navigateToMyStudentProfile(Dashboard.STUDENT_NAME);
         //need to check navigation part
     }
 
