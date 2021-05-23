@@ -13,6 +13,7 @@ import java.util.*;
 
 import static constants.Calendar.*;
 import static constants.CommonConstants.AD_DATA_BASE;
+import static constants.TableColumn.*;
 
 public class CalendarScreen extends GenericAction {
 
@@ -38,6 +39,12 @@ public class CalendarScreen extends GenericAction {
         return this;
     }
 
+    @Step("Changing the student assessment details")
+    public CalendarScreen changeStudentAssessmentDetails() {
+
+        return this;
+    }
+
     @Step("Validating by default no student is selected")
     public CalendarScreen validateNoStudentIsSelected(){
         //checkbox property is not changing in dom showing checked though check box is not selected
@@ -50,7 +57,7 @@ public class CalendarScreen extends GenericAction {
         String startDate = getFormattedDate(bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(0)).getAttribute(DATA_DATE_ATTRIBUTE),Calendar.yyyy_MM_dd,Calendar.yyyyMMdd);
         String endDate = getFormattedDate(bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(getElements(Calendar.CALENDAR_MONTH_DAYS).size()-1)).getAttribute("data-date"),"yyyy-MM-dd","yyyyMMdd");
 
-        return executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_AD_DB
+        return executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_CALENDER_EVENTS_AD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,studentId)
                 .replaceAll(TableColumn.ACCOUNT_NUMBER_DATA,accountNumber)
                 .replaceAll(TableColumn.START_DATE_DATA,startDate)
@@ -59,19 +66,21 @@ public class CalendarScreen extends GenericAction {
 
     private void validateCalendarEvents(ArrayList<HashMap<String,String>> calendarEventsDBResult, boolean isOpenAndValidateEachEventPreview){
 
-        Map<String, ArrayList<String>> eventGridTextData = getGroupedDataAccordingToColumn(TableColumn.START_DATE, calendarEventsDBResult, new ArrayList<String>(Arrays.asList
-                (new String[]{TableColumn.SUBJECT, TableColumn.DESCRIPTION})), Calendar.PIPE_SPLITTER);
-        Map<String, ArrayList<String>> eventPreviewData = getGroupedDataAccordingToColumn(TableColumn.START_DATE, calendarEventsDBResult, new ArrayList<String>(Arrays.asList
-                (new String[]{TableColumn.SUBJECT, TableColumn.LONG_DESCRIPTION})), PIPE_SPLITTER);
-
-        int rowCounter = 1;
-        int taskSize;
-        int dayPosition;
-        int cellCounter = 1;
         String date;
         String monthDay;
+        int taskSize;
+        int dayPosition;
+        int gridDayPosition;
+        int cellCounter = 1;
+        int rowCounter = 1;
+
+        Map<String, ArrayList<String>> eventGridTextData = getGroupedByDataAccordingToColumn(START_DATE, calendarEventsDBResult, new String[]{SUBJECT, DESCRIPTION}, PIPE_SPLITTER);
+        Map<String, ArrayList<String>> eventPreviewData = getGroupedByDataAccordingToColumn(START_DATE, calendarEventsDBResult, new String[]{SUBJECT, LONG_DESCRIPTION}, PIPE_SPLITTER);
+        Map<String, ArrayList<String>> eventIDMapList = getCustomKeyAndColumnDataList(calendarEventsDBResult, new String[]{START_DATE,SUBJECT,LONG_DESCRIPTION}, PIPE_SPLITTER, new String[]{EVENT_ID},PIPE_SPLITTER);
+
         ArrayList<String> eventTextTaskList;
         ArrayList<String> eventPreviewTaskList;
+        ArrayList<String> eventIDList;
         setDayPositionInRow(eventGridTextData.size()/ TOTAL_STUDY_DAYS);
         ArrayList<String> keySet = new ArrayList<>(eventGridTextData.keySet());
 
@@ -80,10 +89,9 @@ public class CalendarScreen extends GenericAction {
             log("Executing validation for date:"+date);
             monthDay = getTaskBoxDay(date);
             dayPosition = Integer.parseInt(allDayPositions.get(date))-1;
-            eventTextTaskList = eventGridTextData.get(date);
-            eventPreviewTaskList = eventPreviewData.get(date);
-//            Collections.sort(eventTextTaskList);
-//            Collections.sort(eventPreviewTaskList);
+            eventTextTaskList = removeDelimiterForBlankData(eventGridTextData.get(date),PIPE_SPLITTER);
+            eventPreviewTaskList = removeDelimiterForBlankData(eventPreviewData.get(date),PIPE_SPLITTER);
+            eventIDList = getEventIDList(eventIDMapList, eventPreviewData, date);
             taskSize = eventTextTaskList.size();
 
             tempXpath = String.format(Calendar.taskGridDay,date);
@@ -94,27 +102,23 @@ public class CalendarScreen extends GenericAction {
 
             switch (getDayTaskGridType(taskSize)){
                 case ONLY_ONE_TASK:
+                    gridDayPosition = getGridDayPosition(rowCounter, 1, eventIDList, date);
                     if (isOpenAndValidateEachEventPreview) {
-                        openAndValidateEventDetailsPopUp(rowCounter, 1, dayPosition, date,eventPreviewTaskList.get(0));
+                        openAndValidateEventDetailsPopUp(rowCounter, 1, gridDayPosition, date,eventPreviewTaskList.get(0));
                     }else {
-                        validateGridText(rowCounter, 1, dayPosition, date, eventTextTaskList.get(0));
-                        validateIsMoreEventLinkIsNotPresent(rowCounter, dayPosition, monthDay);
+                        validateGridText(rowCounter, 1, gridDayPosition, date, eventTextTaskList.get(0));
+                        validateIsMoreEventLinkIsNotPresent(rowCounter,dayPosition, eventTextTaskList.size(),date);
                     }
                     break;
                 case ONLY_TWO_TASK:
-                    if(isOpenAndValidateEachEventPreview) {
-                        openAndValidateEventDetailsPopUp(rowCounter, 1, dayPosition, date,eventPreviewTaskList.get(0));
-                        openAndValidateEventDetailsPopUp(rowCounter, 2, dayPosition, date,eventPreviewTaskList.get(0));
-                    }else {
-                        validateGridText(rowCounter, 1, dayPosition, date, eventTextTaskList.get(0));
-                        validateGridText(rowCounter, 2, dayPosition, date, eventTextTaskList.get(1));
-                        validateIsMoreEventLinkIsNotPresent(rowCounter, dayPosition, monthDay);
-                    }
+                    validateEventGrid(rowCounter, date, eventTextTaskList, eventPreviewTaskList, eventIDList, isOpenAndValidateEachEventPreview);
+                    validateIsMoreEventLinkIsNotPresent(rowCounter,dayPosition, eventTextTaskList.size(),date);
                     break;
                 case MULTIPLE_TASK:
-                    dayPosition = openMoreEventsPopupAndGetDayPosition(rowCounter,dayPosition, eventTextTaskList.size(),date);
-                    if(dayPosition == -1){
-                        validateDayEventGridAndMoreEventTaskList(rowCounter,dayPosition,date,removeDelimiterForBlankData(eventTextTaskList,PIPE_SPLITTER), eventPreviewTaskList, isOpenAndValidateEachEventPreview);
+                    validateEventGrid(rowCounter, date, eventTextTaskList, eventPreviewTaskList, eventIDList, isOpenAndValidateEachEventPreview);
+                    int moreEventLinkDayPosition = validateAndOpenMoreEventsPopupAndGetDayPosition(rowCounter,dayPosition, eventTextTaskList.size(),date, true);
+                    if(moreEventLinkDayPosition != -1){
+                        validateDayEventGridAndMoreEventTaskList(date,eventTextTaskList, eventPreviewTaskList, isOpenAndValidateEachEventPreview);
                     }else {
                         softAssertions.fail(monthDay+" is not having more events link though it is having multiple events.");
                     }
@@ -130,7 +134,25 @@ public class CalendarScreen extends GenericAction {
         }
     }
 
-    private int openMoreEventsPopupAndGetDayPosition(int rowCounter, int dayPosition, int eventTaskListSize, String date){
+    private ArrayList<String> getEventIDList(Map<String,ArrayList<String>> eventIDMapList, Map<String, ArrayList<String>> eventPreviewData, String date){
+        ArrayList<String> eventIDList = new ArrayList<>();
+        for(String string:eventPreviewData.get(date)){
+            eventIDList.add(eventIDMapList.get(date+PIPE_SPLITTER+string).get(0));
+        }
+        return eventIDList;
+    }
+    private int getGridDayPosition(int rowCounter, int gridPosition, ArrayList<String> assignmentId, String date){
+        List<SelenideElement> elementList = getElements(String.format(Calendar.allEventGrids,rowCounter,gridPosition));
+        for(int i = 0;i<elementList.size();i++){
+            if(getClassAttributeValue(elementList.get(i)).indexOf(assignmentId.get(gridPosition-1))>0){
+                return i+1;
+            }
+        }
+        softAssertions.fail(date+":No assignement ID found for given key"+assignmentId);
+        return 0;
+    }
+
+    private int validateAndOpenMoreEventsPopupAndGetDayPosition(int rowCounter, int dayPosition, int eventTaskListSize, String date, boolean isLinkShouldPresent){
         boolean isMoreEventPopupLinkExists = false;
         String moreEventPopupHeader = getFormattedDate(date, yyyy_MM_dd, weekDayMonthDayOfMonth);
         List<SelenideElement> moreEventLinkElementList = getElements(String.format(allAvailableMoreEventsLinksInRow,rowCounter));
@@ -160,7 +182,9 @@ public class CalendarScreen extends GenericAction {
                     .as(date + ": More event link text is not matching \nExpected:" + tempText + "\nActual:" + getElementText(tempXpath)).isTrue();
             return dayPosition;
         }else {
-            softAssertions.fail(date + ":Either more event link is not present for given date or more events pop-up header's text is not matching with expected value [" + moreEventPopupHeader + "]");
+            if(isLinkShouldPresent) {
+                softAssertions.fail(date + ":Either more event link is not present for given date or more events pop-up header's text is not matching with expected value [" + moreEventPopupHeader + "]");
+            }
             return -1;
         }
     }
@@ -174,7 +198,7 @@ public class CalendarScreen extends GenericAction {
     }
 
     private void openAndValidateEventDetailsPopUp(int rowCounter, int gridPosition, int dayPosition, String date, String textToCompare){
-        tempXpath = getElementText(String.format(Calendar.taskGridText,rowCounter,gridPosition,dayPosition));
+        tempXpath = getElementText(String.format(Calendar.eventGridText,rowCounter,gridPosition,dayPosition));
         if(isElementExists(tempXpath)){
             click(tempXpath);
             validateEventPreviewPopUp(date,textToCompare);
@@ -203,23 +227,30 @@ public class CalendarScreen extends GenericAction {
         return taskList;
     }
 
-    private void validateDayEventGridAndMoreEventTaskList(int rowCounter, int dayPosition, String date, ArrayList<String> dayTasksList, ArrayList<String> eventPreviewTaskList, boolean isOpenAndValidateEachEventPreview){
+    private void validateDayEventGridAndMoreEventTaskList(String date, ArrayList<String> dayTasksList, ArrayList<String> eventPreviewTaskList, boolean isOpenAndValidateEachEventPreview){
         tempXpath = Calendar.moreEventsPopupTasksText;
         List<SelenideElement> eventList = getElements(tempXpath);
         if(isOpenAndValidateEachEventPreview){
-            openAndValidateEventDetailsPopUp(rowCounter, 1, dayPosition, date,eventPreviewTaskList.get(0));
-            openAndValidateEventDetailsPopUp(rowCounter, 2, dayPosition, date,eventPreviewTaskList.get(0));
             for(int i=0;i<eventList.size();i++){
                 click(getElements(tempXpath).get(i));
-                validateEventPreviewPopUp(date, dayTasksList.get(i));
+                validateEventPreviewPopUp(date, eventPreviewTaskList.get(i));
             }
         }else {
-            validateGridText(rowCounter, 1, dayPosition, date, dayTasksList.get(0));
-            validateGridText(rowCounter, 2, dayPosition, date, dayTasksList.get(1));
             softAssertions.assertThat(getEventListFromMoreEventsPopup().equals(dayTasksList))
                     .as(date+":More events expected event list ["+dayTasksList+"] is not equal to actual event list["+ getEventListFromMoreEventsPopup()+"]").isTrue();
         }
         click(Calendar.moreEventPopupCloseBtn);
+        waitForPageTobLoaded();
+    }
+
+    public void validateEventGrid(int rowCounter, String date, ArrayList<String> dayTasksList, ArrayList<String> eventPreviewTaskList, ArrayList<String> eventIDList, boolean isOpenAndValidateEachEventPreview){
+        if(isOpenAndValidateEachEventPreview) {
+            openAndValidateEventDetailsPopUp(rowCounter, 1, getGridDayPosition(rowCounter, 1, eventIDList, date), date, eventPreviewTaskList.get(0));
+            openAndValidateEventDetailsPopUp(rowCounter, 2, getGridDayPosition(rowCounter, 2, eventIDList, date), date, eventPreviewTaskList.get(1));
+        }else {
+            validateGridText(rowCounter, 1, getGridDayPosition(rowCounter, 1, eventIDList, date), date, dayTasksList.get(0));
+            validateGridText(rowCounter, 2, getGridDayPosition(rowCounter, 2, eventIDList, date), date, dayTasksList.get(1));
+        }
     }
 
     @Step("Removing delimiter for blank data")
@@ -244,15 +275,16 @@ public class CalendarScreen extends GenericAction {
         }
     }
 
-    private void validateGridText(int rowCounter,int gridPosition, int dayPosition, String monthDay, String compareText){
-            String gridText = getElementText(String.format(Calendar.taskGridText,rowCounter,gridPosition,dayPosition));
-            softAssertions.assertThat(gridText.equals(compareText.replaceAll(Calendar.TBOX_ITEMS,Calendar.QUIZ)))
-                    .as(monthDay+" day's expected task's grid ["+gridPosition+"] expect text ["+compareText+"] is not equal to actual grid text ["+gridText+"]").isTrue();
+    private void validateGridText(int rowCounter,int gridPosition, int dayPosition, String date, String compareText){
+        tempXpath = String.format(Calendar.eventGridText,rowCounter,gridPosition,dayPosition);
+        String gridText = getElementText(tempXpath);
+            softAssertions.assertThat(gridText.equals(compareText))
+                    .as(date+" day's expected task's grid ["+gridPosition+"] expect text ["+compareText+"] is not equal to actual grid text ["+gridText+"] xpath:"+tempXpath).isTrue();
     }
 
-    private void validateIsMoreEventLinkIsNotPresent(int rowCounter, int dayPosition, String monthDay){
-        softAssertions.assertThat(isElementExists(String.format(Calendar.moreEventsLink,rowCounter,dayPosition)))
-                .as(monthDay+" is having more events link though it is having only which it should not.").isFalse();
+    private void validateIsMoreEventLinkIsNotPresent(int rowCounter, int dayPosition, int eventTaskListSize, String date){
+        softAssertions.assertThat(validateAndOpenMoreEventsPopupAndGetDayPosition(rowCounter, dayPosition, eventTaskListSize, date, false)==-1)
+                .as(date+" is having more events link though it is having only which it should not.").isTrue();
     }
 
     private String getTaskBoxDay(String date){

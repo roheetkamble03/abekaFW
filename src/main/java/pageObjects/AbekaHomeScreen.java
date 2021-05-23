@@ -1,6 +1,7 @@
 package pageObjects;
 
 import base.GenericAction;
+import constants.CommonConstants;
 import elementConstants.AbekaHome ;
 import elementConstants.ShoppingCart;
 
@@ -12,7 +13,7 @@ public class AbekaHomeScreen extends GenericAction {
 
     public void navigateToHeaderBannerSubmenu(String menu, String submenu){
         mouseOverOnElement(menu);
-        click(submenu);
+        click(bringElementIntoView(String.format(AbekaHome.HEADER_SUB_MENU,submenu)));
     }
 
     public ShoppingCartPage navigateToShoppingCartPage(){

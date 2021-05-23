@@ -12,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
@@ -19,10 +20,9 @@ import org.openqa.selenium.WebElement;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -39,11 +39,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void click(String identifier){
         waitForElementTobeExist(identifier);
         try {
-            bringElementIntoView(identifier);
-            getElement(identifier).click();
+            click(bringElementIntoView(identifier));
         }catch (Throwable e){
             log("Clicked by java script");
-            clickByJavaScript(identifier);
+            clickByJavaScript(getElement(identifier));
         }
     }
 
@@ -59,7 +58,15 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public boolean isElementDisplayed(String identifier) {
         try {
-            return getElement(identifier).isDisplayed();
+            return getElement(identifier).is(Condition.visible);
+        }catch (ElementNotFound e){
+            return false;
+        }
+    }
+
+    public boolean isElementDisplayed(SelenideElement element) {
+        try {
+            return element.is(Condition.visible);
         }catch (ElementNotFound e){
             return false;
         }
@@ -77,6 +84,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public boolean isElementExists(String identifier) {
         try {
             getElement(identifier);
+            bringElementIntoView(identifier);
             return true;
         }catch (ElementNotFound e){
             return false;
@@ -319,11 +327,19 @@ public abstract class SelenideExtended extends DatabaseExtended {
      */
     public SelenideElement bringElementIntoView(String identifier) {
             waitForElementTobeExist(identifier);
-            JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-            executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", getElement(identifier));
-            Actions actions = new Actions(getDriver());
-            actions.moveToElement(getElement(identifier)).build().perform();
-            return getElement(identifier);
+            for(SelenideElement element:getElements(identifier)){
+                try {
+                    JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+                    executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", element);
+                    Actions actions = new Actions(getDriver());
+                    actions.moveToElement(element).build().perform();
+                    return element;
+                }catch (Throwable t){
+                    continue;
+                }
+            }
+            new Throwable("Visible element not found for given identifier:" +identifier);
+            return null;
     }
 
     public SelenideElement bringElementIntoView(SelenideElement element) {
@@ -541,6 +557,15 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }
     }
 
+    public SelenideElement getVisibleElement(String identifier){
+        for (SelenideElement element: getElements(identifier)){
+            if (isElementDisplayed(identifier)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
     /**
      *
      * @param identifier
@@ -558,7 +583,6 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public void waitForElementTobeEnabled(String identifier){
-        waitForElementTobeVisible(identifier);
         getElements(identifier).get(0).shouldBe(Condition.enabled,Duration.ofSeconds(elementLoadWait));
     }
 

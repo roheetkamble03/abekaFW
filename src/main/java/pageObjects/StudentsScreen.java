@@ -15,6 +15,9 @@ import java.util.*;
 import static com.codeborne.selenide.Selenide.back;
 import static com.codeborne.selenide.Selenide.refresh;
 import static constants.CommonConstants.AD_DATA_BASE;
+import static constants.TableColumn.*;
+import static elementConstants.Students.LESSON_LOCKED;
+import static elementConstants.Students.YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON;
 
 public class StudentsScreen extends GenericAction {
 
@@ -90,7 +93,13 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen validateMyToDoListData(String studentName){
+    public StudentsScreen navigateToProgressReportSection(){
+        click(bringElementIntoView(String.format(Students.widgetLink,Students.PROGRESS_REPORTS)));
+        waitForPageTobLoaded();
+        return this;
+    }
+
+    public StudentsScreen validateMyToDoListData(){
         if (isElementExists(Students.toDoListHeader)) {
             click(Students.updateAll);
             softAssertions.assertThat(isElementTextEquals(Students.toDoListHeader,Students.MY_TO_DO_LIST))
@@ -101,12 +110,12 @@ public class StudentsScreen extends GenericAction {
             String accountNumber = userAccountDetails.get(TableColumn.ACCOUNT_NUMBER_DATA);;
             String startDate = "";
             String endDate = "";
-            ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_AD_DB
+            ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_CALENDER_EVENTS_AD_DB
                     .replaceAll(TableColumn.STUDENT_ID_DATA,studentID).replaceAll(TableColumn.ACCOUNT_NUMBER_DATA,accountNumber)
                     .replaceAll(TableColumn.START_DATE_DATA,startDate).replaceAll(TableColumn.END_DATE_DATA,endDate), AD_DATA_BASE);
             for(HashMap<String,String> row:myLessonsToday) {
                 toDoListName = "read data from row";
-                softAssertions.assertThat(isElementExists(String.format(Students.ASSESSMENT_TEST_LOCKED, toDoListName)))
+                softAssertions.assertThat(isElementExists(String.format(Students.MY_TO_DO_LIST, toDoListName)))
                             .as(toDoListName + " task is not present in My to do list").isTrue();
 
             }
@@ -243,23 +252,27 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen validateDigitalAssessmentsAreLockedOrNot(String studentName, boolean isLockedValidation){
-        if (isElementExists(Students.lessonsToday)) {
+    public StudentsScreen validateDigitalAssessmentsAreLockedOrNot(boolean isAssessmentLocked){
             String subject;
-            String studentID = userAccountDetails.get(TableColumn.STUDENT_ID_DATA);;
-            ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.AVAILABLE_TEST_QUIZZES_AD_DB
+            String lesson;
+            boolean isLocked;
+            String studentID = userAccountDetails.get(TableColumn.STUDENT_ID);;
+            ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.ASSESSMENT_TEST_QUIZZES_AD_DB
                     .replaceAll(TableColumn.STUDENT_ID_DATA,studentID), AD_DATA_BASE);
+            refresh();
+            waitForPageTobLoaded();
             for(HashMap<String,String> row:myLessonsToday) {
-                subject = "run query on DB and add column name";
-                if(isLockedValidation) {
-                    softAssertions.assertThat(isElementExists(String.format(Students.ASSESSMENT_TEST_LOCKED, subject)))
-                            .as(subject + " subject is not locked on assessment page").isTrue();
+                subject = row.get(SHORT_DESCRIPTION);
+                lesson = row.get(LONG_DESCRIPTION);
+                isLocked = false;//need to fetch from DB;
+                if(isAssessmentLocked) {
+                    softAssertions.assertThat(isElementExists(String.format(Students.assessmentLocked, subject,lesson)))
+                            .as(subject + "-"+lesson+" subject is not locked on assessment page").isTrue();
                 }else {
-                    softAssertions.assertThat(isElementExists(String.format(Students.ASSESSMENT_TEST_LOCKED, subject)))
-                            .as(subject + " subject is locked on assessment page, though lesson is completed").isTrue();
+                    softAssertions.assertThat(isElementExists(String.format(Students.assessmentUnlocked, subject,lesson)))
+                            .as("["+subject +"-"+lesson+ "] is not available for assessment, though lesson is completed").isTrue();
                 }
             }
-        }
         return this;
     }
 
@@ -270,15 +283,15 @@ public class StudentsScreen extends GenericAction {
     public StudentsScreen validateMyLessonsTodaySectionData(){
         if(isElementExists(Students.MY_LESSONS_TODAY)) {
             if (isElementExists(Students.lessonsToday)) {
+                String studentID = userAccountDetails.get(TableColumn.STUDENT_ID);
                 String myLessonsVideoLink;
                 String subject;
                 String lesson;
-                String studentID = userAccountDetails.get(TableColumn.STUDENT_ID_DATA);
                 ArrayList<HashMap<String,String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
                         .replaceAll(TableColumn.STUDENT_ID_DATA,studentID), CommonConstants.SD_DATA_BASE);
                 for(HashMap<String,String> row:myLessonsToday) {
-                    subject = "run query on DB and add column name";
-                    lesson = "run query on DB and add column name";
+                    subject = row.get(SHORT_DESCRIPTION);
+                    lesson = row.get(LONG_DESCRIPTION);
                     myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subject, lesson);
                     softAssertions.assertThat(isElementExists(myLessonsVideoLink))
                             .as(lesson +" of "+subject+" subject is not present in My lessons today section").isTrue();
@@ -297,7 +310,7 @@ public class StudentsScreen extends GenericAction {
      * Also, validating the My today's lesson and Video library having same video.
      * @return
      */
-    public StudentsScreen validateMyLessonsTodaySectionVideoLinkNavigationWithVideoLibrary() {
+    public StudentsScreen watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary() {
         if (isElementExists(Students.MY_LESSONS_TODAY)) {
             if (isElementExists(Students.lessonsToday)) {
                 String myLessonsVideoLink;
@@ -305,22 +318,25 @@ public class StudentsScreen extends GenericAction {
                 String lesson;
                 String subjectIDNumber;
                 String subscriptionItemNumber;
-                ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData("Lessons query", AD_DATA_BASE);
+                String studentID = userAccountDetails.get(STUDENT_ID);
+                ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
+                        .replaceAll(TableColumn.STUDENT_ID_DATA,studentID), CommonConstants.SD_DATA_BASE);
                 //for loop
                 for (HashMap<String, String> row : myLessonsToday) {
-                    subject = "fetch from DB";
-                    lesson = "fetch from DB";
-                    subjectIDNumber = "fetch from DB";
-                    subscriptionItemNumber = "fetch from DB";
+                    subject = row.get(SHORT_DESCRIPTION);
+                    lesson = row.get(LONG_DESCRIPTION);
+                    subjectIDNumber = "fetch Video library data from DB";
+                    subscriptionItemNumber = "fetch Video library data from DB";
                     myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subject, lesson);
 
+                    //pending
                     softAssertions.assertThat(getIsLessonCompletedStatusFromVideoLibrary(subjectIDNumber, subscriptionItemNumber, lesson.split("\\s")[1], subject))
                             .as(lesson + " lesson of " + subject + " subject is already viewed and completed according Video library status").isFalse();
 
                     bringElementIntoView(myLessonsVideoLink);
                     click(myLessonsVideoLink);
                     softAssertions.assertThat(isChildElementExists(getElement(Students.videoPlayer),String.format(Students.playingVideoTitle,subject+" - "+lesson)))
-                            .as("Running video is not similar clicked link").isTrue();
+                            .as("Running video is not similar to clicked link").isTrue();
 
                     //logic needs to implement to complete video from back end
                     refresh();
@@ -335,7 +351,30 @@ public class StudentsScreen extends GenericAction {
                 softAssertions.fail(Students.MY_LESSONS_TODAY + " section is not present on UI");
             }
             return this;
+    }
+
+    public StudentsScreen validateVideoLibraryVideoStatusWithDataBase(){
+        String subject;
+        String lesson;
+        String subjectIDNumber;
+        String subscriptionItemNumber;
+        String studentID = userAccountDetails.get(STUDENT_ID);
+
+        // Query needed to fetch video status of video library
+        ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.VIDEO_LIBRARY_VIDEOS_SD_DB
+                .replaceAll(TableColumn.STUDENT_ID_DATA,studentID), CommonConstants.SD_DATA_BASE);
+        for (HashMap<String, String> row : myLessonsToday) {
+            subject = row.get(SHORT_DESCRIPTION);
+            lesson = row.get(LONG_DESCRIPTION);
+            subjectIDNumber = "fetch Video library data from DB";
+            subscriptionItemNumber = "fetch Video library data from DB";
+            //pending
+            softAssertions.assertThat(getIsLessonCompletedStatusFromVideoLibrary(subjectIDNumber, subscriptionItemNumber, lesson.split("\\s")[1], subject))
+                    .as(lesson + " lesson of " + subject + " subject's video status is not showing as completed").isTrue();
         }
+        return this;
+    }
+
 
     public StudentsScreen validateIsLessonVideoLinkIsPresentInVideoLibrary(String subject, String lesson, String subjectIDNumber, String subscriptionItemNumber){
         selectValueFromDropDown(subject,lesson);
@@ -352,9 +391,10 @@ public class StudentsScreen extends GenericAction {
     }
 
     public boolean getIsLessonCompletedStatusFromVideoLibrary(String subjectIDNumber, String subscriptionItemNumber, String lesson, String subject){
-        selectValueFromDropDown(Students.videoLibrarySubjectDropDown,lesson);
+        selectValueFromDropDown(Students.videoLibrarySubjectDropDown,subject);
         tempXpath = String.format(Students.videoLibraryVideoLink,subjectIDNumber,subscriptionItemNumber,lesson);
         bringElementIntoView(getChildElement(getElement(Students.videoLibrarySection),tempXpath));
+        //here we need to add previous video marked as completed with the help of video library data from DB
         return isLessonCompleted(getClassAttributeValue(getChildElement(getElement(Students.videoLibrarySection),tempXpath)));
     }
 
@@ -363,11 +403,21 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen validateStudentShouldNotAbleToWatchNextDayLessonFromVideoLibrary(){
-        bringElementIntoView(getChildElement(getElement(Students.videoLibrarySection),Students.nextToNextVideoLink)).click();
-        if(isChildElementExists(getElement(Students.videoLibraryVideoLink),Students.lessonLockedCloseButton)){
-            click(getChildElement(getElement(Students.videoLibraryVideoLink),Students.lessonLockedCloseButton));
-        }else {
-            softAssertions.fail(Students.YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON+" message popup is not appeared.");
+        String subject;
+        String studentId = userAccountDetails.get(STUDENT_ID);
+        ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
+                .replaceAll(TableColumn.STUDENT_ID_DATA,studentId), CommonConstants.SD_DATA_BASE);
+
+        for (HashMap<String, String> row : myLessonsToday) {
+            subject = row.get(SHORT_DESCRIPTION);
+            selectValueFromDropDown(Students.videoLibrarySubjectDropDown, subject);
+            click(bringElementIntoView(getElement(Students.videoLibrarySection)));
+            tempXpath = String.format(Students.videoLibraryVideoLink, LESSON_LOCKED,YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON,CommonConstants.CLOSE);
+            if (isElementExists(tempXpath)) {
+                click(tempXpath);
+            } else {
+                softAssertions.fail(Students.YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON + " message popup is not appeared.");
+            }
         }
         return this;
     }

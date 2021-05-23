@@ -66,10 +66,12 @@ public @interface Students {
     String myLessonsTodayVideoLink = "xpath=//ul[@id='ulDailyLessons']/descendant::h3[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
     String videoLibrarySection = "id=VideoLibrary";
     String videoLibrarySubjectDropDown = "id=subjectsDropDown";
-    String videoLibraryVideoLink = "xpath=./descendant::li[@onclick and @data-evalue='%s' and @data-sub='%s' and @data-lesson='%s']";
-    String nextToNextVideoLink = "xpath=./descendant::li[@class='lessonComplete'][last()]/following-sibling::li[position()=2]";
+    String videoLibraryVideoLink = "xpath=//h4[normalize-space(text())='%s']/parent::div/following-sibling::div/descendant::p[normalize-space(text())='%s']/ancestor::div[@class='modal-body']/following-sibling::div/descendant::button[normalize-space(text())='%s']";
+    String nextToNextVideoLink = "xpath=(//li[@id='VideoLibrary']/descendant::li[contains(normalize-space(@onclick),'Lesson_Clicked') and not(@class ='lessonComplete') and @data-teacher and position()])[1]";
     String lessonLockedCloseButton = String.format("xpath=./descendant::div[@id='lessonIncomplete']/descendant::p[normalize-space(text())='%s']/parent::div/parent::div/following-sibling::div/descendant::button",YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON);
     String videoPlayer = "id=player";
     String playingVideoTitle = "xpath=./descendant::span[@id='lblTitle' and normalize-space(text())='%s']";
-    String ASSESSMENT_TEST_LOCKED = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/span[@id='lblLockedIcon' and @data-original-title]";
+    String assessmentLocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s']/preceding-sibling::span[@id='lblLockedIcon' and @data-original-title]";
+    String assessmentUnlocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s' and @href and @class='assessmentBtn']";
+    String LESSON_LOCKED = "Lesson Locked";
 }

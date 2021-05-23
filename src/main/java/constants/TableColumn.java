@@ -16,4 +16,7 @@ public @interface TableColumn {
     String LONG_DESCRIPTION = "LONG_DESCRIPTION";
     String DESCRIPTION = "DESCRIPTION";
     String ROW_COUNT_DATA = "ROW_COUNT_DATA";
+    String EVENT_ID = "EVENT_ID";
+    String USER_NAME = "USER_NAME";
+    String SHORT_DESCRIPTION = "SHORT_DESCRIPTION";
 }

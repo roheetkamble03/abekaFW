@@ -68,7 +68,7 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public void waitAndCloseSignUpPop(){
-        waitForElementTobeEnabled(AbekaHome.closeSignup);
+        waitForElementTobeVisible(AbekaHome.closeSignup);
         click(AbekaHome.closeSignup);
     }
 
@@ -125,8 +125,9 @@ public abstract class GenericAction extends SelenideExtended{
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,studentName),SD_DATA_BASE).get(0);
         userAccountDetails.put(TableColumn.LOGIN_ID,userLoginDetails.get(TableColumn.LOGIN_ID));
-        userAccountDetails.put(TableColumn.STUDENT_ID_DATA,userLoginDetails.get(TableColumn.STUDENT_ID_DATA));
-        userAccountDetails.put(TableColumn.ACCOUNT_NUMBER_DATA,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER_DATA));
+        userAccountDetails.put(TableColumn.ACCOUNT_NUMBER,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER));
+        userAccountDetails.put(TableColumn.STUDENT_ID,userLoginDetails.get(TableColumn.STUDENT_ID));
+        userAccountDetails.put(TableColumn.USER_NAME,userLoginDetails.get(TableColumn.USER_NAME));
     }
 
     /**
@@ -137,7 +138,7 @@ public abstract class GenericAction extends SelenideExtended{
      * @param delimiter merged data will be separated by this
      * @return
      */
-    public Map<String, ArrayList<String>> getGroupedDataAccordingToColumn(String groupByColumn, ArrayList<HashMap<String, String>> resultSetMapList, ArrayList<String> dataColumnOrMergedColumnData, String delimiter) {
+    public Map<String, ArrayList<String>> getGroupedByDataAccordingToColumn(String groupByColumn, ArrayList<HashMap<String, String>> resultSetMapList, String[] dataColumnOrMergedColumnData, String delimiter) {
         Map<String, ArrayList<String>> groupByMap = new TreeMap<>();
         ArrayList<String> columnDataList = new ArrayList<>();
         List<String> columnReadDataList = new ArrayList<>();
@@ -156,6 +157,56 @@ public abstract class GenericAction extends SelenideExtended{
             columnReadDataList = new ArrayList<>();
             if(i+1 != resultSetMapList.size()){
                 if (!oldColumnData.equals(resultSetMapList.get(i+1).get(groupByColumn))) {
+                    groupByMap.put(oldColumnData, columnDataList);
+                    columnDataList = new ArrayList<>();
+                }
+            }else {
+                groupByMap.put(oldColumnData, columnDataList);
+            }
+        }
+        return groupByMap;
+    }
+
+    private String getGroupByColumnData(HashMap<String, String> resultSetMap, String[] groupByColumns, String joiner){
+        ArrayList<String> columnDataList = new ArrayList<>();
+        for(String column:groupByColumns){
+            try{
+                columnDataList.add(resultSetMap.get(column).trim());
+            }catch (Throwable t){
+                columnDataList.add("");
+            }
+        }
+        return StringUtils.join(columnDataList,joiner);
+    }
+
+    /**
+     * Returns the data list with custom key and value
+     * @param resultSetMapList Result set from DB
+     * @param dataColumnsToBeFetched Column whose data we want fetch
+     * @param customKeyColumns List of column whose data should be used as a key
+     * @param customKeyJoiner custom key column data joiner
+     * @return
+     */
+    public Map<String, ArrayList<String>> getCustomKeyAndColumnDataList(ArrayList<HashMap<String, String>> resultSetMapList, String[] customKeyColumns,
+                                                                   String customKeyJoiner, String[] dataColumnsToBeFetched, String dataColumnJoiner ){
+        Map<String, ArrayList<String>> groupByMap = new TreeMap<>();
+        ArrayList<String> columnDataList = new ArrayList<>();
+        List<String> columnReadDataList = new ArrayList<>();
+        String oldColumnData;
+
+        for(int i=0;i<resultSetMapList.size();i++){
+            oldColumnData = getGroupByColumnData(resultSetMapList.get(i), customKeyColumns, customKeyJoiner);
+            for(String column:dataColumnsToBeFetched) {
+                try {
+                    columnReadDataList.add(resultSetMapList.get(i).get(column).trim());
+                }catch (NullPointerException e){
+                    columnReadDataList.add("");
+                }
+            }
+            columnDataList.add(StringUtils.join(columnReadDataList,dataColumnJoiner));
+            columnReadDataList = new ArrayList<>();
+            if(i+1 != resultSetMapList.size()){
+                if (!oldColumnData.equals(getGroupByColumnData(resultSetMapList.get(i+1), customKeyColumns, customKeyJoiner))) {
                     groupByMap.put(oldColumnData, columnDataList);
                     columnDataList = new ArrayList<>();
                 }

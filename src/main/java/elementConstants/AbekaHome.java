@@ -23,4 +23,5 @@ public @interface AbekaHome {
     String account = "text=Account";
     String HOME = "Home";
     String CALENDAR = "Calendar";
+    String HEADER_SUB_MENU = "xpath=//ul[@class='mzr-content smallIconList']/descendant::*/descendant::span[contains(normalize-space(text()),'%s')]";
 }

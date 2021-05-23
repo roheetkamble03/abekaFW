@@ -62,7 +62,11 @@ public class DatabaseExtended extends BaseClass {
     @SneakyThrows
     public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery, String dataBase){
         connection = getDBConnection(dataBase);
-        resultSet = connection.createStatement().executeQuery(selectQuery);
+        try {
+            resultSet = connection.createStatement().executeQuery(selectQuery);
+        }catch (Throwable e){
+            throw new Exception(e+"Execute query failed for \n" +selectQuery);
+        }
         ArrayList<HashMap<String,String>> resultSetRowList = convertResultSetToArrayList();
         connection.close();
         return resultSetRowList;

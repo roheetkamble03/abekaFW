@@ -11,6 +11,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.Synchronized;
 import oracle.jdbc.pool.OracleDataSource;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;

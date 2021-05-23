@@ -20,7 +20,8 @@ public @interface Calendar {
     String calendarSection = "id=calendar";
     String CALENDAR_MONTH_DAYS = "xpath=//div[@id='calendar']/descendant::td[@data-date]";
     String taskGridDay = "xpath=//div[@class='fc-content-skeleton']/table/descendant::td[@data-date='%s']/span";
-    String taskGridText = "xpath=((//div[@class='fc-content-skeleton']/table/tbody)[%s]/descendant::tr[%s]/descendant::span[@class='fc-title'])[%s]";
+    String eventGridText = "xpath=((//div[@class='fc-content-skeleton']/table/tbody)[%s]/descendant::tr[%s]/descendant::span[@class='fc-title'])[%s]";
+    String allEventGrids = "xpath=((//div[@class='fc-content-skeleton']/table/tbody)[%s]/descendant::tr[%s]/descendant::a[contains(normalize-space(@class),'fc-day-grid-event')])";
     String moreEventsLink = "xpath=(((//div[@class='fc-content-skeleton']/table/tbody)[%s]/descendant::tr[3])/descendant::td[@class='fc-more-cell']/descendant::a[@class='fc-more'])[%s]";
     String allAvailableMoreEventsLinksInRow = "xpath=((//div[@class='fc-content-skeleton']/table/tbody)[%s]/descendant::tr[3])/descendant::td[@class='fc-more-cell']/descendant::a[@class='fc-more']";
     String dayPositionInRow = "xpath=(//div[@class='fc-content-skeleton']/table/thead)[%s]/descendant::td";

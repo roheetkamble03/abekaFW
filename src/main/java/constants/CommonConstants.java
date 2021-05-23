@@ -32,4 +32,5 @@ public @interface CommonConstants {
 
     String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and @class='close' and normalize-space(text())='×']";
     String dropDownOption = "xpath=./ul[@class='dropdown']/descendant::span[normalize-space(text())='%s']";
+    Object CLOSE = "Close";
 }
