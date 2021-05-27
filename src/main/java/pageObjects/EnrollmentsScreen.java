@@ -6,7 +6,6 @@ import constants.EnrollmentOptions;
 import constants.StudentDetails;
 import elementConstants.Enrollments;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,7 +23,7 @@ public class EnrollmentsScreen extends GenericAction {
 
     public EnrollmentsScreen openSectionLink(String sectionName, String linkText){
         bringElementIntoView(getElements(String.format(Enrollments.sectionChildOpenLink,sectionName,linkText)).get(0)).click();
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return this;
     }
 
@@ -52,7 +51,7 @@ public class EnrollmentsScreen extends GenericAction {
         implicitWaitInSeconds(3);
         type(Enrollments.formPasswordInputBox,studentDetails.getPassword());
         click(Enrollments.CREATE);
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return this;
     }
 
@@ -65,7 +64,7 @@ public class EnrollmentsScreen extends GenericAction {
     public EnrollmentsScreen clickOnNextButton(){
         bringElementIntoView(Enrollments.nextButton);
         click(Enrollments.nextButton);
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return this;
     }
 
@@ -118,7 +117,7 @@ public class EnrollmentsScreen extends GenericAction {
         selectByVisibleText(Enrollments.parentSelectBox,parent);
         selectByVisibleText(Enrollments.relationSelectBox,relation);
         click(Enrollments.confirmButton);
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return this;
     }
 

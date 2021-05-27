@@ -20,11 +20,11 @@ public class CalendarScreen extends GenericAction {
     private static HashMap<String,String> allDayPositions = new HashMap<>();
 
     public CalendarScreen selectStudent(String studentName){
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         tempXpath = String.format(Calendar.studentSelectionCheckBox,studentName);
         bringElementIntoView(tempXpath);
         click(tempXpath);
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return this;
     }
 
@@ -39,15 +39,13 @@ public class CalendarScreen extends GenericAction {
         return this;
     }
 
-    @Step("Changing the student assessment details")
-    public CalendarScreen changeStudentAssessmentDetails() {
-
-        return this;
-    }
-
     @Step("Validating by default no student is selected")
     public CalendarScreen validateNoStudentIsSelected(){
-        //checkbox property is not changing in dom showing checked though check box is not selected
+        //checkbox property is not changing in dom showing checked though check box is not selected, hence validating with event box
+        for(SelenideElement element:getElements(Calendar.eventBoxes)) {
+            softAssertions.assertThat(getClassAttributeValue(element).contains(Calendar.holidayEventId))
+                    .as("Though student is not selected, Calendar having event(s) on the page.").isTrue();
+        }
         return this;
     }
 
@@ -135,16 +133,30 @@ public class CalendarScreen extends GenericAction {
     }
 
     private ArrayList<String> getEventIDList(Map<String,ArrayList<String>> eventIDMapList, Map<String, ArrayList<String>> eventPreviewData, String date){
-        ArrayList<String> eventIDList = new ArrayList<>();
+        Stack<String> stack = new Stack<>();
+        ArrayList<String> zeroEventID = new ArrayList<>();
+        String eventId;
         for(String string:eventPreviewData.get(date)){
-            eventIDList.add(eventIDMapList.get(date+PIPE_SPLITTER+string).get(0));
+            eventId = eventIDMapList.get(date+PIPE_SPLITTER+string).get(0);
+            if(eventId.equals("0")) {
+                zeroEventID.add(eventId);
+            } else {
+                stack.push(eventId);
+            }
         }
-        return eventIDList;
+        if(zeroEventID.size()>0){
+            softAssertions.fail(date+":is having other events on Holiday.");
+            for(int i=0;i<zeroEventID.size();i++){
+                stack.insertElementAt(zeroEventID.get(i),i);
+            }
+        }
+        ArrayList<String> eventIdList = new ArrayList<>(stack);
+        return eventIdList;
     }
     private int getGridDayPosition(int rowCounter, int gridPosition, ArrayList<String> assignmentId, String date){
         List<SelenideElement> elementList = getElements(String.format(Calendar.allEventGrids,rowCounter,gridPosition));
         for(int i = 0;i<elementList.size();i++){
-            if(getClassAttributeValue(elementList.get(i)).indexOf(assignmentId.get(gridPosition-1))>0){
+            if(getClassAttributeValue(elementList.get(i)).indexOf("event_"+assignmentId.get(gridPosition-1))>0){
                 return i+1;
             }
         }
@@ -240,7 +252,7 @@ public class CalendarScreen extends GenericAction {
                     .as(date+":More events expected event list ["+dayTasksList+"] is not equal to actual event list["+ getEventListFromMoreEventsPopup()+"]").isTrue();
         }
         click(Calendar.moreEventPopupCloseBtn);
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
     }
 
     public void validateEventGrid(int rowCounter, String date, ArrayList<String> dayTasksList, ArrayList<String> eventPreviewTaskList, ArrayList<String> eventIDList, boolean isOpenAndValidateEachEventPreview){

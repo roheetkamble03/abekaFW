@@ -2,6 +2,7 @@ package base;
 
 import com.google.common.base.CaseFormat;
 import constants.CommonConstants;
+import constants.SubjectDetails;
 import constants.TableColumn;
 import constants.DataBaseQueryConstant;
 import elementConstants.AbekaHome;
@@ -19,14 +20,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
+import static constants.TableColumn.*;
 import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
 
 public abstract class GenericAction extends SelenideExtended{
 
     @Getter@Setter
     public static HashMap<String,String> userAccountDetails = new HashMap<>();
+    @Getter
+    public static HashMap<String, SubjectDetails> studentSubjectDetailsList = new HashMap<>();
 
     @Parameters({"browser", "platform"})
     @BeforeMethod
@@ -40,6 +45,7 @@ public abstract class GenericAction extends SelenideExtended{
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();
     }
+
     public AbekaHomeScreen loginToAbeka(String userId, String password, String userName){
         waitAndCloseSignUpPop();
         click(AbekaHome.login);
@@ -57,7 +63,7 @@ public abstract class GenericAction extends SelenideExtended{
         click(CommonConstants.LINK_TEXT + submenu);
         if(submenu.equalsIgnoreCase(AbekaHome.DASHBOARD))
             switchToLastOrNewWindow();
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return new AbekaHomeScreen();
     }
 
@@ -121,13 +127,38 @@ public abstract class GenericAction extends SelenideExtended{
         }
     }
 
-    public void setStudentAccountDetails(String studentName){
+    /**
+     * Setting student account details at global level
+     * @param userId
+     */
+    public void setStudentAccountDetailsFromDB(String userId){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
-                .replaceAll(TableColumn.STUDENT_ID_DATA,studentName),SD_DATA_BASE).get(0);
-        userAccountDetails.put(TableColumn.LOGIN_ID,userLoginDetails.get(TableColumn.LOGIN_ID));
+                .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
+        userAccountDetails.put(USER_ID,userId);
+        userAccountDetails.put(LOGIN_ID,userLoginDetails.get(LOGIN_ID));
         userAccountDetails.put(TableColumn.ACCOUNT_NUMBER,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER));
         userAccountDetails.put(TableColumn.STUDENT_ID,userLoginDetails.get(TableColumn.STUDENT_ID));
         userAccountDetails.put(TableColumn.USER_NAME,userLoginDetails.get(TableColumn.USER_NAME));
+        userAccountDetails.put(SUBSCRIPTION_NUMBER,executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_NUMBER_SD_DB
+                .replaceAll(LOGIN_ID_DATA,userAccountDetails.get(LOGIN_ID)),SD_DATA_BASE).get(0).get(SUBSCRIPTION_NUMBER));
+    }
+
+    /**
+     * Setting student subject details at global level
+     * @param studentName
+     */
+
+    public void setStudentSubjectDetailsFromDB(String studentName){
+        if(userAccountDetails.size()==0){
+            setStudentAccountDetailsFromDB(studentName);
+        }
+        for(HashMap<String,String> row: executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_SUBJECT_DETAILS_SD_DB
+                .replaceAll(LOGIN_ID_DATA,userAccountDetails.get(LOGIN_ID)).replaceAll(SUBSCRIPTION_NUMBER_DATA,userAccountDetails.get(SUBSCRIPTION_NUMBER)),SD_DATA_BASE)){
+
+            studentSubjectDetailsList.put(row.get(SUBJECT_NAME).trim(),new SubjectDetails(row.get(SUBJECT_NAME).trim(),row.get(TableColumn.SUBJECT_ID).trim(),
+                    row.get(TableColumn.SUBSCRIPTION_ITEMS).trim(),row.get(SUBSCRIPTION_NUMBER).trim()));
+
+        }
     }
 
     /**
@@ -218,15 +249,25 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public String getFormattedDate(String date, String actualDateFormat, String expectedDateFormat){
+
+        String weekDay;
+        String month;
+        String dayOfMonth;
         DateTimeFormatter actualFormat = DateTimeFormatter.ofPattern(actualDateFormat);
         LocalDate localDate = LocalDate.parse(date,actualFormat);
 
         switch (expectedDateFormat){
             case weekDayMonthDayOfMonth:
-                String weekDay = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getDayOfWeek().toString());
-                String month = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getMonth().name());
-                String dayOfMonth = Integer.toString(localDate.getDayOfMonth());
+                weekDay = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getDayOfWeek().toString());
+                month = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getMonth().name());
+                dayOfMonth = Integer.toString(localDate.getDayOfMonth());
                 return weekDay+", "+month+" "+dayOfMonth;
+            case dayMonthSingleDate:
+                //Returns day in Thu, Apr 8
+                weekDay = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getDayOfWeek().toString());
+                month = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,localDate.getMonth().name());
+                dayOfMonth = Integer.toString(localDate.getDayOfMonth());
+                return weekDay.substring(0,3)+", "+month.subSequence(0,3)+" "+dayOfMonth;
             default:
                 DateTimeFormatter expectedFormat = DateTimeFormatter.ofPattern(expectedDateFormat);
                 return localDate.format(expectedFormat);

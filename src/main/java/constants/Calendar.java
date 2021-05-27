@@ -7,6 +7,7 @@ public @interface Calendar {
     String MORE_EVENTS_TEXT = "+%s more events";
     String DATA_DATE_ATTRIBUTE = "data-date";
     String weekDayMonthDayOfMonth = "weekDayMonthDayOfMonth";
+    String dayMonthSingleDate = "dayMonthSingleDate";
     String yyyy_MM_dd = "yyyy-MM-dd";
     String yyyyMMdd = "yyyyMMdd";
     String dayMMMMdd = "dayMMMMdd";
@@ -32,4 +33,7 @@ public @interface Calendar {
     String eventPreviewDate = "xpath=//div[@aria-describedby='EventPreview']/descendant::span[@id='PreviewDate']";
     String eventPreviewDescription = "xpath=//div[@aria-describedby='EventPreview']/descendant::span[@id='PreviewDescription']";
     String eventPreviewCloseBtn = "xpath=//div[@aria-describedby='EventPreview']/descendant::button[@class='ui-dialog-titlebar-close']";
+    String eventBoxes = "xpath=//a[contains(@class,'fc-day-grid-event')]";
+    String holidayEventId = "event_0";
+    String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd hh:mm:ss";
 }

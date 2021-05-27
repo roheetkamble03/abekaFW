@@ -46,7 +46,8 @@ public class LoginTestSuite extends GenericAction {
     public void validateDashBoardWidgets(String userId, String password, String userName){
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardNewTab().validateMyOrdersWidgetLinks().validateVideoManualPdfsLinks().validateNotificationRows();;
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.validateDashboardNewTab().validateMyOrdersWidgetLinks().validateVideoManualPdfsLinks().validateNotificationRows();;
     }
 
     @Test(testName = "Test-3", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
@@ -57,7 +58,8 @@ public class LoginTestSuite extends GenericAction {
         EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
 
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().navigateToMyOrderLink(Dashboard.ENROLLMENTS);
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
         enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_ONE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails).clickOnNextButton().fillEnrollmentOptionsDetails(enrollmentOptions)
                 .clickOnNextButton().validateBeginDate().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())

@@ -7,6 +7,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import constants.CommonConstants;
+import elementConstants.Dashboard;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Getter;
@@ -44,7 +45,8 @@ public abstract class BaseClass {
     @Getter
     public Logger logger = LoggerFactory.getLogger(this.getClass());
     public static SoftAssertions softAssertions;
-    public static WebDriver driver;
+    private static final ThreadLocal<WebDriver> threadLocalDriver = new InheritableThreadLocal<>();
+    private static WebDriver driver;
     public static String domainURL;
     public static String afterLoginURL;
     protected Map<String,WebDriver> sessionMap = new HashMap<>();
@@ -190,8 +192,12 @@ public abstract class BaseClass {
         }
     }
 
+    private static void setThreadLocalDriver(WebDriver driver){
+        threadLocalDriver.set(driver);
+    }
     private void setSelenideDriver(WebDriver driver){
-        WebDriverRunner.setWebDriver(driver);
+        setThreadLocalDriver(driver);
+        WebDriverRunner.setWebDriver(threadLocalDriver.get());
     }
 
     public JsonNode setScore(String seleniumTestId, String score) throws UnirestException {

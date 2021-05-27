@@ -1,11 +1,13 @@
 package base;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import constants.CommonConstants;
 import constants.EnumUtil;
 import elementConstants.AbekaHome;
+import elementConstants.Dashboard;
 import elementConstants.Students;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
@@ -101,7 +103,18 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public boolean isSelected(String identifier) {
+        waitForElementTobeExist(identifier);
         return getElement(identifier).isSelected();
+    }
+
+    public String getCCPropertyValueByJavaScript(SelenideElement element, String cssAttribute, String property){
+        return ((JavascriptExecutor)getDriver()).executeScript("return window.getComputedStyle(arguments[0], '"+cssAttribute+"').getPropertyValue('"+property+"');"
+                ,element).toString();
+    }
+
+    public String getCCPropertyValueByJavaScript(String identifier, String cssAttribute, String property){
+        return ((JavascriptExecutor)getDriver()).executeScript("return window.getComputedStyle(arguments[0], '"+cssAttribute+"').getPropertyValue('"+property+"');"
+                ,getElement(identifier)).toString();
     }
 
     public boolean isEnabled(String identifier) {
@@ -116,7 +129,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @return - true/false
      */
     public void type(String identifier, String text) {
-        waitForElementTobeExist(identifier);
+        bringElementIntoView(identifier);
         try {
             getElement(identifier).setValue(text);
             if(!getElementText(identifier).equals(text)){
@@ -128,9 +141,48 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }
     }
 
-    private void typeByJavaScript(String identifier, String text) {
+    /**
+     * Type text at location
+     *
+     * @param element element identifier
+     * @param text
+     * @return - true/false
+     */
+    public void type(SelenideElement element, String text) {
+        bringElementIntoView(element);
+        try {
+            element.setValue(text);
+            if(!getElementText(element).equals(text)){
+                element.setValue(text);
+            }
+        }catch (Throwable e){
+            log("Type by java script");
+            typeByJavaScript(element,text);
+        }
+    }
+
+    public void pressTab(SelenideElement element){
+        element.sendKeys(Keys.TAB);
+    }
+
+    public void pressTab(String identifier){
+        getElement(identifier).sendKeys(Keys.TAB);
+    }
+    public void pressEnter(String identifier){
+        getElement(identifier).sendKeys(Keys.ENTER);
+    }
+    public void pressEnter(SelenideElement element){
+        element.sendKeys(Keys.ENTER);
+    }
+
+    public void typeByJavaScript(String identifier, String text) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript("arguments[0].value='"+text+"';", getElement(identifier));
+    }
+
+    public void typeByJavaScript(SelenideElement element, String text) {
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].value='"+text+"';", element);
     }
 
     public boolean isElementTextEquals(String identifier, String expectedText){
@@ -326,9 +378,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @return
      */
     public SelenideElement bringElementIntoView(String identifier) {
-            waitForElementTobeExist(identifier);
             for(SelenideElement element:getElements(identifier)){
                 try {
+                    waitForElementTobeExist(identifier);
                     JavascriptExecutor executor = (JavascriptExecutor) getDriver();
                     executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", element);
                     Actions actions = new Actions(getDriver());
@@ -338,8 +390,8 @@ public abstract class SelenideExtended extends DatabaseExtended {
                     continue;
                 }
             }
-            new Throwable("Visible element not found for given identifier:" +identifier);
-            return null;
+            log("Visible element not found for given identifier:" +identifier);
+            return getElement(identifier);
     }
 
     public SelenideElement bringElementIntoView(SelenideElement element) {
@@ -576,10 +628,23 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     /**
      *
+     * @param identifier
+     */
+    public void waitForElementTobeExist(String identifier, int timeInSeconds) {
+        getElements(identifier).get(0).shouldBe(Condition.exist,Duration.ofSeconds(timeInSeconds));
+    }
+
+    /**
+     *
      * @param element
      */
+    @SneakyThrows
     public void waitForElementTobeExist(SelenideElement element) {
-        element.shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
+        try {
+            element.shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
+        }catch (NullPointerException e){
+            throw new Exception("Element not found "+element);
+        }
     }
 
     public void waitForElementTobeEnabled(String identifier){
@@ -656,6 +721,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         try{
             return $(parentElement.findElement(getByClause(childIdentifier)));
         }catch (Throwable e){
+            softAssertions.fail("Element not found \n Element details:\nParent Element:"+ parentElement+"\nChild Element:"+childIdentifier);
             return null;
         }
     }
@@ -709,7 +775,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public void waitForElementTobeDisappear(String identifier) {
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime stopTime = currentTime.plusSeconds(elementLoadWait);
+        LocalDateTime stopTime = currentTime.plusSeconds(elementLoadWait/2);
         while (stopTime.isAfter(currentTime)) {
                 try {
                     if (!isElementDisplayed(identifier)) {
@@ -728,7 +794,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         waitForElementTobeDisappear(AbekaHome.abekaBGProcessLogo);
     }
 
-    public void waitForPageTobLoaded(){
+    public void waitForPageTobeLoaded(){
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
             wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
@@ -737,17 +803,30 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }
     }
 
-    public void selectValueFromDropDown(String dropDownIdentifier, String value){
+    public void selectValueFromDropDownVideoLibrary(String dropDownIdentifier, String value){
         bringElementIntoView(dropDownIdentifier).click();
         click(getChildElement(getElement(dropDownIdentifier),String.format(CommonConstants.dropDownOption,value)));
+        waitForPageTobeLoaded();
     }
 
     public String getClassAttributeValue(SelenideElement element){
         try{
             return element.getAttribute("class").trim();
         }catch (Throwable t){
-            softAssertions.fail("Class attribute is not present");
+            softAssertions.fail("Either Class attribute is not present or element not found \n Element:" + element);
             return "";
         }
+    }
+
+    public boolean waitAndCloseWidgetTourPopup(){
+        try {
+            waitForElementTobeExist(Dashboard.widgetTourPopupClose,elementLoadWait*2);
+            click(Dashboard.widgetTourPopupClose);
+            waitForPageTobeLoaded();
+            return true;
+        }catch (Throwable e){
+            log(Dashboard.widgetTourPopupClose + " is not loaded.");
+        }
+        return false;
     }
 }

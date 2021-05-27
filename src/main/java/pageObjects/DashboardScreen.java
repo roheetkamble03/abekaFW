@@ -3,15 +3,11 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
-import constants.Calendar;
-import constants.CommonConstants;
 import elementConstants.Dashboard;
-import elementConstants.Enrollments;
 import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -30,7 +26,7 @@ public class DashboardScreen extends GenericAction {
 
     public DashboardScreen navigateToMyOrderLink(String link){
         bringElementIntoView(String.format(Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)).click();
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return this;
     }
 
@@ -114,25 +110,15 @@ public class DashboardScreen extends GenericAction {
         }
     }
 
-    public DashboardScreen waitAndCloseWidgetTourPopup(){
-        try {
-            waitForElementTobeExist(Dashboard.widgetTourPopupClose);
-            click(Dashboard.widgetTourPopupClose);
-        }catch (Throwable e){
-            log(Dashboard.widgetTourPopupClose + " is not loaded.");
-        }
-        return this;
-    }
-
     public StudentsScreen navigateToMyStudentProfile(String studentName){
         bringElementIntoView(getElement(String.format(Dashboard.studentLink, studentName))).click();
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return new StudentsScreen();
     }
 
     public CalendarScreen navigateToFullCalendarView(){
         click(Dashboard.FULL_CALENDAR_VIEW);
-        waitForPageTobLoaded();
+        waitForPageTobeLoaded();
         return new CalendarScreen();
     }
 }

@@ -26,6 +26,18 @@ public @interface Students {
     String TRANSCRIPT_ALERT_TEXT = "Transcript Request submitted and being processed";
     String MY_LESSONS_TODAY = "My Lessons Today";
     String YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON = "You have not completed the previous lesson.";
+    String QUIZ = "Quiz";
+    String TEST = "Test";
+    String EXAM = "Exam";
+    String MISC_NON_GRADED = "MISC_NON_GRADED";
+    String SIX_MONTHS_ASSESSMENT = "Accelerated (6 months)";
+    String NINE_MONTHS_ASSESSMENT = "Standard (9 months)";
+    String TWELVE_MONTHS_ASSESSMENT = "Extended (12 months)";
+    String YES = "Yes";
+    String No = "No";
+    String LESSON_LOCKED = "Lesson Locked";
+    String GRADE_TEXT_BOX_VALIDATOR_MESSAGE = "The highlighted fields below are required. Please be sure to enter a grade between 0 and 100.";
+    String AVERAGE = "Average";
 
 
     /**
@@ -39,7 +51,7 @@ public @interface Students {
     String loginInfoPopup = "passwordModal";
     String gradeAlertHeader = "xpath=//h4[normalize-space(text())=\"%s\"]/ancestor::div[@id='thresholdModal']";
     String gradeAlertSettingPopup = "thresholdModal";
-    String widgetLink = "xpath=//text()[normalize-space()='%s']";
+    String widgetLink = "xpath=//div[@id='%s']/descendant::a";
     String updateAll = "id=updateButton";
     String toDoListHeader = "id=lblToDoList";
     String accountInfoWidgetLink = "xpath=//*[@id='Account']/descendant::a/descendant::text()[normalize-space()='%s']/parent::a";
@@ -66,12 +78,28 @@ public @interface Students {
     String myLessonsTodayVideoLink = "xpath=//ul[@id='ulDailyLessons']/descendant::h3[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
     String videoLibrarySection = "id=VideoLibrary";
     String videoLibrarySubjectDropDown = "id=subjectsDropDown";
-    String videoLibraryVideoLink = "xpath=//h4[normalize-space(text())='%s']/parent::div/following-sibling::div/descendant::p[normalize-space(text())='%s']/ancestor::div[@class='modal-body']/following-sibling::div/descendant::button[normalize-space(text())='%s']";
+    String videoLibraryVideoLink = "xpath=//div[@id='lessonContents']//descendant::li[@data-lesson='%s' and @data-sub='%s']";
     String nextToNextVideoLink = "xpath=(//li[@id='VideoLibrary']/descendant::li[contains(normalize-space(@onclick),'Lesson_Clicked') and not(@class ='lessonComplete') and @data-teacher and position()])[1]";
-    String lessonLockedCloseButton = String.format("xpath=./descendant::div[@id='lessonIncomplete']/descendant::p[normalize-space(text())='%s']/parent::div/parent::div/following-sibling::div/descendant::button",YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON);
+    String lessonLockedCloseButton = "xpath=//div[@id='lessonIncomplete']/descendant::*[normalize-space(text())='%s']/parent::div/following-sibling::div/descendant::p[normalize-space(text())='%s']/parent::div/parent::div/following-sibling::div/descendant::button[normalize-space(text())='%s']";
     String videoPlayer = "id=player";
     String playingVideoTitle = "xpath=./descendant::span[@id='lblTitle' and normalize-space(text())='%s']";
     String assessmentLocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s']/preceding-sibling::span[@id='lblLockedIcon' and @data-original-title]";
     String assessmentUnlocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s' and @href and @class='assessmentBtn']";
-    String LESSON_LOCKED = "Lesson Locked";
+    String projectReportSubjectDropDown = "id=subjectsDropDown";
+    String gradingPeriod = "xpath=//div[@class='gradingPeriods']/a[normalize-space(text())='%s']";
+    String sectionHeader = "//div[@id='%s']/descendant::*[normalize-space(text())='%s']";
+    String gradeTableHeader = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']";
+    String gradeTextBox = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/input[not(@type='hidden')]";
+    String gradeHiddenTextBox = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/input[@type='hidden']";
+    String gradeAverageXpath = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/span";
+    String progressReportSignatureTextBox = "id=txtSignature";
+    String submit = "id=lbtnSubmit";
+    String calendarAssessmentModificationRadioBtn = "xpath=//div[@id='calendarModal']/descendant::label[normalize-space(text())='%s']/preceding-sibling::div/input[@type='radio']";
+    String updateCalendarBtn = "id=btnSubmitCalendarLength";
+    String saveCalendarPermission = "id=btnSaveCalendarPermission";
+    String Y = "Y";
+    String N = "N";
+    String restartVideo = "id=restartVideo";
+    //String myToDoListLesson = "xpath=//div[@id='updatePanel']/descendant::*[normalize-space(text())='%s']/parent::div/descendant::span[normalize-space(text())='%s']/preceding-sibling::a/span[normalize-space(text())='%s']";
+    String myToDoListLesson = "xpath=//div[@id='updatePanel']/descendant::*[normalize-space(text())='%s']/parent::div/descendant::span[normalize-space(text())='%s']/ancestor::div[normalize-space(@class)='dailyLesson']/descendant::*[normalize-space(text())='%s']";
 }

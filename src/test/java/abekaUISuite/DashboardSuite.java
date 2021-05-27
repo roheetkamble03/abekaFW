@@ -14,34 +14,39 @@ public class DashboardSuite extends GenericAction {
     public void validateAccessControlForParent(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardNewTab();
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.validateDashboardNewTab();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
     public void validateDashboardMyOrderWidgetsLinks(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateMyOrdersWidgetLinks();
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.validateMyOrdersWidgetLinks();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
     public void validateDashboardVideoManualPdfsWidgetLinks(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateVideoManualPdfsLinks();
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.validateVideoManualPdfsLinks();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
     public void validateDashboardNotificationWidgetLinks(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateNotificationRows();
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.validateNotificationRows();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
     public void validateDashboardMyStudentsWidgetLinks(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup().validateDashboardMyStudentLink();
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.validateDashboardMyStudentLink();
     }
 }

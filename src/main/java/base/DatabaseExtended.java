@@ -1,12 +1,19 @@
 package base;
 
 import constants.CommonConstants;
+import constants.DataBaseQueryConstant;
+import constants.SubjectDetails;
+import constants.TableColumn;
 import lombok.SneakyThrows;
 import oracle.jdbc.pool.OracleDataSource;
+import org.objectweb.asm.Type;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static constants.CommonConstants.SD_DATA_BASE;
+import static constants.TableColumn.*;
 
 public class DatabaseExtended extends BaseClass {
 
@@ -64,12 +71,25 @@ public class DatabaseExtended extends BaseClass {
         connection = getDBConnection(dataBase);
         try {
             resultSet = connection.createStatement().executeQuery(selectQuery);
+            log("\n\nExecuted query:\n"+selectQuery);
         }catch (Throwable e){
-            throw new Exception(e+"Execute query failed for \n" +selectQuery);
+            throw new Exception(e+"\n\nExecute query failed for \n\n" +selectQuery);
         }
         ArrayList<HashMap<String,String>> resultSetRowList = convertResultSetToArrayList();
         connection.close();
         return resultSetRowList;
+    }
+
+    @SneakyThrows
+    public void executeQuery(String selectQuery, String dataBase){
+        connection = getDBConnection(dataBase);
+        try {
+            connection.createStatement().executeQuery(selectQuery);
+            log("Executed query:\n"+selectQuery);
+        }catch (Throwable e){
+            throw new Exception(e+"Execute query failed for \n" +selectQuery);
+        }
+        connection.close();
     }
 
     @SneakyThrows
@@ -98,33 +118,49 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
-    private void executeStoredProcedure(String spQuery){
-        CallableStatement callableStatement = connection.prepareCall("{call procedure_name(?, ?, ?)}");
-        resultSet = callableStatement.executeQuery();
+    public void executeSetVideoCompletedStoredProcedure(String storedProcedure, String subscriptionNumber, String subscriptionItem, String loginId, String segmentId,
+                                                        String userID, String dataBase){
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.registerOutParameter(2, Types.INTEGER);
+        callableStatement.registerOutParameter(3, Types.INTEGER);
+        callableStatement.registerOutParameter(4, Types.INTEGER);
+        callableStatement.registerOutParameter(5, Types.VARCHAR);
 
-        CallableStatement cstmt = connection.prepareCall("{call sampleProcedure()}");
-        //Executing the CallableStatement
-        ResultSet rs1 = cstmt.executeQuery();
-        //Displaying the result
-        System.out.println("Contents of the first result-set");
-        while(rs1.next()) {
-            System.out.print("First Name: "+rs1.getString("First_Name")+", ");
-            System.out.print("Last Name: "+rs1.getString("Last_Name")+", ");
-            System.out.print("Year of Birth: "+rs1.getDate("Year_Of_Birth")+", ");
-            System.out.print("Place of Birth: "+rs1.getString("Place_Of_Birth")+", ");
-            System.out.print("Country: "+rs1.getString("Country"));
-            System.out.println();
-        }
-        System.out.println(" ");
-        cstmt.getMoreResults();
-        System.out.println("Contents of the second result-set");
-        ResultSet rs2 = cstmt.getResultSet();
-        while(rs2.next()) {
-            System.out.print("Product Name: "+rs2.getString("Product_Name")+", ");
-            System.out.print("Name of Customer: "+rs2.getString("Name_Of_Customer")+", ");
-            System.out.print("Dispatch Date: "+rs2.getDate("Dispatch_Date")+", ");
-            System.out.print("Location: "+rs2.getString("Location"));
-            System.out.println();
-        }
+        callableStatement.setInt(1,Integer.parseInt(subscriptionNumber));
+        callableStatement.setInt(2,Integer.parseInt(subscriptionItem));
+        callableStatement.setInt(3,Integer.parseInt(loginId));
+        callableStatement.setInt(4,Integer.parseInt(segmentId));
+        callableStatement.setString(5,userID);
+        callableStatement.execute();
+        log("Successfully executed the stored procedure:\n"+storedProcedure+"\n subscriptionNumber:"+subscriptionNumber+"\nsubscriptionItem:"+subscriptionItem+"\nloginId:"+loginId+"\nsegmentId:"+segmentId+"\nuserID:"+userID);
+        callableStatement.close();
+        connection.close();
+
+//        CallableStatement cstmt = connection.prepareCall("{call sampleProcedure()}");
+//        //Executing the CallableStatement
+//        ResultSet rs1 = cstmt.executeQuery();
+//        //Displaying the result
+//        System.out.println("Contents of the first result-set");
+//        while(rs1.next()) {
+//            System.out.print("First Name: "+rs1.getString("First_Name")+", ");
+//            System.out.print("Last Name: "+rs1.getString("Last_Name")+", ");
+//            System.out.print("Year of Birth: "+rs1.getDate("Year_Of_Birth")+", ");
+//            System.out.print("Place of Birth: "+rs1.getString("Place_Of_Birth")+", ");
+//            System.out.print("Country: "+rs1.getString("Country"));
+//            System.out.println();
+//        }
+//        System.out.println(" ");
+//        cstmt.getMoreResults();
+//        System.out.println("Contents of the second result-set");
+//        ResultSet rs2 = cstmt.getResultSet();
+//        while(rs2.next()) {
+//            System.out.print("Product Name: "+rs2.getString("Product_Name")+", ");
+//            System.out.print("Name of Customer: "+rs2.getString("Name_Of_Customer")+", ");
+//            System.out.print("Dispatch Date: "+rs2.getDate("Dispatch_Date")+", ");
+//            System.out.print("Location: "+rs2.getString("Location"));
+//            System.out.println();
+//        }
     }
 }
