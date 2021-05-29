@@ -5,12 +5,10 @@ import com.codeborne.selenide.SelenideElement;
 import constants.Calendar;
 import constants.TableColumn;
 import constants.DataBaseQueryConstant;
-import edu.emory.mathcs.backport.java.util.Arrays;
 import io.qameta.allure.Step;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
-
 import static constants.Calendar.*;
 import static constants.CommonConstants.AD_DATA_BASE;
 import static constants.TableColumn.*;
@@ -160,7 +158,7 @@ public class CalendarScreen extends GenericAction {
                 return i+1;
             }
         }
-        softAssertions.fail(date+":No assignement ID found for given key"+assignmentId);
+        softAssertions.fail(date+":Grid "+gridPosition+" position event text is not matching with given assignment ID:"+assignmentId.get(gridPosition-1));
         return 0;
     }
 
@@ -288,6 +286,9 @@ public class CalendarScreen extends GenericAction {
     }
 
     private void validateGridText(int rowCounter,int gridPosition, int dayPosition, String date, String compareText){
+        if(dayPosition == 0){
+            return;
+        }
         tempXpath = String.format(Calendar.eventGridText,rowCounter,gridPosition,dayPosition);
         String gridText = getElementText(tempXpath);
             softAssertions.assertThat(gridText.equals(compareText))

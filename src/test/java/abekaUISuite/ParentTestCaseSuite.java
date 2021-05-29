@@ -11,24 +11,27 @@ import pageObjects.DashboardScreen;
 import pageObjects.StudentsScreen;
 import utility.RetryUtility;
 
+import static constants.DataProviderName.PARENT_CREDENTIALS;
+import static constants.DataProviderName.STUDENT_CREDENTIALS;
 import static elementConstants.Students.*;
 
 public class ParentTestCaseSuite extends GenericAction {
     DashboardScreen dashboardScreen = new DashboardScreen();
     StudentsScreen studentsScreen;
 
-    @Test(testName = "Test-4", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "Test-4", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testManageStudentInformationFromDashboard(String userId, String password, String userName){
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
-        dashboardScreen.navigateToMyStudentProfile(Dashboard.STUDENT_NAME).
-                validateStudentInformationSection(Dashboard.STUDENT_NAME)
+        dashboardScreen.navigateToMyStudentProfile(Dashboard.STUDENT_NAME).waitAndCloseWidgetTourPopup();
+        new StudentsScreen().validateStudentInformationSection(Dashboard.STUDENT_NAME)
 //             disabled, since progress report not working   .navigateToProgressReportWidget().enterStudentGrades()
 //                .signProgressReport("signature").submitProgressReport()
                 .logoutFromAbeka();
+        softAssertions.assertAll();
     }
 
-    @Test(testName = "Test-5", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "Test-5", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAssessmentDetailsOnCalendar(String userId, String password, String userName){
         CalendarScreen calendarScreen = new CalendarScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
@@ -37,10 +40,10 @@ public class ParentTestCaseSuite extends GenericAction {
         dashboardScreen.navigateToFullCalendarView();
         dashboardScreen.waitAndCloseWidgetTourPopup();
         calendarScreen.validateNoStudentIsSelected().selectStudent(Dashboard.STUDENT_NAME).validateStudentCalendarEvents(false).logoutFromAbeka();
-        //need to check navigation part
+        softAssertions.assertAll();
     }
 
-    @Test(testName = "Test-6", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "Test-6", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testModifyStudentAssessmentDetailsOnCalendar(String userId, String password, String userName){
         StudentsScreen studentsScreen = new StudentsScreen();
         CalendarScreen calendarScreen = new CalendarScreen();
@@ -51,11 +54,10 @@ public class ParentTestCaseSuite extends GenericAction {
         studentsScreen.navigateToCalendarSettingsWidget().changeStudentAssessmentDetails(SIX_MONTHS_ASSESSMENT,"");
         studentsScreen.navigateToCalendarSettingsWidget().validateStudentAssessmentDetails(SIX_MONTHS_ASSESSMENT,No);
         studentsScreen.navigateToCalendarSettingsWidget().changeStudentAssessmentDetails(NINE_MONTHS_ASSESSMENT,"").logoutFromAbeka();
-
-        //need to check navigation part
+        softAssertions.assertAll();
     }
 
-    @Test(testName = "Test-7", dataProvider = "studentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "Test-7", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentDashboardData(String userId, String password, String userName){
         StudentsScreen studentsScreen = new StudentsScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
@@ -64,15 +66,16 @@ public class ParentTestCaseSuite extends GenericAction {
         studentsScreen.validateMyToDoListData().validateAccountInfoPage().
                 validateRequestTranScriptFunctionality(Dashboard.STUDENT_NAME).
         validateMyRecentGrades(Dashboard.STUDENT_NAME).verifyLastViewedLessons().logoutFromAbeka();
+        softAssertions.assertAll();
     }
 
-    @Test(testName = "Test-8", dataProvider = "studentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "Test-8", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAbleToWatchVideoStreaming(String userId, String password, String userName){
         StudentsScreen studentsScreen = new StudentsScreen();
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         setStudentAccountDetailsFromDB(userId);
-        setStudentSubjectDetailsFromDB(userId);
+        getStudentSubjectDetailsFromDB(userId);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         studentsScreen.validateDigitalAssessmentsAreLockedOrNot();
@@ -84,10 +87,39 @@ public class ParentTestCaseSuite extends GenericAction {
 
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         studentsScreen.validateDigitalAssessmentsAreLockedOrNot().logoutFromAbeka();
-
-        //data need to fetch from DB for validation
+        softAssertions.assertAll();
     }
 
+    @Test(testName = "Test-9", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentAbleToCompleteDigitalAssessmentSuccessfully(String userId, String password, String userName){
+        loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
+        navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
+        getStudentSubjectDetailsFromDB(userId);
+        new StudentsScreen().submitAnswerAndSubmitDigitalAssessment(false);
+        softAssertions.assertAll();
+    }
 
+    @Test(enabled = true, testName = "Test-10", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentCalendarEvents(String userId, String password, String userName){
+        loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
+        navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
+        new CalendarScreen().validateStudentCalendarEvents(false).logoutFromAbeka();
+        softAssertions.assertAll();
+    }
 
+    @Test(enabled = false, testName = "Test-11", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateParentDashboardAccessControl(String userId, String password, String userName){
+        loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        new AbekaHomeScreen().validatedURLContent(AbekaHome.PARENT_ACCESS_CONTROL_URL_CONTENT);
+        logoutFromAbeka();
+        softAssertions.assertAll();
+    }
+
+    @Test(enabled = false, testName = "Test-12", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentDashboardAccessControl(String userId, String password, String userName){
+        loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        new AbekaHomeScreen().validatedURLContent(AbekaHome.STUDENT_ACCESS_CONTROL_URL_CONTENT);
+        logoutFromAbeka();
+        softAssertions.assertAll();
+    }
 }

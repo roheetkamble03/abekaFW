@@ -26,4 +26,11 @@ public class AbekaHomeScreen extends GenericAction {
     protected void setUp(String browserName, String platform) {
 
     }
+
+    public void validatedURLContent(String urlContent){
+        softAssertions.assertThat(getCurrentURL().contains(urlContent))
+                .as("Navigated page's current URL is not having mentioned URL content.\nCurrent URL:"+getCurrentURL()
+                            +"\n Expected content:"+urlContent).isTrue();
+    }
+
 }

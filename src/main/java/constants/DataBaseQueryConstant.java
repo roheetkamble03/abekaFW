@@ -200,6 +200,10 @@ public @interface DataBaseQueryConstant {
             "        OR (vAssign.grade IN(7,8,9,10,11,12) AND trunc(vAssign.completion_date) = trunc(sysdate) )\n" +
             "  ORDER BY vAssign.completion_date desc, vAssign.sub_start_date, vAssign.sortorder, vAssign.lesson_number";
 
+    /**
+     * Fetching Student's digital assessment details
+     * .replaceAll(TableColumn.STUDENT_ID_DATA,studentID)
+     */
     String DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB = "/*Get digital only assessment details from AD DB*/\n" +
             "SELECT ap_grade,\n" +
             "       apref,\n" +
@@ -362,7 +366,7 @@ public @interface DataBaseQueryConstant {
             "                 AND assign.completion_date IS NULL\n" +
             "            ORDER BY sortorder ASC)";
 
-    //ORDER BY start_date ASC, eventid ASC)
+    //ORDER BY start_date ASC, eventid ASC) or ORDER BY start_date ASC, our_sort ASC, short_description ASC, long_description ASC)
     String STUDENT_CALENDER_EVENTS_AD_DB = "/*Get student calendar events from AD DB*/\n" +
             "SELECT eventID AS EVENT_ID,\n" +
             "            student_id AS STUDENT_ID,\n" +
@@ -617,7 +621,7 @@ public @interface DataBaseQueryConstant {
             "                'YYYYMMDDhh24miss')\n" +
             "            AND ap.ap_status != 9\n" +
             "            AND (rchdr.rch_status IS NULL OR rchdr.rch_status != 'C')\n" +
-            "       ORDER BY start_date ASC, our_sort ASC, short_description ASC, EventID ASC)";
+            "       ORDER BY start_date ASC, our_sort ASC, short_description ASC, long_description ASC)";
 
     String VIDEO_LIBRARY_VIDEOS_SD_DB = "/*Get video library video details from SD DB*/\n" +
             "SELECT DISTINCT lessons.segment_id, lessons.lesson_number, lessons.subject_name, lessons.completed,\n" +
@@ -643,7 +647,7 @@ public @interface DataBaseQueryConstant {
             "            ORDER BY lessons.lesson_number, lessons.super_group NULLS FIRST";
 
     String LOGIN_DETAILS_SD_DB = "/* To get the Student Login details from SD DB*/\n" +
-            "SELECT LOGIN_ID_PK AS LOGIN_ID, ACCOUNT_NUMBER, STUDENT_ID, USER_NAME FROM abashared.user_logins WHERE lower(user_name) = lower('STUDENT_ID_DATA')";
+            "SELECT DISPLAY_NAME, LOGIN_ID_PK AS LOGIN_ID, ACCOUNT_NUMBER, STUDENT_ID, USER_NAME FROM abashared.user_logins WHERE lower(user_name) = lower('STUDENT_ID_DATA')";
 
     String GET_SUBSCRIPTION_NUMBER_SD_DB = "/* To get the Subscription number from SD DB*/ \n" +
             "SELECT DISTINCT subscription_number AS SUBSCRIPTION_NUMBER\n" +

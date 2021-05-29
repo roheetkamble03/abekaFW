@@ -82,6 +82,7 @@ public class DatabaseExtended extends BaseClass {
 
     @SneakyThrows
     public void executeQuery(String selectQuery, String dataBase){
+        log("Executing SQL query");
         connection = getDBConnection(dataBase);
         try {
             connection.createStatement().executeQuery(selectQuery);
@@ -120,6 +121,7 @@ public class DatabaseExtended extends BaseClass {
     @SneakyThrows
     public void executeSetVideoCompletedStoredProcedure(String storedProcedure, String subscriptionNumber, String subscriptionItem, String loginId, String segmentId,
                                                         String userID, String dataBase){
+        log("Executing stored procedure");
         connection = getDBConnection(dataBase);
         CallableStatement callableStatement = connection.prepareCall(storedProcedure);
         callableStatement.registerOutParameter(1, Types.INTEGER);

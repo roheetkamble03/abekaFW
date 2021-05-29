@@ -5,6 +5,7 @@ public @interface TableColumn {
     String GRADE = "GRADE";
     String STUDENT_ID_DATA = "STUDENT_ID_DATA";
     String STUDENT_ID = "STUDENT_ID";
+    String DISPLAY_NAME = "DISPLAY_NAME";
     String START_DATE_DATA = "START_DATE_DATA";
     String START_DATE = "START_DATE";
     String END_DATE_DATA = "END_DATE_DATA";

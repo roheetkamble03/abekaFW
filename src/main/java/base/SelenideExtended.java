@@ -46,6 +46,19 @@ public abstract class SelenideExtended extends DatabaseExtended {
             log("Clicked by java script");
             clickByJavaScript(getElement(identifier));
         }
+        waitForPageTobeLoaded();
+        log("Clicked on "+identifier);
+    }
+
+    public void clickWithoutPageLoadWait(String identifier){
+        waitForElementTobeExist(identifier);
+        try {
+            click(bringElementIntoView(identifier));
+        }catch (Throwable e){
+            log("Clicked by java script");
+            clickByJavaScript(getElement(identifier));
+        }
+        log("Clicked on "+identifier);
     }
 
     public void click(SelenideElement element){
@@ -85,10 +98,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public boolean isElementExists(String identifier) {
         try {
-            getElement(identifier);
-            bringElementIntoView(identifier);
+            waitForElementTobeExist(identifier);
             return true;
-        }catch (ElementNotFound e){
+        }catch (Throwable e){
             return false;
         }
     }
@@ -622,8 +634,15 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      * @param identifier
      */
+    @SneakyThrows
     public void waitForElementTobeExist(String identifier) {
-        getElements(identifier).get(0).shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
+        try {
+            getElements(identifier).get(0).shouldBe(Condition.exist, Duration.ofSeconds(elementLoadWait));
+        }catch (Throwable t){
+            logger.info("Following Element not found \n" +
+                    getByClause(identifier));
+            throw new Exception(t);
+        }
     }
 
     /**
@@ -828,5 +847,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
             log(Dashboard.widgetTourPopupClose + " is not loaded.");
         }
         return false;
+    }
+
+    public void navigateToHeaderBannerSubmenu(String menu, String submenu){
+        mouseOverOnElement(menu);
+        click(bringElementIntoView(String.format(AbekaHome.HEADER_SUB_MENU,submenu)));
     }
 }

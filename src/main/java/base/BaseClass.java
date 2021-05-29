@@ -7,13 +7,10 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import constants.CommonConstants;
-import elementConstants.Dashboard;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.Synchronized;
-import oracle.jdbc.pool.OracleDataSource;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,17 +23,17 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
 import static org.openqa.selenium.remote.BrowserType.*;
 
 public abstract class BaseClass {
@@ -82,7 +79,6 @@ public abstract class BaseClass {
         quitEachDriver(sessionMap);
         SelenideLogger.removeListener("allure");
         log("Tearing down test finished");
-        softAssertions.assertAll();
     }
     @BeforeSuite
     public void prerequisiteSetup(){

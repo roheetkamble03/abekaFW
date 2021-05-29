@@ -1,25 +1,19 @@
 package base;
 
 import com.google.common.base.CaseFormat;
-import constants.CommonConstants;
-import constants.SubjectDetails;
-import constants.TableColumn;
-import constants.DataBaseQueryConstant;
+import constants.*;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
 import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import pageObjects.AbekaHomeScreen;
-
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
@@ -28,8 +22,9 @@ import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
 
 public abstract class GenericAction extends SelenideExtended{
 
-    @Getter@Setter
-    public static HashMap<String,String> userAccountDetails = new HashMap<>();
+    @Getter
+    public static UserAccountDetails userAccountDetails = null;
+
     @Getter
     public static HashMap<String, SubjectDetails> studentSubjectDetailsList = new HashMap<>();
 
@@ -88,7 +83,7 @@ public abstract class GenericAction extends SelenideExtended{
         return quantity*price;
     }
 
-    public ArrayList getAllAvailableBrowserTab(){
+    public ArrayList<String> getAllAvailableBrowserTab(){
         return new ArrayList<>(getDriver().getWindowHandles());
     }
 
@@ -129,35 +124,30 @@ public abstract class GenericAction extends SelenideExtended{
 
     /**
      * Setting student account details at global level
-     * @param userId
+     * @param userId user ID to get the details
      */
     public void setStudentAccountDetailsFromDB(String userId){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
-        userAccountDetails.put(USER_ID,userId);
-        userAccountDetails.put(LOGIN_ID,userLoginDetails.get(LOGIN_ID));
-        userAccountDetails.put(TableColumn.ACCOUNT_NUMBER,userLoginDetails.get(TableColumn.ACCOUNT_NUMBER));
-        userAccountDetails.put(TableColumn.STUDENT_ID,userLoginDetails.get(TableColumn.STUDENT_ID));
-        userAccountDetails.put(TableColumn.USER_NAME,userLoginDetails.get(TableColumn.USER_NAME));
-        userAccountDetails.put(SUBSCRIPTION_NUMBER,executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_NUMBER_SD_DB
-                .replaceAll(LOGIN_ID_DATA,userAccountDetails.get(LOGIN_ID)),SD_DATA_BASE).get(0).get(SUBSCRIPTION_NUMBER));
+
+        userAccountDetails = new UserAccountDetails(userId,userLoginDetails.get(LOGIN_ID),userLoginDetails.get(ACCOUNT_NUMBER),
+                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_NUMBER_SD_DB
+                .replaceAll(LOGIN_ID_DATA,userLoginDetails.get(LOGIN_ID)),SD_DATA_BASE).get(0).get(SUBSCRIPTION_NUMBER));
     }
 
     /**
      * Setting student subject details at global level
-     * @param studentName
+     * @param studentName student name for get student details
      */
-
-    public void setStudentSubjectDetailsFromDB(String studentName){
-        if(userAccountDetails.size()==0){
+    public void getStudentSubjectDetailsFromDB(String studentName){
+        if(getUserAccountDetails() == null){
             setStudentAccountDetailsFromDB(studentName);
         }
         for(HashMap<String,String> row: executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_SUBJECT_DETAILS_SD_DB
-                .replaceAll(LOGIN_ID_DATA,userAccountDetails.get(LOGIN_ID)).replaceAll(SUBSCRIPTION_NUMBER_DATA,userAccountDetails.get(SUBSCRIPTION_NUMBER)),SD_DATA_BASE)){
+                .replaceAll(LOGIN_ID_DATA, getUserAccountDetails().getLoginId()).replaceAll(SUBSCRIPTION_NUMBER_DATA, getUserAccountDetails().getSubscriptionNumber()),SD_DATA_BASE)){
 
             studentSubjectDetailsList.put(row.get(SUBJECT_NAME).trim(),new SubjectDetails(row.get(SUBJECT_NAME).trim(),row.get(TableColumn.SUBJECT_ID).trim(),
                     row.get(TableColumn.SUBSCRIPTION_ITEMS).trim(),row.get(SUBSCRIPTION_NUMBER).trim()));
-
         }
     }
 
@@ -167,7 +157,7 @@ public abstract class GenericAction extends SelenideExtended{
      * @param resultSetMapList data to be processed
      * @param dataColumnOrMergedColumnData If we pass multiple column, data will be merged of all columns
      * @param delimiter merged data will be separated by this
-     * @return
+     * @return returning grouped by data in the form of Map<String, ArrayList<String>>
      */
     public Map<String, ArrayList<String>> getGroupedByDataAccordingToColumn(String groupByColumn, ArrayList<HashMap<String, String>> resultSetMapList, String[] dataColumnOrMergedColumnData, String delimiter) {
         Map<String, ArrayList<String>> groupByMap = new TreeMap<>();
@@ -216,7 +206,7 @@ public abstract class GenericAction extends SelenideExtended{
      * @param dataColumnsToBeFetched Column whose data we want fetch
      * @param customKeyColumns List of column whose data should be used as a key
      * @param customKeyJoiner custom key column data joiner
-     * @return
+     * @return returning the custom key with column list in the form of Map<String, ArrayList<String>>
      */
     public Map<String, ArrayList<String>> getCustomKeyAndColumnDataList(ArrayList<HashMap<String, String>> resultSetMapList, String[] customKeyColumns,
                                                                    String customKeyJoiner, String[] dataColumnsToBeFetched, String dataColumnJoiner ){
@@ -272,5 +262,15 @@ public abstract class GenericAction extends SelenideExtended{
                 DateTimeFormatter expectedFormat = DateTimeFormatter.ofPattern(expectedDateFormat);
                 return localDate.format(expectedFormat);
         }
+    }
+
+    public void validatedURLContent(String urlContent){
+        softAssertions.assertThat(getCurrentURL().contains(urlContent))
+                .as("Navigated page's current URL is not having mentioned URL content.\nCurrent URL:"+getCurrentURL()
+                        +"\n Expected content:"+urlContent).isTrue();
+    }
+
+    public boolean isURLContainsGivenText(String text){
+        return getCurrentURL().indexOf(text)>0;
     }
 }

@@ -47,7 +47,7 @@ public @interface Students {
     String calendarPopup = "calendarModal";
     String imagePopupHeader = "xpath=//h4[normalize-space(text())=\"%s\"]/ancestor::div[@id='photoModal']";
     String imagePopup = "photoModal";
-    String loginInfoPopupHeader = "xpath=//h4[normalize-space(text())=\"%s\"]/ancestor::div[@id='passwordModal']";
+    String loginInfoPopupHeader = "xpath=//div[@id='passwordModal']/descendant::*[@class='modal-title themeColor']";
     String loginInfoPopup = "passwordModal";
     String gradeAlertHeader = "xpath=//h4[normalize-space(text())=\"%s\"]/ancestor::div[@id='thresholdModal']";
     String gradeAlertSettingPopup = "thresholdModal";
@@ -82,7 +82,7 @@ public @interface Students {
     String nextToNextVideoLink = "xpath=(//li[@id='VideoLibrary']/descendant::li[contains(normalize-space(@onclick),'Lesson_Clicked') and not(@class ='lessonComplete') and @data-teacher and position()])[1]";
     String lessonLockedCloseButton = "xpath=//div[@id='lessonIncomplete']/descendant::*[normalize-space(text())='%s']/parent::div/following-sibling::div/descendant::p[normalize-space(text())='%s']/parent::div/parent::div/following-sibling::div/descendant::button[normalize-space(text())='%s']";
     String videoPlayer = "id=player";
-    String playingVideoTitle = "xpath=./descendant::span[@id='lblTitle' and normalize-space(text())='%s']";
+    String playingVideoTitle = "xpath=//div[@id='player']/descendant::span[@id='lblTitle' and normalize-space(text())='%s']";
     String assessmentLocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s']/preceding-sibling::span[@id='lblLockedIcon' and @data-original-title]";
     String assessmentUnlocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s' and @href and @class='assessmentBtn']";
     String projectReportSubjectDropDown = "id=subjectsDropDown";
