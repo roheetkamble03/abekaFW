@@ -12,6 +12,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -46,6 +47,7 @@ public abstract class BaseClass {
     private static WebDriver driver;
     public static String domainURL;
     public static String afterLoginURL;
+    public static String browser;
     protected Map<String,WebDriver> sessionMap = new HashMap<>();
     protected DesiredCapabilities desiredCapabilities;
     protected int pageLoadTimeOut;
@@ -66,11 +68,12 @@ public abstract class BaseClass {
     @BeforeMethod
     protected void setUp(String browserName, String platform){
         log("Setting up the test");
+        browser = browserName;
         softAssertions = new SoftAssertions();
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
         launchApp(grid,browserName, this.platform);
         //Allure report writing will be done letter
-        log("Setting up test finished");
+        log("setUp done successfully");
     }
 
     @AfterMethod
@@ -108,18 +111,31 @@ public abstract class BaseClass {
     }
 
     private void setBrowserProperties(){
+        log("Setting selenide driver");
         setSelenideDriver(driver);
+        log("Setting window maximize");
         getDriver().manage().window().maximize();
         //Delete all the cookies
+        log("Deleting all cookies");
         getDriver().manage().deleteAllCookies();
         //Implicit TimeOuts
+        log("setting time out with with common wait");
         getDriver().manage().timeouts().implicitlyWait
                 (commonWait, TimeUnit.SECONDS);
         //PageLoad TimeOuts
+        log("Setting page load timeout");
         getDriver().manage().timeouts().pageLoadTimeout
                 (pageLoadTimeOut, TimeUnit.SECONDS);
         //Launching the URL
-        getDriver().get(domainURL);
+        try {
+            log("Opening domain URL");
+            getDriver().get(domainURL);
+        }catch (TimeoutException e){
+            if(!browser.equals(SAFARI)){
+                tearDown();
+            }
+        }
+        log("Setting driver in default session");
         sessionMap.put("DefaultSession",getDriver());
     }
 
@@ -138,7 +154,6 @@ public abstract class BaseClass {
             case CommonConstants.CROSS_BROWSER:
                 isLocalRun = false;
                 launchAppOnCrossBrowser(browser,platform);
-
         }
     }
 

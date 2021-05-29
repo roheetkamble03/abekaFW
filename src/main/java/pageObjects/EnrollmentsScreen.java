@@ -22,7 +22,7 @@ public class EnrollmentsScreen extends GenericAction {
     }
 
     public EnrollmentsScreen openSectionLink(String sectionName, String linkText){
-        bringElementIntoView(getElements(String.format(Enrollments.sectionChildOpenLink,sectionName,linkText)).get(0)).click();
+        click(bringElementIntoView(getElements(String.format(Enrollments.sectionChildOpenLink,sectionName,linkText)).get(0)));
         waitForPageTobeLoaded();
         return this;
     }
@@ -34,7 +34,7 @@ public class EnrollmentsScreen extends GenericAction {
    }
 
     public EnrollmentsScreen goToAddNewStudentPage(){
-        bringElementIntoView(Enrollments.addNewStudent).click();
+        click(bringElementIntoView(Enrollments.addNewStudent));
         return this;
     }
 
@@ -102,8 +102,8 @@ public class EnrollmentsScreen extends GenericAction {
     }
 
     public EnrollmentsScreen fillEnrollmentOptionsDetails(EnrollmentOptions enrollmentOptions){
-        bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())).click();
-        bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())).click();
+        click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())));
+        click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
         bringElementIntoView(enrollmentOptions.getGuardians());
         click(enrollmentOptions.getGuardians());
         implicitWaitInSeconds(3);

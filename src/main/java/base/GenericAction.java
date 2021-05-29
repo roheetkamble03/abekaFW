@@ -19,6 +19,7 @@ import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
+import static org.openqa.selenium.remote.BrowserType.SAFARI;
 
 public abstract class GenericAction extends SelenideExtended{
 
@@ -69,8 +70,14 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public void waitAndCloseSignUpPop(){
+        log("Waiting for sign up popup");
         waitForElementTobeVisible(AbekaHome.closeSignup);
-        click(AbekaHome.closeSignup);
+        if(browser.equals(SAFARI)){
+            clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
+        }else {
+            click(getVisibleElement(AbekaHome.closeSignup));
+        }
+
     }
 
     public String formatCurrencyToDollar(Double amount){

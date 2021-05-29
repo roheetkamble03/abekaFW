@@ -17,7 +17,7 @@ public @interface AbekaHome {
     String shop = "text=Shop";
     String firstGrade = "text=1st Grade";
     String cart = "text=Cart";
-    String closeSignup = "xpath=//div[@id='newsLetterSignup']//button[@onclick='dockEmailSubscribe()']";
+    String closeSignup = "xpath=//form[@id='aspnetForm']//div[@id='newsLetterSignup']//button[@onclick='dockEmailSubscribe()']";
     String abekaBGProcessLogo = "xpath=//i[@class='abekaLogoLoading']";
     String accountGreeting = "xpath=//*[@id='AccountGreeting']/a";
     String account = "text=Account";

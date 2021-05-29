@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="D:/Automation/Framework/AbekaAutomationFW">
-        <parameter name="browser" value="Chrome"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
         <parameter name= "platform" value="Windows 10"></parameter>
         <classes>
             <!--<class name="abekaUISuite.LoginTestSuite">

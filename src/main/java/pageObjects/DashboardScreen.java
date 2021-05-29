@@ -25,7 +25,7 @@ public class DashboardScreen extends GenericAction {
     }
 
     public DashboardScreen navigateToMyOrderLink(String link){
-        bringElementIntoView(String.format(Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)).click();
+        click(bringElementIntoView(String.format(Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)));
         waitForPageTobeLoaded();
         return this;
     }
@@ -111,7 +111,7 @@ public class DashboardScreen extends GenericAction {
     }
 
     public StudentsScreen navigateToMyStudentProfile(String studentName){
-        bringElementIntoView(getElement(String.format(Dashboard.studentLink, studentName))).click();
+        click(bringElementIntoView(getElement(String.format(Dashboard.studentLink, studentName))));
         waitForPageTobeLoaded();
         return new StudentsScreen();
     }

@@ -46,7 +46,6 @@ public class ParentTestCaseSuite extends GenericAction {
     @Test(testName = "Test-6", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testModifyStudentAssessmentDetailsOnCalendar(String userId, String password, String userName){
         StudentsScreen studentsScreen = new StudentsScreen();
-        CalendarScreen calendarScreen = new CalendarScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         setStudentAccountDetailsFromDB("syed.rcg");
         dashboardScreen.waitAndCloseWidgetTourPopup();
