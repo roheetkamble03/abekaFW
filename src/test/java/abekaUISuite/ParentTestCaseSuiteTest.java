@@ -15,7 +15,7 @@ import static constants.DataProviderName.PARENT_CREDENTIALS;
 import static constants.DataProviderName.STUDENT_CREDENTIALS;
 import static elementConstants.Students.*;
 
-public class ParentTestCaseSuite extends GenericAction {
+public class ParentTestCaseSuiteTest extends GenericAction {
     DashboardScreen dashboardScreen = new DashboardScreen();
     StudentsScreen studentsScreen;
 
@@ -114,7 +114,7 @@ public class ParentTestCaseSuite extends GenericAction {
         softAssertions.assertAll();
     }
 
-    @Test(enabled = false, testName = "Test-12", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(enabled = true, testName = "Test-12", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentDashboardAccessControl(String userId, String password, String userName){
         loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         new AbekaHomeScreen().validatedURLContent(AbekaHome.STUDENT_ACCESS_CONTROL_URL_CONTENT);

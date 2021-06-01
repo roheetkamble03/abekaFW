@@ -12,6 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.11" level="project" />
     <orderEntry type="library" name="Maven: io.qameta.allure:allure-selenide:2.14.0" level="project" />
     <orderEntry type="library" name="Maven: io.qameta.allure:allure-java-commons:2.14.0" level="project" />
     <orderEntry type="library" name="Maven: io.qameta.allure:allure-model:2.14.0" level="project" />

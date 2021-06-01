@@ -15,7 +15,7 @@ import utility.RetryUtility;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LoginTestSuite extends GenericAction {
+public class LoginTestSuiteTest extends GenericAction {
     AbekaHomeScreen abekaHomeScreen;
     DashboardScreen dashboardScreen;
     EnrollmentsScreen enrollmentsScreen;

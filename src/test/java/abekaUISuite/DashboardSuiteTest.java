@@ -6,7 +6,7 @@ import elementConstants.AbekaHome;
 import org.testng.annotations.Test;
 import pageObjects.DashboardScreen;
 
-public class DashboardSuite extends GenericAction {
+public class DashboardSuiteTest extends GenericAction {
 
     DashboardScreen dashboardScreen = new DashboardScreen();
 

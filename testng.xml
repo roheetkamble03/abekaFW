@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="D:/Automation/Framework/AbekaAutomationFW">
-        <parameter name="browser" value="chrome"></parameter>
-        <parameter name= "platform" value="Windows 10"></parameter>
+
+    <test verbose="2" preserve-order="true" name="Smoke Suite test">
+        <parameter name = "browser" value = "chrome"/>
+        <parameter name = "platform" value = "Windows 10"/>
         <classes>
-            <!--<class name="abekaUISuite.LoginTestSuite">
+            <class name="abekaUISuite.ParentTestCaseSuiteTest">
                 <methods>
-                    <include name="enrollmentPurchase"/>
-                    <include name="validateDashBoardWidgets"/>
-                    <include name="validateNewStudentCreation"/>
-                </methods>
-            </class>
-            -->
-            <class name="abekaUISuite.ParentTestCaseSuite">
-                <methods>
-                    <!--<include name="testValidateStudentAbleToWatchVideoStreaming"/>
-                    <include name="testManageStudentInformationFromDashboard"/>
-                    <include name="testModifyStudentAssessmentDetailsOnCalendar"/>-->
+                    <include name="testValidateStudentDashboardAccessControl"></include>
                 </methods>
             </class>
         </classes>

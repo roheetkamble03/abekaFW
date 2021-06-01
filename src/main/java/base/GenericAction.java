@@ -29,8 +29,8 @@ public abstract class GenericAction extends SelenideExtended{
     @Getter
     public static HashMap<String, SubjectDetails> studentSubjectDetailsList = new HashMap<>();
 
-    @Parameters({"browser", "platform"})
     @BeforeMethod
+    @Parameters({"browser", "platform"})
     protected void setUp(String browserName, String platform) {
         super.setUp(browserName,platform);
         //Allure report writing will be done later
