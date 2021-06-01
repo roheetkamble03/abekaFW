@@ -175,7 +175,9 @@ public abstract class BaseClass {
         desiredCapabilities.setCapability("build", "1.0");
         desiredCapabilities.setCapability("browserName", browser);
         desiredCapabilities.setCapability("version", "72");
-        desiredCapabilities.setCapability("platform", platform);
+        if(platform == null){
+            desiredCapabilities.setCapability("platform", platform);
+        }
         desiredCapabilities.setCapability("screenResolution", "1366x768");
         desiredCapabilities.setCapability("record_video", "true");
         desiredCapabilities.setCapability("record_network", "false");

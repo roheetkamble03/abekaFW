@@ -16,8 +16,8 @@
             <class name="abekaUISuite.ParentTestCaseSuite">
                 <methods>
                     <!--<include name="testValidateStudentAbleToWatchVideoStreaming"/>
-                    <include name="testManageStudentInformationFromDashboard"/>-->
-                    <include name="testModifyStudentAssessmentDetailsOnCalendar"/>
+                    <include name="testManageStudentInformationFromDashboard"/>
+                    <include name="testModifyStudentAssessmentDetailsOnCalendar"/>-->
                 </methods>
             </class>
         </classes>

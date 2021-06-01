@@ -72,6 +72,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         waitForElementTobeExist(element);
         try {
             if(browser.equals(SAFARI)) {
+                log("Clicked by java script for safari browser");
                 clickByJavaScript(element);
             }else {
                 element.click();
@@ -514,7 +515,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void switchToLastOrNewWindow() {
             Set<String> s=getDriver().getWindowHandles();
             Object popup[]=s.toArray();
-            getDriver().switchTo().window(popup[popup.length-1].toString());
+            if(browser.equals(SAFARI)) {
+                switchToFirstWindow();
+            }else{
+                getDriver().switchTo().window(popup[popup.length - 1].toString());
+            }
     }
 
     /**
@@ -532,7 +537,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void switchToFirstWindow() {
         Set<String> s=getDriver().getWindowHandles();
         Object popup[]=s.toArray();
-        getDriver().switchTo().window(popup[0].toString());
+        if(browser.equals(SAFARI)) {
+            getDriver().switchTo().window(popup[popup.length - 1].toString());
+        }else {
+            getDriver().switchTo().window(popup[0].toString());
+        }
     }
 
     /**
@@ -648,8 +657,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public SelenideElement getVisibleElement(String identifier){
-        log("Getting visible element");
+        log("Getting visible element:"+identifier);
         for (SelenideElement element: getElements(identifier)){
+            implicitWaitInSeconds(1);
             if (isElementDisplayed(identifier)) {
                 log("Visible element found");
                 return element;

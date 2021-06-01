@@ -55,8 +55,8 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public AbekaHomeScreen navigateToAccountGreetingSubMenu(String submenu){
-        click(AbekaHome.accountGreeting);
-        click(CommonConstants.LINK_TEXT + submenu);
+        click(getVisibleElement(AbekaHome.accountGreeting));
+        click(getVisibleElement(CommonConstants.LINK_TEXT + submenu));
         if(submenu.equalsIgnoreCase(AbekaHome.DASHBOARD))
             switchToLastOrNewWindow();
         waitForPageTobeLoaded();

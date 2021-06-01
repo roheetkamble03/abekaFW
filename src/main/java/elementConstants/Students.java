@@ -38,6 +38,8 @@ public @interface Students {
     String LESSON_LOCKED = "Lesson Locked";
     String GRADE_TEXT_BOX_VALIDATOR_MESSAGE = "The highlighted fields below are required. Please be sure to enter a grade between 0 and 100.";
     String AVERAGE = "Average";
+    String MULTIPLE_CHOICE = "MULTIPLE CHOICE";
+    String TRUE_FALSE = "TRUE/FALSE";
 
 
     /**
@@ -102,4 +104,15 @@ public @interface Students {
     String restartVideo = "id=restartVideo";
     //String myToDoListLesson = "xpath=//div[@id='updatePanel']/descendant::*[normalize-space(text())='%s']/parent::div/descendant::span[normalize-space(text())='%s']/preceding-sibling::a/span[normalize-space(text())='%s']";
     String myToDoListLesson = "xpath=//div[@id='updatePanel']/descendant::*[normalize-space(text())='%s']/parent::div/descendant::span[normalize-space(text())='%s']/ancestor::div[normalize-space(@class)='dailyLesson']/descendant::*[normalize-space(text())='%s']";
+    String signature = "id=txtSignature";
+    String signPledgeBtn = "id=lbtnSignPledge";
+    String linkitBeginBtn = "id=startButton";
+    String linkitQuestionPanel = "id=questionItemPanel";
+    String linkitTotalQuestions = "xpath=//div[@class='currentQuestion']";
+    String linkitQuestionType = "xpath=//div[@class='sectionInstructor']";
+    String linkitMultipleChoiceFirstAnswer = "xpath=//choiceinteraction/descendant::div[@class='answer']/descendant::span";
+    String linkitTrueFalseFirstAnswer = "xpath=//choiceinteraction/descendant::div[@class='answer']/descendant::span";
+    String linkitNextQuestionBtn = "id=nextQuestionButton";
+    String linkitSubmitAnswer = "id=acceptCompleteTestButton";
+    String linkitStartAnotherSession = "id=takeAnotherTestButton";
 }

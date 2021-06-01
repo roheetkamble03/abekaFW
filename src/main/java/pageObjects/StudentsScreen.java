@@ -24,6 +24,7 @@ import static elementConstants.Students.*;
 public class StudentsScreen extends GenericAction {
 
     HashMap<String, Boolean> videoViewStatusVideoLibrary = new HashMap<>();
+    private static ArrayList<HashMap<String,String>> submittedAssessmentList = new ArrayList<>();
 
     public StudentsScreen validateStudentInformationSection(String studentName) {
         if (isElementExists(Students.STUDENT_INFORMATION)) {
@@ -764,7 +765,7 @@ public class StudentsScreen extends GenericAction {
         return classValue.equalsIgnoreCase(CommonConstants.LESSON_COMPLETED_CLASS_VALUE);
     }
 
-    public StudentsScreen submitAnswerAndSubmitDigitalAssessment(boolean isAllDigitalAssessment) {
+    public StudentsScreen submitAnswerAndDigitalAssessment(boolean isAnswerAndSubmitAllAssessment) {
         String subject;
         String lesson;
         String studentID = getUserAccountDetails().getStudentId();
@@ -781,11 +782,54 @@ public class StudentsScreen extends GenericAction {
             if (!isLocked) {
                 bringElementIntoView(String.format(Students.assessmentUnlocked, subject, lesson));
                 click(String.format(Students.assessmentUnlocked, subject, lesson));
-
+                type(Students.signature,userName);
+                click(Students.signPledgeBtn);
+                waitForPageTobeLoaded();
+                click(Students.linkitBeginBtn);
+                waitForPageTobeLoaded();
+                waitForElementTobeVisible(Students.linkitQuestionPanel);
+                answerQuestions();
+                submitQuestion();
+                goToAnotherSession();
             }
-            if (!isAllDigitalAssessment) {
+            if (!isAnswerAndSubmitAllAssessment) {
                 break;
             }
+        }
+        return this;
+    }
+
+    private void goToAnotherSession() {
+        click(Students.linkitStartAnotherSession);
+        waitForPageTobeLoaded();
+    }
+
+    private void submitQuestion() {
+        click(Students.linkitSubmitAnswer);
+        waitForPageTobeLoaded();
+    }
+
+    private void answerQuestions() {
+        String questionType;
+        String totalQuestions = getElementText(Students.linkitTotalQuestions).split("of")[1].trim();
+
+        for(int i=0;i<Integer.parseInt(totalQuestions);i++){
+            questionType = getElementText(Students.linkitQuestionType).split(":")[0].trim();
+            switch (questionType.toUpperCase()){
+                case MULTIPLE_CHOICE:
+                    click(getVisibleElement(Students.linkitMultipleChoiceFirstAnswer));
+                    break;
+                case TRUE_FALSE:
+                    click(getVisibleElement(Students.linkitMultipleChoiceFirstAnswer));
+            }
+        }
+    }
+
+    public StudentsScreen validateCompletionOfAssessmentInToDoList(){
+        String subject;
+        String lesson;
+        for(HashMap<String,String> assessment:submittedAssessmentList){
+            //pending
         }
         return this;
     }
