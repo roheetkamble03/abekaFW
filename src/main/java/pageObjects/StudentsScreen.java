@@ -62,7 +62,7 @@ public class StudentsScreen extends GenericAction {
                             break;
                         case Students.PROGRESS_REPORTS:
                             waitForPageTobeLoaded();
-                            softAssertions.assertThat(isURLContainsGivenText(Students.PROGRESS_REPORTS.replaceAll("\s", "")) && !(getCurrentURL().equals(oldURL)))
+                            softAssertions.assertThat(isURLContainsGivenText(Students.PROGRESS_REPORTS.replaceAll("\\s", "")) && !(getCurrentURL().equals(oldURL)))
                                     .as("Navigated URL is not related to " + Students.PROGRESS_REPORTS + "\n current URL:" + getCurrentURL() + "\n Old URL:" + oldURL).isTrue();
                             softAssertions.assertThat(isElementExists(Students.PROGRESS_REPORTS))
                                     .as("Navigated page is not header " + Students.PROGRESS_REPORTS).isTrue();
@@ -72,7 +72,7 @@ public class StudentsScreen extends GenericAction {
                             break;
                         case Students.ASSESSMENT_PERMISSIONS:
                             waitForPageTobeLoaded();
-                            softAssertions.assertThat(getCurrentURL().indexOf(Students.ASSESSMENT_PERMISSIONS.replaceAll("\s", "")) > 0 && !(getCurrentURL().equals(oldURL)))
+                            softAssertions.assertThat(getCurrentURL().indexOf(Students.ASSESSMENT_PERMISSIONS.replaceAll("\\s", "")) > 0 && !(getCurrentURL().equals(oldURL)))
                                     .as("Navigated URL is not related to " + Students.ASSESSMENT_PERMISSIONS + "\n current URL:" + getCurrentURL() + "\n Old URL:" + oldURL).isTrue();
                             softAssertions.assertThat(isElementExists(Students.ASSESSMENT_PERMISSIONS))
                                     .as("Navigated page is not header " + Students.ASSESSMENT_PERMISSIONS).isTrue();
