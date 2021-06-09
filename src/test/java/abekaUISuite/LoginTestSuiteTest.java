@@ -51,7 +51,7 @@ public class LoginTestSuiteTest extends GenericAction {
     }
 
     @Test(testName = "Test-3", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void validateNewStudentCreation(String userId, String password, String userName) {
+    public void validateNewStudentEnrollment(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
         StudentDetails studentDetails = new StudentDetails();

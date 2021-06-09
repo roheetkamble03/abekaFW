@@ -660,7 +660,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         log("Getting visible element:"+identifier);
         for (SelenideElement element: getElements(identifier)){
             implicitWaitInSeconds(1);
-            if (isElementDisplayed(identifier)) {
+            if (isElementDisplayed(element)) {
                 log("Visible element found");
                 return element;
             }

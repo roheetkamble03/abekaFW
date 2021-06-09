@@ -24,7 +24,7 @@ import static elementConstants.Students.*;
 public class StudentsScreen extends GenericAction {
 
     HashMap<String, Boolean> videoViewStatusVideoLibrary = new HashMap<>();
-    private static ArrayList<HashMap<String,String>> submittedAssessmentList = new ArrayList<>();
+    private static ArrayList<String[]> submittedAssessmentList = new ArrayList<String[]>();
 
     public StudentsScreen validateStudentInformationSection(String studentName) {
         if (isElementExists(Students.STUDENT_INFORMATION)) {
@@ -629,6 +629,11 @@ public class StudentsScreen extends GenericAction {
                 segmentId, userId, SD_DATA_BASE);
     }
 
+    public void markAllVideoLessonsAsCompletedForRespectiveStudent(String loginId){
+        log("Marking all lessons as completed");
+        executeQuery(DataBaseQueryConstant.MARK_ALL_VIDEO_LESSONS_AS_COMPLETED_AD_DB.replaceAll(LOGIN_ID_DATA,loginId),AD_DATA_BASE);
+    }
+
     public StudentsScreen validateVideoLibraryVideoStatusWithDataBase() {
         String subject;
         String subjectID;
@@ -765,12 +770,14 @@ public class StudentsScreen extends GenericAction {
         return classValue.equalsIgnoreCase(CommonConstants.LESSON_COMPLETED_CLASS_VALUE);
     }
 
-    public StudentsScreen submitAnswerAndDigitalAssessment(boolean isAnswerAndSubmitAllAssessment) {
+    public StudentsScreen answerAndSubmitDigitalAssessment(boolean isAnswerAndSubmitAllAssessment) {
         String subject;
         String lesson;
         String studentID = getUserAccountDetails().getStudentId();
         boolean isLocked;
         String userName;
+        boolean isValidationDone = false;
+        markAllVideoLessonsAsCompletedForRespectiveStudent(getUserAccountDetails().getLoginId());
         ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
         for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
@@ -778,23 +785,29 @@ public class StudentsScreen extends GenericAction {
             lesson = myAssessment.get(LESSON);
             isLocked = getIsLocked(myAssessment.get(LOCKED), Students.Y);
             userName = getUserAccountDetails().getUserName();
-            //need to fetch from DB;
             if (!isLocked) {
                 bringElementIntoView(String.format(Students.assessmentUnlocked, subject, lesson));
                 click(String.format(Students.assessmentUnlocked, subject, lesson));
                 type(Students.signature,userName);
                 click(Students.signPledgeBtn);
+                click(Students.signPledgeBtn);
                 waitForPageTobeLoaded();
-                click(Students.linkitBeginBtn);
+                waitForElementTobeExist(Students.linkitBeginBtn);
+                click(getVisibleElement(Students.linkitBeginBtn));
                 waitForPageTobeLoaded();
                 waitForElementTobeVisible(Students.linkitQuestionPanel);
                 answerQuestions();
                 submitQuestion();
                 goToAnotherSession();
+                submittedAssessmentList.add(new String[]{subject,lesson});
+                isValidationDone = true;
             }
-            if (!isAnswerAndSubmitAllAssessment) {
+            if (!isAnswerAndSubmitAllAssessment && isValidationDone) {
                 break;
             }
+        }
+        if(!isValidationDone){
+            softAssertions.fail("All assessments are locked, Validation is not completed for any assessment.");
         }
         return this;
     }
@@ -809,6 +822,7 @@ public class StudentsScreen extends GenericAction {
         waitForPageTobeLoaded();
     }
 
+    @SneakyThrows
     private void answerQuestions() {
         String questionType;
         String totalQuestions = getElementText(Students.linkitTotalQuestions).split("of")[1].trim();
@@ -821,6 +835,24 @@ public class StudentsScreen extends GenericAction {
                     break;
                 case TRUE_FALSE:
                     click(getVisibleElement(Students.linkitMultipleChoiceFirstAnswer));
+                    break;
+                case DICTATION:
+                    type(getVisibleElement(Students.linkitDictationTextBox),"Answered by automation test");
+                    click(linkitNextQuestionBtn);
+                    break;
+                case SPELLING:
+                    type(getVisibleElement(Students.linkitDictationTextBox),"Answered by automation test for spelling");
+                    click(linkitNextQuestionBtn);
+                    break;
+                case VOCABULARY:
+                    clickByJavaScript(Students.linkitVocabDropDown);
+                    click(linkitNextQuestionBtn);
+                case SHORT_ANSWER:
+                    type(getVisibleElement(Students.linkitDictationTextBox),"Short answer");
+                    click(linkitNextQuestionBtn);
+                    break;
+                default:
+                    throw new Exception("Wrong question type found");
             }
         }
     }
@@ -828,8 +860,9 @@ public class StudentsScreen extends GenericAction {
     public StudentsScreen validateCompletionOfAssessmentInToDoList(){
         String subject;
         String lesson;
-        for(HashMap<String,String> assessment:submittedAssessmentList){
-            //pending
+        for(String[] assessment:submittedAssessmentList){
+            subject = assessment[0];
+            lesson = assessment[1];
         }
         return this;
     }

@@ -8,7 +8,8 @@
         <classes>
             <class name="abekaUISuite.ParentTestCaseSuiteTest">
                 <methods>
-                    <include name="testValidateStudentDashboardAccessControl"></include>
+                    <!--<include name="testValidateStudentAbleToWatchVideoStreaming"/>-->
+                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfully"></include>
                 </methods>
             </class>
         </classes>

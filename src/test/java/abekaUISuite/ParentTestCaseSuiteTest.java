@@ -74,7 +74,7 @@ public class ParentTestCaseSuiteTest extends GenericAction {
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         setStudentAccountDetailsFromDB(userId);
-        getStudentSubjectDetailsFromDB(userId);
+        setStudentSubjectDetailsFromDB(userId);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         studentsScreen.validateDigitalAssessmentsAreLockedOrNot();
@@ -93,8 +93,8 @@ public class ParentTestCaseSuiteTest extends GenericAction {
     public void testValidateStudentAbleToCompleteDigitalAssessmentSuccessfully(String userId, String password, String userName){
         loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
         navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
-        getStudentSubjectDetailsFromDB(userId);
-        new StudentsScreen().submitAnswerAndDigitalAssessment(false).validateCompletionOfAssessmentInToDoList();
+        setStudentAccountDetailsFromDB(userId);
+        new StudentsScreen().answerAndSubmitDigitalAssessment(false).validateCompletionOfAssessmentInToDoList();
         softAssertions.assertAll();
     }
 

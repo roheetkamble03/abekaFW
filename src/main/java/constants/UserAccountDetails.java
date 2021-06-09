@@ -12,4 +12,5 @@ public class UserAccountDetails {
     String studentId;
     String userName;
     String subscriptionNumber;
+    String applicationNumber;
 }

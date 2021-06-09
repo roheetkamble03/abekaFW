@@ -40,6 +40,10 @@ public @interface Students {
     String AVERAGE = "Average";
     String MULTIPLE_CHOICE = "MULTIPLE CHOICE";
     String TRUE_FALSE = "TRUE/FALSE";
+    String DICTATION = "DICTATION";
+    String SPELLING = "SPELLING";
+    String VOCABULARY = "VOCABULARY";
+    String SHORT_ANSWER = "SHORT ANSWER";
 
 
     /**
@@ -115,4 +119,6 @@ public @interface Students {
     String linkitNextQuestionBtn = "id=nextQuestionButton";
     String linkitSubmitAnswer = "id=acceptCompleteTestButton";
     String linkitStartAnotherSession = "id=takeAnotherTestButton";
+    String linkitDictationTextBox = "xpath=//input[@class='textEntryInteraction' and @type='text']";
+    String linkitVocabDropDown = "xpath=(//ul[@class='sbOptions']/li/div)[2]";
 }

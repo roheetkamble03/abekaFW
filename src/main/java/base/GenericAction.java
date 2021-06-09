@@ -77,7 +77,6 @@ public abstract class GenericAction extends SelenideExtended{
         }else {
             click(getVisibleElement(AbekaHome.closeSignup));
         }
-
     }
 
     public String formatCurrencyToDollar(Double amount){
@@ -136,17 +135,20 @@ public abstract class GenericAction extends SelenideExtended{
     public void setStudentAccountDetailsFromDB(String userId){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
+        String subscriptionNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_NUMBER_SD_DB
+                .replaceAll(LOGIN_ID_DATA,userLoginDetails.get(LOGIN_ID)),SD_DATA_BASE).get(0).get(SUBSCRIPTION_NUMBER);
+        String applicationNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_SD_DB
+                .replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber),SD_DATA_BASE).get(0).get(APPLICATION_NUMBER);
 
         userAccountDetails = new UserAccountDetails(userId,userLoginDetails.get(LOGIN_ID),userLoginDetails.get(ACCOUNT_NUMBER),
-                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_NUMBER_SD_DB
-                .replaceAll(LOGIN_ID_DATA,userLoginDetails.get(LOGIN_ID)),SD_DATA_BASE).get(0).get(SUBSCRIPTION_NUMBER));
+                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),subscriptionNumber,applicationNumber);
     }
 
     /**
      * Setting student subject details at global level
      * @param studentName student name for get student details
      */
-    public void getStudentSubjectDetailsFromDB(String studentName){
+    public void setStudentSubjectDetailsFromDB(String studentName){
         if(getUserAccountDetails() == null){
             setStudentAccountDetailsFromDB(studentName);
         }

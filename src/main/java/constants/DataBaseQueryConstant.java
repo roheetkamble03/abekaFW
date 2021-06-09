@@ -652,12 +652,45 @@ public @interface DataBaseQueryConstant {
     String GET_SUBSCRIPTION_NUMBER_SD_DB = "/* To get the Subscription number from SD DB*/ \n" +
             "SELECT DISTINCT subscription_number AS SUBSCRIPTION_NUMBER\n" +
             "  FROM abashared.permissions_queries.GetSubscriptionsByLogin('LOGIN_ID_DATA')";
+
+    String GET_APPLICATION_NUMBER_SD_DB = "/* To get the Application number from SD DB*/ \n" +
+            "SELECT subs.application_number AS APPLICATION_NUMBER\n" +
+            "FROM ABASHARED.streaming_subscriptions subs\n" +
+            "WHERE subs.subscription_number_pk = 'SUBSCRIPTION_NUMBER_DATA'";
+
     String STUDENT_SUBJECT_DETAILS_SD_DB = "/* To fetch the student subject details  from SD DB*/\n" +
             "select distinct * from TABLE (abashared.permissions_queries.getAvailableSubjects('LOGIN_ID_DATA','SUBSCRIPTION_NUMBER_DATA'))";
+
     String MARK_VIDEO_LESSON_AS_COMPLETED_SD_DB =
             //parameters - SUBSCRIPTION_NUMBER_DATA,SUBSCRIPTION_ITEM_DATA,LOGIN_ID_DATA,SEGMENT_ID_FK_DATA,'USER_ID_DATA'
             "/* To update the video as completed ON SD DB*/\n" +
             "{CALL ABASHARED.VIDEO_STREAMING.FORCE_COMPLETE_VIDEO(?,?,?,?,?)}";
+
+    String MARK_ALL_VIDEO_LESSONS_AS_COMPLETED_AD_DB = "/* To mark all video lessons as completed*/\n" +
+            "BEGIN\n" +
+            " \n" +
+            "  for r_SubscriptionItem IN (SELECT subs.subscription_number_pk, sitems.subscription_items_pk,\n" +
+            "                                    sitems.start_lesson_number, sitems.end_lesson_number\n" +
+            "                               FROM ABASHARED.streaming_subscriptions subs\n" +
+            "                               LEFT JOIN ABASHARED.streaming_subscriptions_items sitems\n" +
+            "                                 ON sitems.subscription_number_fk = subs.subscription_number_pk\n" +
+            "                              WHERE subs.subscription_number_pk = (SELECT max(subscriptions.subscription_number) AS subscription_number\n" +
+            "                                                                     FROM TABLE(abashared.permissions_queries.GetSubscriptionsByLogin(p_LoginID => 393266)) subscriptions\n" +
+            "                                                                    WHERE subscriptions.type_name = 'HOMESCHOOL'\n" +
+            "                                                                      AND subscriptions.status_name = 'ACTIVE')\n" +
+            "                            )\n" +
+            "  LOOP\n" +
+            "    abashared.video_streaming.Bulk_Clear_Or_Complete(\n" +
+            "      p_Subscription_Number => r_SubscriptionItem.subscription_number_pk,\n" +
+            "      p_Subscription_Items  => r_SubscriptionItem.subscription_items_pk,\n" +
+            "      p_Login_ID            => 393266,\n" +
+            "      p_Start_Lesson        => r_SubscriptionItem.start_lesson_number,\n" +
+            "      p_End_Lesson          => r_SubscriptionItem.end_lesson_number,\n" +
+            "     p_agent               => 'RCG-Script',\n" +
+            "      p_clear_or_complete   => 'complete');\n" +
+            "  END LOOP;\n" +
+            "END;";
+
     String MY_TO_LIST_LESSONS_SD_DB = "/* MY TO-Do list lessons data*/ \n" +
             "WITH\n" +
             "               studentAssignments AS (\n" +
