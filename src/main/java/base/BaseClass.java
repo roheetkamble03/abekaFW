@@ -132,6 +132,7 @@ public abstract class BaseClass {
             getDriver().get(domainURL);
         }catch (TimeoutException e){
             if(!browser.equals(SAFARI)){
+                log("Opening URL failed");
                 tearDown();
             }
         }

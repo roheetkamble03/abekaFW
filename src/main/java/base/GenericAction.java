@@ -44,6 +44,7 @@ public abstract class GenericAction extends SelenideExtended{
 
     public AbekaHomeScreen loginToAbeka(String userId, String password, String userName){
         waitAndCloseSignUpPop();
+        log("logging in to application");
         click(AbekaHome.login);
         click(AbekaHome.logInCreateAccount);
         type(Login.emailAddress,userId);

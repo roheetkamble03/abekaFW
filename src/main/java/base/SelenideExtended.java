@@ -645,7 +645,8 @@ public abstract class SelenideExtended extends DatabaseExtended {
             while (waitTime.isAfter(LocalTime.now())) {
                 try{
                     if(getVisibleElement(identifier)!=null){
-                        break;
+                        log("Visible element appeared");
+                        return;
                     }
                     //getElement(identifier).shouldBe(Condition.visible, Duration.ofSeconds(elementLoadWait));
                 }catch (Throwable t){
@@ -654,6 +655,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
             }
     }
 
+    @SneakyThrows
     public SelenideElement getVisibleElement(String identifier){
         log("Getting visible element:"+identifier);
         for (SelenideElement element: getElements(identifier)){
@@ -663,7 +665,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
                 return element;
             }
         }
-        return null;
+        throw new Exception("Visible element not found for mentioned identifier:"+ getByClause(identifier));
     }
 
     /**
@@ -696,6 +698,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
      */
     @SneakyThrows
     public void waitForElementTobeExist(SelenideElement element) {
+        log("Waiting for element to be exist: "+element);
         try {
             element.shouldBe(Condition.exist,Duration.ofSeconds(elementLoadWait));
         }catch (NullPointerException e){
