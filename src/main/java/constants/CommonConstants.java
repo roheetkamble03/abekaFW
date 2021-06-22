@@ -4,6 +4,7 @@ public @interface CommonConstants {
     String URL = "Url";
     String AFTER_LOGIN_URL = "AfterLoginURL";
     String PAGE_LOAD_TIME_OUT = "PageLoadTimeOut";
+    String VERY_LONG_WAIT = "VeryLongWait";
     String ELEMENT_LOAD_WAIT = "ElementLoadWait";
     String COMMON_WAIT = "CommonWait";
     String POLLING_TIME_OUT = "PollingTimeOut";

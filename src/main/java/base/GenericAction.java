@@ -72,7 +72,7 @@ public abstract class GenericAction extends SelenideExtended{
 
     public void waitAndCloseSignUpPop(){
         log("Waiting for sign up popup");
-        waitForElementTobeVisible(AbekaHome.closeSignup);
+        waitForElementTobeVisible(AbekaHome.closeSignup, veryLongWait);
         if(browser.equals(SAFARI)){
             clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
         }else {

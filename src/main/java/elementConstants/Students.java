@@ -44,6 +44,8 @@ public @interface Students {
     String SPELLING = "SPELLING";
     String VOCABULARY = "VOCABULARY";
     String SHORT_ANSWER = "SHORT ANSWER";
+    String CHOOSE_CORRECT_ANSWER = "CHOOSE THE CORRECT ANSWER.";
+    String MEMORIZATION = "MEMORIZATION";
 
 
     /**
@@ -115,10 +117,15 @@ public @interface Students {
     String linkitTotalQuestions = "xpath=//div[@class='currentQuestion']";
     String linkitQuestionType = "xpath=//div[@class='sectionInstructor']";
     String linkitMultipleChoiceFirstAnswer = "xpath=//choiceinteraction/descendant::div[@class='answer']/descendant::span";
+    String linkitChooseCorrectAnswerFirst = "xpath=//choiceinteraction/descendant::div[@class='answer']";
     String linkitTrueFalseFirstAnswer = "xpath=//choiceinteraction/descendant::div[@class='answer']/descendant::span";
     String linkitNextQuestionBtn = "id=nextQuestionButton";
     String linkitSubmitAnswer = "id=acceptCompleteTestButton";
     String linkitStartAnotherSession = "id=takeAnotherTestButton";
-    String linkitDictationTextBox = "xpath=//input[@class='textEntryInteraction' and @type='text']";
+    String linkitDictationTextBox = "xpath=//input[@class='textEntryInteraction' and @type='text']|//div[@class='questionItem']/descendant::textarea";
     String linkitVocabDropDown = "xpath=(//ul[@class='sbOptions']/li/div)[2]";
+    String linkitTextArea = "xpath=//div[@class='questionItem']/descendant::textarea";
+    String linkitSkipQuestionYes = "id=yesAllAnswer";
+    String linkitFrame = "xpath=//iframe";
+    String linkitFrameBody = "xpath=//body";
 }

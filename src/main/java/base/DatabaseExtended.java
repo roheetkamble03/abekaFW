@@ -101,11 +101,9 @@ public class DatabaseExtended extends BaseClass {
         int columnCount = resultSetMetaData.getColumnCount();
         ArrayList<String> columnNameList = new ArrayList<>();
         HashMap<String,String> columnDataMap;
-        String key;
-        String value;
 
         for(int i=1;i<=columnCount;i++){
-            columnNameList.add(resultSetMetaData.getColumnName(i).toUpperCase());
+            columnNameList.add(resultSetMetaData.getColumnName(i).toUpperCase().trim());
         }
 
         while (resultSet.next()){
@@ -119,9 +117,22 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
+    public void executeSetAllVideoCompletedStoredProcedure(String storedProcedure, String loginId, String dataBase){
+        log("Executing stored procedure of marking single video as completed");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.setInt(1, Integer.parseInt(loginId));
+        callableStatement.execute();
+        log("Successfully executed the stored procedure:\n"+storedProcedure+"\n LoginId:"+loginId);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
     public void executeSetVideoCompletedStoredProcedure(String storedProcedure, String subscriptionNumber, String subscriptionItem, String loginId, String segmentId,
                                                         String userID, String dataBase){
-        log("Executing stored procedure");
+        log("Executing stored procedure of marking single video as completed");
         connection = getDBConnection(dataBase);
         CallableStatement callableStatement = connection.prepareCall(storedProcedure);
         callableStatement.registerOutParameter(1, Types.INTEGER);

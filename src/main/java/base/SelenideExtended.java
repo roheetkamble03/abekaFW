@@ -54,6 +54,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
         log("Clicked on "+identifier);
     }
 
+    public void clickIfExists(String identifier){
+        if(isElementExists(identifier)){
+            click(identifier);
+        }
+    }
+
     public void clickWithoutPageLoadWait(String identifier){
         waitForElementTobeExist(identifier);
         try {
@@ -83,8 +89,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public boolean isElementDisplayed(String identifier) {
         try {
-            return getElement(identifier).is(Condition.visible);
-        }catch (ElementNotFound e){
+            getVisibleElement(identifier);
+            return true;
+        }catch (Exception e){
             return false;
         }
     }
@@ -223,8 +230,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
         return getElementValue(element).equals(expectedText);
     }
 
-    public String getElementText(String identifier){
+    public String getElementText(String identifier, int... waitTimeInSeconds){
         try{
+            waitForElementTobeVisible(identifier, waitTimeInSeconds);
             return getElementText(getElement(identifier));
         }catch (Throwable e){
             return "";
@@ -370,6 +378,16 @@ public abstract class SelenideExtended extends DatabaseExtended {
      */
     public void switchToFrameById(String idValue) {
             getDriver().switchTo().frame(idValue);
+    }
+
+    /**
+     * This method switch the to frame using frame ID.
+     *
+     * @param identifier : Frame ID wish to switch
+     *
+     */
+    public void switchToFrameByElement(String identifier) {
+        getDriver().switchTo().frame(getVisibleElement(identifier));
     }
 
     /**
@@ -639,9 +657,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      * @param identifier
      */
-    public void waitForElementTobeVisible(String identifier) {
+    public void waitForElementTobeVisible(String identifier, int... waitTimeInSeconds) {
         log("Waiting for element to be visible");
-        LocalTime waitTime = LocalTime.now().plusSeconds(elementLoadWait);
+        LocalTime waitTime = LocalTime.now().plusSeconds((waitTimeInSeconds.length>0)?waitTimeInSeconds[0]:elementLoadWait);
             while (waitTime.isAfter(LocalTime.now())) {
                 try{
                     if(getVisibleElement(identifier)!=null){
@@ -673,10 +691,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @param identifier
      */
     @SneakyThrows
-    public void waitForElementTobeExist(String identifier) {
+    public void waitForElementTobeExist(String identifier, int... timeout) {
         try {
             log("Waiting for element to be exist:"+identifier);
-            getElements(identifier).get(0).shouldBe(Condition.exist, Duration.ofSeconds(elementLoadWait));
+            getElements(identifier).get(0).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
         }catch (Throwable t){
             logger.info("Following Element not found \n" +
                     getByClause(identifier));

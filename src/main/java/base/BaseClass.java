@@ -51,6 +51,7 @@ public abstract class BaseClass {
     protected Map<String,WebDriver> sessionMap = new HashMap<>();
     protected DesiredCapabilities desiredCapabilities;
     protected int pageLoadTimeOut;
+    protected int veryLongWait;
     protected int elementLoadWait;
     int commonWait;
     protected int pollingTimeOut;
@@ -95,6 +96,7 @@ public abstract class BaseClass {
         FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + implementPath("\\src\\main\\java\\configuration\\config.properties"));
         properties.load(fileInputStream);
         pageLoadTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.PAGE_LOAD_TIME_OUT));
+        veryLongWait = Integer.parseInt(properties.getProperty(CommonConstants.VERY_LONG_WAIT));
         elementLoadWait = Integer.parseInt(properties.getProperty(CommonConstants.ELEMENT_LOAD_WAIT));
         commonWait = Integer.parseInt(properties.getProperty(CommonConstants.COMMON_WAIT));
         pollingTimeOut = Integer.parseInt(properties.getProperty(CommonConstants.POLLING_TIME_OUT));

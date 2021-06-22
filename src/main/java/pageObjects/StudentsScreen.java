@@ -631,7 +631,7 @@ public class StudentsScreen extends GenericAction {
 
     public void markAllVideoLessonsAsCompletedForRespectiveStudent(String loginId){
         log("Marking all lessons as completed");
-        executeQuery(DataBaseQueryConstant.MARK_ALL_VIDEO_LESSONS_AS_COMPLETED_AD_DB.replaceAll(LOGIN_ID_DATA,loginId),AD_DATA_BASE);
+        executeSetAllVideoCompletedStoredProcedure(DataBaseQueryConstant.SET_ALL_VIDEO_COMPLETED_SP_SD_DB,loginId,SD_DATA_BASE);
     }
 
     public StudentsScreen validateVideoLibraryVideoStatusWithDataBase() {
@@ -781,21 +781,21 @@ public class StudentsScreen extends GenericAction {
         ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
         for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
-            subject = myAssessment.get(SUBJECT);
-            lesson = myAssessment.get(LESSON);
+            subject = myAssessment.get(SUBJECT).trim();
+            lesson = myAssessment.get(LESSON).trim();
             isLocked = getIsLocked(myAssessment.get(LOCKED), Students.Y);
-            userName = getUserAccountDetails().getUserName();
+            userName = getUserAccountDetails().getUserName().trim();
             if (!isLocked) {
                 bringElementIntoView(String.format(Students.assessmentUnlocked, subject, lesson));
                 click(String.format(Students.assessmentUnlocked, subject, lesson));
-                type(Students.signature,userName);
-                click(Students.signPledgeBtn);
-                click(Students.signPledgeBtn);
+//                type(Students.signature,userName);
+//                click(Students.signPledgeBtn);
+//                clickIfExists(Students.signPledgeBtn);
                 waitForPageTobeLoaded();
-                waitForElementTobeExist(Students.linkitBeginBtn);
+                waitForElementTobeExist(Students.linkitBeginBtn, veryLongWait);
                 click(getVisibleElement(Students.linkitBeginBtn));
                 waitForPageTobeLoaded();
-                waitForElementTobeVisible(Students.linkitQuestionPanel);
+                waitForElementTobeVisible(Students.linkitQuestionPanel, veryLongWait);
                 answerQuestions();
                 submitQuestion();
                 goToAnotherSession();
@@ -818,17 +818,27 @@ public class StudentsScreen extends GenericAction {
     }
 
     private void submitQuestion() {
-        click(Students.linkitSubmitAnswer);
+        click(getVisibleElement(Students.linkitSubmitAnswer));
         waitForPageTobeLoaded();
     }
 
     @SneakyThrows
     private void answerQuestions() {
         String questionType;
-        String totalQuestions = getElementText(Students.linkitTotalQuestions).split("of")[1].trim();
+        waitForElementTobeVisible(Students.linkitTotalQuestions, veryLongWait);
 
-        for(int i=0;i<Integer.parseInt(totalQuestions);i++){
-            questionType = getElementText(Students.linkitQuestionType).split(":")[0].trim();
+        int totalQuestions = 0;
+        boolean isLastQuestion = false;
+        try{
+            totalQuestions = Integer.parseInt(getElementText(Students.linkitTotalQuestions, veryLongWait).split("of")[1].trim());
+        }catch (ArrayIndexOutOfBoundsException e) {
+            implicitWaitInSeconds(5);
+            totalQuestions = Integer.parseInt(getElementText(Students.linkitTotalQuestions, veryLongWait).split("of")[1].trim());
+        }
+
+        while(Integer.parseInt(getElementText(Students.linkitTotalQuestions, veryLongWait).split("of")[0].trim()) <= totalQuestions){
+            isLastQuestion = (Integer.parseInt(getElementText(Students.linkitTotalQuestions, veryLongWait).split("of")[0].trim()) == totalQuestions)?true:false;
+            questionType = getElementText(Students.linkitQuestionType, veryLongWait).split(":")[0].trim();
             switch (questionType.toUpperCase()){
                 case MULTIPLE_CHOICE:
                     click(getVisibleElement(Students.linkitMultipleChoiceFirstAnswer));
@@ -847,17 +857,37 @@ public class StudentsScreen extends GenericAction {
                 case VOCABULARY:
                     clickByJavaScript(Students.linkitVocabDropDown);
                     click(linkitNextQuestionBtn);
+                    break;
                 case SHORT_ANSWER:
                     type(getVisibleElement(Students.linkitDictationTextBox),"Short answer");
                     click(linkitNextQuestionBtn);
                     break;
+                case CHOOSE_CORRECT_ANSWER:
+                    click(getVisibleElement(linkitChooseCorrectAnswerFirst));
+                    break;
+                case MEMORIZATION:
+                    getDriver().switchTo().frame(getVisibleElement(linkitFrame));
+                    type(getVisibleElement(linkitFrameBody),"Answered by automation");
+                    switchToDefaultFrame(getDriver());
+                    click(linkitNextQuestionBtn);
+                    break;
                 default:
-                    throw new Exception("Wrong question type found");
+                    if(isElementDisplayed(linkitTextArea)){
+                        type(getVisibleElement(linkitTextArea),"Answered by automation");
+                        click(linkitNextQuestionBtn);
+                        break;
+                    }else {
+                        click(linkitNextQuestionBtn);
+                        click(getVisibleElement(linkitSkipQuestionYes));
+                    }
             }
+            implicitWaitInSeconds(5);
+            if(isLastQuestion)break;
         }
     }
 
     public StudentsScreen validateCompletionOfAssessmentInToDoList(){
+        //Need to discuss with KJ
         String subject;
         String lesson;
         for(String[] assessment:submittedAssessmentList){

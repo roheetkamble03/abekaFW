@@ -691,6 +691,9 @@ public @interface DataBaseQueryConstant {
             "  END LOOP;\n" +
             "END;";
 
+    String SET_ALL_VIDEO_COMPLETED_SP_SD_DB = "/*Marking all video completed SP*/ \n" +
+            "{CALL abashared.RCG_Complete_All_Videos_For_Student(p_LoginID => ?)}";
+
     String MY_TO_LIST_LESSONS_SD_DB = "/* MY TO-Do list lessons data*/ \n" +
             "WITH\n" +
             "               studentAssignments AS (\n" +
