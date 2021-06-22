@@ -94,7 +94,7 @@ public class ParentTestCaseSuiteTest extends GenericAction {
         loginToAbeka(userId,password,userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
         navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         setStudentAccountDetailsFromDB(userId);
-        new StudentsScreen().answerAndSubmitDigitalAssessment(false).validateCompletionOfAssessmentInToDoList();
+        new StudentsScreen().answerAndSubmitDigitalAssessment(false);
         softAssertions.assertAll();
     }
 

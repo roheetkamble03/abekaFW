@@ -788,9 +788,11 @@ public class StudentsScreen extends GenericAction {
             if (!isLocked) {
                 bringElementIntoView(String.format(Students.assessmentUnlocked, subject, lesson));
                 click(String.format(Students.assessmentUnlocked, subject, lesson));
-//                type(Students.signature,userName);
-//                click(Students.signPledgeBtn);
-//                clickIfExists(Students.signPledgeBtn);
+                if(isElementDisplayed(Students.signature)) {
+                    type(Students.signature, userName);
+                    click(Students.signPledgeBtn);
+                    clickIfExists(Students.signPledgeBtn);
+                }
                 waitForPageTobeLoaded();
                 waitForElementTobeExist(Students.linkitBeginBtn, veryLongWait);
                 click(getVisibleElement(Students.linkitBeginBtn));
@@ -884,17 +886,6 @@ public class StudentsScreen extends GenericAction {
             implicitWaitInSeconds(5);
             if(isLastQuestion)break;
         }
-    }
-
-    public StudentsScreen validateCompletionOfAssessmentInToDoList(){
-        //Need to discuss with KJ
-        String subject;
-        String lesson;
-        for(String[] assessment:submittedAssessmentList){
-            subject = assessment[0];
-            lesson = assessment[1];
-        }
-        return this;
     }
 }
 
