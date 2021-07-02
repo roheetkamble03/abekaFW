@@ -20,13 +20,13 @@ public class ParentTestCaseSuiteTest extends GenericAction {
     StudentsScreen studentsScreen;
 
     @Test(testName = "Test-4", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void testManageStudentInformationFromDashboard(String userId, String password, String userName){
+    public void testManageStudentInformationFromDashboard(String userId, String password, String userName, String signature){
+        setStudentAccountDetailsFromDB("syed.rcg");
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.navigateToMyStudentProfile(Dashboard.STUDENT_NAME).waitAndCloseWidgetTourPopup();
         new StudentsScreen().validateStudentInformationSection(Dashboard.STUDENT_NAME)
-//             disabled, since progress report not working   .navigateToProgressReportWidget().enterStudentGrades()
-//                .signProgressReport("signature").submitProgressReport()
+             .navigateToProgressReportWidget(Dashboard.STUDENT_NAME).enterStudentGrades(false,false, signature)
                 .logoutFromAbeka();
         softAssertions.assertAll();
     }

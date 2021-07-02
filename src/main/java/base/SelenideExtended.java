@@ -459,11 +459,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @param identifier
      * @return
      */
-    public void bringChildElementIntoView(SelenideElement parentElement, String identifier) {
+    public SelenideElement bringChildElementIntoView(SelenideElement parentElement, String identifier) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript("arguments[0].scrollIntoView({block: \"center\"});", getChildElement(parentElement,identifier));
         Actions actions = new Actions(getDriver());
         actions.moveToElement(getChildElement(parentElement,identifier)).build().perform();
+        return getChildElement(parentElement,identifier);
     }
 
     /**

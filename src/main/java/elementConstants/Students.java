@@ -29,7 +29,8 @@ public @interface Students {
     String QUIZ = "Quiz";
     String TEST = "Test";
     String EXAM = "Exam";
-    String MISC_NON_GRADED = "MISC_NON_GRADED";
+    String MISC_NON_GRADED = "Misc Non-graded";
+    String REVIEW = "Review";
     String SIX_MONTHS_ASSESSMENT = "Accelerated (6 months)";
     String NINE_MONTHS_ASSESSMENT = "Standard (9 months)";
     String TWELVE_MONTHS_ASSESSMENT = "Extended (12 months)";
@@ -46,6 +47,9 @@ public @interface Students {
     String SHORT_ANSWER = "SHORT ANSWER";
     String CHOOSE_CORRECT_ANSWER = "CHOOSE THE CORRECT ANSWER.";
     String MEMORIZATION = "MEMORIZATION";
+    String AUTHOR = "Author";
+    String TITLE = "Title";
+    String PAGES_READ = "Pages Read";
 
 
     /**
@@ -95,9 +99,11 @@ public @interface Students {
     String assessmentUnlocked = "xpath=//span[@id='lblSubject' and normalize-space(text())='%s']/parent::h4/following-sibling::p/descendant::a[@id='lbtnAssessment' and normalize-space(text())='%s' and @href and @class='assessmentBtn']";
     String projectReportSubjectDropDown = "id=subjectsDropDown";
     String gradingPeriod = "xpath=//div[@class='gradingPeriods']/a[normalize-space(text())='%s']";
-    String sectionHeader = "//div[@id='%s']/descendant::*[normalize-space(text())='%s']";
+    String sectionHeader = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']";
     String gradeTableHeader = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']";
     String gradeTextBox = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/input[not(@type='hidden')]";
+    String hiddenGradeTextBox = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/input[@type='hidden' and normalize-space(@value)='.0']/following-sibling::span[normalize-space(text())='--']";
+    String pendingGrade = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/input[@type='hidden' and normalize-space(@value)='777.7']/following-sibling::span[normalize-space(text())='Pending']";
     String gradeHiddenTextBox = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/input[@type='hidden']";
     String gradeAverageXpath = "xpath=//div[@id='%s']/descendant::*[normalize-space(text())='%s']/following-sibling::table[@class='GradeTable']/descendant::span[normalize-space(text())='%s']/parent::td/following-sibling::td/span";
     String progressReportSignatureTextBox = "id=txtSignature";
@@ -128,4 +134,7 @@ public @interface Students {
     String linkitSkipQuestionYes = "id=yesAllAnswer";
     String linkitFrame = "xpath=//iframe";
     String linkitFrameBody = "xpath=//body";
+    String progressReportsStudentLink = "xpath=//a[@id='lbtnStudent']/p[normalize-space(text())='%s']";
+    String bookReports = "xpath=//div[@class='BookReport']";
+    String bookReportTextBox = "xpath=(//div[@class='BookReport'])[%s]/descendant::label[normalize-space(text())='%s']/following-sibling::input[@type='text']";
 }

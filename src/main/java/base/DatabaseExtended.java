@@ -117,6 +117,49 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
+    public void clearProcessOfAssessmentMarkVideoAsNotViewedStoredProcedure(String storedProcedure, String loginId, String subjectId, String startLesson, String endLesson, String dataBase){
+        log("Executing stored procedure To process the specified assessment to unlocked");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.setInt(1, Integer.parseInt(loginId));
+
+        callableStatement.registerOutParameter(2, Types.INTEGER);
+        callableStatement.setInt(2, Integer.parseInt(subjectId));
+
+        callableStatement.registerOutParameter(3, Types.INTEGER);
+        callableStatement.setInt(3, Integer.parseInt(startLesson));
+
+        callableStatement.registerOutParameter(4, Types.INTEGER);
+        callableStatement.setInt(4, Integer.parseInt(endLesson)-1);
+
+        callableStatement.execute();
+        log("Successfully executed the stored procedure:\n"+storedProcedure+"\n LoginId:"+loginId +"\n SubjectId:"+subjectId+" \n StartLesson:"+startLesson+"\n EndLesson:"+endLesson);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
+    public void processSpecificAssessmentToUnlockedStoredProcedure(String storedProcedure, String loginId, String subjectId, String endLesson, String dataBase){
+        log("Executing stored procedure To process the specified assessment to unlocked");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.setInt(1, Integer.parseInt(loginId));
+
+        callableStatement.registerOutParameter(2, Types.INTEGER);
+        callableStatement.setInt(2, Integer.parseInt(subjectId));
+
+        callableStatement.registerOutParameter(3, Types.INTEGER);
+        callableStatement.setInt(3, Integer.parseInt(endLesson)-1);
+
+        callableStatement.execute();
+        log("Successfully executed the stored procedure:\n"+storedProcedure+"\n LoginId:"+loginId +"\n SubjectId:"+subjectId+"\n EndLesson:"+endLesson);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
     public void executeSetAllVideoCompletedStoredProcedure(String storedProcedure, String loginId, String dataBase){
         log("Executing stored procedure of marking single video as completed");
         connection = getDBConnection(dataBase);
@@ -128,6 +171,7 @@ public class DatabaseExtended extends BaseClass {
         callableStatement.close();
         connection.close();
     }
+
 
     @SneakyThrows
     public void executeSetVideoCompletedStoredProcedure(String storedProcedure, String subscriptionNumber, String subscriptionItem, String loginId, String segmentId,

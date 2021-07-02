@@ -204,6 +204,143 @@ public @interface DataBaseQueryConstant {
      * Fetching Student's digital assessment details
      * .replaceAll(TableColumn.STUDENT_ID_DATA,studentID)
      */
+    String GET_DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB = "/*Get digital only assessment details from AD DB*/\n" +
+            "WITH\n" +
+            "      nextVideoLessons AS (\n" +
+            "        SELECT DISTINCT appld.ap_grade, appld.ap_end_dt, assign.apref, assign.subject, min(lessonInfo.lesson) OVER (PARTITION BY assign.subject, assign.apref) AS nextVideoLesson \n" +
+            "          FROM homeschoolhouse.student_assignments assign\n" +
+            "          JOIN homeschoolhouse.student_assignments_types types\n" +
+            "            ON assign.assignment_type_fk = types.assignment_type_pk\n" +
+            "          JOIN homeschoolhouse.lesson_information lessonInfo\n" +
+            "            ON assign.segment_id_fk = lessonInfo.segmentid\n" +
+            "           AND assign.apref = lessonInfo.application_number\n" +
+            "           AND assign.subject_id_fk = lessonInfo.subject_id_fk\n" +
+            "          JOIN linc.abadb_appld appld\n" +
+            "            ON assign.apref = appld.ap_apref\n" +
+            "           AND appld.fd_id = 'STUDENT_ID_DATA'\n" +
+            "          LEFT JOIN linc.abadb_rchdr rchdr\n" +
+            "            ON appld.ap_apref = rchdr.rch_apref\n" +
+            "           AND rchdr.rch_id = 'STUDENT_ID_DATA'\n" +
+            "         WHERE assign.student_id = 'STUDENT_ID_DATA'\n" +
+            "           AND appld.ap_status = 8\n" +
+            "           AND trunc(appld.ap_end_dt) >= trunc(sysdate)\n" +
+            "           AND assign.completion_date IS NULL\n" +
+            "           AND lessonInfo.lesson BETWEEN lessonInfo.start_lesson_number AND lessonInfo.end_lesson_number\n" +
+            "           AND types.name = 'VIDEO'\n" +
+            "           AND (rchdr.rch_status IN ('A', 'I')\n" +
+            "            OR  appld.ap_credt != 'Y')\n" +
+            "         GROUP BY appld.ap_grade, appld.ap_end_dt, assign.subject, lessonInfo.lesson, assign.apref\n" +
+            "      ),\n" +
+            "      studentAssignments AS (\n" +
+            "        SELECT appld.ap_grade, appld.ap_end_dt, assign.apref, assign.student_assignments_id AS eventID, assign.start_date, assign.end_date, tenop.eno_desc, tboxd.txd_desc, tboxm.txm_desc, types.description, assign.completion_date, assign.lock_assignment,\n" +
+            "               assign.da_enddate,tboxh.txh_type, assign.segment_id_fk, coalesce(to_number(assign.da_testid), tboxd.txd_da_testid, tboxm.txm_da_testid, 0) AS linkitTestID, assign.da_testassignmentid, types.name, tenop.eno_ver, tenop.eno_series,\n" +
+            "               tboxh.txh_subj, assign.subject, assign.pr_form, assign.pr_version, assign.pr_school, assign.pr_boxletter, assign.pr_itemnumber, COALESCE(assign.pr_subitemnumber, 0) AS pr_subitemnumber, coalesce(to_number(tboxm.txm_lesson), to_number(tboxd.txd_lesson)) as lesson_number, appld.ap_ograde\n" +
+            "          FROM homeschoolhouse.student_assignments assign\n" +
+            "          JOIN homeschoolhouse.student_assignments_types types\n" +
+            "            ON assign.assignment_type_fk = types.assignment_type_pk\n" +
+            "          JOIN linc.abadb_appld appld\n" +
+            "            ON assign.apref = appld.ap_apref\n" +
+            "           AND appld.fd_id = 'STUDENT_ID_DATA'\n" +
+            "          LEFT JOIN linc.abadb_digital_assessments digAsmts\n" +
+            "            ON assign.apref = digAsmts.application_number\n" +
+            "           AND assign.subject = digAsmts.eno_subj\n" +
+            "          JOIN linc.abadb_tenop tenop\n" +
+            "            ON assign.subject = tenop.eno_subj\n" +
+            "          LEFT JOIN linc.abadb_tboxh tboxh\n" +
+            "            ON assign.pr_form = tboxh.txh_form\n" +
+            "           AND assign.pr_version = tboxh.txh_ver\n" +
+            "           AND assign.pr_school = tboxh.txh_school\n" +
+            "           AND assign.pr_boxletter = tboxh.txh_boxltr\n" +
+            "          LEFT JOIN linc.abadb_tboxd tboxd\n" +
+            "            ON tboxh.txh_form = tboxd.form_number\n" +
+            "           AND tboxh.txh_school = tboxd.school\n" +
+            "           AND tboxh.txh_boxltr = tboxd.box_letter\n" +
+            "           AND tboxh.txh_ver = tboxd.version\n" +
+            "           AND assign.pr_itemnumber = tboxd.txd_itmnbr\n" +
+            "           AND coalesce(assign.pr_subitemnumber, 0) = 0\n" +
+            "          LEFT JOIN linc.abadb_tboxm tboxm\n" +
+            "            ON tboxh.txh_form = tboxm.form_number\n" +
+            "           AND tboxh.txh_school = tboxm.school\n" +
+            "           AND tboxh.txh_boxltr = tboxm.box_letter\n" +
+            "           AND tboxh.txh_ver = tboxm.version\n" +
+            "           AND assign.pr_itemnumber = tboxm.txm_itmnbr\n" +
+            "           AND assign.pr_subitemnumber = tboxm.txm_sub_itmnbr\n" +
+            "          LEFT JOIN linc.abadb_rchdr rchdr\n" +
+            "            ON appld.ap_apref = rchdr.rch_apref\n" +
+            "           AND rchdr.rch_id = 'STUDENT_ID_DATA'\n" +
+            "         WHERE assign.student_id = 'STUDENT_ID_DATA'\n" +
+            "           AND types.name IN('DIGITAL-ASSESSMENT', 'PE ACTIVITY', 'PE SKILLS TEST')\n" +
+            "           AND coalesce(assign.grade_percentage, 0) != 333.3\n" +
+            "           AND trunc(sysdate) BETWEEN coalesce(to_date(appld.ap_beg_dt,'yyyymmdd') - 14, digAsmts.start_date) AND coalesce(appld.ap_end_dt, digAsmts.end_date)\n" +
+            "           AND coalesce(to_number(tboxm.txm_lesson), to_number(tboxd.txd_lesson)) BETWEEN coalesce(digAsmts.start_lesson, 1) AND coalesce(digAsmts.end_lesson, 180)\n" +
+            "           AND appld.ap_status = 8\n" +
+            "           AND (rchdr.rch_status IN ('A', 'I')\n" +
+            "            OR  appld.ap_credt != 'Y')\n" +
+            "           AND ('Y' != 'Y' OR (coalesce(tboxd.txd_da_testid, tboxm.txm_da_testid, 0) > 0 AND ap_ograde = 'Y'))\n" +
+            "      ),\n" +
+            "      nextLessons AS (\n" +
+            "        SELECT DISTINCT assign.ap_grade, assign.ap_end_dt, assign.txh_subj, MIN(to_number(assign.lesson_number)) OVER (PARTITION BY assign.txh_subj) AS nextLesson\n" +
+            "          FROM studentAssignments assign\n" +
+            "         WHERE assign.completion_date IS NULL\n" +
+            "         GROUP BY assign.ap_grade, assign.ap_end_dt, assign.txh_subj, assign.lesson_number\n" +
+            "      ),\n" +
+            "      currentPELesson AS (\n" +
+            "        SELECT assign.ap_grade, assign.ap_end_dt, coalesce(assign.txh_subj, assign.subject) AS subject, assign.lesson_number AS currentLesson\n" +
+            "          FROM studentAssignments assign\n" +
+            "         WHERE trunc(assign.start_date) = trunc(sysdate)\n" +
+            "           AND assign.name IN ('PE ACTIVITY', 'PE SKILLS TEST')\n" +
+            "      ),\n" +
+            "      streamSubjects AS (\n" +
+            "        SELECT subj.subjectid, subj.subjectname, subj.book_item_number, subj.image_url, subj.duration,\n" +
+            "               subj.seriesno, subj.seriesversion, subj.rcg_subj,\n" +
+            "               sTypes.supergroup, sTypes.sessionname, sTypes.sortorder\n" +
+            "          FROM homeschoolhouse.vsubjects subj\n" +
+            "          LEFT JOIN homeschoolhouse.vsessiontypes sTypes\n" +
+            "            ON subj.subjectid = sTypes.subjectid\n" +
+            "         WHERE (sTypes.sessiontypeid = (SELECT max(sessiontypeid)\n" +
+            "                                          FROM homeschoolhouse.vsessiontypes sTypes2\n" +
+            "                                         WHERE sTypes2.subjectid = subj.subjectid\n" +
+            "                                           AND coalesce(sTypes2.bonus_content, 'N') != 'Y')\n" +
+            "            OR sTypes.sessiontypeid is null)\n" +
+            "      )\n" +
+            "\n" +
+            " \n" +
+            "\n" +
+            "      SELECT assign.ap_grade, assign.ap_end_dt, assign.apref, assign.eventID, assign.start_date, assign.end_date, coalesce(CASE WHEN subj.supergroup IS NOT NULL then subj.subjectname ELSE coalesce(subj.sessionname, subj.subjectname) END, assign.eno_desc) AS short_description, coalesce(assign.txd_desc, assign.txm_desc, assign.description) AS long_description, assign.completion_date, assign.lock_assignment,\n" +
+            "             box.description AS assignType, assign.segment_id_fk, linkitTestID, assign.da_testassignmentid, to_number(subj.book_item_number) AS book_item_number, subj.image_url,\n" +
+            "             assign.subject, assign.pr_form, assign.pr_version, assign.pr_school, assign.pr_boxletter, assign.pr_itemnumber, coalesce(assign.pr_subitemnumber, 0) AS pr_subitemnumber,\n" +
+            "             cast(coalesce(subj.sortorder, 99) AS NUMBER(3)) AS sortorder, assign.lesson_number, cast(coalesce(subj.subjectid, -1) AS NUMBER(10)) AS subject_id_fk,\n" +
+            "             CASE\n" +
+            "               WHEN nVL.nextVideoLesson > subj.duration THEN nVL.nextVideoLesson - subj.duration\n" +
+            "               ELSE COALESCE(nVL.nextVideoLesson, 170)\n" +
+            "             END AS nextVideoLesson, assign.ap_ograde\n" +
+            "        FROM studentAssignments assign\n" +
+            "        LEFT JOIN progress_report.pr_box_types box\n" +
+            "          ON assign.txh_type = box.box_type\n" +
+            "        LEFT JOIN streamSubjects subj\n" +
+            "          ON assign.eno_series = subj.seriesno\n" +
+            "         AND assign.eno_ver = subj.seriesversion\n" +
+            "         AND assign.txh_subj = subj.rcg_subj\n" +
+            "        LEFT JOIN nextLessons nLmL\n" +
+            "          ON assign.txh_subj = nLmL.txh_subj\n" +
+            "        LEFT JOIN nextVideoLessons nVL\n" +
+            "          ON assign.subject = nVL.subject\n" +
+            "        LEFT JOIN currentPELesson cPEL\n" +
+            "          ON coalesce(assign.txh_subj, assign.subject) = cPEL.subject\n" +
+            "       WHERE (assign.lesson_number = CASE\n" +
+            "                                       WHEN coalesce(trim(assign.txh_type), 'PE') = 'PE' THEN cPEL.currentLesson\n" +
+            "                                       ELSE nLmL.nextLesson\n" +
+            "                                     END\n" +
+            "          OR (trunc(coalesce(assign.completion_date, assign.da_enddate)) = trunc(sysdate)\n" +
+            "         AND 'Y' != 'Y'))\n" +
+            "         AND assign.completion_date IS NULL\n" +
+            "         order by sortorder asc";
+
+
+    /**
+     * Fetching Student's digital assessment details
+     * .replaceAll(TableColumn.STUDENT_ID_DATA,studentID)
+     */
     String DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB = "/*Get digital only assessment details from AD DB*/\n" +
             "SELECT ap_grade,\n" +
             "       apref,\n" +
@@ -694,6 +831,12 @@ public @interface DataBaseQueryConstant {
     String SET_ALL_VIDEO_COMPLETED_SP_SD_DB = "/*Marking all video completed SP*/ \n" +
             "{CALL abashared.RCG_Complete_All_Videos_For_Student(p_LoginID => ?)}";
 
+    String MARK_ASSESSMENT_RELATED_VIDEO_COMPLETED_SP_SD_DB = "/*Marking assessment related all video completed SP*/ \n" +
+            "{CALL abashared.RCG_Complete_All_Videos_For_Student(p_LoginID => ?,p_SubjectID => ?,p_EndLesson => ?)}";
+
+    String CLEAR_ASSESSMENT_PROCESS_MARK_VIDEO_NOT_VIEWED_SP_SD_DB = "/*Clear assessment process (marking video lessons not viewed ) SP*/ \n" +
+            "CALL abashared.RCG_Complete_All_Videos_For_Student(p_LoginID   => ?, p_SubjectID => ?,p_StartLesson => ?,p_EndLesson => ?,p_ClearProgress => 'Y');";
+
     String MY_TO_LIST_LESSONS_SD_DB = "/* MY TO-Do list lessons data*/ \n" +
             "WITH\n" +
             "               studentAssignments AS (\n" +
@@ -1047,4 +1190,312 @@ public @interface DataBaseQueryConstant {
             "FROM dual) AS prevsegment\t\n" +
             "FROM SubjectLessonDetails\t\n" +
             "ORDER BY last_viewed DESC";
+
+    String GET_PROGRESS_REPORT_SUBJECT_LIST_AD_DB = "/* Progress report subject list AD DB*/\n" +
+            "SELECT DISTINCT p.st_id, b.txh_subj, t.eno_subj AS SUBJECT_CODE, t.eno_desc AS SUBJECT_NAME, b.txh_school AS SCHOOL, t.eno_sem, a.ap_sem, a.ap_item,\t\n" +
+            "                                            ((b.txh_form - MOD(b.txh_form, 10)) / 10) AS FORM, b.txh_ver AS VERSION,\t\n" +
+            "                                            MAX(DECODE(CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN MOD(b.txh_form, 10) \t\n" +
+            "                                                            WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN MOD(b.txh_form, 10) \t\n" +
+            "                                                            ELSE MOD(b.txh_form, 10)\t\n" +
+            "                                                        END, 1, CASE WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN NULL\t\n" +
+            "                                                                     ELSE 1\t\n" +
+            "                                                                 END, \t\n" +
+            "                                                             3, CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN 3\t\n" +
+            "                                                                     ELSE NULL\t\n" +
+            "                                                                 END, NULL)) AS grd_prd1,\t\n" +
+            "                                            MAX(DECODE(CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN MOD(b.txh_form, 10)\t\n" +
+            "                                                            WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN MOD(b.txh_form, 10)\t\n" +
+            "                                                            ELSE MOD(b.txh_form, 10)\t\n" +
+            "                                                        END, 2, CASE WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN NULL\t\n" +
+            "                                                                     ELSE 2\t\n" +
+            "                                                                 END, \t\n" +
+            "                                                             4, CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN 4\t\n" +
+            "                                                                     ELSE NULL\t\n" +
+            "                                                                 END, NULL)) AS grd_prd2,\t\n" +
+            "                                            MAX(DECODE(CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN MOD(b.txh_form, 10)\t\n" +
+            "                                                            WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN MOD(b.txh_form, 10)\t\n" +
+            "                                                            ELSE MOD(b.txh_form, 10)\t\n" +
+            "                                                        END, 3, CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN NULL\t\n" +
+            "                                                                     ELSE 3\t\n" +
+            "                                                                 END, \t\n" +
+            "                                                             1, CASE WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN 1\t\n" +
+            "                                                                     ELSE NULL\t\n" +
+            "                                                                 END, NULL)) AS grd_prd3,\t\n" +
+            "                                            MAX(DECODE(CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN MOD(b.txh_form, 10)\t\n" +
+            "                                                            WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN MOD(b.txh_form, 10)\t\n" +
+            "                                                            ELSE MOD(b.txh_form, 10)\t\n" +
+            "                                                        END, 4, CASE WHEN t.eno_sem = 2 AND a.ap_sem = 1 THEN NULL\t\n" +
+            "                                                                     ELSE 4\t\n" +
+            "                                                                 END, \t\n" +
+            "                                                             2, CASE WHEN t.eno_sem = 1 AND a.ap_sem = 2 THEN 2\t\n" +
+            "                                                                     ELSE NULL\t\n" +
+            "                                                                 END, NULL)) AS grd_prd4,\t\n" +
+            "                                            MAX(DECODE(MOD(b.txh_form, 10), 5, 5, NULL)) AS grd_prd5,\t\n" +
+            "                                            MAX(DECODE(MOD(b.txh_form, 10), 6, 6, NULL)) AS grd_prd6,\t\n" +
+            "                                            abadb.Courses.LookUpCourseSBN(t.eno_subj) as book_item_number, abadb.Courses.LookUpCourseImageURL(t.eno_subj) as image_url\t\n" +
+            "                                       FROM linc.abadb_tboxh b\t\n" +
+            "                                      INNER JOIN linc.abadb_prst p\t\n" +
+            "                                         ON b.txh_form = p.st_form\t\n" +
+            "                                        AND b.txh_ver = p.st_version\t\n" +
+            "                                        AND b.txh_school = p.st_school\t\n" +
+            "                                      INNER JOIN linc.abadb_tenop t\t\n" +
+            "                                         ON t.eno_rcard = b.txh_subj\t\n" +
+            "                                      INNER JOIN linc.abadb_applc a\t\n" +
+            "                                         ON t.eno_subj = a.ap_item\t\n" +
+            "                                        AND a.apc_apref = p.st_apref\t\n" +
+            "                                      INNER JOIN linc.abadb_appld appld\t\n" +
+            "                                         ON apc_apref = appld.ap_apref\t\n" +
+            "                                       LEFT JOIN linc.abadb_digital_assessments assessments\t\n" +
+            "                                         ON assessments.application_number = p.st_apref\t\n" +
+            "                                        AND assessments.eno_subj = t.eno_subj\t\n" +
+            "                                      WHERE p.st_apref = 'APPLICATION_NUMBER_DATA'\t\n" +
+            "                                        AND fd_host_no = 'ACCOUNT_NUMBER_DATA'\t\n" +
+            "                                        AND b.txh_boxltr = 'A'\t\n" +
+            "                                      GROUP BY p.st_id, b.txh_subj, t.eno_subj, t.eno_desc, b.txh_school, t.eno_sem, a.ap_sem, a.ap_item,\t\n" +
+            "                                            ((b.txh_form - MOD(b.txh_form, 10)) / 10), b.txh_ver,\t\n" +
+            "                                            CASE WHEN eno_sem = 2 THEN 2 ELSE 0 END\t\n" +
+            "                                      ORDER BY b.txh_subj\t";
+
+    String GET_PROGRESS_REPORT_TABLE_SECTION_LIST_AD_DB = "/* Progress report table's section list AD DB*/\n" +
+            "SELECT distinct tboxh.txh_type AS REPORT_TABLE_SECTION_TYPE, box.description AS REPORT_TABLE_SECTION_NAME, box.display_order\t\n" +
+            "                                                 FROM linc.abadb_tboxh tboxh\t\n" +
+            "                                                 JOIN progress_report.pr_box_types box\t\n" +
+            "                                                   ON tboxh.txh_type = box.box_type\t\n" +
+            "                                                WHERE tboxh.txh_form = 'FORM_DATA'\t\n" +
+            "                                                  AND tboxh.txh_ver = 'VERSION_DATA'\t\n" +
+            "                                                  AND tboxh.txh_school = 'SCHOOL_DATA'\t\n" +
+            "                                                  AND box.on_dashboard_pr = 'Y'\t\n" +
+            "                                                ORDER BY box.display_order";
+
+    String GET_PROGRESS_REPORT_SECTION_TABLE_LIST_AD_DB = "/* Progress report section's table list AD DB*/\n" +
+            "SELECT tboxh.txh_boxltr, CASE WHEN (txh_subj LIKE '%EN%'\t\n" +
+            "                                                                                       AND tboxh.txh_type IN ('T', 'E') \t\n" +
+            "                                                                                       AND (SELECT ap_ograde FROM linc.abadb_appld WHERE ap_apref = 'APPLICATION_NUMBER_DATA') != 'Y') THEN tboxh.txh_desc || ' (Contains - grammar and literature)' \t\n" +
+            "                                                                                    ELSE tboxh.txh_desc END AS TABLE_NAME,\t\n" +
+            "                                                               tboxh.txh_type, tboxh.exception_message\t\n" +
+            "                                                          FROM linc.abadb_tboxh tboxh\t\n" +
+            "                                                          JOIN progress_report.pr_box_types box\t\n" +
+            "                                                            ON tboxh.txh_type = box.box_type                                                          \t\n" +
+            "                                                         WHERE tboxh.txh_form = 'FORM_DATA'\t\n" +
+            "                                                           AND tboxh.txh_ver = 'VERSION_DATA'\t\n" +
+            "                                                           AND tboxh.txh_type = 'REPORT_TABLE_SECTION_TYPE_DATA'\t\n" +
+            "                                                           AND tboxh.txh_school = 'SCHOOL_DATA'\t\n" +
+            "                                                         ORDER BY box.display_order";
+
+//    String GET_PROGRESS_REPORT_TABLE_ROWS_AD_DB = "/* Progress report section's table rows AD DB*/\n" +
+//            "SELECT tboxd.txd_lesson AS lesson, tboxd.txd_type AS ITEM_TYPE, tboxd.txd_onlinepr AS hasCustomEval,\t\n" +
+//            "             tboxd.txd_hosten AS hostEntered, tboxd.txd_itmnbr AS ITEM_NUMBER,\t\n" +
+//            "             replace(tboxd.txd_desc, ';', ';<br />') AS ITEM_DESCRIPTION,\t\n" +
+//            "             coalesce(prbxd.pxd_status, assign.da_status) AS itemStatus, tboxh.txh_boxltr, tboxh.txh_type,\t\n" +
+//            "             coalesce(to_char(prbxd.pxd_grade, '999.9'), to_char(assign.grade_percentage, '999.9'), '0') AS itemGrade, assign.da_testid,\t\n" +
+//            "             prbxd.pxd_aflag AS AFlag, coalesce(assign.da_testid, to_char(tboxd.txd_da_testid)) AS testID,\t\n" +
+//            "             tboxd.txd_da_testname AS testName, assign.da_testassignmentid, assign.da_enddate AS submittedDate,\t\n" +
+//            "             prbxh.pxh_s_type, appld.fd_id AS pxh_id, assign.lock_assignment, appld.ap_ograde AS digitalAssessment, prbxd.start_filling_grade\t\n" +
+//            "        FROM linc.abadb_appld appld\t\n" +
+//            "        LEFT JOIN linc.abadb_prbxh prbxh\t\n" +
+//            "          ON appld.ap_apref = prbxh.pxh_apref\t\n" +
+//            "        LEFT JOIN linc.abadb_prbxd prbxd\t\n" +
+//            "          ON appld.ap_apref = prbxd.application_number\t\n" +
+//            "         AND prbxh.pxh_form = prbxd.form_number\t\n" +
+//            "         AND prbxh.pxh_school = prbxd.school\t\n" +
+//            "         AND prbxh.pxh_boxltr = prbxd.box_letter\t\n" +
+//            "         AND prbxh.pxh_ver = prbxd.version\t\n" +
+//            "        JOIN linc.abadb_tboxh tboxh\t\n" +
+//            "          ON prbxh.pxh_form = tboxh.txh_form\t\n" +
+//            "         AND prbxh.pxh_school = tboxh.txh_school\t\n" +
+//            "         AND prbxh.pxh_boxltr = tboxh.txh_boxltr\t\n" +
+//            "         AND prbxh.pxh_ver = tboxh.txh_ver\t\n" +
+//            "        JOIN linc.abadb_tboxd tboxd\t\n" +
+//            "          ON tboxh.txh_form = tboxd.form_number\t\n" +
+//            "         AND tboxh.txh_school = tboxd.school\t\n" +
+//            "         AND tboxh.txh_boxltr = tboxd.box_letter\t\n" +
+//            "         AND tboxh.txh_ver = tboxd.version\t\n" +
+//            "         AND prbxd.pxd_itmnbr = tboxd.txd_itmnbr\t\n" +
+//            "        LEFT JOIN homeschoolhouse.student_assignments assign\t\n" +
+//            "          ON appld.ap_apref = assign.apref\t\n" +
+//            "         AND assign.apref = 'APPLICATION_NUMBER_DATA'\t\n" +
+//            "         AND tboxh.txh_form = assign.pr_form\t\n" +
+//            "         AND tboxh.txh_school = assign.pr_school\t\n" +
+//            "         AND tboxh.txh_boxltr = assign.pr_boxletter\t\n" +
+//            "         AND tboxh.txh_ver = assign.pr_version\t\n" +
+//            "         AND tboxd.txd_itmnbr = assign.pr_itemnumber\t\n" +
+//            "         AND coalesce(assign.pr_subitemnumber, 0) = 0\t\n" +
+//            "       WHERE appld.ap_apref = 'APPLICATION_NUMBER_DATA'\t\n" +
+//            "         AND prbxh.pxh_form = 'FORM_DATA'\t\n" +
+//            "         AND prbxh.pxh_school = 'SCHOOL_DATA'\t\n" +
+//            "         AND prbxh.pxh_boxltr = 'TXH_BOXLTR_DATA'\t\n" +
+//            "         AND prbxh.pxh_ver = 'VERSION_DATA'\t\n" +
+//            "         AND (tboxd.txd_type != 'I'\t\n" +
+//            "          OR  (tboxd.txd_type = 'I'\t\n" +
+//            "         AND   prbxd.pxd_itmnbr IS NOT NULL))\t\n" +
+//            "         AND (tboxh.txh_type != 'V'\t\n" +
+//            "          OR  coalesce(tboxd.txd_da_testid, 0) > 0 )\t\n" +
+//            "       ORDER BY prbxd.pxd_itmnbr";
+
+    String GET_PROGRESS_REPORT_TABLE_ROWS_AD_DB = "/* Progress report section's table rows AD DB*/\n" +
+            "SELECT case when Enrollment.Enrollment_Queries.HasClassWithDigitalAssessments(p_ApplicationNumber => 'APPLICATION_NUMBER_DATA') = 'Y'\n" +
+            "THEN\n" +
+            " case when (tboxd.txd_hosten = 'G'\n" +
+            " AND coalesce(to_char(prbxd.pxd_grade, '999.9'), to_char(assign.grade_percentage, '999.9'), '0') not in (777.7,999.9,222.2,333.3) ) THEN 'True'\n" +
+            " Else 'False' End\n" +
+            "ELSE\n" +
+            " Case\n" +
+            "    when  (tboxd.txd_hosten = 'G' or (tboxh.txh_type in ('T','E') and tboxd.txd_hosten = ' '))\n" +
+            "        AND coalesce(to_char(prbxd.pxd_grade, '999.9'), to_char(assign.grade_percentage, '999.9'), '0') not in (777.7,999.9,222.2,333.3)\n" +
+            "        AND prbxd.start_filling_grade = 'N'\n" +
+            "        AND assign.da_testid is NULL\n" +
+            "        AND tboxh.txh_type = 'T' THEN 'True'\n" +
+            "     when tboxd.txd_hosten not in (' ','B','C')\n" +
+            "        AND coalesce(to_char(prbxd.pxd_grade, '999.9'), to_char(assign.grade_percentage, '999.9'), '0') not in (777.7,999.9,222.2,333.3)\n" +
+            "        AND coalesce(prbxd.pxd_status, assign.da_status) in ('7','8') THEN 'True'\n" +
+            "     ELSE\n" +
+            "     'False' End\n" +
+            "END as SHOW_GRADE_TEXT_BOX\n" +
+            "\n" +
+            "\n" +
+            ",pxh_form,tboxd.txd_lesson AS lesson, tboxd.txd_type AS ITEM_TYPE, tboxd.txd_onlinepr AS hasCustomEval,\n" +
+            "             tboxd.txd_hosten AS hostEntered, tboxd.txd_itmnbr AS ITEM_NUMBER,\n" +
+            "             replace(tboxd.txd_desc, ';', ';<br />') AS ITEM_DESCRIPTION,\n" +
+            "             coalesce(prbxd.pxd_status, assign.da_status) AS itemStatus, tboxh.txh_boxltr, tboxh.txh_type,\n" +
+            "             coalesce(to_char(prbxd.pxd_grade, '999.9'), to_char(assign.grade_percentage, '999.9'), '0') AS ITEM_GRADE, assign.da_testid,\n" +
+            "             prbxd.pxd_aflag AS AFlag, coalesce(assign.da_testid, to_char(tboxd.txd_da_testid)) AS TEST_ID,\n" +
+            "             tboxd.txd_da_testname AS testName, assign.da_testassignmentid, assign.da_enddate AS submittedDate,\n" +
+            "             prbxh.pxh_s_type, appld.fd_id AS pxh_id, assign.lock_assignment, appld.ap_ograde AS digitalAssessment, prbxd.start_filling_grade\n" +
+            "        FROM linc.abadb_appld appld\n" +
+            "        LEFT JOIN linc.abadb_prbxh prbxh\n" +
+            "          ON appld.ap_apref = prbxh.pxh_apref\n" +
+            "        LEFT JOIN linc.abadb_prbxd prbxd\n" +
+            "          ON appld.ap_apref = prbxd.application_number\n" +
+            "         AND prbxh.pxh_form = prbxd.form_number\n" +
+            "         AND prbxh.pxh_school = prbxd.school\n" +
+            "         AND prbxh.pxh_boxltr = prbxd.box_letter\n" +
+            "         AND prbxh.pxh_ver = prbxd.version\n" +
+            "        JOIN linc.abadb_tboxh tboxh\n" +
+            "          ON prbxh.pxh_form = tboxh.txh_form\n" +
+            "         AND prbxh.pxh_school = tboxh.txh_school\n" +
+            "         AND prbxh.pxh_boxltr = tboxh.txh_boxltr\n" +
+            "         AND prbxh.pxh_ver = tboxh.txh_ver\n" +
+            "        JOIN linc.abadb_tboxd tboxd\n" +
+            "          ON tboxh.txh_form = tboxd.form_number\n" +
+            "         AND tboxh.txh_school = tboxd.school\n" +
+            "         AND tboxh.txh_boxltr = tboxd.box_letter\n" +
+            "         AND tboxh.txh_ver = tboxd.version\n" +
+            "         AND prbxd.pxd_itmnbr = tboxd.txd_itmnbr\n" +
+            "        LEFT JOIN homeschoolhouse.student_assignments assign\n" +
+            "          ON appld.ap_apref = assign.apref\n" +
+            "         AND assign.apref = 'APPLICATION_NUMBER_DATA'\n" +
+            "         AND tboxh.txh_form = assign.pr_form\n" +
+            "         AND tboxh.txh_school = assign.pr_school\n" +
+            "         AND tboxh.txh_boxltr = assign.pr_boxletter\n" +
+            "         AND tboxh.txh_ver = assign.pr_version\n" +
+            "         AND tboxd.txd_itmnbr = assign.pr_itemnumber\n" +
+            "         AND coalesce(assign.pr_subitemnumber, 0) = 0\n" +
+            "       WHERE appld.ap_apref = 'APPLICATION_NUMBER_DATA'\n" +
+            "         AND prbxh.pxh_form = 'FORM_DATA'\n" +
+            "         AND prbxh.pxh_school = 'SCHOOL_DATA'\n" +
+            "         AND prbxh.pxh_boxltr = 'TXH_BOXLTR_DATA'\n" +
+            "         AND prbxh.pxh_ver = 'VERSION_DATA'\n" +
+            "         AND (tboxd.txd_type != 'I'\n" +
+            "          OR  (tboxd.txd_type = 'I'\n" +
+            "         AND   prbxd.pxd_itmnbr IS NOT NULL))\n" +
+            "         AND (tboxh.txh_type != 'V'\n" +
+            "          OR  coalesce(tboxd.txd_da_testid, 0) > 0 )\n" +
+            "       ORDER BY prbxd.pxd_itmnbr";
+
+//    String GET_PROGRESS_REPORT_ADDITIONAL_TABLE_PARENT_ROWS = "/* Progress report section's table additional rows AD DB*/\n" +
+//            "SELECT tboxm.txm_lesson AS lesson, tboxm.txm_type AS itemType, 'N' AS hasCustomEval,\t\n" +
+//            "             tboxm.txm_hosten AS hostEntered, tboxm.txm_itmnbr AS itemNumber, tboxm.txm_sub_itmnbr,\t\n" +
+//            "             replace(tboxm.txm_desc, ';', ';<br />') AS itemDescription,\t\n" +
+//            "             coalesce(prbxm.pxm_status, stdntAssign.da_status) AS itemStatus, tboxm.box_letter, tboxh.txh_type,\t\n" +
+//            "             coalesce(to_char(prbxm.pxm_grade, '999.9'), to_char(stdntAssign.grade_percentage, '999.9'), '0') AS itemGrade, stdntAssign.da_testid,\t\n" +
+//            "             prbxm.pxm_aflag AS AFlag, coalesce(stdntAssign.da_testid, to_char(tboxm.txm_da_testid)) AS testID,\t\n" +
+//            "             tboxm.txm_da_testname AS testName, stdntAssign.da_testassignmentid, stdntAssign.da_enddate AS submittedDate, prbxm.pxm_lock AS lock_assignment, appld.ap_ograde AS digitalAssessment, prbxm.start_filling_grade\t\n" +
+//            "        FROM linc.abadb_prbxm prbxm\t\n" +
+//            "        JOIN linc.abadb_appld appld\t\n" +
+//            "          ON prbxm.application_number = appld.ap_apref\t\n" +
+//            "        JOIN linc.abadb_tboxh tboxh\t\n" +
+//            "          ON tboxh.txh_form = prbxm.form_number\t\n" +
+//            "         AND tboxh.txh_ver = prbxm.version\t\n" +
+//            "         AND tboxh.txh_school = prbxm.school\t\n" +
+//            "         AND tboxh.txh_boxltr = prbxm.box_letter\t\n" +
+//            "        JOIN linc.abadb_tboxm tboxm\t\n" +
+//            "          ON tboxm.form_number = prbxm.form_number\t\n" +
+//            "         AND tboxm.version = prbxm.version\t\n" +
+//            "         AND tboxm.school = prbxm.school\t\n" +
+//            "         AND tboxm.box_letter = prbxm.box_letter\t\n" +
+//            "         AND tboxm.txm_itmnbr = prbxm.pxm_itmnbr\t\n" +
+//            "         AND tboxm.txm_sub_itmnbr = prbxm.pxm_sub_itmnbr\t\n" +
+//            "        LEFT JOIN homeschoolhouse.student_assignments stdntAssign\t\n" +
+//            "          ON stdntAssign.apref = prbxm.application_number\t\n" +
+//            "         AND stdntAssign.pr_form = prbxm.form_number\t\n" +
+//            "         AND stdntAssign.pr_version = prbxm.version\t\n" +
+//            "         AND stdntAssign.pr_school = prbxm.school\t\n" +
+//            "         AND stdntAssign.pr_boxLetter = prbxm.box_letter\t\n" +
+//            "         AND stdntAssign.pr_itemNumber = prbxm.pxm_itmnbr\t\n" +
+//            "         AND stdntAssign.pr_subItemNumber = prbxm.pxm_sub_itmnbr\t\n" +
+//            "       WHERE prbxm.application_number = 'APPLICATION_NUMBER_DATA'\t\n" +
+//            "         AND prbxm.form_number = 'FORM_DATA'\t\n" +
+//            "         AND prbxm.version = 'VERSION_DATA'\t\n" +
+//            "         AND prbxm.school = 'SCHOOL_DATA'\t\n" +
+//            "         AND prbxm.box_letter = 'TXH_BOXLTR_DATA'\t\n" +
+//            "         AND prbxm.pxm_itmnbr = 'ITEM_NUMBER_DATA'\t\n" +
+//            "       ORDER BY prbxm.pxm_sub_itmnbr";
+
+    String GET_PROGRESS_REPORT_ADDITIONAL_TABLE_PARENT_ROWS = "/* Progress report section's table additional rows AD DB*/\n" +
+            "SELECT\n" +
+            "case when Enrollment.Enrollment_Queries.HasClassWithDigitalAssessments(p_ApplicationNumber => 'APPLICATION_NUMBER_DATA') = 'Y'\n" +
+            "THEN\n" +
+            " case when (tboxm.txm_hosten = 'G'\n" +
+            " AND coalesce(to_char(prbxm.pxm_grade, '999.9'), to_char(stdntAssign.grade_percentage, '999.9'), '0') not in (777.7,999.9,222.2,333.3) ) THEN 'True'\n" +
+            " Else 'False' End\n" +
+            "ELSE\n" +
+            " Case\n" +
+            "    when  (tboxm.txm_hosten = 'G' or (tboxh.txh_type in ('T','E') and tboxm.txm_hosten = ' '))\n" +
+            "        AND coalesce(to_char(prbxm.pxm_grade, '999.9'), to_char(stdntAssign.grade_percentage, '999.9'), '0') not in (777.7,999.9,222.2,333.3)\n" +
+            "        AND prbxm.start_filling_grade = 'N'\n" +
+            "        AND stdntAssign.da_testid is NULL\n" +
+            "        AND tboxh.txh_type = 'T' THEN 'True'\n" +
+            "     when tboxm.txm_hosten not in (' ','B','C')\n" +
+            "        AND coalesce(to_char(prbxm.pxm_grade, '999.9'), to_char(stdntAssign.grade_percentage, '999.9'), '0') not in (777.7,999.9,222.2,333.3)\n" +
+            "        AND coalesce(prbxm.pxm_status, stdntAssign.da_status) in ('7','8') THEN 'True'\n" +
+            "     ELSE\n" +
+            "     'False' End\n" +
+            "END as SHOW_GRADE_TEXT_BOX ,\n" +
+            "tboxm.txm_lesson AS lesson, tboxm.txm_type AS ITEM_TYPE, 'N' AS hasCustomEval,\n" +
+            "             tboxm.txm_hosten AS hostEntered, tboxm.txm_itmnbr AS ITEM_NUMBER, tboxm.txm_sub_itmnbr,\n" +
+            "             replace(tboxm.txm_desc, ';', ';<br />') AS ITEM_DESCRIPTION,\n" +
+            "             coalesce(prbxm.pxm_status, stdntAssign.da_status) AS ITEM_STATUS, tboxm.box_letter, tboxh.txh_type,\n" +
+            "             coalesce(to_char(prbxm.pxm_grade, '999.9'), to_char(stdntAssign.grade_percentage, '999.9'), '0') AS ITEM_GRADE, stdntAssign.da_testid,\n" +
+            "             prbxm.pxm_aflag AS AFlag, coalesce(stdntAssign.da_testid, to_char(tboxm.txm_da_testid)) AS TEST_ID,\n" +
+            "             tboxm.txm_da_testname AS testName, stdntAssign.da_testassignmentid, stdntAssign.da_enddate AS submittedDate, prbxm.pxm_lock AS lock_assignment, appld.ap_ograde AS digitalAssessment, prbxm.start_filling_grade\n" +
+            "        FROM linc.abadb_prbxm prbxm\n" +
+            "        JOIN linc.abadb_appld appld\n" +
+            "          ON prbxm.application_number = appld.ap_apref\n" +
+            "        JOIN linc.abadb_tboxh tboxh\n" +
+            "          ON tboxh.txh_form = prbxm.form_number\n" +
+            "         AND tboxh.txh_ver = prbxm.version\n" +
+            "         AND tboxh.txh_school = prbxm.school\n" +
+            "         AND tboxh.txh_boxltr = prbxm.box_letter\n" +
+            "        JOIN linc.abadb_tboxm tboxm\n" +
+            "          ON tboxm.form_number = prbxm.form_number\n" +
+            "         AND tboxm.version = prbxm.version\n" +
+            "         AND tboxm.school = prbxm.school\n" +
+            "         AND tboxm.box_letter = prbxm.box_letter\n" +
+            "         AND tboxm.txm_itmnbr = prbxm.pxm_itmnbr\n" +
+            "         AND tboxm.txm_sub_itmnbr = prbxm.pxm_sub_itmnbr\n" +
+            "        LEFT JOIN homeschoolhouse.student_assignments stdntAssign\n" +
+            "          ON stdntAssign.apref = prbxm.application_number\n" +
+            "         AND stdntAssign.pr_form = prbxm.form_number\n" +
+            "         AND stdntAssign.pr_version = prbxm.version\n" +
+            "         AND stdntAssign.pr_school = prbxm.school\n" +
+            "         AND stdntAssign.pr_boxLetter = prbxm.box_letter\n" +
+            "         AND stdntAssign.pr_itemNumber = prbxm.pxm_itmnbr\n" +
+            "         AND stdntAssign.pr_subItemNumber = prbxm.pxm_sub_itmnbr\n" +
+            "       WHERE prbxm.application_number = 'APPLICATION_NUMBER_DATA'\n" +
+            "         AND prbxm.form_number = 'FORM_DATA'\n" +
+            "         AND prbxm.version = 'VERSION_DATA'\n" +
+            "         AND prbxm.school = 'SCHOOL_DATA'\n" +
+            "         AND prbxm.box_letter = 'TXH_BOXLTR_DATA'\n" +
+            "         AND prbxm.pxm_itmnbr = 'ITEM_NUMBER_DATA'\n" +
+            "       ORDER BY prbxm.pxm_sub_itmnbr";
 }

@@ -6,7 +6,6 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import constants.Calendar;
 import constants.CommonConstants;
 import constants.DataBaseQueryConstant;
-import constants.GradeTable;
 import constants.TableColumn;
 import elementConstants.Dashboard;
 import elementConstants.Students;
@@ -14,7 +13,10 @@ import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+
 import java.util.*;
+import java.util.stream.Collectors;
+
 import static com.codeborne.selenide.Selenide.back;
 import static com.codeborne.selenide.Selenide.refresh;
 import static constants.CommonConstants.*;
@@ -96,7 +98,9 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen navigateToProgressReportWidget() {
+    public StudentsScreen navigateToProgressReportWidget(String studentName) {
+        click(bringElementIntoView(String.format(progressReportsStudentLink,studentName)));
+        waitForPageTobeLoaded();
         click(bringElementIntoView(String.format(Students.widgetLink, getStudentInformationWidgetLinkId(PROGRESS_REPORTS))));
         waitForPageTobeLoaded();
         return this;
@@ -182,16 +186,105 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen enterStudentGrades() {
+    public StudentsScreen enterStudentGrades(boolean isSubmissionForAllSubject, boolean isSubmitAllGradingPeriod, String signature) {
         //for loop according to db data
-        String subject = "need to fetch from db";
-        String gradingPeriod = "need to fetch from db";
-        ArrayList<Map<String, ArrayList<Map<String, ArrayList<GradeTable>>>>> studentGradeTableDetailList = new ArrayList<>();// need to fetch from db
-        selectSubjectOnProgressReportPage(subject);
-        chooseGradingPeriod(gradingPeriod);
-        fillGradesToSection(studentGradeTableDetailList, false);
-        waitForPageTobeLoaded();
+        String subject;
+        String form;
+        String school;
+        String version;
+        String boxLetter;
+        String tableName;
+        String reportTableSectionType;
+        String reportTableSectionName;
+        List<String> gradingPeriodList;
+        int submittedReportCount = 0;
+        String applicationNumber = getUserAccountDetails().getApplicationNumber();
+        String accountNumber = getUserAccountDetails().getAccountNumber();
+        ArrayList<HashMap<String, String>> subjectList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_SUBJECT_LIST_AD_DB
+                .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber).replaceAll(ACCOUNT_NUMBER_DATA, accountNumber), CommonConstants.AD_DATA_BASE);
+        ArrayList<HashMap<String, String>> progressReportTableSectionList;
+        ArrayList<HashMap<String, String>> progressReportSectionTableList;
+        ArrayList<HashMap<String, String>> progressReportTableRows;
+        for(HashMap<String, String> subjectListRow:subjectList){
+            subject = subjectListRow.get(SUBJECT_NAME);
+            gradingPeriodList = getGradingPeriod(subjectListRow);
+            switchToLastOrNewWindow();
+            selectSubjectOnProgressReportPage(subject);
+            for(String gradingPeriod:gradingPeriodList){
+                form = subjectListRow.get(FORM).concat(gradingPeriod);
+                school = subjectListRow.get(SCHOOL);
+                version = subjectListRow.get(VERSION);
+
+                progressReportTableSectionList =  executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_TABLE_SECTION_LIST_AD_DB
+                        .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(VERSION_DATA,version), CommonConstants.AD_DATA_BASE);
+                chooseGradingPeriod(gradingPeriod);
+                for(HashMap<String, String> tableSectionDetailsRow:progressReportTableSectionList){
+                    reportTableSectionType = tableSectionDetailsRow.get(REPORT_TABLE_SECTION_TYPE);
+                    reportTableSectionName = tableSectionDetailsRow.get(REPORT_TABLE_SECTION_NAME);
+                    progressReportSectionTableList =  executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_SECTION_TABLE_LIST_AD_DB
+                            .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber).replaceAll(FORM_DATA, form).replaceAll(VERSION_DATA,version).
+                                    replaceAll(REPORT_TABLE_SECTION_TYPE_DATA,reportTableSectionType).replaceAll(SCHOOL_DATA,school), CommonConstants.AD_DATA_BASE);
+                    for(HashMap<String, String> sectionTableDetails:progressReportSectionTableList){
+                        boxLetter = sectionTableDetails.get(TXH_BOXLTR);
+                        tableName = sectionTableDetails.get(TABLE_NAME);
+                        progressReportTableRows =  getProgressReportTableRows(form, school, boxLetter, version, applicationNumber);
+                        fillGradesToSection(reportTableSectionName,tableName, progressReportTableRows, false);
+                    }
+                }
+                waitForPageTobeLoaded();
+                if(!isSubmitAllGradingPeriod){
+                    break;
+                }
+            }
+            fillBookReport();
+            signProgressReport(signature);
+            submitProgressReport();
+            if(!isSubmissionForAllSubject){
+                break;
+            }
+        }
         return this;
+    }
+
+    private void fillBookReport() {
+        List<SelenideElement> bookReportsElements = getElements(Students.bookReports);
+        int i = 1;
+        for(SelenideElement bookReportParent:bookReportsElements){
+            type(bringChildElementIntoView(bookReportParent,String.format(Students.bookReportTextBox,i,AUTHOR)),"Automation author");
+            type(bringChildElementIntoView(bookReportParent,String.format(Students.bookReportTextBox,i, TITLE)),"Automation title");
+            type(bringChildElementIntoView(bookReportParent,String.format(Students.bookReportTextBox,i, PAGES_READ)),Integer.toString(new Random().nextInt(100)));
+            i++;
+        }
+    }
+
+    private ArrayList<HashMap<String, String>> getProgressReportTableRows(String form, String school, String boxLetter, String version, String applicationNumber) {
+        ArrayList<HashMap<String, String>> progressReportTableRowsList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_TABLE_ROWS_AD_DB
+                .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(TXH_BOXLTR_DATA,boxLetter).
+                        replaceAll(VERSION_DATA,version).replaceAll(APPLICATION_NUMBER_DATA,applicationNumber), CommonConstants.AD_DATA_BASE);
+        ArrayList<HashMap<String, String>> progressReportTableRowsTemp = new ArrayList<>();
+        progressReportTableRowsTemp.addAll(progressReportTableRowsList);
+
+        for(HashMap<String, String> progressReportTableRow:progressReportTableRowsList){
+            if(progressReportTableRow.get(ITEM_TYPE).matches("X|C|M")){
+                progressReportTableRowsTemp.addAll(getAndAddParentPRViewSuiteItemGrade(form, progressReportTableRow.get(ITEM_NUMBER), school, boxLetter, version, applicationNumber));
+            }
+        }
+        return progressReportTableRowsTemp;
+    }
+
+    private Collection<? extends HashMap<String, String>> getAndAddParentPRViewSuiteItemGrade(String form, String itemNumber, String school, String boxLetter, String version, String applicationNumber) {
+        return executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_ADDITIONAL_TABLE_PARENT_ROWS
+                .replaceAll(FORM_DATA, form).replaceAll(ITEM_NUMBER_DATA, itemNumber).replaceAll(SCHOOL_DATA,school).
+                        replaceAll(TXH_BOXLTR_DATA,boxLetter).replaceAll(VERSION_DATA,version).replaceAll(APPLICATION_NUMBER_DATA,applicationNumber), CommonConstants.AD_DATA_BASE);
+    }
+
+    private List<String> getGradingPeriod(HashMap<String, String> subjectListRow) {
+        ArrayList<String> gradingPeriodList = new ArrayList<>();
+        gradingPeriodList.add(subjectListRow.get(GRD_PRD1));
+        gradingPeriodList.add(subjectListRow.get(GRD_PRD2));
+        gradingPeriodList.add(subjectListRow.get(GRD_PRD3));
+        gradingPeriodList.add(subjectListRow.get(GRD_PRD4));
+        return gradingPeriodList.stream().filter(e->e!=null).collect(Collectors.toList());
     }
 
     public StudentsScreen signProgressReport(String signature) {
@@ -205,89 +298,81 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    private void fillGradesToSection(ArrayList<Map<String, ArrayList<Map<String, ArrayList<GradeTable>>>>> studentGradeTableDetailList, boolean validateMoreThan100Marks) {
-        int sectionGetKeyCounter = 0;
-        int gradeTableNameCounter = 0;
+    private void fillGradesToSection(String reportTableSectionName, String tableName, ArrayList<HashMap<String, String>> tableRows, boolean validateMoreThan100Marks) {
         SelenideElement gradeTableParentElement;
-        String sectionName;
-        String gradeTableName;
-        ArrayList<GradeTable> lessonList;
-        String lesson;
-        String description;
         boolean isInputTextBoxShouldPresent = false;
-        for (Map<String, ArrayList<Map<String, ArrayList<GradeTable>>>> sectionMap : studentGradeTableDetailList) {
-            ArrayList<Integer> givenGradeList = new ArrayList<>();
-            int gradeTobeGiven;
-            sectionName = sectionMap.keySet().toArray()[sectionGetKeyCounter].toString();
-            if (bringElementIntoView(String.format(sectionHeader, getSectionID(sectionName), sectionName)) != null) {
-                for (Map<String, ArrayList<GradeTable>> gradeTableList : sectionMap.get(sectionName)) {
-                    gradeTableName = gradeTableList.keySet().toArray()[gradeTableNameCounter].toString();
-                    gradeTableParentElement = bringElementIntoView(String.format(Students.gradeTableHeader, getSectionID(sectionName), gradeTableName));
-                    lessonList = gradeTableList.get(gradeTableName);
+            ArrayList<Float> givenGradeList = new ArrayList<>();
+            float gradeTobeGiven = 0;
+            boolean isInputBoxPresent;
+            if (bringElementIntoView(String.format(sectionHeader, getSectionID(reportTableSectionName), reportTableSectionName)) != null) {
+                    gradeTableParentElement = bringElementIntoView(String.format(Students.gradeTableHeader, getSectionID(reportTableSectionName), tableName));
                     if (gradeTableParentElement != null) {
-                        for (GradeTable gradeTableLessonDetails : lessonList) {
-                            isInputTextBoxShouldPresent = false;//need to fetch from db
-                            if (isInputTextBoxShouldPresent) {
-                                gradeTobeGiven = new Random().nextInt(101);
-                                givenGradeList.add(gradeTobeGiven);
-                                addGrade(gradeTableLessonDetails, sectionName, gradeTableName, validateMoreThan100Marks, gradeTobeGiven);
-                            } else {
-                                validateGradeInputBox(gradeTableLessonDetails, sectionName, gradeTableName);
-                            }
+                        for (HashMap<String, String> row : tableRows) {
+                            //isInputTextBoxShouldPresent = false;//need to fetch from db
+                            //if (isInputTextBoxShouldPresent) {
+                                isInputBoxPresent = Boolean.parseBoolean(row.get(SHOW_GRADE_TEXT_BOX));
+                                if(isInputBoxPresent) {
+                                    gradeTobeGiven = new Random().nextInt(101);
+                                    givenGradeList.add(gradeTobeGiven);
+                                }
+                                addGrade(row, reportTableSectionName, tableName, validateMoreThan100Marks, isInputBoxPresent, gradeTobeGiven);
+
+                               // validateGradeInputBox(row, reportTableSectionName, tableName);
                         }
                         if (givenGradeList.size() > 0) {
-                            validateAverage(givenGradeList, sectionName, gradeTableName);
+                            validateAverage(givenGradeList, reportTableSectionName, tableName);
                         }
                     } else {
-                        softAssertions.fail(gradeTableName + " is not present in given sectionMap[" + sectionMap +
-                                "] of Progress Report page");
+                        softAssertions.fail(tableName + " is not present in given sectionMap["+reportTableSectionName+"] of Progress Report page");
                     }
-                    gradeTableNameCounter++;
-                }
-                sectionGetKeyCounter++;
             } else {
-                softAssertions.fail(sectionName + ": sectionMap is not present on Progress Report page");
-                continue;
+                softAssertions.fail(reportTableSectionName + ": sectionMap is not present on Progress Report page");
             }
         }
-    }
 
-    private void validateAverage(ArrayList<Integer> givenGradeList, String sectionName, String gradeTableName) {
-        int totalGrade = 0;
-        for (Integer grade : givenGradeList) {
+    private void validateAverage(ArrayList<Float> givenGradeList, String sectionName, String gradeTableName) {
+        float totalGrade = 0;
+        for (float grade : givenGradeList) {
             totalGrade = totalGrade + grade;
         }
         tempXpath = String.format(Students.gradeAverageXpath, getSectionID(sectionName), gradeTableName, Students.AVERAGE);
-        int expectedAverage = (totalGrade / (100 * givenGradeList.size())) * 100;
-        softAssertions.assertThat(getElementText(tempXpath).equals(Integer.toString(expectedAverage)))
+        String expectedAverage = String.format("%.1f",(Float.parseFloat(String.valueOf(totalGrade)) / (100 * givenGradeList.size())) * 100);
+        implicitWaitInSeconds(3);
+        softAssertions.assertThat(getElementText(tempXpath).equals(expectedAverage))
                 .as(sectionName + "->" + gradeTableName + "'s average is not matching with table average. \nexpected average:"
                         + expectedAverage + "actual average:" + getElementText(tempXpath)).isTrue();
     }
 
-    private StudentsScreen addGrade(GradeTable gradeTableLessonDetails, String sectionName, String gradeTableName, boolean validateMoreThan100Marks, int gradeTobeGiven) {
-        String lesson = gradeTableLessonDetails.getLesson();
-        String description = gradeTableLessonDetails.getDescription();
-        tempXpath = String.format(gradeTextBox, getSectionID(sectionName), gradeTableName, lesson,
+    private StudentsScreen addGrade(HashMap<String,String> tableRow, String sectionName, String gradeTableName, boolean validateMoreThan100Marks, boolean isInputBoxPresent, float gradeTobeGiven) {
+        String lesson = tableRow.get(LESSON);
+        String description = tableRow.get(ITEM_DESCRIPTION);
+        String grade = tableRow.get(ITEM_GRADE);
+        boolean elementExists;
+        tempXpath = (isInputBoxPresent)?String.format(gradeTextBox, getSectionID(sectionName), gradeTableName, lesson,
+                description):(grade.equals("777.7"))?String.format(pendingGrade, getSectionID(sectionName), gradeTableName, lesson,
+                description):String.format(hiddenGradeTextBox, getSectionID(sectionName), gradeTableName, lesson,
                 description);
-        if (isElementExists(tempXpath)) {
+
+        elementExists = isElementExists(tempXpath);
+        if (elementExists && isInputBoxPresent) {
             if (validateMoreThan100Marks) {
                 type(tempXpath, "101");
                 pressTab(getElement(tempXpath));
                 softAssertions.assertThat(isElementExists(Students.GRADE_TEXT_BOX_VALIDATOR_MESSAGE))
                         .as(GRADE_TEXT_BOX_VALIDATOR_MESSAGE + " grade text box validator message is not appeared, though we enter text 101").isTrue();
             }
-            type(tempXpath, Integer.toString(gradeTobeGiven));
+            type(tempXpath, Float.toString(gradeTobeGiven));
             pressTab(tempXpath);
         } else {
-            softAssertions.fail("Grade input text box is not present for following details\nSectionName:" + sectionName + "\nTableName:" + gradeTableName +
-                    "\nLesson:" + lesson + "\nDescription:" + description + "\n xpath:" + tempXpath);
+            softAssertions.assertThat((tableRow.get(ITEM_TYPE).matches("X|C|M|S")||tableRow.get(TEST_ID).equals("0"))?isElementExists(description):elementExists).as("Progress report with \n Section name:"+
+                    sectionName+"\n GradeTableName:"+gradeTableName+"\nLesson:"+lesson+"\n Description:"+description+"is not present with "+((isInputBoxPresent)?"[GradeInputTextBox]":"[--] \nxpath:"+tempXpath)).isTrue();
         }
         return this;
     }
 
-    private StudentsScreen validateGradeInputBox(GradeTable gradeTableLessonDetails, String sectionName, String gradeTableName) {
-        String lesson = gradeTableLessonDetails.getLesson();
-        String description = gradeTableLessonDetails.getDescription();
+    private StudentsScreen validateGradeInputBox(HashMap<String,String> tableRow, String sectionName, String gradeTableName) {
+        String lesson = tableRow.get(LESSON);
+        String description = tableRow.get(DESCRIPTION);
         tempXpath = String.format(gradeHiddenTextBox, getSectionID(sectionName), gradeTableName, lesson,
                 description);
         softAssertions.assertThat(isElementExists(tempXpath)).as("Grade input text box is not present for following details\nSectionName:" + sectionName + "\nTableName:" + gradeTableName +
@@ -297,7 +382,7 @@ public class StudentsScreen extends GenericAction {
 
     @SneakyThrows
     private String getSectionID(String sectionName) {
-        switch (sectionName.toUpperCase()) {
+        switch (sectionName) {
             case QUIZ:
                 return "divQ";
             case TEST:
@@ -306,8 +391,10 @@ public class StudentsScreen extends GenericAction {
                 return "divE";
             case MISC_NON_GRADED:
                 return "divX";
+            case REVIEW:
+                return "divV";
             default:
-                throw new Exception("Section name is other that :" + QUIZ + "," + TEST + "," + EXAM + "," + MISC_NON_GRADED);
+                throw new Exception("["+sectionName+"] Section name is other that :" + QUIZ + "," + TEST + "," + EXAM + "," + MISC_NON_GRADED);
 
         }
     }
@@ -513,6 +600,10 @@ public class StudentsScreen extends GenericAction {
         return (dataColumnText.equals(criteria)) ? true : false;
     }
 
+    private boolean isAllAssignmentsLocked(ArrayList<HashMap<String, String>> assessmentList) {
+        return !assessmentList.stream().anyMatch(e->e.get(LOCK_ASSIGNMENT) == null);
+    }
+
     /**
      * Here we are validating only video list, not clicking on video link
      *
@@ -632,6 +723,26 @@ public class StudentsScreen extends GenericAction {
     public void markAllVideoLessonsAsCompletedForRespectiveStudent(String loginId){
         log("Marking all lessons as completed");
         executeSetAllVideoCompletedStoredProcedure(DataBaseQueryConstant.SET_ALL_VIDEO_COMPLETED_SP_SD_DB,loginId,SD_DATA_BASE);
+    }
+
+    public void markAssessmentRelatedAllLessonVideosAsCompleted(String loginId,String subjectId, String endLesson){
+        log("Mark all assessment related videos as completed");
+        try{
+            processSpecificAssessmentToUnlockedStoredProcedure(DataBaseQueryConstant.MARK_ASSESSMENT_RELATED_VIDEO_COMPLETED_SP_SD_DB,loginId,subjectId,endLesson,SD_DATA_BASE);
+        }catch (Exception e){
+            softAssertions.fail("Stored procedure failed for:\n"+DataBaseQueryConstant.MARK_ASSESSMENT_RELATED_VIDEO_COMPLETED_SP_SD_DB +"\n LoginId:"+loginId +"\n SubjectId:"+subjectId+"\n EndLesson:"+endLesson
+            +"\n"+e);
+        }
+    }
+
+    public void clearAssessmentProcessMarkVideoLessonsAsNotViewed(String loginId,String subjectId, String startLesson, String endLesson){
+        log("Mark all assessment related videos as completed");
+        try{
+            clearProcessOfAssessmentMarkVideoAsNotViewedStoredProcedure(DataBaseQueryConstant.CLEAR_ASSESSMENT_PROCESS_MARK_VIDEO_NOT_VIEWED_SP_SD_DB,loginId,subjectId,startLesson,endLesson,SD_DATA_BASE);
+        }catch (Exception e){
+            softAssertions.fail("Stored procedure failed for:\n"+DataBaseQueryConstant.MARK_ASSESSMENT_RELATED_VIDEO_COMPLETED_SP_SD_DB +"\n LoginId:"+loginId +"\n SubjectId:"+subjectId+"\n StartLesson"+startLesson+"\n EndLesson:"+endLesson
+                    +"\n"+e);
+        }
     }
 
     public StudentsScreen validateVideoLibraryVideoStatusWithDataBase() {
@@ -772,22 +883,30 @@ public class StudentsScreen extends GenericAction {
 
     public StudentsScreen answerAndSubmitDigitalAssessment(boolean isAnswerAndSubmitAllAssessment) {
         String subject;
-        String lesson;
+        String assignmentName;
         String studentID = getUserAccountDetails().getStudentId();
         boolean isLocked;
         String userName;
         boolean isValidationDone = false;
-        markAllVideoLessonsAsCompletedForRespectiveStudent(getUserAccountDetails().getLoginId());
-        ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
+        String subjectId;
+        String endLesson;
+        //markAllVideoLessonsAsCompletedForRespectiveStudent(getUserAccountDetails().getLoginId());
+        ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
         for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
-            subject = myAssessment.get(SUBJECT).trim();
-            lesson = myAssessment.get(LESSON).trim();
-            isLocked = getIsLocked(myAssessment.get(LOCKED), Students.Y);
+            subject = myAssessment.get(SHORT_DESCRIPTION).trim();
+            assignmentName = myAssessment.get(LONG_DESCRIPTION).trim();
+            isLocked = getIsLocked(myAssessment.get(LOCK_ASSIGNMENT), Students.Y);
+            subjectId = myAssessment.get(SUBJECT_ID_FK);
+            endLesson = myAssessment.get(LESSON_NUMBER);
             userName = getUserAccountDetails().getUserName().trim();
+
+            if(isAllAssignmentsLocked(myLessonsAssessmentToday)){
+                markAssessmentRelatedAllLessonVideosAsCompleted(getUserAccountDetails().getLoginId(),subjectId,endLesson);
+            }
             if (!isLocked) {
-                bringElementIntoView(String.format(Students.assessmentUnlocked, subject, lesson));
-                click(String.format(Students.assessmentUnlocked, subject, lesson));
+                bringElementIntoView(String.format(Students.assessmentUnlocked, subject, assignmentName));
+                click(String.format(Students.assessmentUnlocked, subject, assignmentName));
                 if(isElementDisplayed(Students.signature)) {
                     type(Students.signature, userName);
                     click(Students.signPledgeBtn);
@@ -801,7 +920,7 @@ public class StudentsScreen extends GenericAction {
                 answerQuestions();
                 submitQuestion();
                 goToAnotherSession();
-                submittedAssessmentList.add(new String[]{subject,lesson});
+                submittedAssessmentList.add(new String[]{subject,assignmentName});
                 isValidationDone = true;
             }
             if (!isAnswerAndSubmitAllAssessment && isValidationDone) {
