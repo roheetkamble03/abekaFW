@@ -26,6 +26,7 @@ import static elementConstants.Students.*;
 public class StudentsScreen extends GenericAction {
 
     HashMap<String, Boolean> videoViewStatusVideoLibrary = new HashMap<>();
+    public String uploadWordFilePath = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\AutomationTest.docx");
     private static ArrayList<String[]> submittedAssessmentList = new ArrayList<String[]>();
 
     public StudentsScreen validateStudentInformationSection(String studentName) {
@@ -218,6 +219,9 @@ public class StudentsScreen extends GenericAction {
                 progressReportTableSectionList =  executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_TABLE_SECTION_LIST_AD_DB
                         .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(VERSION_DATA,version), CommonConstants.AD_DATA_BASE);
                 chooseGradingPeriod(gradingPeriod);
+                if(!isElementExists(Students.submit)){
+                    continue;
+                }
                 for(HashMap<String, String> tableSectionDetailsRow:progressReportTableSectionList){
                     reportTableSectionType = tableSectionDetailsRow.get(REPORT_TABLE_SECTION_TYPE);
                     reportTableSectionName = tableSectionDetailsRow.get(REPORT_TABLE_SECTION_NAME);
@@ -363,11 +367,30 @@ public class StudentsScreen extends GenericAction {
             }
             type(tempXpath, Float.toString(gradeTobeGiven));
             pressTab(tempXpath);
-        } else {
+        } else if(grade.equals("777.7")){
+            softAssertions.assertThat(elementExists).as("Progress report with \n Section name:"+
+                    sectionName+"\n GradeTableName:"+gradeTableName+"\nLesson:"+lesson+"\n Description:"+description+"is not present with status pending").isTrue();
+        }else if (sectionName.equals(MISC_NON_GRADED)){
+            if(gradeTableName.equals(COMPOSITIONS)){
+                completeComposition(sectionName, gradeTableName, lesson, description);
+            }
+        } else{
             softAssertions.assertThat((tableRow.get(ITEM_TYPE).matches("X|C|M|S")||tableRow.get(TEST_ID).equals("0"))?isElementExists(description):elementExists).as("Progress report with \n Section name:"+
                     sectionName+"\n GradeTableName:"+gradeTableName+"\nLesson:"+lesson+"\n Description:"+description+"is not present with "+((isInputBoxPresent)?"[GradeInputTextBox]":"[--] \nxpath:"+tempXpath)).isTrue();
         }
         return this;
+    }
+
+    private void completeComposition(String sectionName, String gradeTableName, String lesson, String description) {
+        tempXpath = String.format(compositionSubmitLink, getSectionID(sectionName), gradeTableName, lesson,
+                description);
+        click(tempXpath);
+        waitForPageTobeLoaded();
+        click(submitOnline);
+        type(fileUpload,uploadWordFilePath);
+        submitProgressReport();
+        waitForElementTobeVisible(BACK_TO_SERVICE_REPORT);
+        click(BACK_TO_SERVICE_REPORT);
     }
 
     private StudentsScreen validateGradeInputBox(HashMap<String,String> tableRow, String sectionName, String gradeTableName) {
