@@ -21,7 +21,7 @@ public class LoginTestSuiteTest extends GenericAction {
     EnrollmentsScreen enrollmentsScreen;
 
     @Test(testName = "Test-1", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void enrollmentPurchase(String userId, String password, String userName) {
+    public void enrollmentPurchase(String userId, String password, String userName, String signature) {
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
         Product product = new Product();
         product.setProductTitle(ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED);
@@ -43,7 +43,7 @@ public class LoginTestSuiteTest extends GenericAction {
     }
 
     @Test(testName = "Test-2", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void validateDashBoardWidgets(String userId, String password, String userName){
+    public void validateDashBoardWidgets(String userId, String password, String userName, String signature){
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
@@ -51,7 +51,7 @@ public class LoginTestSuiteTest extends GenericAction {
     }
 
     @Test(testName = "Test-3", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void validateNewStudentEnrollment(String userId, String password, String userName) {
+    public void validateNewStudentEnrollment(String userId, String password, String userName, String signature) {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
         StudentDetails studentDetails = new StudentDetails();
@@ -63,6 +63,6 @@ public class LoginTestSuiteTest extends GenericAction {
         enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_ONE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails).clickOnNextButton().fillEnrollmentOptionsDetails(enrollmentOptions)
                 .clickOnNextButton().validateBeginDate().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
-                .clickOnNextButton().submitEnrollment().validateAllSetMessage();
+                .clickOnNextButton().submitEnrollment().validateAllSetMessage().addStudentAccountDetailsToTestData(studentDetails);
     }
 }

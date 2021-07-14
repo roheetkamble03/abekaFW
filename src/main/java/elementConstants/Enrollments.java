@@ -38,6 +38,7 @@ public @interface Enrollments {
     String BEGIN_DATE_PAST_ERROR = "Begin date cannot be past %s.";
     String BEGIN_DATE_REQUIRED = "Begin date is required";
     String ALL_SET = "You’re all set!";
+    String GRADE_ONE = "Grade One";
 
     /**
      * Element xpath

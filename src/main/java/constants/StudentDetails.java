@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
+
+import java.util.Random;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +26,9 @@ public @Data class StudentDetails extends GenericAction {
 
     private String birthDate = generateStudentBirthDate(Enrollments.GRADE_ONE_ACCREDITED);
 
-    private String userName = "Auto"+RandomStringUtils.randomAlphabetic(5);
+    private String userName = "Auto"+RandomStringUtils.randomAlphabetic(5)+"_"+ RandomStringUtils.randomNumeric(3);
 
     private String password = "Password@123";
+
+    private String grade = Enrollments.GRADE_ONE;
 }

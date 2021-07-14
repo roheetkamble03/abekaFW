@@ -17,6 +17,9 @@ public @interface CommonConstants {
     String PLUS = "PLUS";
     String AUTOMATION_TEST = "Automation Test";
     String LESSON_COMPLETED_CLASS_VALUE = "lessonComplete";
+    String STUDENT_CREDENTIALS = "StudentCredentials";
+    String USER_ID = "UserId";
+    String PASSWORD = "Password";
 
     String DB_CONNECTION_URL = "DBConnectionUrl";
     String DB_USER_NAME = "DBUserName";

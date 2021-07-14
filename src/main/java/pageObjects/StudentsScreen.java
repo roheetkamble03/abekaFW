@@ -242,7 +242,7 @@ public class StudentsScreen extends GenericAction {
             }
             fillBookReport();
             signProgressReport(signature);
-            submitProgressReport();
+            //submitProgressReport();
             if(!isSubmissionForAllSubject){
                 break;
             }
@@ -350,7 +350,7 @@ public class StudentsScreen extends GenericAction {
     private StudentsScreen addGrade(HashMap<String,String> tableRow, String sectionName, String gradeTableName, boolean validateMoreThan100Marks, boolean isInputBoxPresent, float gradeTobeGiven) {
         String lesson = tableRow.get(LESSON);
         String description = tableRow.get(ITEM_DESCRIPTION);
-        String grade = tableRow.get(ITEM_GRADE);
+        String grade = (tableRow.get(ITEM_GRADE) != null)?tableRow.get(ITEM_GRADE).trim():tableRow.get(ITEM_GRADE);
         boolean elementExists;
         tempXpath = (isInputBoxPresent)?String.format(gradeTextBox, getSectionID(sectionName), gradeTableName, lesson,
                 description):(grade.equals("777.7"))?String.format(pendingGrade, getSectionID(sectionName), gradeTableName, lesson,
@@ -551,8 +551,8 @@ public class StudentsScreen extends GenericAction {
                     .replaceAll(TableColumn.ROW_COUNT_DATA, Integer.toString(myRecentGradeRowCount)).replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
 
             for (HashMap<String, String> rowData : myGrades) {
-                assignment = rowData.get(TableColumn.ASSESSMENT);
-                grade = rowData.get(TableColumn.GRADE);
+                assignment = rowData.get(TableColumn.ASSESSMENT).trim();
+                grade = rowData.get(TableColumn.GRADE).trim();
                 softAssertions.assertThat(isElementExists(String.format(Students.subjectWithGradeRow, assignment, grade)))
                         .as(assignment + ":" + grade + " row is not present in My recent grade section").isTrue();
             }
@@ -620,7 +620,11 @@ public class StudentsScreen extends GenericAction {
     }
 
     private boolean getIsLocked(String dataColumnText, String criteria) {
-        return (dataColumnText.equals(criteria)) ? true : false;
+        try {
+            return (dataColumnText.equals(criteria)) ? true : false;
+        }catch (NullPointerException e){
+            return false;
+        }
     }
 
     private boolean isAllAssignmentsLocked(ArrayList<HashMap<String, String>> assessmentList) {
@@ -864,7 +868,7 @@ public class StudentsScreen extends GenericAction {
             ArrayList<HashMap<String, String>> videoLibraryVideos = executeAndGetSelectQueryData(DataBaseQueryConstant.VIDEO_LIBRARY_VIDEOS_SD_DB
                     .replaceAll(LOGIN_ID_DATA, loginId).replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber).replaceAll(SUBJECT_ID_DATA, subjectID), CommonConstants.SD_DATA_BASE);
             futureVideoIndex = isSubjectHavingFutureLessons(videoLibraryVideos);
-            if (futureVideoIndex != 0) {
+            if (futureVideoIndex != 0 && futureVideoIndex != -1) {
                 lesson = videoLibraryVideos.get(futureVideoIndex).get(LESSON_NUMBER);
                 selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, lesson, subscriptionItem))));
@@ -876,7 +880,7 @@ public class StudentsScreen extends GenericAction {
                 }
                 isValidationDone = true;
             } else {
-                log(subject + ": Is not having any future videos to validate student Should Not Able To Watch Next Day Lesson FromVideo Library");
+                log(subject + ": All videos are viewed, don't have future videos to validate, student Should Not Able To Watch Next Day Lesson FromVideo Library pop up.");
             }
         }
         if (!isValidationDone) {
@@ -897,11 +901,29 @@ public class StudentsScreen extends GenericAction {
             }
             futureVideoIndex++;
         }
-        return futureVideoIndex;
+        return -1;
     }
 
     public boolean isLessonCompleted(String classValue) {
         return classValue.equalsIgnoreCase(CommonConstants.LESSON_COMPLETED_CLASS_VALUE);
+    }
+
+    public StudentsScreen markAllVideosAsNotViewed() {
+        String studentID = getUserAccountDetails().getStudentId();
+        String subjectId;
+        String endLesson;
+
+        ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
+                .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
+        for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
+            subjectId = myAssessment.get(SUBJECT_ID_FK);
+            endLesson = myAssessment.get(LESSON_NUMBER);
+//            clearAssessmentProcessMarkVideoLessonsAsNotViewed(getUserAccountDetails().getLoginId(), subjectId, "1", endLesson);
+//            clearAssessmentProcessMarkVideoLessonsAsNotViewed(getUserAccountDetails().getLoginId(), subjectId, "1", endLesson);
+            clearAssessmentProcessMarkVideoLessonsAsNotViewed(getUserAccountDetails().getLoginId(), subjectId, "1", "500");
+            clearAssessmentProcessMarkVideoLessonsAsNotViewed(getUserAccountDetails().getLoginId(), subjectId, "1", "500");
+        }
+        return this;
     }
 
     public StudentsScreen answerAndSubmitDigitalAssessment(boolean isAnswerAndSubmitAllAssessment) {
@@ -913,13 +935,12 @@ public class StudentsScreen extends GenericAction {
         boolean isValidationDone = false;
         String subjectId;
         String endLesson;
-        //markAllVideoLessonsAsCompletedForRespectiveStudent(getUserAccountDetails().getLoginId());
         ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
         for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
-            subject = myAssessment.get(SHORT_DESCRIPTION).trim();
+            subject = myAssessment.get(SUBJECT).trim();
             assignmentName = myAssessment.get(LONG_DESCRIPTION).trim();
-            isLocked = getIsLocked(myAssessment.get(LOCK_ASSIGNMENT), Students.Y);
+            isLocked = getIsLocked(myAssessment.get(LOCKED), Students.Y);
             subjectId = myAssessment.get(SUBJECT_ID_FK);
             endLesson = myAssessment.get(LESSON_NUMBER);
             userName = getUserAccountDetails().getUserName().trim();
@@ -928,7 +949,11 @@ public class StudentsScreen extends GenericAction {
                 markAssessmentRelatedAllLessonVideosAsCompleted(getUserAccountDetails().getLoginId(),subjectId,endLesson);
             }
             if (!isLocked) {
-                bringElementIntoView(String.format(Students.assessmentUnlocked, subject, assignmentName));
+                try {
+                    bringElementIntoView(String.format(Students.assessmentUnlocked, subject, assignmentName));
+                }catch (Exception e){
+                    softAssertions.fail("ASSESSMENT_LOCK column value is not in sync with UI");
+                }
                 click(String.format(Students.assessmentUnlocked, subject, assignmentName));
                 if(isElementDisplayed(Students.signature)) {
                     type(Students.signature, userName);

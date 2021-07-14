@@ -180,23 +180,58 @@ public class ExcelUtils extends BaseClass {
 //        }
     }
 
+    public boolean setCellData(String sheetName, String[] data){
+        try{
+            fis = new FileInputStream(path);
+            workbook = new XSSFWorkbook(fis);
+
+            int index = workbook.getSheetIndex(sheetName);
+            int colNum=0;
+            if(index==-1)
+                return false;
+
+            sheet = workbook.getSheetAt(index);
+            int rowNum = sheet.getLastRowNum()+1;
+
+            row=sheet.getRow(0);
+
+            rowNum = (rowNum == 0)?sheet.getLastRowNum()+1:rowNum;
+            sheet.autoSizeColumn(colNum);
+            row = sheet.getRow(rowNum);
+
+            if (row == null)
+                row = sheet.createRow(rowNum);
+            for(String string:data){
+                cell = row.getCell(colNum);
+                if (cell == null)
+                    cell = row.createCell(colNum);
+                cell.setCellValue(string);
+                colNum++;
+            }
+
+            fileOut = new FileOutputStream(path);
+            workbook.write(fileOut);
+            fileOut.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     // returns true if data is set successfully else false
     public boolean setCellData(String sheetName,String colName,int rowNum, String data){
         try{
             fis = new FileInputStream(path);
             workbook = new XSSFWorkbook(fis);
 
-            if(rowNum<=0)
-                return false;
-
             int index = workbook.getSheetIndex(sheetName);
             int colNum=-1;
             if(index==-1)
                 return false;
 
-
             sheet = workbook.getSheetAt(index);
-
 
             row=sheet.getRow(0);
             for(int i=0;i<row.getLastCellNum();i++){
@@ -206,11 +241,11 @@ public class ExcelUtils extends BaseClass {
             }
             if(colNum==-1)
                 return false;
-
+            rowNum = (rowNum == 0)?sheet.getLastRowNum()+1:rowNum;
             sheet.autoSizeColumn(colNum);
-            row = sheet.getRow(rowNum-1);
+            row = sheet.getRow(rowNum);
             if (row == null)
-                row = sheet.createRow(rowNum-1);
+                row = sheet.createRow(rowNum);
 
             cell = row.getCell(colNum);
             if (cell == null)

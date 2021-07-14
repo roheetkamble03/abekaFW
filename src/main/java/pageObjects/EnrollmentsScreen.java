@@ -5,9 +5,12 @@ import constants.CommonConstants;
 import constants.EnrollmentOptions;
 import constants.StudentDetails;
 import elementConstants.Enrollments;
+import utility.ExcelUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static constants.CommonConstants.*;
 
 public class EnrollmentsScreen extends GenericAction {
 
@@ -134,6 +137,14 @@ public class EnrollmentsScreen extends GenericAction {
 
    public EnrollmentsScreen validateAllSetMessage(){
         softAssertions.assertThat(isElementExists(Enrollments.ALL_SET)).as(Enrollments.ALL_SET+" message is not appeared on screen.").isTrue();
+        return this;
+   }
+
+   public EnrollmentsScreen addStudentAccountDetailsToTestData(StudentDetails studentDetails){
+       ExcelUtils excelUtils = new ExcelUtils();
+
+       excelUtils.setCellData(studentDetails.getGrade().replaceAll("\\s","")
+               .concat(STUDENT_CREDENTIALS),new String[]{studentDetails.getUserName(),studentDetails.getPassword()});
         return this;
    }
 }
