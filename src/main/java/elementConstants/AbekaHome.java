@@ -15,7 +15,9 @@ public @interface AbekaHome {
     String login = "text=Log in";
     String logInCreateAccount = "text=Log in / Create Account";
     String shop = "text=Shop";
-    String firstGrade = "text=1st Grade";
+    String firstGrade = "1st Grade";
+    String fourthGrade = "4th Grade";
+    String ninthGrade = "9th Grade";
     String cart = "text=Cart";
     String closeSignup = "xpath=//form[@id='aspnetForm']//div[@id='newsLetterSignup']//button[@onclick='dockEmailSubscribe()']";
     String abekaBGProcessLogo = "xpath=//i[@class='abekaLogoLoading']";

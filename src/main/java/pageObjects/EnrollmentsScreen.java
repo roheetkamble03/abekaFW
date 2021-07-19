@@ -1,16 +1,24 @@
 package pageObjects;
 
 import base.GenericAction;
+import com.codeborne.selenide.SelenideElement;
 import constants.CommonConstants;
 import constants.EnrollmentOptions;
 import constants.StudentDetails;
 import elementConstants.Enrollments;
+import elementConstants.Students;
+import lombok.SneakyThrows;
 import utility.ExcelUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static constants.CommonConstants.*;
+import static elementConstants.Enrollments.HOME_SCHOOLING;
+import static elementConstants.Students.previousGrade;
+import static elementConstants.Students.previousProgram;
 
 public class EnrollmentsScreen extends GenericAction {
 
@@ -41,20 +49,30 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
     }
 
-    public EnrollmentsScreen fillAndSubmitNewStudentDetails(StudentDetails studentDetails){
+    public EnrollmentsScreen fillAndSubmitNewStudentDetails(StudentDetails studentDetails, boolean isValidateUserNameAlreadyExistMessage){
         type(Enrollments.formFirstNameInputBox,studentDetails.getFirstName());
         type(Enrollments.formMiddleNameInputBox,studentDetails.getMiddleName());
         type(Enrollments.formLastNameInputBox,studentDetails.getLastName());
         selectByVisibleText(Enrollments.formSuffixSelectBox,studentDetails.getSuffix());
         selectByVisibleText(Enrollments.formGenderSelectBox,studentDetails.getGender());
         type(Enrollments.formBirthDateInputBox,studentDetails.getBirthDate());
-        validateUserNameAlreadyExistsMessage();
+        if(isValidateUserNameAlreadyExistMessage) {
+            validateUserNameAlreadyExistsMessage();
+        }
         type(Enrollments.formUserNameInputBox,studentDetails.getUserName());
         click(Enrollments.formPasswordInputBox);
         implicitWaitInSeconds(3);
         type(Enrollments.formPasswordInputBox,studentDetails.getPassword());
         click(Enrollments.CREATE);
         waitForPageTobeLoaded();
+        return this;
+    }
+
+    public EnrollmentsScreen fillAvailableRecommendedCourses(){
+        List<SelenideElement> elementList = getElements(String.format(Enrollments.enrollmentOptionRadioBtn, Enrollments.DIGITAL));
+        for(SelenideElement element: elementList){
+            clickByJavaScript(element);
+        }
         return this;
     }
 
@@ -104,14 +122,42 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
     }
 
-    public EnrollmentsScreen fillEnrollmentOptionsDetails(EnrollmentOptions enrollmentOptions){
-        click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())));
-        click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
-        bringElementIntoView(enrollmentOptions.getGuardians());
-        click(enrollmentOptions.getGuardians());
-        implicitWaitInSeconds(3);
-        if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
-            confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+    @SneakyThrows
+    public EnrollmentsScreen fillEnrollmentOptionsDetails(StudentDetails studentDetails, EnrollmentOptions enrollmentOptions){
+        switch (studentDetails.getGrade()){
+            case Enrollments.GRADE_ONE_ACCREDITED:
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())));
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
+                bringElementIntoView(enrollmentOptions.getGuardians());
+                click(enrollmentOptions.getGuardians());
+                implicitWaitInSeconds(3);
+                if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
+                    confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+                }
+                break;
+            case (Enrollments.GRADE_FOUR):
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getProgram())));
+                bringElementIntoView(enrollmentOptions.getGuardians());
+                click(enrollmentOptions.getGuardians());
+                implicitWaitInSeconds(3);
+                if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
+                    confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+                }
+                break;
+            case (Enrollments.GRADE_NINE):
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getProgram())));
+                bringElementIntoView(enrollmentOptions.getGuardians());
+                click(enrollmentOptions.getGuardians());
+                implicitWaitInSeconds(3);
+                if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
+                    confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+                }
+                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getAssessmentType())));
+                break;
+            default:
+                throw new Exception("Wrong grade passed"+ studentDetails.getGrade());
         }
         return this;
     }
@@ -135,14 +181,40 @@ public class EnrollmentsScreen extends GenericAction {
        return this;
    }
 
-   public EnrollmentsScreen validateAllSetMessage(){
+   public EnrollmentsScreen fillProofOfCompletion(String gradeTobeEnrolled){
+        selectByVisibleText(previousGrade,getLastCompletionGrade(gradeTobeEnrolled));
+        selectByVisibleText(previousProgram, HOME_SCHOOLING);
+        click(bringElementIntoView(Enrollments.firstSemesterNo));
+        click(bringElementIntoView(Enrollments.firstSemesterNo));
+        click(bringElementIntoView(Enrollments.repeatNo));
+        click(bringElementIntoView(Enrollments.diplomaFromAbekaNo));
+        click(bringElementIntoView(Enrollments.enrolledAnotherProgramNo));
+        return this;
+   }
+
+   public EnrollmentsScreen fillAddClasses(){
+        waitForElementTobeExist(Enrollments.mailThisFormLaterChkBox);
+        click(bringElementIntoView(Enrollments.mailThisFormLaterChkBox));
+        return this;
+   }
+
+    private String getLastCompletionGrade(String gradeTobeEnrolled) {
+        switch (gradeTobeEnrolled){
+            case Enrollments.GRADE_FOUR:
+                return "3rd";
+            case Enrollments.GRADE_NINE:
+                return "8th";
+        }
+        return null;
+    }
+
+    public EnrollmentsScreen validateAllSetMessage(){
         softAssertions.assertThat(isElementExists(Enrollments.ALL_SET)).as(Enrollments.ALL_SET+" message is not appeared on screen.").isTrue();
         return this;
    }
 
    public EnrollmentsScreen addStudentAccountDetailsToTestData(StudentDetails studentDetails){
        ExcelUtils excelUtils = new ExcelUtils();
-
        excelUtils.setCellData(studentDetails.getGrade().replaceAll("\\s","")
                .concat(STUDENT_CREDENTIALS),new String[]{studentDetails.getUserName(),studentDetails.getPassword()});
         return this;

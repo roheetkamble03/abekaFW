@@ -6,8 +6,8 @@ import elementConstants.AbekaHome ;
 import elementConstants.ShoppingCart;
 
 public class AbekaHomeScreen extends GenericAction {
-    public SearchScreen navigateToShopByGrade(){
-        navigateToHeaderBannerSubmenu(AbekaHome.shop,AbekaHome.firstGrade);
+    public SearchScreen navigateToShopByGrade(String grade){
+        navigateToHeaderBannerSubmenu(AbekaHome.shop,grade);
         return new SearchScreen();
     }
 

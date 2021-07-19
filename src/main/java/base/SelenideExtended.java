@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -320,12 +321,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      * @param identifier element identifier
      *
-     * @param visibletext : VisibleText wish to select from dropdown list.
+     * @param visibleText : VisibleText wish to select from dropdown list.
      *
     **/
-    public void selectByVisibleText(String identifier, String visibletext) {
+    public void selectByVisibleText(String identifier, String visibleText) {
             Select s = new Select(getElement(identifier));
-            s.selectByVisibleText(visibletext);
+            s.selectByVisibleText(visibleText);
     }
 
     /**
@@ -699,6 +700,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }catch (Throwable t){
             logger.info("Following Element not found \n" +
                     getByClause(identifier));
+            if(t.getCause().toString().contains("StaleElementReferenceException")){
+                getElements(identifier).get(0).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
+            }
             throw new Exception(t);
         }
     }
@@ -815,6 +819,16 @@ public abstract class SelenideExtended extends DatabaseExtended {
             return $$(getByClause(identifier));
         }catch (NoSuchFrameException e){
            return $$(getDriver().findElements(getByClause(identifier)));
+        }
+    }
+
+    @SneakyThrows
+    public List<SelenideElement> getOnlyVisibleElementList(String identifier) {
+        log("Getting only visible element list");
+        try {
+            return $$(getByClause(identifier)).stream().filter(e->isElementDisplayed(e)).collect(Collectors.toList());
+        }catch (NoSuchFrameException e){
+            return $$(getDriver().findElements(getByClause(identifier))).stream().filter(t->isElementDisplayed(t)).collect(Collectors.toList());
         }
     }
 

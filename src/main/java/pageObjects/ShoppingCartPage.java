@@ -27,13 +27,14 @@ public class ShoppingCartPage extends GenericAction {
                         +String.format(ShoppingCart.SHOPPING_CART_TITLE_TEXT,productList.size())).isTrue();
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,
                 productList.get(0).getItemNumber())),ShoppingCart.productTitle),
-                ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED +"\nItem No. "+productList.get(0).getItemNumber())).as("Product title is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
+                productList.get(0).getProductTitle() +"\nItem No. "+productList.get(0).getItemNumber())).as("Product title is not present for "+productList.get(0).getProductTitle()).isTrue();
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.productPrice),price))
-                .as(price + "Product price is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
+                .as("Product's expected price ["+price+"] is not equal to actual price ["+getElementText(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.productPrice))+"] for "+productList.get(0).getProductTitle()).isTrue();
         softAssertions.assertThat(isElementValueEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.quantityTextBox),quantity))
-                .as( "Product quantity ["+ quantity+"] is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
+                .as( "Product expected quantity ["+ quantity+"] is not equal to actual quantity ["+getElementValue(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.quantityTextBox))+"] for "+productList.get(0).getProductTitle()).isTrue();
+        implicitWaitInSeconds(3);
         softAssertions.assertThat(isElementTextEquals(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.subTotal),subTotal))
-                .as("Product subtotal ["+subTotal+"] is not present for "+ShoppingCart.GRADE_ONE_VIDEO_BOOKS_ENROLLMENT_ACCREDITED).isTrue();
+                .as("Product expected subtotal ["+subTotal+"] is not equal to actual subtotal["+getElementText(getChildElement(getElement(String.format(ShoppingCart.productRow,productList.get(0).getItemNumber())),ShoppingCart.subTotal))+"] for "+productList.get(0).getProductTitle()).isTrue();
         return this;
     }
 }

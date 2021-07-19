@@ -12,7 +12,9 @@ public class BookDescriptionScreen extends GenericAction {
     public BookDescriptionScreen selectBookingCriteria(String enrollmentPeriod, String materials, String programOption, String quantity){
         click(enrollmentPeriod);
         click(materials);
-        click(programOption);
+        if(programOption.length()>0) {
+            click(programOption);
+        }
         type(BookDescription.quantityTxtBox, quantity);
         return this;
     }

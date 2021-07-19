@@ -16,6 +16,7 @@ public class DashboardSuiteTest extends GenericAction {
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.validateDashboardNewTab();
+        softAssertions.assertAll();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
@@ -24,6 +25,7 @@ public class DashboardSuiteTest extends GenericAction {
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.validateMyOrdersWidgetLinks();
+        softAssertions.assertAll();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
@@ -32,6 +34,7 @@ public class DashboardSuiteTest extends GenericAction {
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.validateVideoManualPdfsLinks();
+        softAssertions.assertAll();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
@@ -40,6 +43,7 @@ public class DashboardSuiteTest extends GenericAction {
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.validateNotificationRows();
+        softAssertions.assertAll();
     }
 
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
@@ -48,5 +52,6 @@ public class DashboardSuiteTest extends GenericAction {
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.validateDashboardMyStudentLink();
+        softAssertions.assertAll();
     }
 }

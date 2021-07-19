@@ -10,6 +10,10 @@ public @interface Enrollments {
      */
     String GRADE_ONE_ACCREDITED = "Grade 1 - Accredited";
     String GRADE_ONE_ENROLLMENT = "Grade 1 Enrollment";
+    String GRADE_FOUR_ENROLLMENT = "Grade 4 Enrollment";
+    String GRADE_NINE_ENROLLMENT = "Grade 9 Enrollment";
+    String GRADE_FOUR = "Grade 4";
+    String GRADE_NINE = "Grade 9";
     String NEW = "New";
     String SAVED = "Saved";
     String HELD = "Held";
@@ -29,6 +33,7 @@ public @interface Enrollments {
     String GENDER = new String[]{MALE, FEMALE}[new Random().nextInt(1)];
     String USER_ALREADY_EXISTS_ERR_MSG = "Username already exists, please enter a different username.";
     String MANUSCRIPT = "Manuscript";
+    String ACCREDITED_PROGRAM = "Accredited Program";
     String CURSIVE = "Cursive";
     String STREAMING = "Streaming";
     String DVD = "DVD";
@@ -39,6 +44,9 @@ public @interface Enrollments {
     String BEGIN_DATE_REQUIRED = "Begin date is required";
     String ALL_SET = "You’re all set!";
     String GRADE_ONE = "Grade One";
+    String HOME_SCHOOLING = "Homeschooling";
+    String DIGITAL_ASSESSMENTS = "Digital Assessments";
+    String DIGITAL = "Digital";
 
     /**
      * Element xpath
@@ -61,10 +69,15 @@ public @interface Enrollments {
     String parentSelectBox = "id=ddlUnassignedGuardians";
     String relationSelectBox = "id=ddlRelation";
     String confirmButton = "id=btnAssignGuardian";
-    String enrollmentOptionRadioBtn = "xpath=//input[contains(normalize-space(@id),'%s') and @type='radio']";
+    String enrollmentOptionRadioBtn = "xpath=//span[normalize-space(text())='%s']/preceding-sibling::span/descendant::input[@type='radio']";
     String beginDateInputBox = "id=txtBeginDate";
     String beginDateLbl = "id=lblMinBeginDate";
     String maxDateLbl = "id=lblMaxBeginDate";
     String agreementSignatureInputBox = "id=txtSignature";
     String existingGuardianRemove = "id=lbtnRemove";
+    String repeatNo = "id=rbnRepeatNo";
+    String enrolledAnotherProgramNo = "id=rbtnAnotherNo";
+    String firstSemesterNo = "id=rbtnFirstSemesterOfNextGradeNo";
+    String mailThisFormLaterChkBox = "id=ckbMailIn";
+    String diplomaFromAbekaNo = "id=rbnDiplomaNo";
 }

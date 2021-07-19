@@ -78,6 +78,8 @@ public @interface Students {
     String requestTranScriptBtn = "id=hlTranscript";
     String yourNameTextBox = "id=txtRequestedBy";
     String relationshipSelectBox = "id=ddlRelationship";
+    String previousGrade = "id=ddlPreviousGrade";
+    String previousProgram = "id=ddlPreviousWith";
     String phoneNumberTextBox = "id=txtPhone";
     String sendMyTranscriptToPCCRadio = "id=rbtnPCC";
     String attentionLineTextBox = "id=txtAttention";

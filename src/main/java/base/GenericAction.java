@@ -18,7 +18,7 @@ import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
 import static constants.TableColumn.*;
-import static elementConstants.Enrollments.GRADE_ONE_ACCREDITED;
+import static elementConstants.Enrollments.*;
 import static org.openqa.selenium.remote.BrowserType.SAFARI;
 
 public abstract class GenericAction extends SelenideExtended{
@@ -94,7 +94,7 @@ public abstract class GenericAction extends SelenideExtended{
         return new ArrayList<>(getDriver().getWindowHandles());
     }
 
-    public String generateStudentBirthDate(String grade){
+    public static String generateStudentBirthDate(String grade){
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         localDate = localDate.minusYears(getStudentRangeAge(grade));
@@ -120,10 +120,14 @@ public abstract class GenericAction extends SelenideExtended{
         }
     }
 
-    public int getStudentRangeAge(String grade){
+    public static int getStudentRangeAge(String grade){
         switch (grade){
             case GRADE_ONE_ACCREDITED:
                 return 6;
+            case GRADE_FOUR:
+                return 10;
+            case GRADE_NINE:
+                return 15;
             default:
                 return 0;
         }
