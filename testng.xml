@@ -19,12 +19,12 @@
 <!--&lt;!&ndash;                    <include name="testValidateStudentDashboardAccessControl"/>&ndash;&gt;-->
 <!--&lt;!&ndash;               </methods>&ndash;&gt;-->
 <!--&lt;!&ndash;            </class>&ndash;&gt;-->
-<!--            <class name="abekaUISuite.LoginTestSuiteTest">-->
-<!--                <methods>-->
-<!--                    <include name="enrollmentPurchaseGradeNine"/>-->
-<!--                    <include name="validateAddNewStudentGradeNine"/>-->
-<!--                </methods>-->
-<!--            </class>-->
+            <class name="abekaUISuite.LoginTestSuiteTest">
+                <methods>
+                    <include name="enrollmentPurchaseGradeNine"/>
+                    <include name="validateAddNewStudentGradeNine"/>
+                </methods>
+            </class>
             <class name="abekaUISuite.UnitTestApiTesting">
                 <methods>
                     <include name="testFetchingDigitalAssessmentSubjects"/>
