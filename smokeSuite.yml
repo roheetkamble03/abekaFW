@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: LocalAgent
+  vmImage: TITGANESH
 
 steps:
 - task: Maven@3
