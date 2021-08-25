@@ -91,6 +91,29 @@ public class LoginTestSuiteTest extends GenericAction {
     }
 
     @Test(testName = "Test-3", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void enrollmentPurchaseGradeTwelve(String userId, String password, String userName, String signature) {
+        CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
+        Product product = new Product();
+        product.setProductTitle(GRADE_TWELVE.getItemName());
+        product.setItemNumber(GRADE_TWELVE.getItemNumber());
+        product.setPrice(GRADE_TWELVE.getPrice());
+        product.setQuantity(GRADE_TWELVE.getQuantity());
+        product.setSubtotal(getCalculatedSubTotal(product.getQuantity(), product.getPrice()));
+
+        ArrayList productList = new ArrayList(Arrays.asList(product));
+
+        abekaHomeScreen = loginToAbeka(userId, password, userName);
+        abekaHomeScreen.navigateToShopByGrade(AbekaHome.twelfthGrade).searchProduct(Enrollments.GRADE_TWELVE_ENROLLMENT).selectProduct(Enrollments.GRADE_TWELVE_ENROLLMENT).
+                selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, "", CommonTexts.one).
+                clickOnAddToCart();
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+                selectCheckoutCriteria(checkoutCriteria).
+                clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_TWELVE);
+        abekaHomeScreen.logoutFromAbeka();
+        softAssertions.assertAll();
+    }
+
+    @Test(testName = "Test-3", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void validateDashBoardWidgets(String userId, String password, String userName, String signature){
         dashboardScreen = new DashboardScreen();
         loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);

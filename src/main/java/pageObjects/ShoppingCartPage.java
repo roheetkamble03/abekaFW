@@ -22,6 +22,7 @@ public class ShoppingCartPage extends GenericAction {
         String price = formatCurrencyToDollar(productList.get(0).getPrice());
         String quantity = Integer.toString(productList.get(0).getQuantity());
         String subTotal = formatCurrencyToDollar(productList.get(0).getSubtotal());
+        implicitWaitInSeconds(5);
         softAssertions.assertThat(isElementTextEquals(ShoppingCart.shoppingCartTitle,String.format(ShoppingCart.SHOPPING_CART_TITLE_TEXT,productList.size())))
                 .as("Shopping cart actual header ["+getElementText(ShoppingCart.shoppingCartTitle)+"] is not matching with expected header ["
                         +String.format(ShoppingCart.SHOPPING_CART_TITLE_TEXT,productList.size())).isTrue();

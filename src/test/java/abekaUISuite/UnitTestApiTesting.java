@@ -14,6 +14,7 @@ public class UnitTestApiTesting extends GenericAction {
     @Test
     public void testFetchingDigitalAssessmentSubjects(){
         String endURL = "http://plmradz.com/pcc/api/digital";
+        //Response response = given().when().queryParam("id",getUserAccountDetails().getStudentId()).when().get(endURL);
         Response response = given().when().queryParam("id","100").when().get(endURL);
         List<DigitalAssessmentPojo> digitalAssessmentPojoList = response.getBody().as(new TypeRef<List<DigitalAssessmentPojo>>(){});
         DigitalAssessmentPojo digitalAssessmentPojo = digitalAssessmentPojoList.get(0);
@@ -28,5 +29,6 @@ public class UnitTestApiTesting extends GenericAction {
        response = given().when().when().get(endURL);
        softAssertions.assertThat(response.getBody().asString().equals("{\"Message\":\"Studentid is mandatory.\"}"))
                .as("Application not giving, student id is mandatory message").isTrue();
+       softAssertions.assertAll();
     }
 }

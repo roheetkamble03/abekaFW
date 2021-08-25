@@ -12,8 +12,10 @@ public @interface Enrollments {
     String GRADE_ONE_ENROLLMENT = "Grade 1 Enrollment";
     String GRADE_FOUR_ENROLLMENT = "Grade 4 Enrollment";
     String GRADE_NINE_ENROLLMENT = "Grade 9 Enrollment";
+    String GRADE_TWELVE_ENROLLMENT = "Grade 12 Enrollment";
     String GRADE_FOUR = "Grade 4";
     String GRADE_NINE = "Grade 9";
+    String GRADE_TWELVE = "Grade 12";
     String NEW = "New";
     String SAVED = "Saved";
     String HELD = "Held";

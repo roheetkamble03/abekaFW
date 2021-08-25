@@ -21,15 +21,15 @@
 <!--&lt;!&ndash;            </class>&ndash;&gt;-->
             <class name="abekaUISuite.LoginTestSuiteTest">
                 <methods>
-                    <include name="enrollmentPurchaseGradeNine"/>
-                    <include name="validateAddNewStudentGradeNine"/>
+                    <include name="enrollmentPurchaseGradeTwelve"/>
+                    <exclude name="validateAddNewStudentGradeNine"/>
                 </methods>
             </class>
-            <class name="abekaUISuite.UnitTestApiTesting">
-                <methods>
-                    <include name="testFetchingDigitalAssessmentSubjects"/>
-                </methods>
-            </class>
+<!--            <class name="abekaUISuite.UnitTestApiTesting">-->
+<!--                <methods>-->
+<!--                    <include name="testFetchingDigitalAssessmentSubjects"/>-->
+<!--                </methods>-->
+<!--            </class>-->
         </classes>
     </test>
 </suite>
