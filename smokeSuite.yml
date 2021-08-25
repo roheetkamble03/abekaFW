@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: macOS-latest
+  vmImage: TITGANESH
 
 steps:
 - task: Maven@3
