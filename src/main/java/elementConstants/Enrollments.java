@@ -82,4 +82,6 @@ public @interface Enrollments {
     String firstSemesterNo = "id=rbtnFirstSemesterOfNextGradeNo";
     String mailThisFormLaterChkBox = "id=ckbMailIn";
     String diplomaFromAbekaNo = "id=rbnDiplomaNo";
+    String mailFormLater = "id=ckbMailIn";
+    String RADIO_NO = "xpath=//input[@type='radio' and contains(@id,'No')]";
 }

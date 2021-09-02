@@ -128,6 +128,8 @@ public abstract class GenericAction extends SelenideExtended{
                 return 10;
             case GRADE_NINE:
                 return 15;
+            case GRADE_TWELVE:
+                return 18;
             default:
                 return 0;
         }

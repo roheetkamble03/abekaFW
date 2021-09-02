@@ -170,7 +170,25 @@ public class LoginTestSuiteTest extends GenericAction {
         dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
         enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_NINE)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
-                .clickOnNextButton().fillAvailableRecommendedCourses().clickOnNextButton().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
+                .clickOnNextButton().fillAvailableRecommendedCourses(Enrollments.GRADE_NINE).clickOnNextButton().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
+                .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage().addStudentAccountDetailsToTestData(studentDetails);
+        softAssertions.assertAll();
+    }
+
+    @Test(testName = "Test-5", dataProvider = "parentCredentials", dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void validateAddNewStudentGradeTwelve(String userId, String password, String userName, String signature) {
+        dashboardScreen = new DashboardScreen();
+        enrollmentsScreen = new EnrollmentsScreen();
+        StudentDetails studentDetails = StudentAccountDetails.getGradeTwelveStudentDetails();
+
+        EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
+
+        loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+        dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
+        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_TWELVE)
+                .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
+                .clickOnNextButton().fillAvailableRecommendedCourses(Enrollments.GRADE_TWELVE).clickOnNextButton().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
                 .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage().addStudentAccountDetailsToTestData(studentDetails);
         softAssertions.assertAll();
     }

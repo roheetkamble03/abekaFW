@@ -325,8 +325,17 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
     **/
     public void selectByVisibleText(String identifier, String visibleText) {
-            Select s = new Select(getElement(identifier));
-            s.selectByVisibleText(visibleText);
+        for(int i=0;i<3;i++) {
+            try {
+                waitForElementTobeExist(identifier);
+                Select s = new Select(getElement(identifier));
+                s.selectByVisibleText(visibleText);
+                return;
+            } catch (Exception e) {
+                implicitWaitInSeconds(3);
+                continue;
+            }
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package constants;
 
 public @interface CommonConstants {
     String URL = "Url";
+    String APIEndUrl = "ApiEndUrl";
     String AFTER_LOGIN_URL = "AfterLoginURL";
     String PAGE_LOAD_TIME_OUT = "PageLoadTimeOut";
     String VERY_LONG_WAIT = "VeryLongWait";

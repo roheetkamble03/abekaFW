@@ -12,6 +12,7 @@ public @interface Dashboard {
     String DIGITAL_ASSESSMENTS = "Digital Assessments";
     String DIGITAL_TEXTBOOKS = "Digital Textbooks";
     String DIGITAL_TEACHING_AIDS = "Digital Teaching Aids";
+    String GRADUATION_PETITION = "Graduation Petition";
     String MY_ABEKA_NAV_PAGE_TITLE = "Abeka | %s";
     String MY_ABEKA_NAV_PAGE_URL = "%s/Fulfillment/%s/";
     String MY_ORDERS = "My Orders";

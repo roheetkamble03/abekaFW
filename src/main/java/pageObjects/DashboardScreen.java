@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.codeborne.selenide.Selenide.*;
+import static elementConstants.Dashboard.GRADUATION_PETITION;
 
 public class DashboardScreen extends GenericAction {
     public DashboardScreen validateDashboardNewTab(){
@@ -116,6 +117,10 @@ public class DashboardScreen extends GenericAction {
         return new StudentsScreen();
     }
 
+    public GraduationPetition navigateToGraduationPetitionPage() {
+        navigateToMyOrderLink(GRADUATION_PETITION);
+        return new GraduationPetition();
+    }
     public CalendarScreen navigateToFullCalendarView(){
         click(Dashboard.FULL_CALENDAR_VIEW);
         waitForPageTobeLoaded();

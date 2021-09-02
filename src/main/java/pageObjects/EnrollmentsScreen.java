@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static constants.CommonConstants.*;
+import static elementConstants.Enrollments.GRADE_TWELVE;
 import static elementConstants.Enrollments.HOME_SCHOOLING;
 import static elementConstants.Students.previousGrade;
 import static elementConstants.Students.previousProgram;
@@ -68,7 +69,15 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
     }
 
-    public EnrollmentsScreen fillAvailableRecommendedCourses(){
+    public EnrollmentsScreen fillAvailableRecommendedCourses(String grade){
+        switch (grade){
+            case GRADE_TWELVE:
+                selectByVisibleText(GraduationPetition.generalSubjectDropdown,GraduationPetition.KEYBOARDING);
+                selectByVisibleText(String.format(GraduationPetition.practicalSubjectDropdown,1),GraduationPetition.HOME_SEWING);
+                waitForElementTobeExist(String.format(GraduationPetition.practicalSubjectDropdown,5));
+                selectByVisibleText(String.format(GraduationPetition.practicalSubjectDropdown,5),GraduationPetition.DOCUMENT_PROCESSING);
+                break;
+        }
         List<SelenideElement> elementList = getElements(String.format(Enrollments.enrollmentOptionRadioBtn, Enrollments.DIGITAL));
         for(SelenideElement element: elementList){
             clickByJavaScript(element);
@@ -145,7 +154,8 @@ public class EnrollmentsScreen extends GenericAction {
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
                 }
                 break;
-            case (Enrollments.GRADE_NINE):
+                case (Enrollments.GRADE_NINE):
+            case (GRADE_TWELVE):
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getProgram())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
@@ -184,11 +194,12 @@ public class EnrollmentsScreen extends GenericAction {
    public EnrollmentsScreen fillProofOfCompletion(String gradeTobeEnrolled){
         selectByVisibleText(previousGrade,getLastCompletionGrade(gradeTobeEnrolled));
         selectByVisibleText(previousProgram, HOME_SCHOOLING);
-        click(bringElementIntoView(Enrollments.firstSemesterNo));
-        click(bringElementIntoView(Enrollments.firstSemesterNo));
-        click(bringElementIntoView(Enrollments.repeatNo));
-        click(bringElementIntoView(Enrollments.diplomaFromAbekaNo));
-        click(bringElementIntoView(Enrollments.enrolledAnotherProgramNo));
+        getElements(Enrollments.RADIO_NO).stream().forEach(e->click(e));
+//        click(bringElementIntoView(Enrollments.firstSemesterNo));
+//        click(bringElementIntoView(Enrollments.firstSemesterNo));
+//        click(bringElementIntoView(Enrollments.repeatNo));
+//        click(bringElementIntoView(Enrollments.diplomaFromAbekaNo));
+//        click(bringElementIntoView(Enrollments.enrolledAnotherProgramNo));
         return this;
    }
 
@@ -204,6 +215,8 @@ public class EnrollmentsScreen extends GenericAction {
                 return "3rd";
             case Enrollments.GRADE_NINE:
                 return "8th";
+            case GRADE_TWELVE:
+                return "11th";
         }
         return null;
     }

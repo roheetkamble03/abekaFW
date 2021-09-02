@@ -22,4 +22,11 @@ public class StudentAccountDetails extends GenericAction {
         studentDetails.setBirthDate(generateStudentBirthDate(Enrollments.GRADE_NINE));
         return studentDetails;
     }
+
+    public static StudentDetails getGradeTwelveStudentDetails(){
+        StudentDetails studentDetails = new StudentDetails();
+        studentDetails.setGrade(Enrollments.GRADE_TWELVE);
+        studentDetails.setBirthDate(generateStudentBirthDate(Enrollments.GRADE_TWELVE));
+        return studentDetails;
+    }
 }

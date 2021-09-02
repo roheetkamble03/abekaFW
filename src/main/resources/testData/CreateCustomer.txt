@@ -1,0 +1,59 @@
+{
+      [
+        {
+          "key": "Request",
+          "value": "CreateCustomer",
+          "type": "text"
+        },
+        {
+          "key": "Key",
+          "value": "GJ3vTwQ87Tarb721xUhW",
+          "type": "text"
+        },
+        {
+          "key": "CustomerType",
+          "value": "80",
+          "type": "text"
+        },
+        {
+          "key": "Name",
+          "value": "Joe Customer",
+          "type": "text"
+        },
+        {
+          "key": "Address1",
+          "value": "250 Brent Lane",
+          "type": "text"
+        },
+        {
+          "key": "Address2",
+          "value": "",
+          "type": "text"
+        },
+        {
+          "key": "City",
+          "value": "Pensacola",
+          "type": "text"
+        },
+        {
+          "key": "State",
+          "value": "FL",
+          "type": "text"
+        },
+        {
+          "key": "Zip",
+          "value": "32523",
+          "type": "text"
+        },
+        {
+          "key": "Country",
+          "value": "USA",
+          "type": "text"
+        },
+        {
+          "key": "Phone",
+          "value": "1233211232",
+          "type": "text"
+        }
+      ]
+}

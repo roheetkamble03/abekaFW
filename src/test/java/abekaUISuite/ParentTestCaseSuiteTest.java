@@ -122,4 +122,12 @@ public class ParentTestCaseSuiteTest extends GenericAction {
         logoutFromAbeka();
         softAssertions.assertAll();
     }
+
+    @Test(testName = "Test-12", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
+        loginToAbeka(userId, password, userName).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm();
+        logoutFromAbeka();
+        softAssertions.assertAll();
+    }
 }
