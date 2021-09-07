@@ -19,17 +19,17 @@
 <!--&lt;!&ndash;                    <include name="testValidateStudentDashboardAccessControl"/>&ndash;&gt;-->
 <!--&lt;!&ndash;               </methods>&ndash;&gt;-->
 <!--&lt;!&ndash;            </class>&ndash;&gt;-->
-<!--            <class name="abekaUISuite.LoginTestSuiteTest">-->
-<!--                <methods>-->
-<!--                    <include name="enrollmentPurchaseGradeTwelve"/>-->
-<!--                    <include name="validateAddNewStudentGradeTwelve"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-            <class name="abekaUISuite.UnitTestApiTesting">
+            <class name="abekaUISuite.LoginTestSuiteTest">
                 <methods>
-                    <include name="testCreateParentAccount"/>
+                    <include name="enrollmentPurchaseGradeOne"/>
+                    <exclude name="validateAddNewStudentGradeTwelve"/>
                 </methods>
             </class>
+<!--            <class name="abekaUISuite.ParentTestCaseSuiteTest">-->
+<!--                <methods>-->
+<!--                    <include name="testValidateParentDashboardAccessControl"/>-->
+<!--                </methods>-->
+<!--            </class>-->
         </classes>
     </test>
 </suite>

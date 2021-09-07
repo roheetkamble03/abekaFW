@@ -232,4 +232,10 @@ public class EnrollmentsScreen extends GenericAction {
                .concat(STUDENT_CREDENTIALS),new String[]{studentDetails.getUserName(),studentDetails.getPassword()});
         return this;
    }
+
+    public EnrollmentsScreen addParentAccountDetailsToTestData(String userName, String password){
+        ExcelUtils excelUtils = new ExcelUtils();
+        excelUtils.setCellData("ParentCredentials",new String[]{userName,password});
+        return this;
+    }
 }

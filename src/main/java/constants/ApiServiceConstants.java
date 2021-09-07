@@ -1,5 +1,7 @@
 package constants;
 
+import java.io.File;
+
 public @interface ApiServiceConstants {
     String request = "Request";
     String key = "Key";
@@ -12,6 +14,5 @@ public @interface ApiServiceConstants {
     String zip = "Zip";
     String country = "Country";
     String phone = "Phone";
-
-
+    String customerNumber = "CustomerNumber";
 }

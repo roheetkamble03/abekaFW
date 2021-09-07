@@ -2,7 +2,9 @@ package constants;
 
 public @interface CommonConstants {
     String URL = "Url";
-    String APIEndUrl = "ApiEndUrl";
+    String API_END_URL = "ApiEndUrl";
+    String API_AUTH_KEY = "ApiAuthKey";
+    String APP_KEY = "AppKey";
     String AFTER_LOGIN_URL = "AfterLoginURL";
     String PAGE_LOAD_TIME_OUT = "PageLoadTimeOut";
     String VERY_LONG_WAIT = "VeryLongWait";
@@ -39,4 +41,7 @@ public @interface CommonConstants {
     String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and normalize-space(text())='×']";
     String dropDownOption = "xpath=./ul[@class='dropdown']/descendant::span[normalize-space(text())='%s']";
     Object CLOSE = "Close";
+    String OK = "Ok";
+    String AUTHORIZATION = "Authorization";
+    Object BEARER = "Bearer ";
 }

@@ -1,24 +1,33 @@
 package base;
 
+import apiPojo.CreateAccountApiResponsePojo;
+import apiPojo.DeleteAccountApiResponse;
 import com.google.common.base.CaseFormat;
 import constants.*;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
+import io.restassured.common.mapper.TypeRef;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import pageObjects.AbekaHomeScreen;
+import utility.ExcelUtils;
+import utility.ParentAccountDetails;
+
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static constants.ApiServiceConstants.customerNumber;
 import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.*;
+import static io.restassured.RestAssured.given;
 import static org.openqa.selenium.remote.BrowserType.SAFARI;
 
 public abstract class GenericAction extends SelenideExtended{
@@ -42,7 +51,7 @@ public abstract class GenericAction extends SelenideExtended{
         super.tearDown();
     }
 
-    public AbekaHomeScreen loginToAbeka(String userId, String password, String userName){
+    public AbekaHomeScreen loginToAbeka(String userId, String password){
         waitAndCloseSignUpPop();
         log("logging in to application");
         click(AbekaHome.login);
@@ -51,7 +60,7 @@ public abstract class GenericAction extends SelenideExtended{
         type(Login.password,password);
         click(Login.loginBtn);
         waitForAbekaBGProcessLogoDisappear();
-        waitForElementTobeExist(userName);//"text=Hello, RCG");
+        //waitForElementTobeExist(userName);//"text=Hello, RCG");
         return new AbekaHomeScreen();
     }
 
@@ -288,5 +297,43 @@ public abstract class GenericAction extends SelenideExtended{
 
     public boolean isURLContainsGivenText(String text){
         return getCurrentURL().indexOf(text)>0;
+    }
+
+    public ParentAccountDetails createAndGetParentAccountDetails(int rowNumber){
+        ParentAccountDetails parentAccountDetails = new ParentAccountDetails();
+        CreateAccountApiResponsePojo response = given().when().multiPart(ApiServiceConstants.request,"CreateCustomer")
+                .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
+                .multiPart(ApiServiceConstants.customerType,"80")
+                .multiPart(ApiServiceConstants.name,parentAccountDetails.getParentName())
+                .multiPart(ApiServiceConstants.address1,parentAccountDetails.getParentAddressOne())
+                .multiPart(ApiServiceConstants.address2,parentAccountDetails.getParentAddressTwo())
+                .multiPart(ApiServiceConstants.city,parentAccountDetails.getParentCity())
+                .multiPart(ApiServiceConstants.state,parentAccountDetails.getParentState())
+                .multiPart(ApiServiceConstants.zip,parentAccountDetails.getParentZipCode())
+                .multiPart(ApiServiceConstants.country,parentAccountDetails.getParentCountry())
+                .multiPart(ApiServiceConstants.phone,parentAccountDetails.getParentPhoneNumber())
+                .header(CommonConstants.AUTHORIZATION, CommonConstants.BEARER + properties.getProperty(API_AUTH_KEY))
+                .get(properties.get(CommonConstants.API_END_URL).toString()).getBody().as(new TypeRef<CreateAccountApiResponsePojo>(){});
+
+        parentAccountDetails.setParentUserName("rcg+"+response.getCustomerNumber()+"@pcci.edu");
+        parentAccountDetails.setParentPassword("rcg"+response.getCustomerNumber());
+        parentAccountDetails.setParentCustomerNumber(response.getCustomerNumber());
+        ExcelUtils excelUtils = new ExcelUtils();
+        excelUtils.setCellData("ParentCredentials",
+                new String[]{parentAccountDetails.getParentUserName(),parentAccountDetails.getParentPassword(),parentAccountDetails.getParentName(),parentAccountDetails.getParentCustomerNumber()}, rowNumber);
+        return parentAccountDetails;
+    }
+
+    public void deleteParentAccount(ParentAccountDetails parentAccountDetails){
+        DeleteAccountApiResponse response = given().when().multiPart(ApiServiceConstants.request,"DeleteCustomer")
+                .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
+                .multiPart(customerNumber,parentAccountDetails.getParentCustomerNumber())
+                .header(CommonConstants.AUTHORIZATION, CommonConstants.BEARER + properties.getProperty(API_AUTH_KEY))
+                .get(properties.get(CommonConstants.API_END_URL).toString()).getBody().as(new TypeRef<DeleteAccountApiResponse>(){});
+        response.getMessage();
+        if(!response.getResponse().equalsIgnoreCase(CommonConstants.OK)){
+            softAssertions.fail("Parent account deletion failed");
+        }
+        softAssertions.assertAll();
     }
 }

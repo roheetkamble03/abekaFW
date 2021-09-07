@@ -3,22 +3,24 @@ package dataProvider;
 import org.testng.annotations.DataProvider;
 import utility.ExcelUtils;
 
+import java.lang.reflect.Method;
+
 public class DataProviders {
     ExcelUtils excelUtils = new ExcelUtils();
 
 //Class --> LoginPageTest,HomePageTest Test Case--> loginTest, wishListTest, orderHistoryandDetailsTest
 
     @DataProvider(name = "parentCredentials")
-    public Object[][] getParentCredentials() {
-        return getExcelData("ParentCredentials");
+    public Object[][] getParentCredentials(Method method) {
+        return getExcelData("ParentCredentials", method.getAnnotation(DataRowNumber.class));
     }
 
     @DataProvider(name = "studentCredentials")
-    public Object[][] getCredentials() {
-        return getExcelData("StudentCredentials");
+    public Object[][] getCredentials(Method method) {
+        return getExcelData("StudentCredentials", method.getAnnotation(DataRowNumber.class));
     }
 
-    private Object[][] getExcelData(String sheetName){
+    private Object[][] getExcelData(String sheetName, DataRowNumber dataRowNumber){
         // Totals rows count
         int rows = excelUtils.getRowCount(sheetName);
         // Total Columns
@@ -32,6 +34,6 @@ public class DataProviders {
                 data[i][j] = excelUtils.getCellData(sheetName, j, i + 2);
             }
         }
-        return data;
+        return (dataRowNumber == null) ? data:new Object[][]{data[Integer.parseInt(dataRowNumber.testDataRowNumber())]};
     }
 }

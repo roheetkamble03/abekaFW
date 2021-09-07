@@ -177,7 +177,7 @@ public class ExcelUtils extends BaseClass {
 //        }
     }
 
-    public boolean setCellData(String sheetName, String[] data){
+    public boolean setCellData(String sheetName, String[] data, int... rowNumber){
         try{
             fis = new FileInputStream(path);
             workbook = new XSSFWorkbook(fis);
@@ -194,6 +194,7 @@ public class ExcelUtils extends BaseClass {
 
             rowNum = (rowNum == 0)?sheet.getLastRowNum()+1:rowNum;
             sheet.autoSizeColumn(colNum);
+            rowNum = (rowNumber.length>0)?rowNumber[0]+1:rowNum;
             row = sheet.getRow(rowNum);
 
             if (row == null)
