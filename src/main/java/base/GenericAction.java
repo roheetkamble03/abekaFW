@@ -301,7 +301,7 @@ public abstract class GenericAction extends SelenideExtended{
 
     public ParentAccountDetails createAndGetParentAccountDetails(int rowNumber){
         ParentAccountDetails parentAccountDetails = new ParentAccountDetails();
-        CreateAccountApiResponsePojo response = given().when().multiPart(ApiServiceConstants.request,"CreateCustomer")
+        CreateAccountApiResponsePojo response = given().when().multiPart(ApiServiceConstants.request,ApiServiceConstants.createRequestType)
                 .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
                 .multiPart(ApiServiceConstants.customerType,"80")
                 .multiPart(ApiServiceConstants.name,parentAccountDetails.getParentName())
@@ -319,13 +319,13 @@ public abstract class GenericAction extends SelenideExtended{
         parentAccountDetails.setParentPassword("rcg"+response.getCustomerNumber());
         parentAccountDetails.setParentCustomerNumber(response.getCustomerNumber());
         ExcelUtils excelUtils = new ExcelUtils();
-        excelUtils.setCellData("ParentCredentials",
+        excelUtils.setCellData(CommonConstants.PARENT_CREDENTIALS,
                 new String[]{parentAccountDetails.getParentUserName(),parentAccountDetails.getParentPassword(),parentAccountDetails.getParentName(),parentAccountDetails.getParentCustomerNumber()}, rowNumber);
         return parentAccountDetails;
     }
 
     public void deleteParentAccount(ParentAccountDetails parentAccountDetails){
-        DeleteAccountApiResponse response = given().when().multiPart(ApiServiceConstants.request,"DeleteCustomer")
+        DeleteAccountApiResponse response = given().when().multiPart(ApiServiceConstants.request,ApiServiceConstants.deleteRequestType)
                 .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
                 .multiPart(customerNumber,parentAccountDetails.getParentCustomerNumber())
                 .header(CommonConstants.AUTHORIZATION, CommonConstants.BEARER + properties.getProperty(API_AUTH_KEY))

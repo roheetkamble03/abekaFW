@@ -40,8 +40,9 @@ public @interface CommonConstants {
 
     String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and normalize-space(text())='×']";
     String dropDownOption = "xpath=./ul[@class='dropdown']/descendant::span[normalize-space(text())='%s']";
-    Object CLOSE = "Close";
+    String CLOSE = "Close";
     String OK = "Ok";
     String AUTHORIZATION = "Authorization";
-    Object BEARER = "Bearer ";
+    String BEARER = "Bearer ";
+    String PARENT_CREDENTIALS = "ParentCredentials";
 }

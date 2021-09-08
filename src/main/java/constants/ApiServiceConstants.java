@@ -15,4 +15,6 @@ public @interface ApiServiceConstants {
     String country = "Country";
     String phone = "Phone";
     String customerNumber = "CustomerNumber";
+    String createRequestType = "CreateCustomer";
+    String deleteRequestType = "DeleteCustomer";
 }
