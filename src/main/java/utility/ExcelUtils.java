@@ -1,7 +1,9 @@
 package utility;
 
 import base.BaseClass;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.*;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
@@ -83,43 +85,9 @@ public class ExcelUtils extends BaseClass {
 
             if (cell == null)
                 return "";
-            //System.out.println(cell.getCellType());
-            //if(cell.getCellType())
+
+            cell.setCellType(Cell.CELL_TYPE_STRING);
             return cell.getStringCellValue();
-//            else if(cell..getCellType().name().equals("NUMERIC") || cell.getCellType().name().equals("FORMULA") ){
-//
-//                String cellText  = String.valueOf(cell.getNumericCellValue());
-//                if (HSSFDateUtil.isCellDateFormatted(cell)) {
-//                    // format in form of M/D/YY
-//                    double d = cell.getNumericCellValue();
-//
-//                    Calendar cal =Calendar.getInstance();
-//                    cal.setTime(HSSFDateUtil.getJavaDate(d));
-//                    cellText =
-//                            (String.valueOf(cal.get(Calendar.YEAR))).substring(2);
-//                    cellText = cal.get(Calendar.DAY_OF_MONTH) + "/" +
-//                            cal.get(Calendar.MONTH)+1 + "/" +
-//                            cellText;
-//
-//                    //System.out.println(cellText);
-//
-//                }
-//
-//
-//
-//                return cellText;
-//            }else if(cell.getCellType().name().equals("BLANK"))
-//                return "";
-//            else
-//                return String.valueOf(cell.getBooleanCellValue());
-//
-//        }
-//        catch(Exception e){
-//
-//            e.printStackTrace();
-//            return "row "+rowNum+" or column "+colName +" does not exist in xls";
-//        }
-            //}
         }
     // returns the data from a cell
     public String getCellData(String sheetName,int colNum,int rowNum){
@@ -134,47 +102,14 @@ public class ExcelUtils extends BaseClass {
 
 
             sheet = workbook.getSheetAt(index);
-            row = sheet.getRow(rowNum-1);
+            row = sheet.getRow(rowNum);
             if(row==null)
                 return "";
             cell = row.getCell(colNum);
-            if(cell==null)
-                return "";
+            if(cell==null) return "";
 
-           // if(cell.getCellType().name().equals("STRING"))
-                return cell.getStringCellValue();
-//            else if(cell.getCellType().name().equals("NUMERIC") || cell.getCellType().name().equals("FORMULA") ){
-//
-//                String cellText  = String.valueOf(cell.getNumericCellValue());
-//                if (HSSFDateUtil.isCellDateFormatted(cell)) {
-//                    // format in form of M/D/YY
-//                    double d = cell.getNumericCellValue();
-//
-//                    Calendar cal =Calendar.getInstance();
-//                    cal.setTime(HSSFDateUtil.getJavaDate(d));
-//                    cellText =
-//                            (String.valueOf(cal.get(Calendar.YEAR))).substring(2);
-//                    cellText = cal.get(Calendar.MONTH)+1 + "/" +
-//                            cal.get(Calendar.DAY_OF_MONTH) + "/" +
-//                            cellText;
-//
-//                    // System.out.println(cellText);
-//
-//                }
-//
-//
-//
-//                return cellText;
-//            }else if(cell.getCellType().name().equals("BLANK"))
-//                return "";
-//            else
-//                return String.valueOf(cell.getBooleanCellValue());
-//        }
-//        catch(Exception e){
-//
-//            e.printStackTrace();
-//            return "row "+rowNum+" or column "+colNum +" does not exist  in xls";
-//        }
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            return cell.getStringCellValue();
     }
 
     public boolean setCellData(String sheetName, String[] data, int... rowNumber){
@@ -194,7 +129,7 @@ public class ExcelUtils extends BaseClass {
 
             rowNum = (rowNum == 0)?sheet.getLastRowNum()+1:rowNum;
             sheet.autoSizeColumn(colNum);
-            rowNum = (rowNumber.length>0)?rowNumber[0]+1:rowNum;
+            rowNum = (rowNumber.length>0)?rowNumber[0]:rowNum;
             row = sheet.getRow(rowNum);
 
             if (row == null)
@@ -210,8 +145,7 @@ public class ExcelUtils extends BaseClass {
             fileOut = new FileOutputStream(path);
             workbook.write(fileOut);
             fileOut.close();
-        }
-        catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
             return false;
         }

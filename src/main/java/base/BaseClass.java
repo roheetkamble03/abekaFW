@@ -21,9 +21,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,14 +42,14 @@ public abstract class BaseClass {
     public Logger logger = LoggerFactory.getLogger(this.getClass());
     public static SoftAssertions softAssertions;
     private static final ThreadLocal<WebDriver> threadLocalDriver = new InheritableThreadLocal<>();
-    private static WebDriver driver;
+    private WebDriver driver;
     public static String domainURL;
     public static String afterLoginURL;
     public static String browser;
     protected Map<String,WebDriver> sessionMap = new HashMap<>();
     protected DesiredCapabilities desiredCapabilities;
     protected int pageLoadTimeOut;
-    protected int veryLongWait;
+    public static int veryLongWait;
     protected int elementLoadWait;
     int commonWait;
     protected int pollingTimeOut;
@@ -67,7 +65,7 @@ public abstract class BaseClass {
     }
 
     @BeforeMethod
-    protected void setUp(String browserName, String platform){
+    public void setUp(String browserName, String platform){
         log("Setting up the test");
         browser = browserName;
         softAssertions = new SoftAssertions();
@@ -109,12 +107,10 @@ public abstract class BaseClass {
     }
 
     public static WebDriver getDriver(){
-        return WebDriverRunner.getWebDriver();
+        return threadLocalDriver.get();
     }
 
     private void setBrowserProperties(){
-        log("Setting selenide driver");
-        setSelenideDriver(driver);
         log("Setting window maximize");
         getDriver().manage().window().maximize();
         //Delete all the cookies
@@ -128,6 +124,9 @@ public abstract class BaseClass {
         log("Setting page load timeout");
         getDriver().manage().timeouts().pageLoadTimeout
                 (pageLoadTimeOut, TimeUnit.SECONDS);
+    }
+
+    private void openDomainUrl(){
         //Launching the URL
         try {
             log("Opening domain URL");
@@ -192,20 +191,21 @@ public abstract class BaseClass {
         switch (browser.toLowerCase()) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                setBrowserProperties();
+                threadLocalDriver.set(new ChromeDriver());
                 break;
             case SAFARI:
-                driver = new SafariDriver();
-                setBrowserProperties();
+                threadLocalDriver.set(new SafariDriver());
                 break;
             case IE:
                 WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
-                setBrowserProperties();
+                threadLocalDriver.set(new InternetExplorerDriver());
             default:
                 throw new Exception("Wrong browser value passed");
         }
+        log("Setting selenide driver");
+        setSelenideDriver(threadLocalDriver.get());
+        setBrowserProperties();
+        openDomainUrl();
     }
 
     private static void setThreadLocalDriver(WebDriver driver){

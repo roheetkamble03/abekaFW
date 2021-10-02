@@ -1,19 +1,12 @@
 package base;
 
 import constants.CommonConstants;
-import constants.DataBaseQueryConstant;
-import constants.SubjectDetails;
-import constants.TableColumn;
 import lombok.SneakyThrows;
 import oracle.jdbc.pool.OracleDataSource;
-import org.objectweb.asm.Type;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static constants.CommonConstants.SD_DATA_BASE;
-import static constants.TableColumn.*;
 
 public class DatabaseExtended extends BaseClass {
 
@@ -68,15 +61,23 @@ public class DatabaseExtended extends BaseClass {
 
     @SneakyThrows
     public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery, String dataBase){
-        connection = getDBConnection(dataBase);
-        try {
-            resultSet = connection.createStatement().executeQuery(selectQuery);
-            log("\n\nExecuted query:\n"+selectQuery);
-        }catch (Throwable e){
-            throw new Exception(e+"\n\nExecute query failed for \n\n" +selectQuery);
+        ArrayList<HashMap<String,String>> resultSetRowList = new ArrayList<>();
+        int retryCount = 0;
+        while (resultSetRowList.size()==0 && retryCount < 3) {
+            connection = getDBConnection(dataBase);
+            try {
+                resultSet = connection.createStatement().executeQuery(selectQuery);
+                log("\n\nExecuted query:\n" + selectQuery);
+            } catch (Throwable e) {
+                throw new Exception(e + "\n\nExecute query failed for \n\n" + selectQuery);
+            }
+            resultSetRowList = convertResultSetToArrayList();
+            connection.close();
+            retryCount++;
+            if(resultSetRowList.size() == 0)Thread.sleep(5000);
         }
-        ArrayList<HashMap<String,String>> resultSetRowList = convertResultSetToArrayList();
-        connection.close();
+        if(resultSetRowList.size()==0)softAssertions.fail("No DB records found for following query: \n"
+                +selectQuery+"\n DB"+dataBase);
         return resultSetRowList;
     }
 
@@ -168,6 +169,36 @@ public class DatabaseExtended extends BaseClass {
         callableStatement.setInt(1, Integer.parseInt(loginId));
         callableStatement.execute();
         log("Successfully executed the stored procedure:\n"+storedProcedure+"\n LoginId:"+loginId);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
+    public void executeDeleteStudentAccountStoredProcedure(String storedProcedure, String studentId, String dataBase){
+        log("Executing stored procedure of deleting student account");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.setInt(1, Integer.parseInt(studentId));
+        callableStatement.execute();
+        log("Successfully executed the stored procedure:\n"+storedProcedure+"\n studentId:"+studentId);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
+    public void executeUpdateCourseBeginDateToBackDate(String storedProcedure, String applicationNumber, String pastBeginDate, String studentUserId, String dataBase){
+        log("Executing stored procedure of changing course begin date of student account");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.setInt(1, Integer.parseInt(applicationNumber));
+        callableStatement.registerOutParameter(2, Types.INTEGER);
+        callableStatement.setInt(2, Integer.parseInt(pastBeginDate));
+        callableStatement.registerOutParameter(3, Types.VARCHAR);
+        callableStatement.setString(3, studentUserId);
+        callableStatement.execute();
+        log("Successfully executed the stored procedure:\n"+storedProcedure+"\n studentUserID:"+studentUserId);
         callableStatement.close();
         connection.close();
     }

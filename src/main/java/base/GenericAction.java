@@ -4,6 +4,7 @@ import apiPojo.CreateAccountApiResponsePojo;
 import apiPojo.DeleteAccountApiResponse;
 import com.google.common.base.CaseFormat;
 import constants.*;
+import dataProvider.DataProviders;
 import elementConstants.AbekaHome;
 import elementConstants.Login;
 import io.restassured.common.mapper.TypeRef;
@@ -25,6 +26,8 @@ import static constants.ApiServiceConstants.customerNumber;
 import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
+import static constants.DataBaseQueryConstant.DELETE_STUDENT_ACCOUNT_SP_AD_DB;
+import static constants.DataBaseQueryConstant.UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.*;
 import static io.restassured.RestAssured.given;
@@ -33,14 +36,14 @@ import static org.openqa.selenium.remote.BrowserType.SAFARI;
 public abstract class GenericAction extends SelenideExtended{
 
     @Getter
-    public static UserAccountDetails userAccountDetails = null;
+    public static UserAccountDetails userAccountDetails = UserAccountDetails.builder().build();
 
     @Getter
     public static HashMap<String, SubjectDetails> studentSubjectDetailsList = new HashMap<>();
 
     @BeforeMethod
     @Parameters({"browser", "platform"})
-    protected void setUp(String browserName, String platform) {
+    public void setUp(String browserName, String platform) {
         super.setUp(browserName,platform);
         //Allure report writing will be done later
     }
@@ -54,6 +57,8 @@ public abstract class GenericAction extends SelenideExtended{
     public AbekaHomeScreen loginToAbeka(String userId, String password){
         waitAndCloseSignUpPop();
         log("logging in to application");
+        log("UserId: "+ userId);
+        log("Password: "+ password);
         click(AbekaHome.login);
         click(AbekaHome.logInCreateAccount);
         type(Login.emailAddress,userId);
@@ -75,13 +80,13 @@ public abstract class GenericAction extends SelenideExtended{
 
     public AbekaHomeScreen logoutFromAbeka(){
         navigateToAccountGreetingSubMenu(AbekaHome.LOG_OUT);
-        waitForElementTobeVisible(AbekaHome.account);
+        waitForElementTobeVisibleOrMoveAhead(AbekaHome.account);
         return new AbekaHomeScreen();
     }
 
     public void waitAndCloseSignUpPop(){
         log("Waiting for sign up popup");
-        waitForElementTobeVisible(AbekaHome.closeSignup, veryLongWait);
+        waitForElementTobeVisibleOrMoveAhead(AbekaHome.closeSignup, veryLongWait);
         if(browser.equals(SAFARI)){
             clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
         }else {
@@ -144,6 +149,21 @@ public abstract class GenericAction extends SelenideExtended{
         }
     }
 
+    public ArrayList<Map<Integer,String>> getExcelDataSet(String sheetName, int rowNumber){
+        return new DataProviders().getExcelData(sheetName, rowNumber, rowNumber);
+    }
+
+    public StudentDetails getStudentAccountDetails(int rowNumber){
+        Map<Integer,String> dataMap = new DataProviders().getExcelData(STUDENT_CREDENTIALS, rowNumber, rowNumber).get(0);
+        StudentDetails studentDetails = new StudentDetails();
+        studentDetails.setStudentUserId(dataMap.get(0));
+        studentDetails.setPassword(dataMap.get(1));
+        studentDetails.setFirstName(dataMap.get(2).split("\\s")[0]);
+        studentDetails.setLastName(dataMap.get(2).split("\\s")[1]);
+        studentDetails.setStudentFullName(studentDetails.getFirstName()+" "+studentDetails.getLastName());
+        return studentDetails;
+    }
+
     /**
      * Setting student account details at global level
      * @param userId user ID to get the details
@@ -151,13 +171,17 @@ public abstract class GenericAction extends SelenideExtended{
     public void setStudentAccountDetailsFromDB(String userId){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
-        String subscriptionNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_NUMBER_SD_DB
-                .replaceAll(LOGIN_ID_DATA,userLoginDetails.get(LOGIN_ID)),SD_DATA_BASE).get(0).get(SUBSCRIPTION_NUMBER);
-        String applicationNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_SD_DB
-                .replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber),SD_DATA_BASE).get(0).get(APPLICATION_NUMBER);
+        HashMap<String,String> subscriptionAccountDetails = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB
+                .replaceAll(ACCOUNT_NUMBER_DATA,userLoginDetails.get(ACCOUNT_NUMBER)),SD_DATA_BASE).get(0);
 
         userAccountDetails = new UserAccountDetails(userId,userLoginDetails.get(LOGIN_ID),userLoginDetails.get(ACCOUNT_NUMBER),
-                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),subscriptionNumber,applicationNumber);
+                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),subscriptionAccountDetails.get(SUBSCRIPTION_NUMBER_PK),subscriptionAccountDetails.get(APPLICATION_NUMBER));
+    }
+
+    public String getStudentIDFromDB(String userId){
+        HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
+                .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
+        return userLoginDetails.get(STUDENT_ID);
     }
 
     /**
@@ -318,16 +342,25 @@ public abstract class GenericAction extends SelenideExtended{
         parentAccountDetails.setParentUserName("rcg+"+response.getCustomerNumber()+"@pcci.edu");
         parentAccountDetails.setParentPassword("rcg"+response.getCustomerNumber());
         parentAccountDetails.setParentCustomerNumber(response.getCustomerNumber());
+        log("Parent account created with following details \n+" +
+                "User Id:"+parentAccountDetails.getParentUserName()+"\n" +
+                "Password:"+parentAccountDetails.getParentPassword());
         ExcelUtils excelUtils = new ExcelUtils();
         excelUtils.setCellData(CommonConstants.PARENT_CREDENTIALS,
                 new String[]{parentAccountDetails.getParentUserName(),parentAccountDetails.getParentPassword(),parentAccountDetails.getParentName(),parentAccountDetails.getParentCustomerNumber()}, rowNumber);
         return parentAccountDetails;
     }
 
-    public void deleteParentAccount(ParentAccountDetails parentAccountDetails){
+    public void setStudentAccountDetailsInTestDataExcel(StudentDetails studentDetails, int rowNumber) {
+        ExcelUtils excelUtils = new ExcelUtils();
+        excelUtils.setCellData(STUDENT_CREDENTIALS,
+                new String[]{studentDetails.getStudentUserId(), studentDetails.getPassword(), studentDetails.getFirstName()+" "+studentDetails.getLastName(), studentDetails.getGrade()}, rowNumber);
+    }
+
+    public void deleteParentAccount(String parentCustomerNumber){
         DeleteAccountApiResponse response = given().when().multiPart(ApiServiceConstants.request,ApiServiceConstants.deleteRequestType)
                 .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
-                .multiPart(customerNumber,parentAccountDetails.getParentCustomerNumber())
+                .multiPart(customerNumber,parentCustomerNumber)
                 .header(CommonConstants.AUTHORIZATION, CommonConstants.BEARER + properties.getProperty(API_AUTH_KEY))
                 .get(properties.get(CommonConstants.API_END_URL).toString()).getBody().as(new TypeRef<DeleteAccountApiResponse>(){});
         response.getMessage();
@@ -335,5 +368,17 @@ public abstract class GenericAction extends SelenideExtended{
             softAssertions.fail("Parent account deletion failed");
         }
         softAssertions.assertAll();
+    }
+
+    public void deleteStudentAccountFromSystem(String studentUserId){
+        executeDeleteStudentAccountStoredProcedure(DELETE_STUDENT_ACCOUNT_SP_AD_DB, getStudentIDFromDB(studentUserId), AD_DATA_BASE);
+    }
+
+    public void updateCourseBeginDateToBackDate(String studentUserName){
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        localDate = localDate.minusMonths(3);
+        String pastCourseBeginDate = localDate.format(formatter);
+        executeUpdateCourseBeginDateToBackDate(UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB, getUserAccountDetails().getApplicationNumber(), pastCourseBeginDate, studentUserName, AD_DATA_BASE);
     }
 }

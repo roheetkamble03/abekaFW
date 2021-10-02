@@ -389,7 +389,7 @@ public class StudentsScreen extends GenericAction {
         click(submitOnline);
         type(fileUpload,uploadWordFilePath);
         submitProgressReport();
-        waitForElementTobeVisible(BACK_TO_SERVICE_REPORT);
+        waitForElementTobeVisibleOrMoveAhead(BACK_TO_SERVICE_REPORT);
         click(BACK_TO_SERVICE_REPORT);
     }
 
@@ -964,7 +964,7 @@ public class StudentsScreen extends GenericAction {
                 waitForElementTobeExist(Students.linkitBeginBtn, veryLongWait);
                 click(getVisibleElement(Students.linkitBeginBtn));
                 waitForPageTobeLoaded();
-                waitForElementTobeVisible(Students.linkitQuestionPanel, veryLongWait);
+                waitForElementTobeVisibleOrMoveAhead(Students.linkitQuestionPanel, veryLongWait);
                 answerQuestions();
                 submitQuestion();
                 goToAnotherSession();
@@ -994,7 +994,7 @@ public class StudentsScreen extends GenericAction {
     @SneakyThrows
     private void answerQuestions() {
         String questionType;
-        waitForElementTobeVisible(Students.linkitTotalQuestions, veryLongWait);
+        waitForElementTobeVisibleOrMoveAhead(Students.linkitTotalQuestions, veryLongWait);
 
         int totalQuestions = 0;
         boolean isLastQuestion = false;

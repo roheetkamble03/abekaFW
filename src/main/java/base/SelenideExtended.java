@@ -7,6 +7,7 @@ import constants.CommonConstants;
 import constants.EnumUtil;
 import elementConstants.AbekaHome;
 import elementConstants.Dashboard;
+import elementConstants.Enrollments;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -14,6 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -233,7 +235,8 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public String getElementText(String identifier, int... waitTimeInSeconds){
         try{
-            waitForElementTobeVisible(identifier, waitTimeInSeconds);
+            waitForElementTobeVisibleOrMoveAhead(identifier, waitTimeInSeconds);
+            implicitWaitInSeconds(3);
             return getElementText(getElement(identifier));
         }catch (Throwable e){
             return "";
@@ -299,6 +302,8 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      */
     public void selectByIndex(String identifier, int index) {
+            waitForElementTobeExist(identifier);
+            implicitWaitInSeconds(2);
             Select s = new Select(getElement(identifier));
             s.selectByIndex(index);
     }
@@ -668,7 +673,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      * @param identifier
      */
-    public void waitForElementTobeVisible(String identifier, int... waitTimeInSeconds) {
+    public void waitForElementTobeVisibleOrMoveAhead(String identifier, int... waitTimeInSeconds) {
         log("Waiting for element to be visible");
         LocalTime waitTime = LocalTime.now().plusSeconds((waitTimeInSeconds.length>0)?waitTimeInSeconds[0]:elementLoadWait);
             while (waitTime.isAfter(LocalTime.now())) {
@@ -684,8 +689,29 @@ public abstract class SelenideExtended extends DatabaseExtended {
             }
     }
 
+    /**
+     *
+     * @param identifier
+     */
+    public void waitForElementTobeVisible(String identifier, int... waitTimeInSeconds) {
+        log("Waiting for element to be visible");
+        LocalTime waitTime = LocalTime.now().plusSeconds((waitTimeInSeconds.length>0)?waitTimeInSeconds[0]:elementLoadWait);
+        while (waitTime.isAfter(LocalTime.now())) {
+            try{
+                if(getVisibleElement(identifier)!=null){
+                    log("Visible element appeared");
+                    return;
+                }
+                //getElement(identifier).shouldBe(Condition.visible, Duration.ofSeconds(elementLoadWait));
+            }catch (Throwable t){
+
+            }
+        }
+        Assert.fail(identifier+" element not found");
+    }
+
     @SneakyThrows
-    public SelenideElement getVisibleElement(String identifier){
+    public SelenideElement getVisibleElement(String identifier, int... timeOut){
         log("Getting visible element:"+identifier);
         for (SelenideElement element: getElements(identifier)){
             implicitWaitInSeconds(1);
@@ -906,6 +932,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
         waitForElementTobeDisappear(AbekaHome.abekaBGProcessLogo);
     }
 
+    public void waitForOrderProcessingMsgDisappear(){
+        log("Waiting for process log to disappear");
+        waitForElementTobeDisappear(Enrollments.orderProcessingMessage);
+        implicitWaitInSeconds(2);
+    }
+
     public void waitForPageTobeLoaded(){
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
@@ -945,5 +977,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void navigateToHeaderBannerSubmenu(String menu, String submenu){
         mouseOverOnElement(menu);
         click(bringElementIntoView(String.format(AbekaHome.HEADER_SUB_MENU,submenu)));
+    }
+
+    public SelenideElement getElement() {
+        return element;
     }
 }

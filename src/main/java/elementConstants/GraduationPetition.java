@@ -1,11 +1,8 @@
 package elementConstants;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Random;
-import java.util.stream.IntStream;
 
 public @interface GraduationPetition {
     String TITLE_OPTION = new String[]{"Mr.","Miss"}[new Random().nextInt(1)];

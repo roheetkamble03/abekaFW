@@ -23,7 +23,7 @@ public @interface CommonConstants {
     String STUDENT_CREDENTIALS = "StudentCredentials";
     String USER_ID = "UserId";
     String PASSWORD = "Password";
-    String NAME_DATE_FORMAT = "yyyyMMddHHmmssSSS";
+    String NAME_DATE_FORMAT = "yyyyMMddHHmm";
 
     String DB_CONNECTION_URL = "DBConnectionUrl";
     String DB_USER_NAME = "DBUserName";
@@ -45,4 +45,5 @@ public @interface CommonConstants {
     String AUTHORIZATION = "Authorization";
     String BEARER = "Bearer ";
     String PARENT_CREDENTIALS = "ParentCredentials";
+    String STUDENT_NAME = "StudentName";
 }

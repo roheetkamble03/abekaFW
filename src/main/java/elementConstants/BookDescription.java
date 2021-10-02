@@ -13,4 +13,6 @@ public @interface BookDescription {
     String independentStudy = "text=Independent Study";
     String addToCart = "id=lbnAddToCart";
     String quantityTxtBox = "id=txtQuantity";
+    String newVersionOfProductAvailable = "xpath=//div[@id='NewProductBox']/descendant::a";
+    String productAddedLink = "xpath=//p/descendant::a[@href='/ABekaOnline/ViewCart.aspx']";
 }

@@ -1,7 +1,5 @@
 package elementConstants;
 
-import lombok.Getter;
-
 public @interface ShoppingCart {
     /**
      * Text

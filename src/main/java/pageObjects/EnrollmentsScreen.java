@@ -6,18 +6,14 @@ import constants.CommonConstants;
 import constants.EnrollmentOptions;
 import constants.StudentDetails;
 import elementConstants.Enrollments;
-import elementConstants.Students;
 import lombok.SneakyThrows;
 import utility.ExcelUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static constants.CommonConstants.*;
-import static elementConstants.Enrollments.GRADE_TWELVE;
-import static elementConstants.Enrollments.HOME_SCHOOLING;
+import static elementConstants.Enrollments.*;
 import static elementConstants.Students.previousGrade;
 import static elementConstants.Students.previousProgram;
 
@@ -60,12 +56,15 @@ public class EnrollmentsScreen extends GenericAction {
         if(isValidateUserNameAlreadyExistMessage) {
             validateUserNameAlreadyExistsMessage();
         }
-        type(Enrollments.formUserNameInputBox,studentDetails.getUserName());
+        type(Enrollments.formUserNameInputBox,studentDetails.getStudentUserId());
         click(Enrollments.formPasswordInputBox);
         implicitWaitInSeconds(3);
         type(Enrollments.formPasswordInputBox,studentDetails.getPassword());
         click(Enrollments.CREATE);
         waitForPageTobeLoaded();
+        log("Student account created with following details:\n" +
+                "UserName:"+studentDetails.getStudentUserId()+"\n" +
+                "Password:"+studentDetails.getPassword());
         return this;
     }
 
@@ -142,6 +141,8 @@ public class EnrollmentsScreen extends GenericAction {
                 implicitWaitInSeconds(3);
                 if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+                }else {
+                    addNewParent(enrollmentOptions.getParentName());
                 }
                 break;
             case (Enrollments.GRADE_FOUR):
@@ -152,6 +153,8 @@ public class EnrollmentsScreen extends GenericAction {
                 implicitWaitInSeconds(3);
                 if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+                } else {
+                    addNewParent(enrollmentOptions.getParentName());
                 }
                 break;
                 case (Enrollments.GRADE_NINE):
@@ -163,6 +166,8 @@ public class EnrollmentsScreen extends GenericAction {
                 implicitWaitInSeconds(3);
                 if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
+                } else {
+                    addNewParent(enrollmentOptions.getParentName());
                 }
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getAssessmentType())));
                 break;
@@ -187,6 +192,8 @@ public class EnrollmentsScreen extends GenericAction {
     }
 
    public EnrollmentsScreen submitEnrollment(){
+        waitForElementTobeVisibleOrMoveAhead(Enrollments.applicationNumber, veryLongWait);
+        getUserAccountDetails().setApplicationNumber(getElementText(applicationNumber));
        clickOnNextButton();
        return this;
    }
@@ -194,7 +201,7 @@ public class EnrollmentsScreen extends GenericAction {
    public EnrollmentsScreen fillProofOfCompletion(String gradeTobeEnrolled){
         selectByVisibleText(previousGrade,getLastCompletionGrade(gradeTobeEnrolled));
         selectByVisibleText(previousProgram, HOME_SCHOOLING);
-        getElements(Enrollments.RADIO_NO).stream().forEach(e->click(e));
+        getElements(Enrollments.RADIO_NO).stream().forEach(e->clickByJavaScript(e));
 //        click(bringElementIntoView(Enrollments.firstSemesterNo));
 //        click(bringElementIntoView(Enrollments.firstSemesterNo));
 //        click(bringElementIntoView(Enrollments.repeatNo));
@@ -204,8 +211,8 @@ public class EnrollmentsScreen extends GenericAction {
    }
 
    public EnrollmentsScreen fillAddClasses(){
-        waitForElementTobeExist(Enrollments.mailThisFormLaterChkBox);
-        click(bringElementIntoView(Enrollments.mailThisFormLaterChkBox));
+        waitForElementTobeExist(Enrollments.mailThisFormLaterChkBox, veryLongWait);
+        clickByJavaScript(Enrollments.mailThisFormLaterChkBox);
         return this;
    }
 
@@ -226,16 +233,32 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
    }
 
-   public EnrollmentsScreen addStudentAccountDetailsToTestData(StudentDetails studentDetails){
-       ExcelUtils excelUtils = new ExcelUtils();
-       excelUtils.setCellData(studentDetails.getGrade().replaceAll("\\s","")
-               .concat(STUDENT_CREDENTIALS),new String[]{studentDetails.getUserName(),studentDetails.getPassword()});
-        return this;
-   }
-
     public EnrollmentsScreen addParentAccountDetailsToTestData(String userName, String password){
         ExcelUtils excelUtils = new ExcelUtils();
         excelUtils.setCellData("ParentCredentials",new String[]{userName,password});
+        return this;
+    }
+
+    public EnrollmentsScreen addNewParent(String signature) {
+        clickIfExists(NEW_PARENT);
+        try {
+            selectByIndex(guardianTitle, 1);
+        }catch (Exception e){
+            click(bringElementIntoView(NEW_PARENT));
+            selectByIndex(guardianTitle, 1);
+        }
+        type(guardianFirstName,signature.split("\\s")[0]);
+        type(guardianLastName, signature.split("\\s")[1]);
+        try {
+            selectByIndex(guardianRelation, 1);
+        }catch (Exception e){
+            clickIfExists(NEW_PARENT);
+            selectByIndex(guardianRelation, 1);
+        }
+        click(addNewParentDoneBtn);
+        implicitWaitInSeconds(3);
+        waitForElementTobeDisappear(pleaseWait);
+        implicitWaitInSeconds(3);
         return this;
     }
 }

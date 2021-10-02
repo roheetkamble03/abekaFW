@@ -9,7 +9,8 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.back;
+import static com.codeborne.selenide.Selenide.closeWindow;
 import static elementConstants.Dashboard.GRADUATION_PETITION;
 
 public class DashboardScreen extends GenericAction {
@@ -98,10 +99,10 @@ public class DashboardScreen extends GenericAction {
         }
     }
 
-    public void validateDashboardMyStudentLink() {
+    public void validateDashboardMyStudentLink(String studentName) {
         if (isElementExists(Dashboard.MY_STUDENTS)) {
             bringElementIntoView(Dashboard.MY_STUDENTS);
-            navigateToMyStudentProfile(Dashboard.STUDENT_NAME);
+            navigateToMyStudentProfile(studentName);
             softAssertions.assertThat(getPageTitle().equals(Dashboard.STUDENT_TAB_TITLE))
                     .as("Actual page title [" + getDriver().getTitle() + "] is not equal to expected page title [" + Dashboard.STUDENT_TAB_TITLE + "]").isTrue();
             softAssertions.assertThat(getCurrentURL().equals(afterLoginURL + Dashboard.STUDENT_TAB_URL))
@@ -112,7 +113,7 @@ public class DashboardScreen extends GenericAction {
     }
 
     public StudentsScreen navigateToMyStudentProfile(String studentName){
-        click(bringElementIntoView(getElement(String.format(Dashboard.studentLink, studentName))));
+        click(bringElementIntoView(String.format(Dashboard.studentLink, studentName)));
         waitForPageTobeLoaded();
         return new StudentsScreen();
     }

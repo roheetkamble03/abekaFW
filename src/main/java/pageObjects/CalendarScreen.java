@@ -3,12 +3,13 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import constants.Calendar;
-import constants.TableColumn;
 import constants.DataBaseQueryConstant;
+import constants.TableColumn;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+
 import static constants.Calendar.*;
 import static constants.CommonConstants.AD_DATA_BASE;
 import static constants.TableColumn.*;

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ShoppingCartPage extends GenericAction {
     @Override
-    protected void setUp(String browserName, String platform) {
+    public void setUp(String browserName, String platform) {
 
     }
 

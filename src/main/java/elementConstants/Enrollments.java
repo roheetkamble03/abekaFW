@@ -1,7 +1,5 @@
 package elementConstants;
 
-import java.lang.reflect.Array;
-import java.util.Locale;
 import java.util.Random;
 
 public @interface Enrollments {
@@ -53,7 +51,7 @@ public @interface Enrollments {
     /**
      * Element xpath
      */
-    String sectionChildLink = "xpath=//h2[normalize-space(text())='%s']/following-sibling::div/descendant::a[@id='lkbApp']";
+    String sectionChildLink = "xpath=//h2[normalize-space(text())='%s']";
     String sectionChildOpenLink = "xpath=//h2[normalize-space(text())='%s']/following-sibling::div/descendant::a[@id='lkbApp' and normalize-space(text())='%s']";
     String addNewStudent = "id=btnAddNewStudent";
     String studentPageHeader = String.format("xpath=//h1[normalize-space(text())='%s']/span[normalize-space(text())='%s']",SELECT_OR,ADD_A_STUDENT);
@@ -84,4 +82,13 @@ public @interface Enrollments {
     String diplomaFromAbekaNo = "id=rbnDiplomaNo";
     String mailFormLater = "id=ckbMailIn";
     String RADIO_NO = "xpath=//input[@type='radio' and contains(@id,'No')]";
+    String guardianTitle = "id=ddlGuardianTitle";
+    String guardianFirstName = "id=txtGuardianFirstName";
+    String guardianLastName = "id=txtGuardianLastName";
+    String guardianRelation = "id=ddlNewRelation";
+    String addNewParentDoneBtn = "id=btnCreateGuardian";
+    String pleaseWait = "text=Please wait...";
+    String orderProcessingMessage = "Please wait while we process your order…";
+    String orderProcessingLoaderText = "id=loaderText";
+    String applicationNumber = "id=lblAppNo";
 }

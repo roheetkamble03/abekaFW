@@ -837,9 +837,11 @@ public @interface DataBaseQueryConstant {
     String LOGIN_DETAILS_SD_DB = "/* To get the Student Login details from SD DB*/\n" +
             "SELECT DISPLAY_NAME, LOGIN_ID_PK AS LOGIN_ID, ACCOUNT_NUMBER, STUDENT_ID, USER_NAME FROM abashared.user_logins WHERE lower(user_name) = lower('STUDENT_ID_DATA')";
 
-    String GET_SUBSCRIPTION_NUMBER_SD_DB = "/* To get the Subscription number from SD DB*/ \n" +
-            "SELECT DISTINCT subscription_number AS SUBSCRIPTION_NUMBER\n" +
-            "  FROM abashared.permissions_queries.GetSubscriptionsByLogin('LOGIN_ID_DATA')";
+    String GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB = "/* To get the Subscription number from SD DB*/ \n" +
+            "Select * from ABAShared.Streaming_Subscriptions\n" +
+            "where account_number = 'ACCOUNT_NUMBER_DATA'";
+//            "SELECT DISTINCT subscription_number AS SUBSCRIPTION_NUMBER\n" +
+//            "  FROM abashared.permissions_queries.GetSubscriptionsByLogin('LOGIN_ID_DATA')";
 
     String GET_APPLICATION_NUMBER_SD_DB = "/* To get the Application number from SD DB*/ \n" +
             "SELECT subs.application_number AS APPLICATION_NUMBER\n" +
@@ -1549,4 +1551,10 @@ public @interface DataBaseQueryConstant {
             "         AND prbxm.box_letter = 'TXH_BOXLTR_DATA'\n" +
             "         AND prbxm.pxm_itmnbr = 'ITEM_NUMBER_DATA'\n" +
             "       ORDER BY prbxm.pxm_sub_itmnbr";
+
+    String DELETE_STUDENT_ACCOUNT_SP_AD_DB = "/*Deleting student account from system SP*/ \n" +
+            "{CALL ABADB.CREATETESTDATA.DeleteTestStudent(?)}";
+
+    String UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB = "/*Updating student's course begin data to back date*/ \n" +
+            "{CALL ABADB.AREA2APPLICATIONS.CHANGEBEGINDATE(?,?,?)}";
 }

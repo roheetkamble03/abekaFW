@@ -1,6 +1,8 @@
 package abekaUISuite;
 
 import base.GenericAction;
+import constants.CommonConstants;
+import constants.StudentDetails;
 import dataProvider.DataProviders;
 import elementConstants.AbekaHome;
 import org.testng.annotations.Test;
@@ -49,9 +51,10 @@ public class DashboardSuiteTest extends GenericAction {
     @Test(dataProvider = "parentCredentials", dataProviderClass = DataProviders.class)
     public void validateDashboardMyStudentsWidgetLinks(String userId, String password, String userName) {
         dashboardScreen = new DashboardScreen();
+        StudentDetails studentDetails = getStudentAccountDetails(1);
         loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
-        dashboardScreen.validateDashboardMyStudentLink();
+        dashboardScreen.validateDashboardMyStudentLink(studentDetails.getFirstName());
         softAssertions.assertAll();
     }
 }

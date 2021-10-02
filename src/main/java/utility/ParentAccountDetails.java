@@ -1,15 +1,8 @@
 package utility;
 
-import apiPojo.CreateAccountApiResponsePojo;
-import constants.ApiServiceConstants;
-import constants.CommonConstants;
-import io.restassured.common.mapper.TypeRef;
-import lombok.*;
-
-import static base.BaseClass.properties;
-import static constants.CommonConstants.API_AUTH_KEY;
-import static constants.CommonConstants.APP_KEY;
-import static io.restassured.RestAssured.given;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor

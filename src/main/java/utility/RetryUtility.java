@@ -1,7 +1,6 @@
 package utility;
+
 import base.GenericAction;
-import com.sun.net.httpserver.Authenticator;
-import org.testng.Assert;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 

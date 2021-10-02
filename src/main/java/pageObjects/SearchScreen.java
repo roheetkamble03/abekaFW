@@ -5,7 +5,7 @@ import elementConstants.Search;
 
 public class SearchScreen extends GenericAction {
     @Override
-    protected void setUp(String browserName, String platform) {
+    public void setUp(String browserName, String platform) {
 
     }
 

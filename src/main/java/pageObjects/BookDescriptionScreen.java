@@ -5,11 +5,17 @@ import elementConstants.BookDescription;
 
 public class BookDescriptionScreen extends GenericAction {
     @Override
-    protected void setUp(String browserName, String platform) {
+    public void setUp(String browserName, String platform) {
 
     }
 
+    public void navigateToNewVersionOfProduct(){
+        waitForElementTobeExist(BookDescription.newVersionOfProductAvailable, veryLongWait);
+        click(BookDescription.newVersionOfProductAvailable);
+    }
+
     public BookDescriptionScreen selectBookingCriteria(String enrollmentPeriod, String materials, String programOption, String quantity){
+        navigateToNewVersionOfProduct();
         click(enrollmentPeriod);
         click(materials);
         if(programOption.length()>0) {
@@ -21,5 +27,6 @@ public class BookDescriptionScreen extends GenericAction {
 
     public void clickOnAddToCart(){
         click(BookDescription.addToCart);
+        waitForElementTobeExist(BookDescription.productAddedLink, veryLongWait);
     }
 }

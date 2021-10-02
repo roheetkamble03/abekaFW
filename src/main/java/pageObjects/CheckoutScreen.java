@@ -4,10 +4,13 @@ import base.GenericAction;
 import com.codeborne.selenide.Condition;
 import constants.CheckoutCriteria;
 import elementConstants.Checkout;
+import org.apache.commons.lang3.RandomStringUtils;
+
+import java.time.LocalDateTime;
 
 public class CheckoutScreen extends GenericAction {
     @Override
-    protected void setUp(String browserName, String platform) {
+    public void setUp(String browserName, String platform) {
 
     }
 
@@ -25,6 +28,7 @@ public class CheckoutScreen extends GenericAction {
         bringElementIntoView(String.format(Checkout.paymentTermRadio, paymentTerm));
         click(String.format(Checkout.paymentTermRadio, paymentTerm));
         waitForAbekaBGProcessLogoDisappear();
+        waitForOrderProcessingMsgDisappear();
     }
 
     public void selectShippingAddress(String shippingAddress){
@@ -32,6 +36,10 @@ public class CheckoutScreen extends GenericAction {
             bringElementIntoView(Checkout.shippingAddressMainRadio);
             click(Checkout.shippingAddressMainRadio);
             waitForAbekaBGProcessLogoDisappear();
+            waitForOrderProcessingMsgDisappear();
+        }
+        if(isElementExists(Checkout.suggestedShipAddresBtn)){
+            click(Checkout.suggestedShipAddresBtn);
         }
     }
 
@@ -39,6 +47,7 @@ public class CheckoutScreen extends GenericAction {
         bringElementIntoView(shippingMethod);
         click(shippingMethod);
         waitForAbekaBGProcessLogoDisappear();
+        waitForOrderProcessingMsgDisappear();
     }
 
     public void selectBillingAddress(boolean isBillingAndShippingAddressSame){
@@ -47,15 +56,25 @@ public class CheckoutScreen extends GenericAction {
                 bringElementIntoView(Checkout.shippingBillingSameChkBox);
                 click(Checkout.shippingBillingSameChkBox);
                 waitForAbekaBGProcessLogoDisappear();
+                waitForOrderProcessingMsgDisappear();
             }
         }
     }
 
     public void selectPaymentMethod(String paymentMethod){
         if(paymentMethod.equalsIgnoreCase(Checkout.DEFAULT)){
+            click(Checkout.newCreditCardRadio);
+            type(Checkout.ccNumber, Checkout.CC_NUMBER);
+            clickByJavaScript(Checkout.ccExpiryMonthTextBox);
+            clickByJavaScript(Checkout.ccExpiryMonth);
+            clickByJavaScript(Checkout.getCcExpiryYearTextBox);
+            clickByJavaScript(String.format(Checkout.ccExpiryYear, Integer.toString(LocalDateTime.now().getYear()+3).substring(2,4)));
+            type(Checkout.ccSecurityCode,RandomStringUtils.randomNumeric(3));
+        }else {
             bringElementIntoView(Checkout.savedCreditCard);
             click(Checkout.savedCreditCard);
             waitForAbekaBGProcessLogoDisappear();
+            waitForOrderProcessingMsgDisappear();
         }
     }
 

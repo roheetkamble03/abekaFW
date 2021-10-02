@@ -1,8 +1,5 @@
 package constants;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public final class EnumUtil {
     public static final String CSS_KEY = "css=";
 

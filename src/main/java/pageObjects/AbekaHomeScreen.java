@@ -1,8 +1,7 @@
 package pageObjects;
 
 import base.GenericAction;
-import constants.CommonConstants;
-import elementConstants.AbekaHome ;
+import elementConstants.AbekaHome;
 import elementConstants.ShoppingCart;
 
 public class AbekaHomeScreen extends GenericAction {
@@ -18,12 +17,12 @@ public class AbekaHomeScreen extends GenericAction {
 
     public ShoppingCartPage navigateToShoppingCartPage(){
         click(AbekaHome.cart);
-        waitForElementTobeVisible(ShoppingCart.checkOutBtn);
+        waitForElementTobeVisibleOrMoveAhead(ShoppingCart.checkOutBtn);
         return new ShoppingCartPage();
     }
 
     @Override
-    protected void setUp(String browserName, String platform) {
+    public void setUp(String browserName, String platform) {
 
     }
 

@@ -2,34 +2,23 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
 
-    <test verbose="2" preserve-order="true" name="Smoke Suite test">
+    <test verbose="2" preserve-order="true" name="Smoke Suite test" parallel="methods" thread-count="3">
         <parameter name = "browser" value = "chrome"/>
         <parameter name = "platform" value = "Mac"/>
         <classes>
-<!--&lt;!&ndash;            <class name="abekaUISuite.ParentTestCaseSuiteTest">&ndash;&gt;-->
-<!--&lt;!&ndash;                <methods>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateStudentAssessmentDetailsOnCalendar"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateStudentDashboardData"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateStudentAbleToWatchVideoStreaming"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfully"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateStudentCalendarEvents"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testManageStudentInformationFromDashboard"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testModifyStudentAssessmentDetailsOnCalendar"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateParentDashboardAccessControl"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="testValidateStudentDashboardAccessControl"/>&ndash;&gt;-->
-<!--&lt;!&ndash;               </methods>&ndash;&gt;-->
-<!--&lt;!&ndash;            </class>&ndash;&gt;-->
-            <class name="abekaUISuite.LoginTestSuiteTest">
-                <methods>
-                    <include name="enrollmentPurchaseGradeOne"/>
-                    <exclude name="validateAddNewStudentGradeTwelve"/>
-                </methods>
-            </class>
-<!--            <class name="abekaUISuite.ParentTestCaseSuiteTest">-->
+<!--            <class name="abekaUISuite.AccessibilityAndWidgetValidationTestSuite">-->
 <!--                <methods>-->
-<!--                    <include name="testValidateParentDashboardAccessControl"/>-->
+<!--                    <exclude name="testValidateGraduationPetitionFunctionality"></exclude>-->
 <!--                </methods>-->
 <!--            </class>-->
+            <class name="abekaUISuite.ParentAndStudentSuiteTest">
+                <methods>
+<!--                    <include name="enrollmentPurchaseGradeNine"></include>-->
+<!--                    <include name="validateAddNewStudentGradeNine"></include>-->
+                    <include name="testModifyStudentAssessmentDetailsOnCalendarOfGradeNine"></include>
+                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine"></include>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
