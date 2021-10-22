@@ -21,7 +21,7 @@ public class AccessibilityAndWidgetValidationTestSuite extends GenericAction {
     @DataRowNumber(fromDataRowNumber = "1",toDataRowNumber = "1")
     @Test(testName = "testValidateParentDashboardAccessControl", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateParentDashboardAccessControl(String userId, String password, String userName, String signature){
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         new AbekaHomeScreen().validatedURLContent(AbekaHome.PARENT_ACCESS_CONTROL_URL_CONTENT);
         logoutFromAbeka();
@@ -31,7 +31,7 @@ public class AccessibilityAndWidgetValidationTestSuite extends GenericAction {
     @DataRowNumber(fromDataRowNumber = "1",toDataRowNumber = "1")
     @Test(testName = "testValidateStudentDashboardAccessControl", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentDashboardAccessControl(String userId, String password, String userName, String signature) {
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         new AbekaHomeScreen().validatedURLContent(AbekaHome.STUDENT_ACCESS_CONTROL_URL_CONTENT);
         logoutFromAbeka();
@@ -42,15 +42,15 @@ public class AccessibilityAndWidgetValidationTestSuite extends GenericAction {
     @Test(testName = "validateDashBoardWidgets", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void validateDashBoardWidgets(String userId, String password, String userName, String signature){
         dashboardScreen = new DashboardScreen();
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.validateDashboardNewTab().validateMyOrdersWidgetLinks().validateVideoManualPdfsLinks().validateNotificationRows();;
         softAssertions.assertAll();
     }
 
-    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(enabled = false, testName = "testValidateGraduationPetitionFunctionality", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
-        loginToAbeka(userId, password).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm();
         logoutFromAbeka();
         softAssertions.assertAll();

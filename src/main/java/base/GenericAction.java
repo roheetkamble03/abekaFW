@@ -54,13 +54,11 @@ public abstract class GenericAction extends SelenideExtended{
         super.tearDown();
     }
 
-    public AbekaHomeScreen loginToAbeka(String userId, String password){
-        waitAndCloseSignUpPop();
+    public AbekaHomeScreen loginToAbeka(String userId, String password, boolean isSignUpPopAppears){
+        waitAndCloseSignUpPop(isSignUpPopAppears);
         log("logging in to application");
         log("UserId: "+ userId);
         log("Password: "+ password);
-        click(AbekaHome.login);
-        click(AbekaHome.logInCreateAccount);
         type(Login.emailAddress,userId);
         type(Login.password,password);
         click(Login.loginBtn);
@@ -71,7 +69,12 @@ public abstract class GenericAction extends SelenideExtended{
 
     public AbekaHomeScreen navigateToAccountGreetingSubMenu(String submenu){
         click(getVisibleElement(AbekaHome.accountGreeting));
-        click(getVisibleElement(CommonConstants.LINK_TEXT + submenu));
+        if(isElementExists(CommonConstants.LINK_TEXT + submenu, false, elementLoadWait)){
+            clickByJavaScript(CommonConstants.LINK_TEXT + submenu);
+        }else {
+            clickByJavaScript(submenu);
+        }
+
         if(submenu.equalsIgnoreCase(AbekaHome.DASHBOARD))
             switchToLastOrNewWindow();
         waitForPageTobeLoaded();
@@ -84,13 +87,23 @@ public abstract class GenericAction extends SelenideExtended{
         return new AbekaHomeScreen();
     }
 
-    public void waitAndCloseSignUpPop(){
+    public void waitAndCloseSignUpPop(boolean isSignUpPopAppears){
         log("Waiting for sign up popup");
-        waitForElementTobeVisibleOrMoveAhead(AbekaHome.closeSignup, veryLongWait);
-        if(browser.equals(SAFARI)){
-            clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
+        if(isSignUpPopAppears) {
+            waitForElementTobeVisibleOrMoveAhead(AbekaHome.closeSignup, veryLongWait);
+            if (browser.equals(SAFARI)) {
+                clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
+            } else {
+                try {
+                    click(getVisibleElement(AbekaHome.closeSignup, veryLongWait));
+                } catch (Exception e) {
+                    log("Sign up pop up on page load not appeared");
+                }
+            }
+            click(AbekaHome.login);
+            click(AbekaHome.logInCreateAccount);
         }else {
-            click(getVisibleElement(AbekaHome.closeSignup));
+            navigateToAccountGreetingSubMenu(AbekaHome.login);
         }
     }
 
@@ -136,9 +149,9 @@ public abstract class GenericAction extends SelenideExtended{
 
     public static int getStudentRangeAge(String grade){
         switch (grade){
-            case GRADE_ONE_ACCREDITED:
+            case GRADE_ONE_VIDEO:
                 return 6;
-            case GRADE_FOUR:
+            case GRADE_FOUR_ACCREDITED:
                 return 10;
             case GRADE_NINE:
                 return 15;
@@ -151,6 +164,17 @@ public abstract class GenericAction extends SelenideExtended{
 
     public ArrayList<Map<Integer,String>> getExcelDataSet(String sheetName, int rowNumber){
         return new DataProviders().getExcelData(sheetName, rowNumber, rowNumber);
+    }
+
+    public ParentAccountDetails getParentAccountDetails(int rowNumber){
+        Map<Integer,String> dataMap = new DataProviders().getExcelData(PARENT_CREDENTIALS, rowNumber, rowNumber).get(0);
+        ParentAccountDetails parentDetails = new ParentAccountDetails();
+        parentDetails.setParentUserName(dataMap.get(0));
+        parentDetails.setParentPassword(dataMap.get(1));
+        parentDetails.setParentSignature(dataMap.get(2));
+        parentDetails.setParentCustomerNumber(dataMap.get(3));
+        parentDetails.setParentName(dataMap.get(2));
+        return parentDetails;
     }
 
     public StudentDetails getStudentAccountDetails(int rowNumber){

@@ -29,7 +29,7 @@ public class CalendarScreen extends GenericAction {
 
     @Step("Validating calendar events")
     public CalendarScreen validateStudentCalendarEvents(boolean isOpenAndValidateEachEventPreview) {
-        if(isElementExists(Calendar.calendarSection)){
+        if(isElementExists(Calendar.calendarSection, false)){
             bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(0));
             validateCalendarEvents(getCalendarDataFromDB(), isOpenAndValidateEachEventPreview);
         }else {
@@ -210,7 +210,7 @@ public class CalendarScreen extends GenericAction {
 
     private void openAndValidateEventDetailsPopUp(int rowCounter, int gridPosition, int dayPosition, String date, String textToCompare){
         tempXpath = getElementText(String.format(Calendar.eventGridText,rowCounter,gridPosition,dayPosition));
-        if(isElementExists(tempXpath)){
+        if(isElementExists(tempXpath, false)){
             click(tempXpath);
             validateEventPreviewPopUp(date,textToCompare);
         }else{

@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
 
-    <test verbose="2" preserve-order="true" name="Smoke Suite test" parallel="methods" thread-count="3">
+    <test verbose="2" preserve-order="true" name="Smoke Suite test" parallel="methods" thread-count="1">
         <parameter name = "browser" value = "chrome"/>
         <parameter name = "platform" value = "Mac"/>
         <classes>
@@ -13,10 +13,17 @@
 <!--            </class>-->
             <class name="abekaUISuite.ParentAndStudentSuiteTest">
                 <methods>
-<!--                    <include name="enrollmentPurchaseGradeNine"></include>-->
-<!--                    <include name="validateAddNewStudentGradeNine"></include>-->
-                    <include name="testModifyStudentAssessmentDetailsOnCalendarOfGradeNine"></include>
-                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine"></include>
+<!--                    <include name="enrollmentPurchaseGradeOne"></include>-->
+<!--                    <include name="validateAddNewStudentGradeOne"></include>-->
+                    <include name="testValidateStudentCursiveVideoLessonOfGradeOne"></include>
+<!--                    <include name="validateCourseBeginDateFormatGradeOne"></include>-->
+<!--                    <include name="testValidateStudentDashboardDataOfGradeOne"></include>-->
+<!--                    <include name="testValidateStudentCalendarEventsOfGradeOne"></include>-->
+<!--                    <include name="validatePreviewStudentVideoLessonsGradeTwelve"></include>-->
+<!--                    <include name="validateAddNewStudentGradeFour"></include>-->
+<!--                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeFour"></include>-->
+<!--                    <include name="testManageStudentInformationFromDashboardOfGradeFour"></include>-->
+<!--                    <include name="testValidateStudentAssessmentDetailsOnCalendarGradeFour"></include>-->
                 </methods>
             </class>
         </classes>

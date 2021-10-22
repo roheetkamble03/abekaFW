@@ -49,6 +49,7 @@ public @interface Students {
     String TITLE = "Title";
     String PAGES_READ = "Pages Read";
     String BACK_TO_SERVICE_REPORT = "Back to Progress Report";
+    String WRITING_1 = "Writing 1";
 
 
     /**
@@ -141,4 +142,9 @@ public @interface Students {
     String progressReportsStudentLink = "xpath=//a[@id='lbtnStudent']/p[normalize-space(text())='%s']";
     String bookReports = "xpath=//div[@class='BookReport']";
     String bookReportTextBox = "xpath=(//div[@class='BookReport'])[%s]/descendant::label[normalize-space(text())='%s']/following-sibling::input[@type='text']";
+    String studentPreviewVideoLink = "xpath=//a[@id='lbtnPreviewVideoLessons' and normalize-space(text())=\"Preview student's video lessons\"]";
+    String seatworkExplanationCursive = "text=Seatwork Explanation (Cursive)";
+    String cursiveWriting = "text=Cursive Writing";
+    String lessonOne = "xpath=//li[@data-lesson='1']";
+    String cursiveWritingVideo = "xpath=//span[@id='lblTitle' and normalize-space(text())='Writing 1 - Lesson 1']";
 }

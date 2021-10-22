@@ -53,7 +53,7 @@ public abstract class BaseClass {
     protected int elementLoadWait;
     int commonWait;
     protected int pollingTimeOut;
-    String grid;
+    public static String grid;
     String platform;
     boolean isLocalRun = false;
     String testMethodName;
@@ -82,7 +82,8 @@ public abstract class BaseClass {
         SelenideLogger.removeListener("allure");
         log("Tearing down test finished");
     }
-    @BeforeSuite
+
+    @BeforeClass
     public void prerequisiteSetup(){
         loadConfig();
     }

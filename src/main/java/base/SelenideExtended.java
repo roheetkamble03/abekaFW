@@ -58,7 +58,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public void clickIfExists(String identifier){
-        if(isElementExists(identifier)){
+        if(isElementExists(identifier, false)){
             click(identifier);
         }
     }
@@ -86,6 +86,8 @@ public abstract class SelenideExtended extends DatabaseExtended {
             }
         }catch (Throwable e){
             log("Clicked by java script");
+            waitForElementTobeExist(element);
+            implicitWaitInSeconds(5);
             clickByJavaScript(element);
         }
     }
@@ -116,9 +118,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }
     }
 
-    public boolean isElementExists(String identifier) {
+    public boolean isElementExists(String identifier, boolean isBringElementInToView, int... timeOut) {
         try {
-            waitForElementTobeExist(identifier);
+            waitForElementTobeExist(identifier, timeOut);
+            if(isBringElementInToView) bringElementIntoView(identifier);
             return true;
         }catch (Throwable e){
             return false;
@@ -964,7 +967,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public boolean waitAndCloseWidgetTourPopup(){
         try {
-            waitForElementTobeExist(Dashboard.widgetTourPopupClose,elementLoadWait*2);
+            waitForElementTobeExist(Dashboard.widgetTourPopupClose,elementLoadWait);
             click(Dashboard.widgetTourPopupClose);
             waitForPageTobeLoaded();
             return true;

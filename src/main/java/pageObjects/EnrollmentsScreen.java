@@ -9,6 +9,7 @@ import elementConstants.Enrollments;
 import lombok.SneakyThrows;
 import utility.ExcelUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,7 @@ public class EnrollmentsScreen extends GenericAction {
     public EnrollmentsScreen validateEnrollmentPageSection() {
         ArrayList<String> sectionList = new ArrayList<>(Arrays.asList(Enrollments.NEW,Enrollments.SAVED,Enrollments.HELD,Enrollments.ACTIVE));
         for(String section:sectionList){
-            softAssertions.assertThat(isElementExists(String.format(Enrollments.sectionChildLink,section)))
+            softAssertions.assertThat(isElementExists(String.format(Enrollments.sectionChildLink,section), false))
                     .as(section+" is not appeared on Enrollment page").isTrue();
         }
         return this;
@@ -97,21 +98,56 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
     }
 
+    public EnrollmentsScreen validateCourseBeginDateFormat(){
+        int year = LocalDate.now().getYear();
+        log("Validating date 12/01/0001");
+        type(Enrollments.beginDateInputBox,"12/01/0001");
+        clickOnNextButton();
+        softAssertions.assertThat(isElementExists(BEGIN_DATE_IN_WRONG_FORMAT, false))
+                .as(BEGIN_DATE_IN_WRONG_FORMAT+" error is not appeared for date 12/01/0001").isTrue();
+
+        log("Validating date 13/01/"+year);
+        type(Enrollments.beginDateInputBox,"13/01/"+year);
+        clickOnNextButton();
+        softAssertions.assertThat(isElementExists(BEGIN_DATE_IN_WRONG_FORMAT, false))
+                .as(BEGIN_DATE_IN_WRONG_FORMAT+" error is not appeared for date 13/01/0001").isTrue();
+
+        int lastDayOfTheMonth = LocalDate.now().lengthOfMonth()+1;
+        log("Validating date 12/"+lastDayOfTheMonth+1+"/"+year);
+        type(Enrollments.beginDateInputBox,"12/"+lastDayOfTheMonth+"/"+year);
+        clickOnNextButton();
+        softAssertions.assertThat(isElementExists(BEGIN_DATE_IN_WRONG_FORMAT, false))
+                .as(BEGIN_DATE_IN_WRONG_FORMAT+" error is not appeared for date 12/"+lastDayOfTheMonth+"/"+year).isTrue();
+
+        log("Validating date abcd");
+        type(Enrollments.beginDateInputBox,"abcd");
+        clickOnNextButton();
+        softAssertions.assertThat(isElementExists(BEGIN_DATE_IN_WRONG_FORMAT, false))
+                .as(BEGIN_DATE_IN_WRONG_FORMAT+" error is not appeared for date abcd").isTrue();
+
+        log("Validating date aa/bb/cccc");
+        type(Enrollments.beginDateInputBox,"aa/bb/cccc");
+        clickOnNextButton();
+        softAssertions.assertThat(isElementExists(BEGIN_DATE_IN_WRONG_FORMAT, false))
+                .as(BEGIN_DATE_IN_WRONG_FORMAT+" error is not appeared for date aa/bb/cccc").isTrue();
+        return this;
+    }
+
     public EnrollmentsScreen validateBeginDate(){
         String beginDate = getElementText(Enrollments.beginDateLbl);
         String maxDate = getElementText(Enrollments.maxDateLbl);
         clickOnNextButton();
-        softAssertions.assertThat(isElementExists(String.format(Enrollments.BEGIN_DATE_REQUIRED,beginDate)))
+        softAssertions.assertThat(isElementExists(String.format(Enrollments.BEGIN_DATE_REQUIRED,beginDate), false))
                 .as(String.format(Enrollments.BEGIN_DATE_BEFORE_ERROR,beginDate)+" error is not appeared").isTrue();
 
         type(Enrollments.beginDateInputBox,getModifiedDate(beginDate,0,0,1, CommonConstants.MINUS));
         clickOnNextButton();
-        softAssertions.assertThat(isElementExists(String.format(Enrollments.BEGIN_DATE_BEFORE_ERROR,beginDate)))
+        softAssertions.assertThat(isElementExists(String.format(Enrollments.BEGIN_DATE_BEFORE_ERROR,beginDate), false))
                 .as(String.format(Enrollments.BEGIN_DATE_BEFORE_ERROR,beginDate)+" error is not appeared").isTrue();
 
         type(Enrollments.beginDateInputBox,getModifiedDate(maxDate,0,0,1, CommonConstants.PLUS));
         clickOnNextButton();
-        softAssertions.assertThat(isElementExists(String.format(Enrollments.BEGIN_DATE_PAST_ERROR,maxDate)))
+        softAssertions.assertThat(isElementExists(String.format(Enrollments.BEGIN_DATE_PAST_ERROR,maxDate), false))
                 .as(String.format(Enrollments.BEGIN_DATE_PAST_ERROR,maxDate)+" error is not appeared").isTrue();
 
         return this;
@@ -124,7 +160,7 @@ public class EnrollmentsScreen extends GenericAction {
     }
 
     public EnrollmentsScreen removeExistingGuardianIfExists(){
-        if(isElementExists(Enrollments.existingGuardianRemove)) {
+        if(isElementExists(Enrollments.existingGuardianRemove, false)) {
             click(Enrollments.existingGuardianRemove);
         }
         return this;
@@ -133,7 +169,7 @@ public class EnrollmentsScreen extends GenericAction {
     @SneakyThrows
     public EnrollmentsScreen fillEnrollmentOptionsDetails(StudentDetails studentDetails, EnrollmentOptions enrollmentOptions){
         switch (studentDetails.getGrade()){
-            case Enrollments.GRADE_ONE_ACCREDITED:
+            case GRADE_ONE_ACCREDITED:
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())));
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
@@ -145,9 +181,8 @@ public class EnrollmentsScreen extends GenericAction {
                     addNewParent(enrollmentOptions.getParentName());
                 }
                 break;
-            case (Enrollments.GRADE_FOUR):
+            case (Enrollments.GRADE_FOUR_ACCREDITED):
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
-                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getProgram())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
                 click(enrollmentOptions.getGuardians());
                 implicitWaitInSeconds(3);
@@ -218,7 +253,7 @@ public class EnrollmentsScreen extends GenericAction {
 
     private String getLastCompletionGrade(String gradeTobeEnrolled) {
         switch (gradeTobeEnrolled){
-            case Enrollments.GRADE_FOUR:
+            case Enrollments.GRADE_FOUR_ACCREDITED:
                 return "3rd";
             case Enrollments.GRADE_NINE:
                 return "8th";
@@ -229,7 +264,8 @@ public class EnrollmentsScreen extends GenericAction {
     }
 
     public EnrollmentsScreen validateAllSetMessage(){
-        softAssertions.assertThat(isElementExists(Enrollments.ALL_SET)).as(Enrollments.ALL_SET+" message is not appeared on screen.").isTrue();
+        softAssertions.assertThat(isElementExists(Enrollments.ALL_SET, false)||
+                isElementExists(applicationStatusCompleted, false, veryLongWait)).as(Enrollments.ALL_SET+" or Completed status is not appeared on screen.").isTrue();
         return this;
    }
 

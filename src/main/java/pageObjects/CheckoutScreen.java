@@ -38,7 +38,7 @@ public class CheckoutScreen extends GenericAction {
             waitForAbekaBGProcessLogoDisappear();
             waitForOrderProcessingMsgDisappear();
         }
-        if(isElementExists(Checkout.suggestedShipAddresBtn)){
+        if(isElementExists(Checkout.suggestedShipAddresBtn, false)){
             click(Checkout.suggestedShipAddresBtn);
         }
     }
@@ -92,6 +92,10 @@ public class CheckoutScreen extends GenericAction {
         bringElementIntoView(Checkout.placeOrder);
         click(Checkout.placeOrder);
         waitForAbekaBGProcessLogoDisappear();
+        if(isElementDisplayed(Checkout.placeOrder)){
+            click(Checkout.placeOrder);
+            waitForAbekaBGProcessLogoDisappear();
+        }
         return new OrderConfirmationScreen();
     }
 

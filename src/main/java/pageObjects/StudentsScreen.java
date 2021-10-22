@@ -30,7 +30,7 @@ public class StudentsScreen extends GenericAction {
     private static ArrayList<String[]> submittedAssessmentList = new ArrayList<String[]>();
 
     public StudentsScreen validateStudentInformationSection(String studentName) {
-        if (isElementExists(Students.STUDENT_INFORMATION)) {
+        if (isElementExists(Students.STUDENT_INFORMATION, false)) {
             String oldURL;
             List<String> widgetList = Arrays.asList(CALENDAR_SETTINGS, IMAGE, LOGIN_INFORMATION,
                     PROGRESS_REPORTS, ASSESSMENT_PERMISSIONS);
@@ -42,13 +42,13 @@ public class StudentsScreen extends GenericAction {
                     switch (widget) {
                         case Students.CALENDAR_SETTINGS:
                             String calendarHeader = String.format(Students.calendarPopupHeader, String.format(Students.CHANGE_CALENDAR_LENGTH, studentName));
-                            softAssertions.assertThat(isElementExists(calendarHeader))
+                            softAssertions.assertThat(isElementExists(calendarHeader, false))
                                     .as(calendarHeader + " setting header is not appeared").isTrue();
                             click(String.format(CommonConstants.closeXpath, Students.calendarPopup));
                             break;
                         case Students.IMAGE:
                             String imageHeader = String.format(Students.imagePopupHeader, String.format(Students.CHANGE_IMAGE, studentName));
-                            softAssertions.assertThat(isElementExists(imageHeader))
+                            softAssertions.assertThat(isElementExists(imageHeader, false))
                                     .as(imageHeader + " setting header is not appeared").isTrue();
                             click(String.format(CommonConstants.closeXpath, Students.imagePopup));
                             break;
@@ -59,7 +59,7 @@ public class StudentsScreen extends GenericAction {
                             break;
                         case Students.GRADE_ALERT_SETTING:
                             String gradeAlertSettingHeader = String.format(Students.gradeAlertHeader, Students.GRADE_ALERT_SETTING_HEADER);
-                            softAssertions.assertThat(isElementExists(gradeAlertSettingHeader))
+                            softAssertions.assertThat(isElementExists(gradeAlertSettingHeader, false))
                                     .as(gradeAlertSettingHeader + " setting header is not appeared").isTrue();
                             click(String.format(CommonConstants.closeXpath, Students.gradeAlertSettingPopup));
                             break;
@@ -67,7 +67,7 @@ public class StudentsScreen extends GenericAction {
                             waitForPageTobeLoaded();
                             softAssertions.assertThat(isURLContainsGivenText(Students.PROGRESS_REPORTS.replaceAll("\\s", "")) && !(getCurrentURL().equals(oldURL)))
                                     .as("Navigated URL is not related to " + Students.PROGRESS_REPORTS + "\n current URL:" + getCurrentURL() + "\n Old URL:" + oldURL).isTrue();
-                            softAssertions.assertThat(isElementExists(Students.PROGRESS_REPORTS))
+                            softAssertions.assertThat(isElementExists(Students.PROGRESS_REPORTS, false))
                                     .as("Navigated page is not header " + Students.PROGRESS_REPORTS).isTrue();
                             if (!getCurrentURL().equals(oldURL)) {
                                 back();
@@ -77,7 +77,7 @@ public class StudentsScreen extends GenericAction {
                             waitForPageTobeLoaded();
                             softAssertions.assertThat(getCurrentURL().indexOf(Students.ASSESSMENT_PERMISSIONS.replaceAll("\\s", "")) > 0 && !(getCurrentURL().equals(oldURL)))
                                     .as("Navigated URL is not related to " + Students.ASSESSMENT_PERMISSIONS + "\n current URL:" + getCurrentURL() + "\n Old URL:" + oldURL).isTrue();
-                            softAssertions.assertThat(isElementExists(Students.ASSESSMENT_PERMISSIONS))
+                            softAssertions.assertThat(isElementExists(Students.ASSESSMENT_PERMISSIONS, false))
                                     .as("Navigated page is not header " + Students.ASSESSMENT_PERMISSIONS).isTrue();
                             if (!getCurrentURL().equals(oldURL)) {
                                 back();
@@ -219,7 +219,7 @@ public class StudentsScreen extends GenericAction {
                 progressReportTableSectionList =  executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_TABLE_SECTION_LIST_AD_DB
                         .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(VERSION_DATA,version), CommonConstants.AD_DATA_BASE);
                 chooseGradingPeriod(gradingPeriod);
-                if(!isElementExists(Students.submit)){
+                if(!isElementExists(Students.submit, false)){
                     continue;
                 }
                 for(HashMap<String, String> tableSectionDetailsRow:progressReportTableSectionList){
@@ -357,12 +357,12 @@ public class StudentsScreen extends GenericAction {
                 description):String.format(hiddenGradeTextBox, getSectionID(sectionName), gradeTableName, lesson,
                 description);
 
-        elementExists = isElementExists(tempXpath);
+        elementExists = isElementExists(tempXpath, false);
         if (elementExists && isInputBoxPresent) {
             if (validateMoreThan100Marks) {
                 type(tempXpath, "101");
                 pressTab(getElement(tempXpath));
-                softAssertions.assertThat(isElementExists(Students.GRADE_TEXT_BOX_VALIDATOR_MESSAGE))
+                softAssertions.assertThat(isElementExists(Students.GRADE_TEXT_BOX_VALIDATOR_MESSAGE, false))
                         .as(GRADE_TEXT_BOX_VALIDATOR_MESSAGE + " grade text box validator message is not appeared, though we enter text 101").isTrue();
             }
             type(tempXpath, Float.toString(gradeTobeGiven));
@@ -375,7 +375,7 @@ public class StudentsScreen extends GenericAction {
                 completeComposition(sectionName, gradeTableName, lesson, description);
             }
         } else{
-            softAssertions.assertThat((tableRow.get(ITEM_TYPE).matches("X|C|M|S")||tableRow.get(TEST_ID).equals("0"))?isElementExists(description):elementExists).as("Progress report with \n Section name:"+
+            softAssertions.assertThat((tableRow.get(ITEM_TYPE).matches("X|C|M|S")||tableRow.get(TEST_ID).equals("0"))?isElementExists(description, false):elementExists).as("Progress report with \n Section name:"+
                     sectionName+"\n GradeTableName:"+gradeTableName+"\nLesson:"+lesson+"\n Description:"+description+"is not present with "+((isInputBoxPresent)?"[GradeInputTextBox]":"[--] \nxpath:"+tempXpath)).isTrue();
         }
         return this;
@@ -398,7 +398,7 @@ public class StudentsScreen extends GenericAction {
         String description = tableRow.get(DESCRIPTION);
         tempXpath = String.format(gradeHiddenTextBox, getSectionID(sectionName), gradeTableName, lesson,
                 description);
-        softAssertions.assertThat(isElementExists(tempXpath)).as("Grade input text box is not present for following details\nSectionName:" + sectionName + "\nTableName:" + gradeTableName +
+        softAssertions.assertThat(isElementExists(tempXpath, false)).as("Grade input text box is not present for following details\nSectionName:" + sectionName + "\nTableName:" + gradeTableName +
                 "\nLesson:" + lesson + "\nDescription:" + description + "\n xpath:" + tempXpath).isTrue();
         return this;
     }
@@ -435,7 +435,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen validateMyToDoListData() {
-        if (isElementExists(Students.toDoListHeader)) {
+        if (isElementExists(Students.toDoListHeader, false)) {
             String studentID = getUserAccountDetails().getStudentId();//getuserAccountDetails.get(TableColumn.STUDENT_ID);
             String subject;
             String startDate;
@@ -455,7 +455,7 @@ public class StudentsScreen extends GenericAction {
                 startDate = getFormattedDate(lessonsMap.get(START_DATE), Calendar.YYYY_MM_DD_HH_MM_SS, Calendar.dayMonthSingleDate);
 
                 tempXpath = String.format(myToDoListLesson, subject, startDate, lesson);
-                softAssertions.assertThat(isElementExists(tempXpath))
+                softAssertions.assertThat(isElementExists(tempXpath, false))
                         .as(subject + ":" + lesson + ":" + startDate + " is not present in My to do list. \n identifier:" + tempXpath).isTrue();
 
             }
@@ -465,7 +465,7 @@ public class StudentsScreen extends GenericAction {
                 startDate = getFormattedDate(assignmentsMap.get(START_DATE), Calendar.YYYY_MM_DD_HH_MM_SS, Calendar.dayMonthSingleDate);
 
                 tempXpath = String.format(myToDoListLesson, subject, startDate, lesson);
-                softAssertions.assertThat(isElementExists(tempXpath))
+                softAssertions.assertThat(isElementExists(tempXpath, false))
                         .as(subject + ":" + lesson + ":" + startDate + " is not present in My to do list. \n identifier:" + tempXpath).isTrue();
             }
         } else {
@@ -476,12 +476,12 @@ public class StudentsScreen extends GenericAction {
 
     public StudentsScreen validateAccountInfoPage() {
         navigateToAccountInfoWidget(Students.PASSWORD);
-        softAssertions.assertThat(isElementExists(Students.changePasswordHeader)).as("Change Password pop-up is not appeared").isTrue();
-        softAssertions.assertThat(isElementExists(Students.currentPassword)).as("Current password text box is not present on Change Password pop-up").isTrue();
-        softAssertions.assertThat(isElementExists(Students.newPassword)).as("New password text box is not present on Change Password pop-up").isTrue();
+        softAssertions.assertThat(isElementExists(Students.changePasswordHeader, false)).as("Change Password pop-up is not appeared").isTrue();
+        softAssertions.assertThat(isElementExists(Students.currentPassword, false)).as("Current password text box is not present on Change Password pop-up").isTrue();
+        softAssertions.assertThat(isElementExists(Students.newPassword, false)).as("New password text box is not present on Change Password pop-up").isTrue();
         softAssertions.assertThat(isElementTextEquals(Students.forgotPasswordMessage, Students.FORGOT_PASSWORD_MESSAGE))
                 .as("Forgot password message of Change Password pop-up is not equal to " + Students.FORGOT_PASSWORD_MESSAGE).isTrue();
-        softAssertions.assertThat(isElementExists(Students.changePasswordSubmitBtn))
+        softAssertions.assertThat(isElementExists(Students.changePasswordSubmitBtn, false))
                 .as("Change Password button is not present on Change Password pop-up.").isTrue();
         click(String.format(CommonConstants.closeXpath, Students.changePasswordPopup));
         return this;
@@ -495,33 +495,33 @@ public class StudentsScreen extends GenericAction {
 
     public StudentsScreen validateRequestTranScriptFunctionality(String studentName) {
         openTranScriptRequestPopUp();
-        if (isElementExists(Students.yourNameTextBox)) {
+        if (isElementExists(Students.yourNameTextBox, false)) {
             type(Students.yourNameTextBox, studentName);
         } else {
             softAssertions.fail("Your name text box is not present on Transcript Request pop-up");
         }
-        if (isElementExists(Students.relationshipSelectBox)) {
+        if (isElementExists(Students.relationshipSelectBox, false)) {
             selectByVisibleText(Students.relationshipSelectBox, Students.SELF);
         } else {
             softAssertions.fail("Relationship to Student select box is not present on Transcript Request pop-up");
         }
 
-        if (isElementExists(Students.phoneNumberTextBox)) {
+        if (isElementExists(Students.phoneNumberTextBox, false)) {
             type(Students.phoneNumberTextBox, RandomStringUtils.randomNumeric(10));
         } else {
             softAssertions.fail("Phone number box is not present on Transcript Request pop-up");
         }
-        if (isElementExists(Students.sendMyTranscriptToPCCRadio)) {
+        if (isElementExists(Students.sendMyTranscriptToPCCRadio, false)) {
             click(Students.sendMyTranscriptToPCCRadio);
         } else {
             softAssertions.fail("Send my transcript to PCC ratio button is not present on Transcript Request pop-up");
         }
-        if (isElementExists(Students.attentionLineTextBox)) {
+        if (isElementExists(Students.attentionLineTextBox, false)) {
             type(Students.attentionLineTextBox, CommonConstants.AUTOMATION_TEST);
         } else {
             softAssertions.fail("Attention line text box is not present on Transcript Request pop-up");
         }
-        if (isElementExists(Students.sendImmediately)) {
+        if (isElementExists(Students.sendImmediately, false)) {
             click(Students.sendImmediately);
         } else {
             softAssertions.fail("Send transcript immediately with current status. radio button is not present on Transcript Request pop-up");
@@ -540,7 +540,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen validateMyRecentGrades(String studentName) {
-        if (isElementExists(Students.myRecentGradeSection)) {
+        if (isElementExists(Students.myRecentGradeSection, false)) {
             String assignment;
             String grade;
             String studentID = getUserAccountDetails().getStudentId();//getUserAccountDetails().get(STUDENT_ID);//fetch from DB
@@ -553,7 +553,7 @@ public class StudentsScreen extends GenericAction {
             for (HashMap<String, String> rowData : myGrades) {
                 assignment = rowData.get(TableColumn.ASSESSMENT).trim();
                 grade = rowData.get(TableColumn.GRADE).trim();
-                softAssertions.assertThat(isElementExists(String.format(Students.subjectWithGradeRow, assignment, grade)))
+                softAssertions.assertThat(isElementExists(String.format(Students.subjectWithGradeRow, assignment, grade), false))
                         .as(assignment + ":" + grade + " row is not present in My recent grade section").isTrue();
             }
         } else {
@@ -571,7 +571,7 @@ public class StudentsScreen extends GenericAction {
 
     public StudentsScreen verifyLastViewedLessons() {
         boolean isValidationDone = false;
-        if (isElementExists(Students.lastViewedVideoLessonsSection)) {
+        if (isElementExists(Students.lastViewedVideoLessonsSection, false)) {
             String loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
             ArrayList<HashMap<String, String>> lastViewedLessonsDataMapList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_LAST_VIEWED_LESSON_DATA_SD_DB.replaceAll(LOGIN_ID_DATA, loginId), SD_DATA_BASE);
             for (HashMap<String, String> lastViewedLesson : lastViewedLessonsDataMapList) {
@@ -595,6 +595,15 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
+    public StudentsScreen validateCursiveWritingVideo(){
+        softAssertions.assertThat(isElementExists(seatworkExplanationCursive, true)).as(seatworkExplanationCursive + " lesson is not present on UI").isTrue();
+        softAssertions.assertThat(isElementExists(seatworkExplanationCursive, true)).as(cursiveWriting + " lesson is not present on UI").isTrue();
+        selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, WRITING_1);
+        click(lessonOne);
+        softAssertions.assertThat(isElementExists(cursiveWritingVideo,false)).as("Cursive writing video is not played").isTrue();
+        return this;
+    }
+
     public StudentsScreen validateDigitalAssessmentsAreLockedOrNot() {
         String subject;
         String lesson;
@@ -609,10 +618,10 @@ public class StudentsScreen extends GenericAction {
             lesson = row.get(LESSON);
             isLocked = getIsLocked(row.get(LOCKED), Students.Y);//need to fetch from DB;
             if (isLocked) {
-                softAssertions.assertThat(isElementExists(String.format(Students.assessmentLocked, subject, lesson)))
+                softAssertions.assertThat(isElementExists(String.format(Students.assessmentLocked, subject, lesson), false))
                         .as(subject + "-" + lesson + " subject is not locked on assessment page").isTrue();
             } else {
-                softAssertions.assertThat(isElementExists(String.format(Students.assessmentUnlocked, subject, lesson)))
+                softAssertions.assertThat(isElementExists(String.format(Students.assessmentUnlocked, subject, lesson), false))
                         .as("[" + subject + "-" + lesson + "] is not available for assessment or Locked, though lesson is completed").isTrue();
             }
         }
@@ -637,8 +646,8 @@ public class StudentsScreen extends GenericAction {
      * @return
      */
     public StudentsScreen validateMyLessonsTodaySectionData() {
-        if (isElementExists(Students.MY_LESSONS_TODAY)) {
-            if (isElementExists(Students.lessonsToday)) {
+        if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
+            if (isElementExists(Students.lessonsToday, false)) {
                 String studentID = getUserAccountDetails().getStudentId();//userAccountDetails.get(TableColumn.STUDENT_ID);
                 String myLessonsVideoLink;
                 String subject;
@@ -649,7 +658,7 @@ public class StudentsScreen extends GenericAction {
                     subject = row.get(SHORT_DESCRIPTION);
                     lesson = row.get(LONG_DESCRIPTION);
                     myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subject, lesson);
-                    softAssertions.assertThat(isElementExists(myLessonsVideoLink))
+                    softAssertions.assertThat(isElementExists(myLessonsVideoLink, false))
                             .as(lesson + " of " + subject + " subject is not present in My lessons today section").isTrue();
                 }
             } else {
@@ -668,8 +677,8 @@ public class StudentsScreen extends GenericAction {
      * @return
      */
     public StudentsScreen watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary() {
-        if (isElementExists(Students.MY_LESSONS_TODAY)) {
-            if (isElementExists(Students.lessonsToday)) {
+        if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
+            if (isElementExists(Students.lessonsToday, false)) {
                 String myLessonsVideoLink;
                 String subject;
                 String lesson;
@@ -704,7 +713,7 @@ public class StudentsScreen extends GenericAction {
                         playLessonVideo(subject, longDescription);
 
                         tempXpath = String.format(Students.playingVideoTitle, subject + " - " + longDescription);
-                        softAssertions.assertThat(isElementExists(tempXpath))
+                        softAssertions.assertThat(isElementExists(tempXpath, false))
                                 .as(subject + " - " + lesson + ": Running video is not similar to clicked link. \n identifier:" + tempXpath).isTrue();
 
                         markVideoLessonAsCompleted(subscriptionNumber, subscriptionItem, loginId, segmentId, getUserAccountDetails().getUserId());//getUserAccountDetails().get(USER_ID));
@@ -731,11 +740,11 @@ public class StudentsScreen extends GenericAction {
         int retry = 0;
         tempXpath = String.format(Students.myLessonsTodayVideoLink, subject, longDescription);
 
-        while (!isElementExists(String.format(Students.playingVideoTitle, subject + " - " + longDescription)) && retry < 3) {
+        while (!isElementExists(String.format(Students.playingVideoTitle, subject + " - " + longDescription), false) && retry < 3) {
             bringElementIntoView(tempXpath);
             implicitWaitInSeconds(2);
             clickByJavaScript(tempXpath);
-            if (isElementExists(Students.restartVideo)) {
+            if (isElementExists(Students.restartVideo, false)) {
                 click(restartVideo);
             }
             retry++;
@@ -873,7 +882,7 @@ public class StudentsScreen extends GenericAction {
                 selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, lesson, subscriptionItem))));
                 tempXpath = String.format(Students.lessonLockedCloseButton, LESSON_LOCKED, YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON, CLOSE);
-                if (isElementExists(tempXpath)) {
+                if (isElementExists(tempXpath, false)) {
                     click(tempXpath);
                 } else {
                     softAssertions.fail(Students.YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON + " message popup is not appeared.");
@@ -1053,6 +1062,15 @@ public class StudentsScreen extends GenericAction {
             implicitWaitInSeconds(5);
             if(isLastQuestion)break;
         }
+    }
+
+    public StudentsScreen navigateToPreviewVideoStudentScreen(){
+        click(studentPreviewVideoLink);
+        return this;
+    }
+
+    public void isVideoLibraryPageOpened() {
+        softAssertions.assertThat(isElementExists(videoLibrarySubjectDropDown, false)).as("Video library page is not loaded successfully").isTrue();
     }
 }
 

@@ -44,7 +44,7 @@ public class DataProviders {
             Object[][] finalData = new Object[(toDataRowNumber-fromDataRowNumber)+1][column];
             int row = 0;
             int col = 0;
-            for (int i = fromDataRowNumber-1; i <= toDataRowNumber-1; i++) {
+            for (int i = fromDataRowNumber; i <= toDataRowNumber; i++) {
                 for (int j = 0; j < column; j++) {
                     finalData[row][col] = data[i][j];
                     col++;

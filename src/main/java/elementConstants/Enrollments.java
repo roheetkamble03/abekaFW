@@ -7,11 +7,11 @@ public @interface Enrollments {
      * Element text
      */
     String GRADE_ONE_ACCREDITED = "Grade 1 - Accredited";
-    String GRADE_ONE_ENROLLMENT = "Grade 1 Enrollment";
-    String GRADE_FOUR_ENROLLMENT = "Grade 4 Enrollment";
-    String GRADE_NINE_ENROLLMENT = "Grade 9 Enrollment";
-    String GRADE_TWELVE_ENROLLMENT = "Grade 12 Enrollment";
-    String GRADE_FOUR = "Grade 4";
+    String GRADE_ONE_VIDEO = "Grade 1 Video";
+    String GRADE_FOUR_VIDEO = "Grade 4 Video";
+    String GRADE_NINE_VIDEO = "Grade 9 Video";
+    String GRADE_TWELVE_VIDEO = "Grade 12 Video";
+    String GRADE_FOUR_ACCREDITED = "Grade 4 - Accredited";
     String GRADE_NINE = "Grade 9";
     String GRADE_TWELVE = "Grade 12";
     String NEW = "New";
@@ -41,6 +41,7 @@ public @interface Enrollments {
     String NEW_PARENT = "Add New Parent/Guardian";
     String BEGIN_DATE_BEFORE_ERROR = "Begin date cannot be before %s.";
     String BEGIN_DATE_PAST_ERROR = "Begin date cannot be past %s.";
+    String BEGIN_DATE_IN_WRONG_FORMAT = "Please provide the begin date in MM/DD/YYYY format.";
     String BEGIN_DATE_REQUIRED = "Begin date is required";
     String ALL_SET = "You’re all set!";
     String GRADE_ONE = "Grade One";
@@ -91,4 +92,5 @@ public @interface Enrollments {
     String orderProcessingMessage = "Please wait while we process your order…";
     String orderProcessingLoaderText = "id=loaderText";
     String applicationNumber = "id=lblAppNo";
+    String applicationStatusCompleted = "xpath=//span[@id='lblAppStatus' and normalize-space(text())='Completed']";
 }

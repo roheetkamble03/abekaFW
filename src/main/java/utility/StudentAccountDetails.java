@@ -11,8 +11,8 @@ public class StudentAccountDetails extends GenericAction {
 
     public static StudentDetails getGradeFourStudentDetails(){
         StudentDetails studentDetails = new StudentDetails();
-        studentDetails.setGrade(Enrollments.GRADE_FOUR);
-        studentDetails.setBirthDate(generateStudentBirthDate(Enrollments.GRADE_FOUR));
+        studentDetails.setGrade(Enrollments.GRADE_FOUR_ACCREDITED);
+        studentDetails.setBirthDate(generateStudentBirthDate(Enrollments.GRADE_FOUR_ACCREDITED));
         return studentDetails;
     }
 

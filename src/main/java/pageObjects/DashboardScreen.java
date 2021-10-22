@@ -36,7 +36,7 @@ public class DashboardScreen extends GenericAction {
         ArrayList<String> linkList = new ArrayList<>(Arrays.asList(Dashboard.ENROLLMENTS,Dashboard.DIGITAL_CLIP_ART,Dashboard.DIGITAL_ASSESSMENTS,Dashboard.DIGITAL_TEXTBOOKS,Dashboard.DIGITAL_TEACHING_AIDS));
         String pageTitle;
         String pageUrl;
-        if(isElementExists(Dashboard.MY_ORDERS)){
+        if(isElementExists(Dashboard.MY_ORDERS, false)){
             bringElementIntoView(Dashboard.MY_ORDERS);
             for(String link:linkList){
                 try {
@@ -63,7 +63,7 @@ public class DashboardScreen extends GenericAction {
         String linkHref;
         String linkText;
 
-        if(isElementExists(Dashboard.VIDEO_MANUAL_PDFS)){
+        if(isElementExists(Dashboard.VIDEO_MANUAL_PDFS, false)){
             bringElementIntoView(Dashboard.VIDEO_MANUAL_PDFS);
             try {
                 for (SelenideElement videoLink : getElements(Dashboard.videoManualPdfLink)) {
@@ -86,7 +86,7 @@ public class DashboardScreen extends GenericAction {
     }
 
     public void validateNotificationRows(){
-        if(isElementExists(Dashboard.NOTIFICATIONS)){
+        if(isElementExists(Dashboard.NOTIFICATIONS, false)){
             bringElementIntoView(Dashboard.NOTIFICATIONS);
             try {
                 softAssertions.assertThat(getElements(Dashboard.notificationLinks).size()!=0)
@@ -100,7 +100,7 @@ public class DashboardScreen extends GenericAction {
     }
 
     public void validateDashboardMyStudentLink(String studentName) {
-        if (isElementExists(Dashboard.MY_STUDENTS)) {
+        if (isElementExists(Dashboard.MY_STUDENTS, false)) {
             bringElementIntoView(Dashboard.MY_STUDENTS);
             navigateToMyStudentProfile(studentName);
             softAssertions.assertThat(getPageTitle().equals(Dashboard.STUDENT_TAB_TITLE))
