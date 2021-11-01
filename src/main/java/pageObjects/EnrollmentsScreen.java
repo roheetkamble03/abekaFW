@@ -195,7 +195,6 @@ public class EnrollmentsScreen extends GenericAction {
                 case (Enrollments.GRADE_NINE):
             case (GRADE_TWELVE):
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
-                click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getProgram())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
                 click(enrollmentOptions.getGuardians());
                 implicitWaitInSeconds(3);
@@ -264,6 +263,12 @@ public class EnrollmentsScreen extends GenericAction {
     }
 
     public EnrollmentsScreen validateAllSetMessage(){
+//        if(!(isElementExists(Enrollments.ALL_SET, false)||
+//                isElementExists(applicationStatusCompleted, false, veryLongWait))){
+//            if(isElementExists(Enrollments.nextButton, false, elementLoadWait)){
+//                clickOnNextButton();
+//            }
+//        }
         softAssertions.assertThat(isElementExists(Enrollments.ALL_SET, false)||
                 isElementExists(applicationStatusCompleted, false, veryLongWait)).as(Enrollments.ALL_SET+" or Completed status is not appeared on screen.").isTrue();
         return this;

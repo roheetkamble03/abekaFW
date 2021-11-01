@@ -14,11 +14,11 @@ public @interface ShoppingCart {
      * Element xpath
      */
 
-    String productRow = "xpath=//div[@data-sbn='%s']";
-    final String productTitle = "xpath=./descendant::div[position()=3]";
-    final String productPrice = "xpath=./descendant::div[position()=5]";
-    final String quantityTextBox = "xpath=./descendant::input[@class='txtQuantity shop-item-qty']";
-    final String subTotal = "xpath=./descendant::div[position()=7]";
+    String productRow = "xpath=//div[@data-sbn='%s']%s";
+    String productTitle = "/descendant::div[position()=3]";
+    String productPrice = "/descendant::div[position()=5]";
+    String quantityTextBox = "/descendant::input[@class='txtQuantity shop-item-qty']";
+    String subTotal = "/descendant::div[position()=7]";
     String shoppingCartTitle = "id=cartItems";
     String checkOutBtn = "id=lbnFinishOrder";
 

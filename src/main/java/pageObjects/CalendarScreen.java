@@ -29,6 +29,7 @@ public class CalendarScreen extends GenericAction {
 
     @Step("Validating calendar events")
     public CalendarScreen validateStudentCalendarEvents(boolean isOpenAndValidateEachEventPreview) {
+        waitAndCloseWidgetTourPopup();
         if(isElementExists(Calendar.calendarSection, false)){
             bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(0));
             validateCalendarEvents(getCalendarDataFromDB(), isOpenAndValidateEachEventPreview);
@@ -41,16 +42,14 @@ public class CalendarScreen extends GenericAction {
     @Step("Validating by default no student is selected")
     public CalendarScreen validateNoStudentIsSelected(){
         //checkbox property is not changing in dom showing checked though check box is not selected, hence validating with event box
-        for(SelenideElement element:getElements(Calendar.eventBoxes)) {
-            softAssertions.assertThat(getClassAttributeValue(element).contains(Calendar.holidayEventId))
-                    .as("Though student is not selected, Calendar having event(s) on the page.").isTrue();
-        }
+            softAssertions.assertThat(getElements(Calendar.eventBoxes).size()>5)
+                    .as("Though student is not selected, Calendar having event(s) on the page.").isFalse();
         return this;
     }
 
     private  ArrayList<HashMap<String,String>> getCalendarDataFromDB(){
-        String studentId = "427725";//userAccountDetails.get(TableColumn.STUDENT_ID);
-        String accountNumber = "27579418";//userAccountDetails.get(TableColumn.ACCOUNT_NUMBER);
+        String studentId = getUserAccountDetails().getStudentId();
+        String accountNumber = getUserAccountDetails().getAccountNumber();
         String startDate = getFormattedDate(bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(0)).getAttribute(DATA_DATE_ATTRIBUTE),Calendar.yyyy_MM_dd,Calendar.yyyyMMdd);
         String endDate = getFormattedDate(bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(getElements(Calendar.CALENDAR_MONTH_DAYS).size()-1)).getAttribute("data-date"),"yyyy-MM-dd","yyyyMMdd");
 
@@ -152,6 +151,7 @@ public class CalendarScreen extends GenericAction {
         ArrayList<String> eventIdList = new ArrayList<>(stack);
         return eventIdList;
     }
+
     private int getGridDayPosition(int rowCounter, int gridPosition, ArrayList<String> assignmentId, String date){
         List<SelenideElement> elementList = getElements(String.format(Calendar.allEventGrids,rowCounter,gridPosition));
         for(int i = 0;i<elementList.size();i++){

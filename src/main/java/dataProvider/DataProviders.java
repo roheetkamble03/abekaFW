@@ -31,13 +31,14 @@ public class DataProviders {
         int column = excelUtils.getColumnCount(sheetName);
         int actRows = rows - 1;
 
-        Object[][] data = new Object[actRows][column];
+        Object[][] data = new Object[actRows+1][column];
 
-        for (int rowNumber = 0; rowNumber < actRows; rowNumber++) {
+        for (int rowNumber = 0; rowNumber <= actRows; rowNumber++) {
             for (int j = 0; j < column; j++) {
                 data[rowNumber][j] = excelUtils.getCellData(sheetName, j, rowNumber);
             }
         }
+
         if(dataRowNumber != null) {
             int fromDataRowNumber = Integer.parseInt(dataRowNumber.fromDataRowNumber());
             int toDataRowNumber = ((dataRowNumber.toDataRowNumber().length()>0)?Integer.parseInt(dataRowNumber.toDataRowNumber()):actRows);

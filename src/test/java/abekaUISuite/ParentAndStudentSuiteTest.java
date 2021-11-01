@@ -29,7 +29,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @Test(testName = "enrollmentPurchaseGradeOne", retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchaseGradeOne() {
-        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(2);
+        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(2, true);
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
         Product product = new Product();
         product.setProductTitle(GRADE_ONE.getItemName());
@@ -111,7 +111,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade one
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
-    @Test(testName = "testValidateStudentCursiveVideoLessonOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "testValidateStudentCursiveVideoLessonOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
     public void testValidateStudentCursiveVideoLessonOfGradeOne(String userId, String password, String studentName, String signature){
         StudentsScreen studentsScreen = new StudentsScreen();
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
@@ -125,6 +125,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
     @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
     public void testValidateStudentCalendarEventsOfGradeOne(String userId, String password, String userName, String signature){
+        setStudentAccountDetailsFromDB(userId);
         loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
         navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
         new CalendarScreen().validateStudentCalendarEvents(false).logoutFromAbeka();
@@ -133,7 +134,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @Test(testName = "enrollmentPurchaseGradeFour", retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchaseGradeFour() {
-        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(3);
+        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(3, true);
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
         Product product = new Product();
         product.setProductTitle(GRADE_FOUR.getItemName());
@@ -170,14 +171,14 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_FOUR_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
                 .clickOnNextButton().validateBeginDate().addBeginDate().clickOnNextButton().signEnrollmentAgreement(signature)
-                .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage().updateCourseBeginDateToBackDate(studentDetails.getStudentUserId());;
+                .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage().updateCourseBeginDateToBackDate(studentDetails.getStudentUserId());
         setStudentAccountDetailsInTestDataExcel(studentDetails, 3);
         softAssertions.assertAll();
     }
 
     //Grade 4
     @DataRowNumber(fromDataRowNumber = "3", toDataRowNumber = "3")
-    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeFour", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class,dependsOnMethods = {"validateAddNewStudentGradeFour"})
+    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeFour", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAbleToWatchVideoStreamingOfGradeFour(String userId, String password, String userName, String signature){
         StudentsScreen studentsScreen = new StudentsScreen();
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
@@ -225,14 +226,14 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.navigateToFullCalendarView();
         dashboardScreen.waitAndCloseWidgetTourPopup();
-        calendarScreen.validateNoStudentIsSelected().selectStudent(studentDetails.getStudentFullName()).validateStudentCalendarEvents(false).logoutFromAbeka();
+        calendarScreen.validateNoStudentIsSelected().selectStudent(studentDetails.getFirstName()).validateStudentCalendarEvents(false).logoutFromAbeka();
         softAssertions.assertAll();
     }
 
 
     @Test(testName = "enrollmentPurchaseGradeNine", retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchaseGradeNine() {
-        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(4);
+        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(4, true);
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
         Product product = new Product();
         product.setProductTitle(GRADE_NINE.getItemName());
@@ -245,11 +246,11 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
         abekaHomeScreen = loginToAbeka(parentAccountDetails.getParentUserName(), parentAccountDetails.getParentPassword(), true);
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.ninthGrade).searchProduct(Enrollments.GRADE_NINE_VIDEO).selectProduct(Enrollments.GRADE_NINE_VIDEO).
-                selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, "", CommonTexts.one).
+                selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
         abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
                 selectCheckoutCriteria(checkoutCriteria).
-                clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_NINE);
+                clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_NINE_ACCREDITED);
         abekaHomeScreen.logoutFromAbeka();
         softAssertions.assertAll();
     }
@@ -266,7 +267,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
-        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_NINE)
+        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_NINE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
                 .clickOnNextButton().fillAvailableRecommendedCourses(Enrollments.GRADE_NINE).clickOnNextButton().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
                 .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage();
@@ -302,7 +303,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @Test(testName = "enrollmentPurchaseGradeTwelve", retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchaseGradeTwelve() {
-        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(5);
+        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(5, true);
         CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
         Product product = new Product();
         product.setProductTitle(GRADE_TWELVE.getItemName());
@@ -315,11 +316,11 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
         abekaHomeScreen = loginToAbeka(parentAccountDetails.getParentUserName(), parentAccountDetails.getParentPassword(), true);
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.twelfthGrade).searchProduct(Enrollments.GRADE_TWELVE_VIDEO).selectProduct(Enrollments.GRADE_TWELVE_VIDEO).
-                selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, "", CommonTexts.one).
+                selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
         abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
                 selectCheckoutCriteria(checkoutCriteria).
-                clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_TWELVE);
+                clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_TWELVE_ACCREDITED);
         abekaHomeScreen.logoutFromAbeka();
         softAssertions.assertAll();
     }
@@ -330,13 +331,12 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
         StudentDetails studentDetails = StudentAccountDetails.getGradeTwelveStudentDetails();
-
         EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
 
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
-        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_TWELVE)
+        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_TWELVE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
                 .clickOnNextButton().fillAvailableRecommendedCourses(Enrollments.GRADE_TWELVE).clickOnNextButton().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
                 .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage();
@@ -344,29 +344,42 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         softAssertions.assertAll();
     }
 
-    @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
-    @Test(testName = "validateAddNewStudentGradeTwelve", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"enrollmentPurchaseGradeTwelve"})
-    public void validateCourseBeginDateFieldGradeTwelve(String userId, String password, String signature, String customerNumber) {
+    @Test(testName = "validateCourseBeginDateFieldGradeTwelve", retryAnalyzer = RetryUtility.class)
+    public void validateCourseBeginDateFieldGradeTwelve() {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
         StudentDetails studentDetails = StudentAccountDetails.getGradeTwelveStudentDetails();
-
         EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
 
-        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup();
-        dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
-        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_TWELVE)
+        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(5, false);
+        CheckoutCriteria checkoutCriteria = new CheckoutCriteria();
+        Product product = new Product();
+        product.setProductTitle(GRADE_TWELVE.getItemName());
+        product.setItemNumber(GRADE_TWELVE.getItemNumber());
+        product.setPrice(GRADE_TWELVE.getPrice());
+        product.setQuantity(GRADE_TWELVE.getQuantity());
+        product.setSubtotal(getCalculatedSubTotal(product.getQuantity(), product.getPrice()));
+
+        ArrayList productList = new ArrayList(Arrays.asList(product));
+
+        abekaHomeScreen = loginToAbeka(parentAccountDetails.getParentUserName(), parentAccountDetails.getParentPassword(), true);
+        abekaHomeScreen.navigateToShopByGrade(AbekaHome.twelfthGrade).searchProduct(Enrollments.GRADE_TWELVE_VIDEO).selectProduct(Enrollments.GRADE_TWELVE_VIDEO).
+                selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
+                clickOnAddToCart();
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+                selectCheckoutCriteria(checkoutCriteria).
+                clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_TWELVE_ACCREDITED);
+
+        enrollmentsScreen.openSectionLink(Enrollments.NEW,Enrollments.GRADE_TWELVE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
                 .clickOnNextButton().fillAvailableRecommendedCourses(Enrollments.GRADE_TWELVE).clickOnNextButton().validateBeginDate().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
                 .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage();
-        setStudentAccountDetailsInTestDataExcel(studentDetails,5);
         softAssertions.assertAll();
     }
 
     @DataRowNumber(fromDataRowNumber = "1",toDataRowNumber = "1")
-    @Test(testName = "validateAddNewStudentGradeTwelve", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void validatePreviewStudentVideoLessonsGradeTwelve(String userId, String password, String signature, String customerNumber) {
+    @Test(testName = "validatePreviewStudentVideoLessonsGradeTwelve", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void validatePreviewStudentVideoLessonsGradeNine(String userId, String password, String signature, String customerNumber) {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
         StudentDetails studentDetails = getStudentAccountDetails(1);
@@ -378,6 +391,15 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         studentsScreen.navigateToPreviewVideoStudentScreen();
         waitAndCloseWidgetTourPopup();
         studentsScreen.isVideoLibraryPageOpened();
+        softAssertions.assertAll();
+    }
+
+    @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
+    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeTwelve"})
+    public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm();
+        logoutFromAbeka();
         softAssertions.assertAll();
     }
 }

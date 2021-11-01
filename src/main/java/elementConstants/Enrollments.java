@@ -13,7 +13,9 @@ public @interface Enrollments {
     String GRADE_TWELVE_VIDEO = "Grade 12 Video";
     String GRADE_FOUR_ACCREDITED = "Grade 4 - Accredited";
     String GRADE_NINE = "Grade 9";
+    String GRADE_NINE_ACCREDITED = "Grade 9 - Accredited";
     String GRADE_TWELVE = "Grade 12";
+    String GRADE_TWELVE_ACCREDITED = "Grade 12 - Accredited";
     String NEW = "New";
     String SAVED = "Saved";
     String HELD = "Held";

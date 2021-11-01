@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -87,7 +88,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }catch (Throwable e){
             log("Clicked by java script");
             waitForElementTobeExist(element);
-            implicitWaitInSeconds(5);
+            implicitWaitInSeconds(elementLoadWait);
             clickByJavaScript(element);
         }
     }
@@ -236,6 +237,13 @@ public abstract class SelenideExtended extends DatabaseExtended {
         return getElementValue(element).equals(expectedText);
     }
 
+    public boolean isElementValueEquals(String identifier, String expectedText){
+        if(getElementValue(getElement(identifier)).length() == 0 && expectedText.length() > 0){
+            implicitWaitInSeconds(5);
+        }
+        return getElementValue(getElement(identifier)).equals(expectedText);
+    }
+
     public String getElementText(String identifier, int... waitTimeInSeconds){
         try{
             waitForElementTobeVisibleOrMoveAhead(identifier, waitTimeInSeconds);
@@ -249,6 +257,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public String getElementValue(SelenideElement element){
         return element.getValue();
     }
+
+    public String getElementValue(String identifier){
+        return getElement(identifier).getValue();
+    }
+
     public String getElementText(SelenideElement element){
         for(int i=0;i<4;i++){
                 try{
@@ -856,7 +869,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
         try {
             return $$(getByClause(identifier));
         }catch (NoSuchFrameException e){
-           return $$(getDriver().findElements(getByClause(identifier)));
+            try {
+                return $$(getDriver().findElements(getByClause(identifier)));
+            }catch (Exception f){
+                return new ArrayList<>();
+            }
         }
     }
 

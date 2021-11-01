@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.remote.BrowserType.*;
 
 public abstract class BaseClass {

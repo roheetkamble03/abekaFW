@@ -347,7 +347,7 @@ public abstract class GenericAction extends SelenideExtended{
         return getCurrentURL().indexOf(text)>0;
     }
 
-    public ParentAccountDetails createAndGetParentAccountDetails(int rowNumber){
+    public ParentAccountDetails createAndGetParentAccountDetails(int rowNumber, boolean isSetDataToExcel){
         ParentAccountDetails parentAccountDetails = new ParentAccountDetails();
         CreateAccountApiResponsePojo response = given().when().multiPart(ApiServiceConstants.request,ApiServiceConstants.createRequestType)
                 .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
@@ -369,9 +369,11 @@ public abstract class GenericAction extends SelenideExtended{
         log("Parent account created with following details \n+" +
                 "User Id:"+parentAccountDetails.getParentUserName()+"\n" +
                 "Password:"+parentAccountDetails.getParentPassword());
-        ExcelUtils excelUtils = new ExcelUtils();
-        excelUtils.setCellData(CommonConstants.PARENT_CREDENTIALS,
-                new String[]{parentAccountDetails.getParentUserName(),parentAccountDetails.getParentPassword(),parentAccountDetails.getParentName(),parentAccountDetails.getParentCustomerNumber()}, rowNumber);
+        if(isSetDataToExcel) {
+            ExcelUtils excelUtils = new ExcelUtils();
+            excelUtils.setCellData(CommonConstants.PARENT_CREDENTIALS,
+                    new String[]{parentAccountDetails.getParentUserName(), parentAccountDetails.getParentPassword(), parentAccountDetails.getParentName(), parentAccountDetails.getParentCustomerNumber()}, rowNumber);
+        }
         return parentAccountDetails;
     }
 
@@ -399,6 +401,9 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public void updateCourseBeginDateToBackDate(String studentUserName){
+        if(getUserAccountDetails().getApplicationNumber().length() == 0){
+            setStudentAccountDetailsFromDB(studentUserName);
+        }
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         localDate = localDate.minusMonths(3);

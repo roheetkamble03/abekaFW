@@ -43,7 +43,7 @@ public class UnitTestApiTesting extends GenericAction {
 
     @Test(testName = "Test-11")
     public void testCreateParentAccount(){
-        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(0);
+        ParentAccountDetails parentAccountDetails = createAndGetParentAccountDetails(0, true);
         parentAccountDetails.getParentUserName();
         parentAccountDetails.getParentPassword();
 

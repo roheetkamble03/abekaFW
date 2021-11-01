@@ -47,12 +47,4 @@ public class AccessibilityAndWidgetValidationTestSuite extends GenericAction {
         dashboardScreen.validateDashboardNewTab().validateMyOrdersWidgetLinks().validateVideoManualPdfsLinks().validateNotificationRows();;
         softAssertions.assertAll();
     }
-
-    @Test(enabled = false, testName = "testValidateGraduationPetitionFunctionality", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
-        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm();
-        logoutFromAbeka();
-        softAssertions.assertAll();
-    }
 }
