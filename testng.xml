@@ -6,13 +6,15 @@
         <parameter name = "platform" value = "Mac"/>
         <classes>
 <!--            <class name="abekaUISuite.AccessibilityAndWidgetValidationTestSuite">-->
-<!--                <methods>-->
-<!--                    <include name="testValidateGraduationPetitionFunctionality"></include>-->
-<!--                </methods>-->
+<!--&lt;!&ndash;                <methods>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="testValidateGraduationPetitionFunctionality"></include>&ndash;&gt;-->
+<!--&lt;!&ndash;                </methods>&ndash;&gt;-->
 <!--            </class>-->
             <class name="abekaUISuite.ParentAndStudentSuiteTest">
                 <methods>
-                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeFour"></include>
+                    <include name="validateSubjectListOnProgressPage"></include>
+<!--                    <include name="validateAddNewStudentGradeOne"></include>-->
+<!--                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeNine"></include>-->
 <!--                    <include name="enrollmentPurchaseGradeFour"></include>-->
 <!--                    <include name="validateAddNewStudentGradeFour"></include>-->
 <!--                        <include name="testValidateStudentAssessmentDetailsOnCalendarGradeFour"></include>-->

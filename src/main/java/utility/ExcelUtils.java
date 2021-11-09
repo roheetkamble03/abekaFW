@@ -92,9 +92,6 @@ public class ExcelUtils extends BaseClass {
     // returns the data from a cell
     public String getCellData(String sheetName,int colNum,int rowNum){
         //try{
-            if(rowNum <=0)
-                return "";
-
             int index = workbook.getSheetIndex(sheetName);
 
             if(index==-1)

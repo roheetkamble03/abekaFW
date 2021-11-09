@@ -46,4 +46,14 @@ public @interface CommonConstants {
     String BEARER = "Bearer ";
     String PARENT_CREDENTIALS = "ParentCredentials";
     String STUDENT_NAME = "StudentName";
+    String GRADE_WISE_VIDEO_LIST = "GradeWiseVideoList";
+    String MY_LESSONS_TODAY_SUBJECT_LIST = "MyLessonsTodaySubjectList";
+    String MY_LESSONS_TODAY_LESSON_LIST = "MyLessonsTodayLessonList";
+    String VIDEO_LIBRARY_DROPDOWN_SUBJECT_LIST = "VideoLibraryDropdownSubjectList";
+    String VIDEO_LIBRARY_DROPDOWN_LONG_DESCRIPTION_LIST = "VideoLibraryDropdownLongDescriptionList";
+    String SEGMENT_ID = "SegmentId";
+    String TODAY_LESSON_OF_VIDEO_LIBRARY = "TodayLessonOfVideoLibrary";
+    String NEXT_DAY_LESSON_OF_VIDEO_LIBRARY = "NextDayLessonOfVideoLibrary";
+    String DIGITAL_ASSESSMENT_LIST = "DigitalAssessmentList";
+    String GRADE_ONE_VIDEO_LIST = "GradeOneVideoList";
 }

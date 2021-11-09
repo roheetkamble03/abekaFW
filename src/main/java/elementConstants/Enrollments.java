@@ -93,6 +93,6 @@ public @interface Enrollments {
     String pleaseWait = "text=Please wait...";
     String orderProcessingMessage = "Please wait while we process your order…";
     String orderProcessingLoaderText = "id=loaderText";
-    String applicationNumber = "id=lblAppNo";
+    String applicationNumber = "xpath=//span[@id='lblAppNo' and string-length(normalize-space(text()))>1]";
     String applicationStatusCompleted = "xpath=//span[@id='lblAppStatus' and normalize-space(text())='Completed']";
 }

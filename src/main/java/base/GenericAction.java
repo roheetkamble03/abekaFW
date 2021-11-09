@@ -21,6 +21,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static constants.ApiServiceConstants.customerNumber;
 import static constants.Calendar.dayMonthSingleDate;
@@ -52,6 +53,10 @@ public abstract class GenericAction extends SelenideExtended{
     public void tearDown(){
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();
+    }
+
+    public List<String> removeBlankDataFromList(List<String> stringList){
+        return stringList.stream().filter(e->e.trim().length()!=0).collect(Collectors.toList());
     }
 
     public AbekaHomeScreen loginToAbeka(String userId, String password, boolean isSignUpPopAppears){
@@ -162,10 +167,6 @@ public abstract class GenericAction extends SelenideExtended{
         }
     }
 
-    public ArrayList<Map<Integer,String>> getExcelDataSet(String sheetName, int rowNumber){
-        return new DataProviders().getExcelData(sheetName, rowNumber, rowNumber);
-    }
-
     public ParentAccountDetails getParentAccountDetails(int rowNumber){
         Map<Integer,String> dataMap = new DataProviders().getExcelData(PARENT_CREDENTIALS, rowNumber, rowNumber).get(0);
         ParentAccountDetails parentDetails = new ParentAccountDetails();
@@ -183,7 +184,7 @@ public abstract class GenericAction extends SelenideExtended{
         studentDetails.setStudentUserId(dataMap.get(0));
         studentDetails.setPassword(dataMap.get(1));
         studentDetails.setFirstName(dataMap.get(2).split("\\s")[0]);
-        studentDetails.setLastName(dataMap.get(2).split("\\s")[1]);
+        studentDetails.setLastName((dataMap.get(2).split("\\s").length>1)?dataMap.get(2).split("\\s")[1]:"");
         studentDetails.setStudentFullName(studentDetails.getFirstName()+" "+studentDetails.getLastName());
         return studentDetails;
     }

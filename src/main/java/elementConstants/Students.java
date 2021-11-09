@@ -92,7 +92,8 @@ public @interface Students {
     String myLessonsTodayVideoLink = "xpath=//ul[@id='ulDailyLessons']/descendant::h3[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
     String videoLibrarySection = "id=VideoLibrary";
     String videoLibrarySubjectDropDown = "id=subjectsDropDown";
-    String videoLibraryVideoLink = "xpath=//div[@id='lessonContents']//descendant::li[@data-lesson='%s' and @data-sub='%s']";
+    String videoLibraryVideoLinkWithSubId = "xpath=//div[@id='lessonContents']//descendant::li[@data-lesson='%s' and @data-sub='%s']";
+    String videoLibraryVideoLink = "xpath=//div[@id='lessonContents']//descendant::li[@data-lesson='%s']";
     String nextToNextVideoLink = "xpath=(//li[@id='VideoLibrary']/descendant::li[contains(normalize-space(@onclick),'Lesson_Clicked') and not(@class ='lessonComplete') and @data-teacher and position()])[1]";
     String lessonLockedCloseButton = "xpath=//div[@id='lessonIncomplete']/descendant::*[normalize-space(text())='%s']/parent::div/following-sibling::div/descendant::p[normalize-space(text())='%s']/parent::div/parent::div/following-sibling::div/descendant::button[normalize-space(text())='%s']";
     String videoPlayer = "id=player";
@@ -147,4 +148,7 @@ public @interface Students {
     String cursiveWriting = "text=Cursive Writing";
     String lessonOne = "xpath=//li[@data-lesson='1']";
     String cursiveWritingVideo = "xpath=//span[@id='lblTitle' and normalize-space(text())='Writing 1 - Lesson 1']";
+    String subjectAndLessonNameOnVideoPage = "xpath=//*[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
+    String videoNameInLibraryDropDown = "xpath=//li[@onclick='jVideo_SelectedIndexChanged(this)']/descendant::span[@class='subjectInfo' and normalize-space(text())='%s']";
+    String subjectProgressSection = "xpath=//div[@id='StudentProgress']/descendant::*[normalize-space(text())='Subject Progress']";
 }
