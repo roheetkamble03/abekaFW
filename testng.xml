@@ -12,7 +12,7 @@
 <!--            </class>-->
             <class name="abekaUISuite.ParentAndStudentSuiteTest">
                 <methods>
-                    <include name="validateSubjectListOnProgressPage"></include>
+                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeNine"></include>
 <!--                    <include name="validateAddNewStudentGradeOne"></include>-->
 <!--                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeNine"></include>-->
 <!--                    <include name="enrollmentPurchaseGradeFour"></include>-->

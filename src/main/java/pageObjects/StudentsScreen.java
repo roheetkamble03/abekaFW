@@ -658,8 +658,9 @@ public class StudentsScreen extends GenericAction {
      * Here we are validating only video list, not clicking on video link
      *
      * @return
+     * @param isValidationWithExcel
      */
-    public StudentsScreen validateMyLessonsTodaySectionData() {
+    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel) {
         //getExcelDataSet()
         if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
             if (isElementExists(Students.lessonsToday, false)) {
@@ -667,16 +668,28 @@ public class StudentsScreen extends GenericAction {
                 String myLessonsVideoLink;
                 String subject;
                 String lesson;
-                ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
-                        .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE);
-                //Change data of excel as per grade 9 and fetch it
-                for (HashMap<String, String> row : myLessonsToday) {
-                    subject = row.get(SHORT_DESCRIPTION);
-                    lesson = row.get(LONG_DESCRIPTION);
-                    myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subject, lesson);
-                    softAssertions.assertThat(isElementExists(myLessonsVideoLink, false))
-                            .as(lesson + " of " + subject + " subject is not present in My lessons today section").isTrue();
+                int counter = 0;
+                if(isValidationWithExcel){
+                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST);
+                    for(String subjectName: videoListTestData.getMyLessonsTodaySubjectList()){
+                        lesson = videoListTestData.getMyLessonsTodayLessonList().get(counter);
+                        myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subjectName, lesson);
+                        softAssertions.assertThat(isElementExists(myLessonsVideoLink, false))
+                                .as(lesson + " of " + subjectName + " subject is not present in My lessons today section").isTrue();
+                        counter++;
+                    }
+                }else {
+                    ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
+                            .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE);
+                    for (HashMap<String, String> row : myLessonsToday) {
+                        subject = row.get(SHORT_DESCRIPTION);
+                        lesson = row.get(LONG_DESCRIPTION);
+                        myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subject, lesson);
+                        softAssertions.assertThat(isElementExists(myLessonsVideoLink, false))
+                                .as(lesson + " of " + subject + " subject is not present in My lessons today section").isTrue();
+                    }
                 }
+                //Change data of excel as per grade 9 and fetch it
             } else {
                 softAssertions.fail(Students.MY_LESSONS_TODAY + " is not having any video link on UI");
             }
@@ -958,7 +971,7 @@ public class StudentsScreen extends GenericAction {
         String loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
         int counter = 0;
         if(isValidationWithExcelData){
-            VideoListTestData videoListTestData = getVideoListTestDataFroExcel(CommonConstants.GRADE_WISE_VIDEO_LIST);
+            VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST);
             for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()){
                 selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subjectName);
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, videoListTestData.getNextDayLessonOfVideoLibrary().get(counter)))));

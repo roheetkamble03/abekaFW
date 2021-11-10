@@ -56,4 +56,5 @@ public @interface CommonConstants {
     String NEXT_DAY_LESSON_OF_VIDEO_LIBRARY = "NextDayLessonOfVideoLibrary";
     String DIGITAL_ASSESSMENT_LIST = "DigitalAssessmentList";
     String GRADE_ONE_VIDEO_LIST = "GradeOneVideoList";
+    String GRADE_NINE_VIDEO_LIST = "GradeNineVideoList";
 }

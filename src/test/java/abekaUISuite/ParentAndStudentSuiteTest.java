@@ -71,7 +71,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
     @Test(testName = "validateSubjectListOnProgressPage", dataProvider = DataProviderName.PARENT_CREDENTIALS,
-            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
     public void validateSubjectListOnProgressPage(String userId, String password, String signature, String customerNumber){
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
@@ -302,8 +302,8 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     }
 
     //Grade 9 change to 4 currently fetching data for syed
-    @DataRowNumber(fromDataRowNumber = "1", toDataRowNumber = "1")
-    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeNine"})
+    @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
+    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAbleToWatchVideoStreamingOfGradeNine(String userId, String password, String userName, String signature){
         StudentsScreen studentsScreen = new StudentsScreen();
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
@@ -315,9 +315,9 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         studentsScreen.validateDigitalAssessmentsAreLockedOrNot(true);
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.HOME);
-        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData().validateDigitalAssessmentsAreLockedOrNot(true)
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true).validateDigitalAssessmentsAreLockedOrNot(true)
                 .validateStudentShouldNotAbleToWatchNextDayLessonFromVideoLibrary(true)
-                .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(true)
+                .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(false)
                 .validateVideoLibraryVideoStatusWithDataBase(true).validateDigitalAssessmentsAreLockedOrNot(true);
 
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
