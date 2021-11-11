@@ -37,6 +37,7 @@ public @interface CommonConstants {
     String SDService = "SDService";
     String AD_DATA_BASE = "AD";
     String SD_DATA_BASE = "SD";
+    String PEN_KEY = "PEN_KEY";
 
     String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and normalize-space(text())='×']";
     String dropDownOption = "xpath=./ul[@class='dropdown']/descendant::span[normalize-space(text())='%s']";

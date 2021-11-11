@@ -25,6 +25,7 @@ import static com.codeborne.selenide.Selenide.refresh;
 import static constants.CommonConstants.*;
 import static constants.CommonConstants.MY_LESSONS_TODAY_LESSON_LIST;
 import static constants.TableColumn.*;
+import static elementConstants.Enrollments.CURSIVE;
 import static elementConstants.Students.*;
 
 public class StudentsScreen extends GenericAction {
@@ -659,8 +660,9 @@ public class StudentsScreen extends GenericAction {
      *
      * @return
      * @param isValidationWithExcel
+     * @param videoListSheetName
      */
-    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel) {
+    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel, String videoListSheetName) {
         //getExcelDataSet()
         if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
             if (isElementExists(Students.lessonsToday, false)) {
@@ -670,7 +672,7 @@ public class StudentsScreen extends GenericAction {
                 String lesson;
                 int counter = 0;
                 if(isValidationWithExcel){
-                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST);
+                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName);
                     for(String subjectName: videoListTestData.getMyLessonsTodaySubjectList()){
                         lesson = videoListTestData.getMyLessonsTodayLessonList().get(counter);
                         myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subjectName, lesson);
@@ -705,8 +707,9 @@ public class StudentsScreen extends GenericAction {
      *
      * @return
      * @param isValidationWithExcelData
+     * @param videoListSheetName
      */
-    public StudentsScreen watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(boolean isValidationWithExcelData) {
+    public StudentsScreen watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(boolean isValidationWithExcelData, String videoListSheetName) {
         if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
             if (isElementExists(Students.lessonsToday, false)) {
                 String myLessonsVideoLink;
@@ -721,7 +724,7 @@ public class StudentsScreen extends GenericAction {
                 boolean isVideoAlreadyViewedInVideoLibrary = false;
                 int counter = 0;
                 String studentID = getUserAccountDetails().getStudentId();//userAccountDetails.get(STUDENT_ID);
-                VideoListTestData videoListTestData = getVideoListTestDataFroExcel(CommonConstants.GRADE_WISE_VIDEO_LIST);
+                VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName);
 
                 if(isValidationWithExcelData){
                     for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()) {
@@ -1216,6 +1219,12 @@ public class StudentsScreen extends GenericAction {
         for(String subject: videoListTestData.getMyLessonsTodaySubjectList()){
             softAssertions.assertThat(isElementExists(subject, true)).as(subject+" not found on Screen").isTrue();
         }
+    }
+
+    public void switchPenmanShipFromBackEnd(String type){
+        int penKey = (type.equals(CURSIVE)?2:1);
+        executeQuery(DataBaseQueryConstant.UPDATE_PENMANSHIP_TYPE_BACKEND_AD_DB.replaceAll(PEN_KEY,
+                Integer.toString(penKey)).replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE);
     }
 }
 

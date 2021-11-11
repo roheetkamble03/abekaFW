@@ -13,9 +13,12 @@ import utility.StudentAccountDetails;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static constants.CommonConstants.GRADE_NINE_VIDEO_LIST;
+import static constants.CommonConstants.GRADE_ONE_VIDEO_LIST;
 import static constants.DataProviderName.PARENT_CREDENTIALS;
 import static constants.DataProviderName.STUDENT_CREDENTIALS;
 import static elementConstants.Enrollments.CURSIVE;
+import static elementConstants.Enrollments.MANUSCRIPT;
 import static elementConstants.ItemDetails.*;
 import static elementConstants.Students.*;
 
@@ -82,6 +85,30 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         softAssertions.assertAll();
     }
 
+    @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
+    @Test(testName = "validateSwitchPenmanShipScenario", dataProvider = STUDENT_CREDENTIALS,
+            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void validateSwitchPenmanShipScenarioGradeOne(String userId, String password, String signature, String customerNumber){
+        StudentsScreen studentsScreen = new StudentsScreen();
+        AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
+        StudentDetails studentDetails = getStudentAccountDetails(2);
+        setStudentAccountDetailsFromDB(userId);
+        setStudentSubjectDetailsFromDB(userId);
+        studentsScreen.switchPenmanShipFromBackEnd(MANUSCRIPT);
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        dashboardScreen.waitAndCloseWidgetTourPopup();
+
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_ONE_VIDEO_LIST)
+                .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(false, GRADE_ONE_VIDEO_LIST)
+                .validateVideoLibraryVideoStatusWithDataBase(true);
+
+        studentsScreen.switchPenmanShipFromBackEnd(CURSIVE);
+        abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.HOME);
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_ONE_VIDEO_LIST);
+        softAssertions.assertAll();
+
+
+    }
 
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
     @Test(testName = "validateCourseBeginDateFormatGradeOne", dataProvider = DataProviderName.PARENT_CREDENTIALS,
@@ -315,9 +342,9 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         studentsScreen.validateDigitalAssessmentsAreLockedOrNot(true);
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.HOME);
-        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true).validateDigitalAssessmentsAreLockedOrNot(true)
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_NINE_VIDEO_LIST).validateDigitalAssessmentsAreLockedOrNot(true)
                 .validateStudentShouldNotAbleToWatchNextDayLessonFromVideoLibrary(true)
-                .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(false)
+                .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(false, GRADE_NINE_VIDEO_LIST)
                 .validateVideoLibraryVideoStatusWithDataBase(true).validateDigitalAssessmentsAreLockedOrNot(true);
 
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
@@ -439,12 +466,13 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         softAssertions.assertAll();
     }
 
-//    @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
-//    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeTwelve"})
-//    public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
-//        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-//        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm();
-//        logoutFromAbeka();
-//        softAssertions.assertAll();
-//    }
+    @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
+    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeTwelve"})
+    public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
+        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+        setStudentAccountDetailsFromDB(getStudentAccountDetails(5).getStudentUserId());
+        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm().approveSubmittedPetition();
+        logoutFromAbeka();
+        softAssertions.assertAll();
+    }
 }

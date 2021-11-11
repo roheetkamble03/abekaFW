@@ -2,6 +2,10 @@ package pageObjects;
 
 import base.GenericAction;
 
+import static constants.CommonConstants.AD_DATA_BASE;
+import static constants.DataBaseQueryConstant.UPDATE_SUBMITTED_PETITION_STATUS_AD_DB;
+import static constants.TableColumn.STUDENT_ID_DATA;
+
 public class GraduationPetition extends GenericAction {
 
     public static String generalSubjectDropdown = "xpath=//span[normalize-space(text())='General']/ancestor::h5/following-sibling::div/select";
@@ -18,6 +22,11 @@ public class GraduationPetition extends GenericAction {
 
     public GraduationPetition fillGraduationPetitionForm(){
         //selectByVisibleText();
+        return this;
+    }
+
+    public GraduationPetition approveSubmittedPetition(){
+        executeQuery(UPDATE_SUBMITTED_PETITION_STATUS_AD_DB,AD_DATA_BASE.replaceAll(STUDENT_ID_DATA, getUserAccountDetails().getStudentId()));
         return this;
     }
 }

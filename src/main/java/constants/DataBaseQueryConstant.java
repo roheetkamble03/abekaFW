@@ -1575,4 +1575,14 @@ public @interface DataBaseQueryConstant {
 
     String UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB = "/*Updating student's course begin data to back date*/ \n" +
             "{CALL ABADB.AREA2APPLICATIONS.CHANGEBEGINDATE(?,?,?)}";
+
+    String UPDATE_SUBMITTED_PETITION_STATUS_AD_DB = "/* Approving submitted graduation petition application*/" +
+            "UPDATE graduation.graduation_petitions\n" +
+            "SET petition_status = 8\n" +
+            "WHERE student_id = STUDENT_ID_DATA";
+
+    String UPDATE_PENMANSHIP_TYPE_BACKEND_AD_DB = "/* Updating penmanship type from back end*/" +
+            "UPDATE linc.abadb_appld\n" +
+            "SET pen_key = PEN_KEY\n" +
+            "WHERE ap_apref = APPLICATION_NUMBER_DATA";
 }

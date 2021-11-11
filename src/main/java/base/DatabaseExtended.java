@@ -203,7 +203,6 @@ public class DatabaseExtended extends BaseClass {
         connection.close();
     }
 
-
     @SneakyThrows
     public void executeSetVideoCompletedStoredProcedure(String storedProcedure, String subscriptionNumber, String subscriptionItem, String loginId, String segmentId,
                                                         String userID, String dataBase){
