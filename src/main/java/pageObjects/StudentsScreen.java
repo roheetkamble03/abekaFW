@@ -661,8 +661,10 @@ public class StudentsScreen extends GenericAction {
      * @return
      * @param isValidationWithExcel
      * @param videoListSheetName
+     * @param fromDataRowNumber
+     * @param toDataRowNumber
      */
-    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel, String videoListSheetName) {
+    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel, String videoListSheetName, int fromDataRowNumber, int toDataRowNumber) {
         //getExcelDataSet()
         if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
             if (isElementExists(Students.lessonsToday, false)) {
@@ -672,7 +674,7 @@ public class StudentsScreen extends GenericAction {
                 String lesson;
                 int counter = 0;
                 if(isValidationWithExcel){
-                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName);
+                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName, fromDataRowNumber, toDataRowNumber);
                     for(String subjectName: videoListTestData.getMyLessonsTodaySubjectList()){
                         lesson = videoListTestData.getMyLessonsTodayLessonList().get(counter);
                         myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subjectName, lesson);
@@ -724,7 +726,7 @@ public class StudentsScreen extends GenericAction {
                 boolean isVideoAlreadyViewedInVideoLibrary = false;
                 int counter = 0;
                 String studentID = getUserAccountDetails().getStudentId();//userAccountDetails.get(STUDENT_ID);
-                VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName);
+                VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName, 0, 0);
 
                 if(isValidationWithExcelData){
                     for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()) {
@@ -926,14 +928,14 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen validateVideoListAvailableOnVideoLibrary(){
-        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(CommonConstants.GRADE_WISE_VIDEO_LIST);
+        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(CommonConstants.GRADE_WISE_VIDEO_LIST, 0, 0);
         validateMyLessonsTodayVideoList(removeBlankDataFromList(videoListTestData.getMyLessonsTodaySubjectList()), videoListTestData.getMyLessonsTodayLessonList());
         validateVideoLibraryDropDownList(removeBlankDataFromList(videoListTestData.getVideoLibraryDropdownSubjectList()));
         return this;
     }
 
-    private VideoListTestData getVideoListTestDataFroExcel(String sheetName) {
-        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, 0, 0);
+    private VideoListTestData getVideoListTestDataFroExcel(String sheetName, int fromDataRowNumber, int toDataRowNumber) {
+        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, fromDataRowNumber, toDataRowNumber);
         VideoListTestData videoListTestData = VideoListTestData.builder()
                 .myLessonsTodaySubjectList(removeBlankDataFromList(excelDataHashTable.get(MY_LESSONS_TODAY_SUBJECT_LIST)))
                 .myLessonsTodayLessonList(removeBlankDataFromList(excelDataHashTable.get(MY_LESSONS_TODAY_LESSON_LIST)))
@@ -974,7 +976,7 @@ public class StudentsScreen extends GenericAction {
         String loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
         int counter = 0;
         if(isValidationWithExcelData){
-            VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST);
+            VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST, 0, 0);
             for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()){
                 selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subjectName);
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, videoListTestData.getNextDayLessonOfVideoLibrary().get(counter)))));
@@ -1214,7 +1216,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     public void validateSubjectListInSubjectProgressSection() {
-        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_ONE_VIDEO_LIST);
+        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_ONE_VIDEO_LIST, 0, 0);
         bringElementIntoView(subjectProgressSection);
         for(String subject: videoListTestData.getMyLessonsTodaySubjectList()){
             softAssertions.assertThat(isElementExists(subject, true)).as(subject+" not found on Screen").isTrue();

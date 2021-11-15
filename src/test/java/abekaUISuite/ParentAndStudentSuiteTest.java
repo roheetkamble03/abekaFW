@@ -94,20 +94,20 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         StudentDetails studentDetails = getStudentAccountDetails(2);
         setStudentAccountDetailsFromDB(userId);
         setStudentSubjectDetailsFromDB(userId);
-        studentsScreen.switchPenmanShipFromBackEnd(MANUSCRIPT);
+        studentsScreen.switchPenmanShipFromBackEnd(CURSIVE);
+        studentDetails.implicitWaitInSeconds(900);
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
 
-        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_ONE_VIDEO_LIST)
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_ONE_VIDEO_LIST, 0, 9)
                 .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(false, GRADE_ONE_VIDEO_LIST)
                 .validateVideoLibraryVideoStatusWithDataBase(true);
 
-        studentsScreen.switchPenmanShipFromBackEnd(CURSIVE);
+        studentsScreen.switchPenmanShipFromBackEnd(MANUSCRIPT);
+        studentDetails.implicitWaitInSeconds(900);
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.HOME);
-        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_ONE_VIDEO_LIST);
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_ONE_VIDEO_LIST,  19, 31);
         softAssertions.assertAll();
-
-
     }
 
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
@@ -342,7 +342,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         studentsScreen.validateDigitalAssessmentsAreLockedOrNot(true);
         abekaHomeScreen.navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.HOME);
-        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_NINE_VIDEO_LIST).validateDigitalAssessmentsAreLockedOrNot(true)
+        studentsScreen.navigateToStartWatchingYourLessonsLink().validateMyLessonsTodaySectionData(true, GRADE_NINE_VIDEO_LIST, 0, 0).validateDigitalAssessmentsAreLockedOrNot(true)
                 .validateStudentShouldNotAbleToWatchNextDayLessonFromVideoLibrary(true)
                 .watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(false, GRADE_NINE_VIDEO_LIST)
                 .validateVideoLibraryVideoStatusWithDataBase(true).validateDigitalAssessmentsAreLockedOrNot(true);

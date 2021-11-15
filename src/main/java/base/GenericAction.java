@@ -197,7 +197,7 @@ public abstract class GenericAction extends SelenideExtended{
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
         HashMap<String,String> subscriptionAccountDetails = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB
-                .replaceAll(ACCOUNT_NUMBER_DATA,userLoginDetails.get(ACCOUNT_NUMBER)),SD_DATA_BASE).get(0);
+                .replaceAll(APPLICATION_NUMBER_DATA,executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_AD_DB.replaceAll(STUDENT_ID_DATA, userLoginDetails.get(STUDENT_ID)), AD_DATA_BASE).get(0).get(APPLICATION_NUMBER)),SD_DATA_BASE).get(0);
 
         userAccountDetails = new UserAccountDetails(userId,userLoginDetails.get(LOGIN_ID),userLoginDetails.get(ACCOUNT_NUMBER),
                 userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),subscriptionAccountDetails.get(SUBSCRIPTION_NUMBER_PK),subscriptionAccountDetails.get(APPLICATION_NUMBER));

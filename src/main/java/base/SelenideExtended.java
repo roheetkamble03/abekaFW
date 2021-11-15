@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -788,11 +789,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      * @param timeOutInSeconds
      */
-    public void implicitWaitInSeconds(int timeOutInSeconds) {
-        try {
-            Thread.sleep(timeOutInSeconds*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void implicitWaitInSeconds(int... timeOutInSeconds) {
+        LocalTime waitTime = LocalTime.now().plusSeconds((timeOutInSeconds.length>0)?timeOutInSeconds[0]:commonWait);
+        while (waitTime.isAfter(LocalTime.now())) {
+            log("Implicit wait is in progress, time remaining:["+ (waitTime.getSecond()-LocalTime.now().getSecond())+"] seconds");
         }
     }
 

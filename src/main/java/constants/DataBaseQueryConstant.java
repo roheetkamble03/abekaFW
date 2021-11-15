@@ -837,16 +837,14 @@ public @interface DataBaseQueryConstant {
     String LOGIN_DETAILS_SD_DB = "/* To get the Student Login details from SD DB*/\n" +
             "SELECT DISPLAY_NAME, LOGIN_ID_PK AS LOGIN_ID, ACCOUNT_NUMBER, STUDENT_ID, USER_NAME FROM abashared.user_logins WHERE lower(user_name) = lower('STUDENT_ID_DATA')";
 
+    String GET_APPLICATION_NUMBER_AD_DB = "/* Fetching application number */\n" +
+            "select AP_APREF AS APPLICATION_NUMBER from LINC.ABADB_APPLD where FD_ID = 'STUDENT_ID_DATA'";
+
     String GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB = "/* To get the Subscription number from SD DB*/ \n" +
             "Select * from ABAShared.Streaming_Subscriptions\n" +
-            "where account_number = 'ACCOUNT_NUMBER_DATA'";
+            "where APPLICATION_NUMBER = 'APPLICATION_NUMBER_DATA'";
 //            "SELECT DISTINCT subscription_number AS SUBSCRIPTION_NUMBER\n" +
 //            "  FROM abashared.permissions_queries.GetSubscriptionsByLogin('LOGIN_ID_DATA')";
-
-    String GET_APPLICATION_NUMBER_SD_DB = "/* To get the Application number from SD DB*/ \n" +
-            "SELECT subs.application_number AS APPLICATION_NUMBER\n" +
-            "FROM ABASHARED.streaming_subscriptions subs\n" +
-            "WHERE subs.subscription_number_pk = 'SUBSCRIPTION_NUMBER_DATA'";
 
     String STUDENT_SUBJECT_DETAILS_SD_DB = "/* To fetch the student subject details  from SD DB*/\n" +
             "select distinct * from TABLE (abashared.permissions_queries.getAvailableSubjects('LOGIN_ID_DATA','SUBSCRIPTION_NUMBER_DATA'))";

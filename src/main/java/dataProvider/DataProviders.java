@@ -118,7 +118,7 @@ public class DataProviders {
         int columnHeader = 0;
         for (int i = 0; i < data[0].length; i++) {
             columnData = new ArrayList<>();
-            for (int j = 0; j < data.length; j++) {
+            for (int j = fromDataRowNumber; j < toDataRowNumber; j++) {
                 columnData.add(data[j][i].toString());
 
             }
