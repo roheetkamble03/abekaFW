@@ -74,7 +74,7 @@ public class DataProviders {
                 data[rowNumber][j] = excelUtils.getCellData(sheetName, j, rowNumber + 1);
             }
         }
-        //if to you need to read all rows pass toDataRowNumber as 0
+        //if to you need to read all rows pass fromDataRowNumber, toDataRowNumber as 0
         fromDataRowNumber = (fromDataRowNumber == 0)?1:fromDataRowNumber;
         toDataRowNumber = (toDataRowNumber == 0)? (toDataRowNumber == fromDataRowNumber) ? actRows+1:actRows:toDataRowNumber;
         Object[][] finalData = new Object[(toDataRowNumber-fromDataRowNumber)+1][column];
@@ -122,7 +122,7 @@ public class DataProviders {
                 columnData.add(data[j][i].toString());
 
             }
-            excelTable.put(excelUtils.getCellData(sheetName,columnHeader,0), columnData);
+            excelTable.put(excelUtils.getCellData(sheetName,columnHeader,fromDataRowNumber), columnData);
             columnHeader++;
         }
         return excelTable;

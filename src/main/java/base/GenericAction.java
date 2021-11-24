@@ -59,6 +59,10 @@ public abstract class GenericAction extends SelenideExtended{
         return stringList.stream().filter(e->e.trim().length()!=0).collect(Collectors.toList());
     }
 
+    public List<Integer> removeBlankDataFromIntegerList(List<Integer> stringList){
+        return stringList.stream().filter(e->Integer.toString(e).trim().length()!=0).collect(Collectors.toList());
+    }
+
     public AbekaHomeScreen loginToAbeka(String userId, String password, boolean isSignUpPopAppears){
         waitAndCloseSignUpPop(isSignUpPopAppears);
         log("logging in to application");

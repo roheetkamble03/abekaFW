@@ -5,11 +5,14 @@ import constants.*;
 import dataProvider.DataProviders;
 import dataProvider.DataRowNumber;
 import elementConstants.*;
+import org.checkerframework.checker.units.qual.C;
 import org.testng.annotations.Test;
 import pageObjects.*;
 import utility.ParentAccountDetails;
 import utility.RetryUtility;
 import utility.StudentAccountDetails;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -87,7 +90,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
     @Test(testName = "validateSwitchPenmanShipScenario", dataProvider = STUDENT_CREDENTIALS,
-            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
     public void validateSwitchPenmanShipScenarioGradeOne(String userId, String password, String signature, String customerNumber){
         StudentsScreen studentsScreen = new StudentsScreen();
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
@@ -152,6 +155,23 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
         navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
         new CalendarScreen().validateStudentCalendarEvents(false).logoutFromAbeka();
+        softAssertions.assertAll();
+    }
+
+    //Grade1
+    @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
+    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
+    public void testValidateStudentCalendarEventsOfProgressReportOfGradeOne(String userId, String password, String userName, String signature){
+        CalendarScreen calendarScreen = new CalendarScreen();
+        StudentsScreen studentsScreen = new StudentsScreen();
+        //Change day count according to validation http://abatestweb.pcci.int/abadb/abaweb/aba_grading/viewonlinepr.aspx
+        ProgressReportEventPreviewTestData progressReportEventPreviewTestData = studentsScreen.getProgressReportPreviewEventDataFroExcel(GRADE_ONE_VIDEO_LIST, 36, 37);
+        progressReportEventPreviewTestData.setProgressReportEventDate(calendarScreen.fetchProgressReportEventDate(progressReportEventPreviewTestData.getDayCount()));
+        setStudentAccountDetailsFromDB(userId);
+        loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
+        navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
+
+        calendarScreen.navigateToCalendarDate(progressReportEventPreviewTestData.getProgressReportEventDate().get(0)).validateProgressReportEventPreview(progressReportEventPreviewTestData);
         softAssertions.assertAll();
     }
 
@@ -467,7 +487,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     }
 
     @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
-    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeTwelve"})
+    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         setStudentAccountDetailsFromDB(getStudentAccountDetails(5).getStudentUserId());

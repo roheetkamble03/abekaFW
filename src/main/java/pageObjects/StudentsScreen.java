@@ -8,10 +8,7 @@ import constants.CommonConstants;
 import constants.DataBaseQueryConstant;
 import constants.TableColumn;
 import dataProvider.DataProviders;
-import elementConstants.Dashboard;
-import elementConstants.DigitalAssessmentsTestData;
-import elementConstants.Students;
-import elementConstants.VideoListTestData;
+import elementConstants.*;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -23,6 +20,7 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Selenide.back;
 import static com.codeborne.selenide.Selenide.refresh;
 import static constants.CommonConstants.*;
+import static constants.CommonConstants.EVENT_ID;
 import static constants.CommonConstants.MY_LESSONS_TODAY_LESSON_LIST;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.CURSIVE;
@@ -945,6 +943,18 @@ public class StudentsScreen extends GenericAction {
                 .todayLessonOfVideoLibrary(removeBlankDataFromList(excelDataHashTable.get(TODAY_LESSON_OF_VIDEO_LIBRARY)))
                 .nextDayLessonOfVideoLibrary(removeBlankDataFromList(excelDataHashTable.get(NEXT_DAY_LESSON_OF_VIDEO_LIBRARY))).build();
         return videoListTestData;
+    }
+
+    public ProgressReportEventPreviewTestData getProgressReportPreviewEventDataFroExcel(String sheetName, int fromDataRowNumber, int toDataRowNumber) {
+        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, fromDataRowNumber, toDataRowNumber);
+        ProgressReportEventPreviewTestData progressReportEventPreviewTestData = ProgressReportEventPreviewTestData.builder()
+                .dayCount(removeBlankDataFromIntegerList(excelDataHashTable.get(DAY_COUNT).stream().map(Integer::parseInt).collect(Collectors.toList())))
+                .eventID(removeBlankDataFromList(excelDataHashTable.get(EVENT_ID)))
+                .previewTitle(removeBlankDataFromList(excelDataHashTable.get(PREVIEW_TITLE)))
+                .popupTitle(removeBlankDataFromList(excelDataHashTable.get(POPUP_TITLE)))
+                .popupType(excelDataHashTable.get(POPUP_TYPE))
+                .previewDescription(removeBlankDataFromList(excelDataHashTable.get(PREVIEW_DESCRIPTION))).build();
+        return progressReportEventPreviewTestData;
     }
 
     private void validateVideoLibraryDropDownList(List<String> videosInDropdown) {

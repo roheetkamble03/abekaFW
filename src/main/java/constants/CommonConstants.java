@@ -36,6 +36,9 @@ public @interface CommonConstants {
     String SDHost = "SDHost";
     String SDService = "SDService";
     String AD_DATA_BASE = "AD";
+    String DATA_DATE = "data-date";
+    String ROW = "row";
+    String CELL = "cell";
     String SD_DATA_BASE = "SD";
     String PEN_KEY = "PEN_KEY";
 
@@ -46,6 +49,7 @@ public @interface CommonConstants {
     String AUTHORIZATION = "Authorization";
     String BEARER = "Bearer ";
     String PARENT_CREDENTIALS = "ParentCredentials";
+    String HOLIDAY_LIST = "HolidayList";
     String STUDENT_NAME = "StudentName";
     String GRADE_WISE_VIDEO_LIST = "GradeWiseVideoList";
     String MY_LESSONS_TODAY_SUBJECT_LIST = "MyLessonsTodaySubjectList";
@@ -58,4 +62,10 @@ public @interface CommonConstants {
     String DIGITAL_ASSESSMENT_LIST = "DigitalAssessmentList";
     String GRADE_ONE_VIDEO_LIST = "GradeOneVideoList";
     String GRADE_NINE_VIDEO_LIST = "GradeNineVideoList";
+    String DAY_COUNT = "DayCount";
+    String EVENT_ID = "EventID";
+    String PREVIEW_TITLE = "PreviewTitle";
+    String POPUP_TITLE = "PopupTitle";
+    String POPUP_TYPE = "PopupType";
+    String PREVIEW_DESCRIPTION = "PreviewDescription";
 }

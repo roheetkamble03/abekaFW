@@ -156,6 +156,7 @@ public class EnrollmentsScreen extends GenericAction {
     public EnrollmentsScreen addBeginDate(){
         String beginDate = getElementText(Enrollments.beginDateLbl);
         type(Enrollments.beginDateInputBox,getModifiedDate(beginDate,1,0,0, CommonConstants.PLUS));
+        courseBeginDate = beginDate;
         return this;
     }
 

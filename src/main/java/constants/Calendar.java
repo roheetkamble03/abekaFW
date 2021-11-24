@@ -11,6 +11,7 @@ public @interface Calendar {
     String yyyy_MM_dd = "yyyy-MM-dd";
     String yyyyMMdd = "yyyyMMdd";
     String dayMMMMdd = "dayMMMMdd";
+    String MMM_dd_yyyy = "MMM dd, yyyy";
     String MMMddyyyy = "MMM, dd yyyy";
     String PIPE_SPLITTER = " | ";
     String TBOX_ITEMS = "Tboxitems";
@@ -36,4 +37,15 @@ public @interface Calendar {
     String eventBoxes = "xpath=//a[contains(@class,'fc-day-grid-event')]";
     String holidayEventId = "event_0";
     String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd hh:mm:ss";
+    String monthButton = "xpath=//button[normalize-space(text())='month']";
+    String calendarNextButton = "xpath=//button[@aria-label='next']";
+    String calendarPrevButton = "xpath=//button[@aria-label='prev']";
+    String dateCellOnCalendar = "xpath=//h2[normalize-space(text())='%s']/ancestor::div[@id='calendar']/descendant::span[@class='fc-day-number' and normalize-space(text())='%s']";
+    String tableRows = "xpath=//div[@class='fc-content-skeleton']";
+    String tableRowDays = "xpath=(//div[@class='fc-content-skeleton'])[%s]/descendant::td[contains(@class,'fc-future')]";
+    String showMoreLink = "xpath=((//div[@class='fc-content-skeleton'])[%s]/descendant::tbody/tr[3]/descendant::a[@class='fc-more'])[%s]";
+    String eventBox = "xpath=(//a[contains(@class,'%s')])[last()]";
+    String eventPreviewTitle = "xpath=//div[@id='EventPreview']/descendant::h1[normalize-space(text())='%s']/small[normalize-space(text())='%s']";
+    String eventPreviewPopUpDate = "xpath=//span[@id='PreviewDate' and normalize-space(text())='%s']";
+    String eventPreviewDescriptionText = "xpath=//span[@id='PreviewDescription' and normalize-space(text())='%s']";
 }

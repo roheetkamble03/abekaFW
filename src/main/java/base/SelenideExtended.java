@@ -126,6 +126,18 @@ public abstract class SelenideExtended extends DatabaseExtended {
             if(isBringElementInToView) bringElementIntoView(identifier);
             return true;
         }catch (Throwable e){
+            if(isElementExistsByDriver(identifier)){
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public boolean isElementExistsByDriver(String identifier){
+        try {
+            getDriver().findElement(getByClause(identifier));
+            return true;
+        }catch (Throwable e){
             return false;
         }
     }
@@ -296,6 +308,14 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public String getHrefLink(SelenideElement element){
         try {
             return element.getAttribute("href").trim();
+        }catch (NullPointerException e){
+            return "";
+        }
+    }
+
+    public String getElementPropertyValue(SelenideElement element, String property){
+        try {
+            return element.getAttribute(property).trim();
         }catch (NullPointerException e){
             return "";
         }

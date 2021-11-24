@@ -60,6 +60,7 @@ public abstract class BaseClass {
     String testMethodName;
     static String username = "rohit.kamble%40pcci.edu";
     static String authkey = "u26c428039154c57";
+    protected String courseBeginDate;
 
     public void log(String message){
         getLogger().info(message);

@@ -2,17 +2,30 @@ package pageObjects;
 
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
+import com.google.common.base.CaseFormat;
 import constants.Calendar;
+import constants.CommonConstants;
 import constants.DataBaseQueryConstant;
 import constants.TableColumn;
+import dataProvider.DataProviders;
+import elementConstants.ProgressReportEventPreviewTestData;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.Days360;
+import utility.HolidayList;
+import utility.ParentAccountDetails;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static constants.Calendar.*;
-import static constants.CommonConstants.AD_DATA_BASE;
+import static constants.CommonConstants.*;
 import static constants.TableColumn.*;
+import static constants.TableColumn.EVENT_ID;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class CalendarScreen extends GenericAction {
 
@@ -25,6 +38,46 @@ public class CalendarScreen extends GenericAction {
         click(tempXpath);
         waitForPageTobeLoaded();
         return this;
+    }
+
+    @Step("Fetch progress report event date")
+    public List<LocalDate> fetchProgressReportEventDate(List<Integer> dayCountList){
+        List<Map<Integer,String>> dataMapList = new DataProviders().getExcelData(HOLIDAY_LIST, 0, 0);
+        List<HolidayList> holidayListArrayList = new ArrayList<>();
+        List<HolidayList> finalHolidayListArrayList = holidayListArrayList;
+        dataMapList.stream().forEach(e-> finalHolidayListArrayList.add(HolidayList.builder().holiday(e.get(0)).beginDate(LocalDate.parse(e.get(1), DateTimeFormatter.ofPattern("yyyyMMdd"))).endDate(LocalDate.parse(e.get(2), DateTimeFormatter.ofPattern("yyyyMMdd"))).build()));
+        courseBeginDate = "11/22/2021";
+        LocalDate courseBeginDateLocal = LocalDate.parse(courseBeginDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        LocalDate courseDayCounter = LocalDate.parse(courseBeginDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        List<LocalDate> localDateList = new ArrayList<>();
+        for(Integer dayCount: dayCountList) {
+            LocalDate progressReportEventDate = courseBeginDateLocal.plusDays(dayCount);
+            holidayListArrayList = finalHolidayListArrayList.stream().filter(e -> e.getBeginDate().isAfter(courseBeginDateLocal)).collect(Collectors.toList());
+
+            while (!courseDayCounter.equals(progressReportEventDate)) {
+                courseDayCounter = courseDayCounter.plusDays(1);
+                if (courseDayCounter.getDayOfWeek() == DayOfWeek.SATURDAY ||
+                        courseDayCounter.getDayOfWeek() == DayOfWeek.SUNDAY || isHolidayOnGivenDate(courseDayCounter, holidayListArrayList)) {
+                    progressReportEventDate = progressReportEventDate.plusDays(1);
+                }
+            }
+            localDateList.add(progressReportEventDate);
+        }
+        return localDateList;
+    }
+
+    private boolean isHolidayOnGivenDate(LocalDate courseDayCounter, List<HolidayList> holidayListArrayList){
+        LocalDate tempDate;
+        for(HolidayList holiday:holidayListArrayList){
+            tempDate = holiday.getBeginDate().plusDays(1);
+            for(int i = 0; i <= DAYS.between(holiday.getBeginDate(),holiday.getEndDate()); i++){
+                if(tempDate.equals(courseDayCounter)){
+                    return true;
+                }
+                tempDate = tempDate.plusDays(1);
+            }
+        }
+        return false;
     }
 
     @Step("Validating calendar events")
@@ -315,5 +368,62 @@ public class CalendarScreen extends GenericAction {
             default:
                 return MULTIPLE_TASK;
         }
+    }
+
+    public CalendarScreen navigateToCalendarDate(LocalDate progressReportEventDate){
+        waitForElementTobeExist(monthButton);
+        click(monthButton);
+        boolean isClickNext = progressReportEventDate.isAfter(LocalDate.now());
+        int counter = 0;
+        while (!isElementExists(String.format(dateCellOnCalendar,
+                CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,progressReportEventDate.getMonth()
+                        .toString())+" "+progressReportEventDate.getYear(), progressReportEventDate.getDayOfMonth()), false, elementLoadWait/4) && counter < 13){
+            if (isClickNext) {
+                click(calendarNextButton);
+                waitForPageTobeLoaded();
+            } else {
+                click(calendarPrevButton);
+            }
+            counter++;
+        }
+        return this;
+    }
+
+    public void validateProgressReportEventPreview(ProgressReportEventPreviewTestData progressReportEventPreviewTestData){
+        Map<String,Map<String,Integer>> dateRowMap = getDateRowCombinationMap();
+        LocalDate date = progressReportEventPreviewTestData.getProgressReportEventDate().get(0);
+        Integer rowPosition = dateRowMap.get(date.toString()).get(ROW);
+        Integer cellPosition = dateRowMap.get(date.toString()).get(CELL);
+        bringElementIntoView(String.format(showMoreLink,rowPosition, cellPosition));
+        click(String.format(showMoreLink,rowPosition, cellPosition));
+        click(String.format(eventBox,progressReportEventPreviewTestData.getEventID().get(0)));
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewTitle,progressReportEventPreviewTestData.getPopupTitle().get(0),progressReportEventPreviewTestData.getPopupType().get(0))
+                , false)).as("Event preview is not expected as "+ progressReportEventPreviewTestData.getPreviewTitle()).isTrue();
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewPopUpDate,
+                progressReportEventPreviewTestData.getProgressReportEventDate().get(0).format(DateTimeFormatter.ofPattern(MMM_dd_yyyy))),false)).as("Event preview pop up is not showing expected date "
+                +progressReportEventPreviewTestData.getProgressReportEventDate().get(0).format(DateTimeFormatter.ofPattern(MMM_dd_yyyy))).isTrue();
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewDescriptionText,progressReportEventPreviewTestData.getPreviewDescription().get(0)), false))
+                .as("Event preview description is not expected as "+ progressReportEventPreviewTestData.getPreviewDescription()).isTrue();
+    }
+
+    private Map<String, Map<String,Integer>> getDateRowCombinationMap() {
+        List<SelenideElement> tableRows = getElements(Calendar.tableRows);
+        Map<String, Map<String,Integer>> tableRowCellCombination = new HashMap<>();
+        Map<String, Integer> rowCellCombination = new HashMap<>();
+        int rowCounter = 1;
+        int cellCounter = 1;
+        for(SelenideElement element:tableRows){
+            rowCellCombination = new HashMap<>();
+            rowCellCombination.put(ROW, rowCounter);
+            rowCellCombination.put(CELL, cellCounter);
+            cellCounter = 1;
+            for(SelenideElement dateElement:getElements(String.format(tableRowDays, rowCounter))){
+                tableRowCellCombination.put(getElementPropertyValue(dateElement, DATA_DATE), rowCellCombination);
+                cellCounter++;
+                cellCounter = (cellCounter == 8)?1:cellCounter;
+            }
+            rowCounter++;
+        }
+        return tableRowCellCombination;
     }
 }
