@@ -27,8 +27,7 @@ import static constants.ApiServiceConstants.customerNumber;
 import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
-import static constants.DataBaseQueryConstant.DELETE_STUDENT_ACCOUNT_SP_AD_DB;
-import static constants.DataBaseQueryConstant.UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB;
+import static constants.DataBaseQueryConstant.*;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.*;
 import static io.restassured.RestAssured.given;
@@ -196,15 +195,22 @@ public abstract class GenericAction extends SelenideExtended{
     /**
      * Setting student account details at global level
      * @param userId user ID to get the details
+     * @param isFetchSubscriptionNumber
      */
-    public void setStudentAccountDetailsFromDB(String userId){
+    public void setStudentAccountDetailsFromDB(String userId, boolean isFetchSubscriptionNumber){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
                 .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
-        HashMap<String,String> subscriptionAccountDetails = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB
-                .replaceAll(APPLICATION_NUMBER_DATA,executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_AD_DB.replaceAll(STUDENT_ID_DATA, userLoginDetails.get(STUDENT_ID)), AD_DATA_BASE).get(0).get(APPLICATION_NUMBER)),SD_DATA_BASE).get(0);
+        String applicationNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_AD_DB.replaceAll(STUDENT_ID_DATA, userLoginDetails.get(STUDENT_ID)), AD_DATA_BASE).get(0).get(APPLICATION_NUMBER);
+        String subscriptionNumber = "";
+
+        if(isFetchSubscriptionNumber) {
+            HashMap<String, String> subscriptionAccountDetails = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB
+                    .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber), SD_DATA_BASE).get(0);
+            subscriptionNumber = subscriptionAccountDetails.get(SUBSCRIPTION_NUMBER_PK);
+        }
 
         userAccountDetails = new UserAccountDetails(userId,userLoginDetails.get(LOGIN_ID),userLoginDetails.get(ACCOUNT_NUMBER),
-                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),subscriptionAccountDetails.get(SUBSCRIPTION_NUMBER_PK),subscriptionAccountDetails.get(APPLICATION_NUMBER));
+                userLoginDetails.get(STUDENT_ID),userLoginDetails.get(DISPLAY_NAME),subscriptionNumber,applicationNumber);
     }
 
     public String getStudentIDFromDB(String userId){
@@ -219,7 +225,7 @@ public abstract class GenericAction extends SelenideExtended{
      */
     public void setStudentSubjectDetailsFromDB(String studentName){
         if(getUserAccountDetails() == null){
-            setStudentAccountDetailsFromDB(studentName);
+            setStudentAccountDetailsFromDB(studentName, true);
         }
         for(HashMap<String,String> row: executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_SUBJECT_DETAILS_SD_DB
                 .replaceAll(LOGIN_ID_DATA, getUserAccountDetails().getLoginId()).replaceAll(SUBSCRIPTION_NUMBER_DATA, getUserAccountDetails().getSubscriptionNumber()),SD_DATA_BASE)){
@@ -405,14 +411,39 @@ public abstract class GenericAction extends SelenideExtended{
         executeDeleteStudentAccountStoredProcedure(DELETE_STUDENT_ACCOUNT_SP_AD_DB, getStudentIDFromDB(studentUserId), AD_DATA_BASE);
     }
 
-    public void updateCourseBeginDateToBackDate(String studentUserName){
+    public void removeABAHold(String applicationNumber, String holdCode){
+        executeRemoveABAHoldStoredProcedure(REMOVE_ABA_HOLD_SP_AD_DB, applicationNumber,holdCode, BY_AUTOMATION, AD_DATA_BASE);
+    }
+
+    public void markApplicationAsCompleted(String applicationNumber){
+        executeMarkApplicationAsCompletedStoredProcedure(MARK_APPLICATION_AS_COMPLETED, applicationNumber, BY_AUTOMATION, AD_DATA_BASE);
+    }
+
+    public void updateCourseBeginDateToBackDateAndRemoveHolds(String studentUserName){
         if(getUserAccountDetails().getApplicationNumber().length() == 0){
-            setStudentAccountDetailsFromDB(studentUserName);
+            setStudentAccountDetailsFromDB(studentUserName, true);
         }
+        removeAccountHoldsIfAny();
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         localDate = localDate.minusMonths(3);
         String pastCourseBeginDate = localDate.format(formatter);
         executeUpdateCourseBeginDateToBackDate(UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB, getUserAccountDetails().getApplicationNumber(), pastCourseBeginDate, studentUserName, AD_DATA_BASE);
+    }
+
+    public void removeAccountHoldsIfAny(){
+        ArrayList<HashMap<String,String>> holdReasonList = executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE);
+        if(holdReasonList.size()>0){
+            for(HashMap<String,String> holReasonMap:holdReasonList){
+                removeABAHold(getUserAccountDetails().getApplicationNumber(),holReasonMap.get(HOLD_REASON));
+            }
+            markApplicationAsCompleted(getUserAccountDetails().getApplicationNumber());
+        }
+
+        ArrayList<HashMap<String,String>> navHoldReasonList = executeAndGetSelectQueryData(FETCH_NAV_HOLD_REASON_LIST
+                .replaceAll(ACCOUNT_NUMBER_DATA,getUserAccountDetails().getAccountNumber()).replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()),AD_DATA_BASE);
+        if(navHoldReasonList.size()>0){
+
+        }
     }
 }

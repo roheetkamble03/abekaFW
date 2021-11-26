@@ -1583,4 +1583,23 @@ public @interface DataBaseQueryConstant {
             "UPDATE linc.abadb_appld\n" +
             "SET pen_key = PEN_KEY\n" +
             "WHERE ap_apref = APPLICATION_NUMBER_DATA";
+
+    String FETCH_HOLD_REASON_LIST_AD_DB = "/* Fetching account hold reason list*/" +
+            "select (select ltrim(to_char(hold, '00')) || ' - ' || xdesc\n" +
+            "                              from linc.abadb_thold\n" +
+            "                              where hold = aph_hold) as hold_desc, aph_hold, 'Y' as found,\n" +
+            "                           aph_cre_by, aph_cre_dt, aph_cre_tm\n" +
+            "                        from linc.abadb_aphld\n" +
+            "                     where aph_apref = APPLICATION_NUMBER_DATA\n" +
+            "                     order by aph_cre_dt desc, aph_cre_tm desc";
+
+    String FETCH_NAV_HOLD_REASON_LIST = "/* Fetching NAV hold reason list*/" +
+            "SELECT Description, HoldCode, SetBy, SetAt, DocumentNbr\n" +
+            "FROM table(abadb.Holds.GetAppNavHolds(p_AccountNumber => ACCOUNT_NUMBER_DATA, p_ApplicationNumber => APPLICATION_NUMBER_DATA))";
+
+    String REMOVE_ABA_HOLD_SP_AD_DB = "/*Removing ABA hold, application number, hold code, held released by*/ \n" +
+            "{CALL ABADB.HOLDS.REMOVEHOLD(?,?,?)}";
+
+    String MARK_APPLICATION_AS_COMPLETED = "/*Marking application as completed application number, changed by*/" +
+            "{CALL ABADB.applications.CompleteApplication(?,?)}";
 }

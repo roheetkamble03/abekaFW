@@ -12,15 +12,14 @@
 <!--            </class>-->
             <class name="abekaUISuite.ParentAndStudentSuiteTest">
                 <methods>
-                    <include name="testValidateStudentCalendarEventsOfProgressReportOfGradeOne"></include>
-<!--                    <include name="enrollmentPurchaseGradeNine"></include>-->
-<!--                    <include name="validateAddNewStudentGradeNine"></include>-->
+<!--                    <include name="enrollmentPurchaseGradeOne"></include>-->
 <!--                    <include name="validateAddNewStudentGradeOne"></include>-->
-<!--                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeNine"></include>-->
 <!--                    <include name="enrollmentPurchaseGradeFour"></include>-->
 <!--                    <include name="validateAddNewStudentGradeFour"></include>-->
-<!--                        <include name="testValidateStudentAssessmentDetailsOnCalendarGradeFour"></include>-->
 <!--                    <include name="enrollmentPurchaseGradeNine"></include>-->
+                    <include name="validateAddNewStudentGradeNine"></include>
+<!--                        <include name="enrollmentPurchaseGradeTwelve"></include>-->
+<!--                    <include name="validateAddNewStudentGradeTwe"></include>-->
 <!--                    <include name="validateAddNewStudentGradeNine"></include>-->
 <!--                    <include name="testModifyStudentAssessmentDetailsOnCalendarOfGradeNine"></include>-->
 <!--                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine"></include>-->

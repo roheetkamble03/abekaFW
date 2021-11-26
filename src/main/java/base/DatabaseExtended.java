@@ -4,6 +4,7 @@ import constants.CommonConstants;
 import lombok.SneakyThrows;
 import oracle.jdbc.pool.OracleDataSource;
 
+import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -182,6 +183,40 @@ public class DatabaseExtended extends BaseClass {
         callableStatement.setInt(1, Integer.parseInt(studentId));
         callableStatement.execute();
         log("Successfully executed the stored procedure:\n"+storedProcedure+"\n studentId:"+studentId);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
+    public void executeRemoveABAHoldStoredProcedure(String storedProcedure, String applicationNumber, String holdReasonCode, String releasedBy, String dataBase){
+        log("Executing stored procedure to remove ABA hold");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.registerOutParameter(2, Types.INTEGER);
+        callableStatement.registerOutParameter(3, Types.VARCHAR);
+        callableStatement.setInt(1,Integer.parseInt(applicationNumber));
+        callableStatement.setInt(2,Integer.parseInt(holdReasonCode));
+        callableStatement.setString(3,releasedBy);
+        callableStatement.execute();
+        log("Successfully executed the stored procedure on AD DB:\n"+storedProcedure+"\n applicationNumber:"
+                +applicationNumber+"\n holdReasonCode:"+holdReasonCode+"\n releasedBy:"+releasedBy);
+        callableStatement.close();
+        connection.close();
+    }
+
+    @SneakyThrows
+    public void executeMarkApplicationAsCompletedStoredProcedure(String storedProcedure, String applicationNumber, String changedBy, String dataBase){
+        log("Executing stored procedure to mark application as complete");
+        connection = getDBConnection(dataBase);
+        CallableStatement callableStatement = connection.prepareCall(storedProcedure);
+        callableStatement.registerOutParameter(1, Types.INTEGER);
+        callableStatement.registerOutParameter(2, Types.VARCHAR);
+        callableStatement.setInt(1,Integer.parseInt(applicationNumber));
+        callableStatement.setString(2,changedBy);
+        callableStatement.execute();
+        log("Successfully executed the stored procedure on AD DB:\n"+storedProcedure+"\n applicationNumber:"
+                +applicationNumber+"\n changedBy:"+changedBy);
         callableStatement.close();
         connection.close();
     }

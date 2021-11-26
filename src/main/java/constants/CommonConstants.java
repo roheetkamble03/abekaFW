@@ -41,6 +41,7 @@ public @interface CommonConstants {
     String CELL = "cell";
     String SD_DATA_BASE = "SD";
     String PEN_KEY = "PEN_KEY";
+    String BY_AUTOMATION = "By Automation";
 
     String closeXpath = "xpath=//*[@id='%s']//button[@type='button' and normalize-space(text())='×']";
     String dropDownOption = "xpath=./ul[@class='dropdown']/descendant::span[normalize-space(text())='%s']";
