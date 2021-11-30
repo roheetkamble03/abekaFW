@@ -11,11 +11,11 @@ import utility.ParentAccountDetails;
 import utility.RetryUtility;
 import utility.StudentAccountDetails;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static constants.CommonConstants.GRADE_NINE_VIDEO_LIST;
-import static constants.CommonConstants.GRADE_ONE_VIDEO_LIST;
+import static constants.CommonConstants.*;
 import static constants.DataProviderName.PARENT_CREDENTIALS;
 import static constants.DataProviderName.STUDENT_CREDENTIALS;
 import static elementConstants.Enrollments.CURSIVE;
@@ -172,6 +172,44 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         calendarScreen.navigateToCalendarDate(progressReportEventPreviewTestData.getProgressReportEventDate().get(0)).validateProgressReportEventPreview(progressReportEventPreviewTestData);
         softAssertions.assertAll();
     }
+
+    @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
+    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentCalendarAddEditDeleteEventsOfGradeOne(String userId, String password, String userName, String signature){
+        CalendarScreen calendarScreen = new CalendarScreen();
+        StudentsScreen studentsScreen = new StudentsScreen();
+        StudentDetails studentDetails = getStudentAccountDetails(2);
+        //Change day count according to validation http://abatestweb.pcci.int/abadb/abaweb/aba_grading/viewonlinepr.aspx
+        ProgressReportEventPreviewTestData progressReportEventPreviewTestData = studentsScreen.getProgressReportPreviewEventDataFroExcel(GRADE_ONE_VIDEO_LIST, 36, 37);
+        progressReportEventPreviewTestData.setProgressReportEventDate(calendarScreen.fetchProgressReportEventDate(progressReportEventPreviewTestData.getDayCount()));
+        //setStudentAccountDetailsFromDB(userId, true);
+        loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
+        navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
+        LocalDate eventDate = progressReportEventPreviewTestData.getProgressReportEventDate().get(0);
+        calendarScreen.selectStudent(studentDetails).navigateToCalendarDate(eventDate)
+                .addNewEventToCalendar(eventDate, VIDEO, AUTOMATION_TEST)
+                .validateNewlyAddedEvent(eventDate).editCreatedEvent(eventDate).deleteAndVerifyCreatedEvent(eventDate);
+        softAssertions.assertAll();
+    }
+
+    @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
+    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentCalendarCategoryGradeOne(String userId, String password, String userName, String signature){
+        CalendarScreen calendarScreen = new CalendarScreen();
+        StudentsScreen studentsScreen = new StudentsScreen();
+        StudentDetails studentDetails = getStudentAccountDetails(2);
+        //Change day count according to validation http://abatestweb.pcci.int/abadb/abaweb/aba_grading/viewonlinepr.aspx
+        ProgressReportEventPreviewTestData progressReportEventPreviewTestData = studentsScreen.getProgressReportPreviewEventDataFroExcel(GRADE_ONE_VIDEO_LIST, 36, 37);
+        progressReportEventPreviewTestData.setProgressReportEventDate(calendarScreen.fetchProgressReportEventDate(progressReportEventPreviewTestData.getDayCount()));
+        //setStudentAccountDetailsFromDB(userId, true);
+        loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
+        navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
+        LocalDate eventDate = progressReportEventPreviewTestData.getProgressReportEventDate().get(0);
+        calendarScreen.selectStudent(studentDetails).navigateToCalendarDate(eventDate)
+                .addNewEventToCalendar(eventDate, MISC_ASSIGNMENTS, MISC_AUTOMATION_TEST).selectDeselectCalendarCategory(MISC_ASSIGNMENTS).validateIsEventBoxPresent(eventDate, MISC_AUTOMATION_TEST);
+        softAssertions.assertAll();
+    }
+
 
     @Test(testName = "enrollmentPurchaseGradeFour", retryAnalyzer = RetryUtility.class)
     public void enrollmentPurchaseGradeFour() {

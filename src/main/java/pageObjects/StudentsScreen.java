@@ -205,7 +205,7 @@ public class StudentsScreen extends GenericAction {
         String applicationNumber = getUserAccountDetails().getApplicationNumber();
         String accountNumber = getUserAccountDetails().getAccountNumber();
         ArrayList<HashMap<String, String>> subjectList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_SUBJECT_LIST_AD_DB
-                .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber).replaceAll(ACCOUNT_NUMBER_DATA, accountNumber), CommonConstants.AD_DATA_BASE);
+                .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber).replaceAll(ACCOUNT_NUMBER_DATA, accountNumber), CommonConstants.AD_DATA_BASE, false);
         ArrayList<HashMap<String, String>> progressReportTableSectionList;
         ArrayList<HashMap<String, String>> progressReportSectionTableList;
         ArrayList<HashMap<String, String>> progressReportTableRows;
@@ -220,7 +220,7 @@ public class StudentsScreen extends GenericAction {
                 version = subjectListRow.get(VERSION);
 
                 progressReportTableSectionList =  executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_TABLE_SECTION_LIST_AD_DB
-                        .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(VERSION_DATA,version), CommonConstants.AD_DATA_BASE);
+                        .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(VERSION_DATA,version), CommonConstants.AD_DATA_BASE, false);
                 chooseGradingPeriod(gradingPeriod);
                 if(!isElementExists(Students.submit, false)){
                     continue;
@@ -230,7 +230,7 @@ public class StudentsScreen extends GenericAction {
                     reportTableSectionName = tableSectionDetailsRow.get(REPORT_TABLE_SECTION_NAME);
                     progressReportSectionTableList =  executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_SECTION_TABLE_LIST_AD_DB
                             .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber).replaceAll(FORM_DATA, form).replaceAll(VERSION_DATA,version).
-                                    replaceAll(REPORT_TABLE_SECTION_TYPE_DATA,reportTableSectionType).replaceAll(SCHOOL_DATA,school), CommonConstants.AD_DATA_BASE);
+                                    replaceAll(REPORT_TABLE_SECTION_TYPE_DATA,reportTableSectionType).replaceAll(SCHOOL_DATA,school), CommonConstants.AD_DATA_BASE, false);
                     for(HashMap<String, String> sectionTableDetails:progressReportSectionTableList){
                         boxLetter = sectionTableDetails.get(TXH_BOXLTR);
                         tableName = sectionTableDetails.get(TABLE_NAME);
@@ -267,7 +267,7 @@ public class StudentsScreen extends GenericAction {
     private ArrayList<HashMap<String, String>> getProgressReportTableRows(String form, String school, String boxLetter, String version, String applicationNumber) {
         ArrayList<HashMap<String, String>> progressReportTableRowsList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_TABLE_ROWS_AD_DB
                 .replaceAll(FORM_DATA, form).replaceAll(SCHOOL_DATA, school).replaceAll(TXH_BOXLTR_DATA,boxLetter).
-                        replaceAll(VERSION_DATA,version).replaceAll(APPLICATION_NUMBER_DATA,applicationNumber), CommonConstants.AD_DATA_BASE);
+                        replaceAll(VERSION_DATA,version).replaceAll(APPLICATION_NUMBER_DATA,applicationNumber), CommonConstants.AD_DATA_BASE, false);
         ArrayList<HashMap<String, String>> progressReportTableRowsTemp = new ArrayList<>();
         progressReportTableRowsTemp.addAll(progressReportTableRowsList);
 
@@ -282,7 +282,7 @@ public class StudentsScreen extends GenericAction {
     private Collection<? extends HashMap<String, String>> getAndAddParentPRViewSuiteItemGrade(String form, String itemNumber, String school, String boxLetter, String version, String applicationNumber) {
         return executeAndGetSelectQueryData(DataBaseQueryConstant.GET_PROGRESS_REPORT_ADDITIONAL_TABLE_PARENT_ROWS
                 .replaceAll(FORM_DATA, form).replaceAll(ITEM_NUMBER_DATA, itemNumber).replaceAll(SCHOOL_DATA,school).
-                        replaceAll(TXH_BOXLTR_DATA,boxLetter).replaceAll(VERSION_DATA,version).replaceAll(APPLICATION_NUMBER_DATA,applicationNumber), CommonConstants.AD_DATA_BASE);
+                        replaceAll(TXH_BOXLTR_DATA,boxLetter).replaceAll(VERSION_DATA,version).replaceAll(APPLICATION_NUMBER_DATA,applicationNumber), CommonConstants.AD_DATA_BASE, false);
     }
 
     private List<String> getGradingPeriod(HashMap<String, String> subjectListRow) {
@@ -432,7 +432,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen selectSubjectOnProgressReportPage(String subject) {
-        selectValueFromDropDownVideoLibrary(Students.projectReportSubjectDropDown, subject);
+        selectValueFromDropDownVideo(Students.projectReportSubjectDropDown, subject);
         waitForPageTobeLoaded();
         return this;
     }
@@ -449,9 +449,9 @@ public class StudentsScreen extends GenericAction {
                     .as("My to do list header is not equal to " + Students.MY_TO_DO_LIST).isTrue();
 
             ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_LIST_LESSONS_SD_DB
-                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), SD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), SD_DATA_BASE, false);
             ArrayList<HashMap<String, String>> myAssignmentsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_ASSIGNMENTS_AD_DB
-                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
             for (HashMap<String, String> lessonsMap : myLessonsToday) {
                 subject = lessonsMap.get(SHORT_DESCRIPTION);
                 lesson = lessonsMap.get(LONG_DESCRIPTION);
@@ -551,7 +551,7 @@ public class StudentsScreen extends GenericAction {
             int myRecentGradeRowCount = getElements(Students.myRecentGradeRows).size() - 1;
             //add getStudentIdFromDB(studentName) to string.format
             ArrayList<HashMap<String, String>> myGrades = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT_AD_DB
-                    .replaceAll(TableColumn.ROW_COUNT_DATA, Integer.toString(myRecentGradeRowCount)).replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
+                    .replaceAll(TableColumn.ROW_COUNT_DATA, Integer.toString(myRecentGradeRowCount)).replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
 
             for (HashMap<String, String> rowData : myGrades) {
                 assignment = rowData.get(TableColumn.ASSESSMENT).trim();
@@ -576,7 +576,7 @@ public class StudentsScreen extends GenericAction {
         boolean isValidationDone = false;
         if (isElementExists(Students.lastViewedVideoLessonsSection, false)) {
             String loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
-            ArrayList<HashMap<String, String>> lastViewedLessonsDataMapList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_LAST_VIEWED_LESSON_DATA_SD_DB.replaceAll(LOGIN_ID_DATA, loginId), SD_DATA_BASE);
+            ArrayList<HashMap<String, String>> lastViewedLessonsDataMapList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_LAST_VIEWED_LESSON_DATA_SD_DB.replaceAll(LOGIN_ID_DATA, loginId), SD_DATA_BASE, false);
             for (HashMap<String, String> lastViewedLesson : lastViewedLessonsDataMapList) {
 
             }
@@ -601,7 +601,7 @@ public class StudentsScreen extends GenericAction {
     public StudentsScreen validateCursiveWritingVideo(){
         softAssertions.assertThat(isElementExists(seatworkExplanationCursive, true)).as(seatworkExplanationCursive + " lesson is not present on UI").isTrue();
         softAssertions.assertThat(isElementExists(seatworkExplanationCursive, true)).as(cursiveWriting + " lesson is not present on UI").isTrue();
-        selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, WRITING_1);
+        selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, WRITING_1);
         click(lessonOne);
         softAssertions.assertThat(isElementExists(cursiveWritingVideo,false)).as("Cursive writing video is not played").isTrue();
         return this;
@@ -618,7 +618,7 @@ public class StudentsScreen extends GenericAction {
             fromExcelDigitalAssessmentsTestDataArrayList = getDigitalAssessmentTestDataFromExcel();
         } else {
             ArrayList<HashMap<String, String>> myAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_ASSIGNMENTS_AD_DB
-                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
             myAssessmentToday.stream().forEach(e->fromDataBaseDigitalAssessmentsTestDataArrayList.add(DigitalAssessmentsTestData.builder()
                     .subject(e.get(SUBJECT)).quiz(e.get(MY_LESSONS_TODAY_LESSON_LIST)).isLocked(getIsLocked(e.get(LOCKED), Students.Y)).build()));
             refresh();
@@ -682,7 +682,7 @@ public class StudentsScreen extends GenericAction {
                     }
                 }else {
                     ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
-                            .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE);
+                            .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE, false);
                     for (HashMap<String, String> row : myLessonsToday) {
                         subject = row.get(SHORT_DESCRIPTION);
                         lesson = row.get(LONG_DESCRIPTION);
@@ -740,7 +740,7 @@ public class StudentsScreen extends GenericAction {
                         if (isVideoAlreadyViewedInVideoLibrary) {
                             softAssertions.fail("According Video library status [" + lesson + " lesson of " + subject + " subject] is already viewed and completed.");
                         }
-                        selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
+                        selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subject);
                         playLessonVideo(subject, longDescription);
                         tempXpath = String.format(Students.playingVideoTitle, subject + " - " + longDescription);
                         softAssertions.assertThat(isElementExists(tempXpath, false))
@@ -750,14 +750,14 @@ public class StudentsScreen extends GenericAction {
                         refresh();
                         waitForPageTobeLoaded();
 
-                        selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
+                        selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subject);
                         softAssertions.assertThat(getIsLessonCompletedStatusFromVideoLibrary(subscriptionItem, lesson, true))
                                 .as(lesson + " lesson of " + subject + " subject's video status is not updated to viewed/completed in Video library section").isTrue();
                         counter++;
                     }
                 }else {
                     ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
-                            .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE);
+                            .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE, false);
 
                     for (HashMap<String, String> row : myLessonsToday) {
                         subject = row.get(SHORT_DESCRIPTION);
@@ -769,7 +769,7 @@ public class StudentsScreen extends GenericAction {
                         subscriptionItem = getStudentSubjectDetailsList().get(subject).getSubscriptionItems();
                         loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
 
-                        selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
+                        selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subject);
                         isVideoAlreadyViewedInVideoLibrary = getIsLessonCompletedStatusFromVideoLibrary(subscriptionItem, lesson, true);
                         if (isVideoAlreadyViewedInVideoLibrary && !completed) {
                             softAssertions.fail("According Video library status [" + lesson + " lesson of " + subject + " subject] is already viewed and completed.");
@@ -786,7 +786,7 @@ public class StudentsScreen extends GenericAction {
                             refresh();
                             waitForPageTobeLoaded();
 
-                            selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
+                            selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subject);
                             softAssertions.assertThat(getIsLessonCompletedStatusFromVideoLibrary(subscriptionItem, lesson, true))
                                     .as(lesson + " lesson of " + subject + " subject's video status is not updated to viewed/completed in Video library section").isTrue();
                         } else {
@@ -861,7 +861,7 @@ public class StudentsScreen extends GenericAction {
             boolean isLessonCompleted;
 
             ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
-                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), CommonConstants.SD_DATA_BASE, false);
             ArrayList<String> validatedSubject = new ArrayList<>();
             for (HashMap<String, String> studentLessons : myLessonsToday) {
                 subject = studentLessons.get(SHORT_DESCRIPTION);
@@ -871,9 +871,9 @@ public class StudentsScreen extends GenericAction {
                     subscriptionItem = getStudentSubjectDetailsList().get(subject).getSubscriptionItems();
 
                     ArrayList<HashMap<String, String>> videoLibraryVideos = executeAndGetSelectQueryData(DataBaseQueryConstant.VIDEO_LIBRARY_VIDEOS_SD_DB
-                            .replaceAll(LOGIN_ID_DATA, loginId).replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber).replaceAll(SUBJECT_ID_DATA, subjectID), CommonConstants.SD_DATA_BASE);
+                            .replaceAll(LOGIN_ID_DATA, loginId).replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber).replaceAll(SUBJECT_ID_DATA, subjectID), CommonConstants.SD_DATA_BASE, false);
 
-                    selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
+                    selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subject);
                     for (HashMap<String, String> video : videoLibraryVideos) {
                         isLessonCompleted = (video.get(COMPLETED).equals(Y)) ? true : false;
                         lesson = video.get(LESSON_NUMBER);
@@ -900,7 +900,7 @@ public class StudentsScreen extends GenericAction {
 
 
     public StudentsScreen validateIsLessonVideoLinkIsPresentInVideoLibrary(String subject, String lesson, String subjectIDNumber, String subscriptionItemNumber) {
-        selectValueFromDropDownVideoLibrary(subject, lesson);
+        selectValueFromDropDownVideo(subject, lesson);
         tempXpath = String.format(Students.videoLibraryVideoLinkWithSubId, subjectIDNumber, subscriptionItemNumber, lesson);
         if (isChildElementExists(getElement(Students.videoLibrarySection), tempXpath)) {
             bringElementIntoView(getChildElement(getElement(Students.videoLibrarySection), tempXpath));
@@ -988,7 +988,7 @@ public class StudentsScreen extends GenericAction {
         if(isValidationWithExcelData){
             VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST, 0, 0);
             for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()){
-                selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subjectName);
+                selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subjectName);
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, videoListTestData.getNextDayLessonOfVideoLibrary().get(counter)))));
                 tempXpath = String.format(Students.lessonLockedCloseButton, LESSON_LOCKED, YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON, CLOSE);
                 if (isElementExists(tempXpath, false)) {
@@ -1001,7 +1001,7 @@ public class StudentsScreen extends GenericAction {
             }
         }else {
             ArrayList<HashMap<String, String>> myLessonsToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_LESSONS_TODAY_SD_DB
-                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentId), CommonConstants.SD_DATA_BASE);
+                    .replaceAll(TableColumn.STUDENT_ID_DATA, studentId), CommonConstants.SD_DATA_BASE, false);
 
             for (HashMap<String, String> row : myLessonsToday) {
                 subject = row.get(SHORT_DESCRIPTION);
@@ -1010,11 +1010,11 @@ public class StudentsScreen extends GenericAction {
                 subjectID = getStudentSubjectDetailsList().get(subject).getSubjectId();
 
                 ArrayList<HashMap<String, String>> videoLibraryVideos = executeAndGetSelectQueryData(DataBaseQueryConstant.VIDEO_LIBRARY_VIDEOS_SD_DB
-                        .replaceAll(LOGIN_ID_DATA, loginId).replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber).replaceAll(SUBJECT_ID_DATA, subjectID), CommonConstants.SD_DATA_BASE);
+                        .replaceAll(LOGIN_ID_DATA, loginId).replaceAll(SUBSCRIPTION_NUMBER_DATA, subscriptionNumber).replaceAll(SUBJECT_ID_DATA, subjectID), CommonConstants.SD_DATA_BASE, false);
                 futureVideoIndex = isSubjectHavingFutureLessons(videoLibraryVideos);
                 if (futureVideoIndex != 0 && futureVideoIndex != -1) {
                     lesson = videoLibraryVideos.get(futureVideoIndex).get(LESSON_NUMBER);
-                    selectValueFromDropDownVideoLibrary(Students.videoLibrarySubjectDropDown, subject);
+                    selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subject);
                     click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLinkWithSubId, lesson, subscriptionItem))));
                     tempXpath = String.format(Students.lessonLockedCloseButton, LESSON_LOCKED, YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON, CLOSE);
                     if (isElementExists(tempXpath, false)) {
@@ -1059,7 +1059,7 @@ public class StudentsScreen extends GenericAction {
         String endLesson;
 
         ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_ASSIGNMENTS_AD_DB
-                .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
+                .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
         for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
             subjectId = myAssessment.get(SUBJECT_ID_FK);
             endLesson = myAssessment.get(LESSON_NUMBER);
@@ -1081,7 +1081,7 @@ public class StudentsScreen extends GenericAction {
         String subjectId;
         String endLesson;
         ArrayList<HashMap<String, String>> myLessonsAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_DIGITAL_ONLY_ASSESSMENT_DETAILS_AD_DB
-                .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE);
+                .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
         for (HashMap<String, String> myAssessment : myLessonsAssessmentToday) {
             subject = myAssessment.get(SUBJECT).trim();
             assignmentName = myAssessment.get(LONG_DESCRIPTION).trim();

@@ -17,6 +17,10 @@ public @interface Calendar {
     String TBOX_ITEMS = "Tboxitems";
     String QUIZ = "Quiz";
     int TOTAL_STUDY_DAYS = 5;
+    String TEST = "Test";
+    String BIBLE = "Bible";
+    String LESSON_ONE = "Lesson 1";
+    String sureDeleteEvent = "Are you sure you want to delete this event?";
 
     String studentSelectionCheckBox = "xpath=//span[normalize-space(text())='%s']/parent::div/preceding-sibling::div[position()=1]/descendant::input[@type='checkbox']";
     String calendarSection = "id=calendar";
@@ -45,7 +49,23 @@ public @interface Calendar {
     String tableRowDays = "xpath=(//div[@class='fc-content-skeleton'])[%s]/descendant::td[contains(@class,'fc-future')]";
     String showMoreLink = "xpath=((//div[@class='fc-content-skeleton'])[%s]/descendant::tbody/tr[3]/descendant::a[@class='fc-more'])[%s]";
     String eventBox = "xpath=(//a[contains(@class,'%s')])[last()]";
+    String eventBoxTitle = "xpath=//div[@class='fc-event-container']/descendant::span[@class='fc-title' and normalize-space(text())='%s']";
     String eventPreviewTitle = "xpath=//div[@id='EventPreview']/descendant::h1[normalize-space(text())='%s']/small[normalize-space(text())='%s']";
     String eventPreviewPopUpDate = "xpath=//span[@id='PreviewDate' and normalize-space(text())='%s']";
+    String eventPreviewTime = "xpath=//span[@id='PreviewTime' and normalize-space(text())='%s']";
     String eventPreviewDescriptionText = "xpath=//span[@id='PreviewDescription' and normalize-space(text())='%s']";
+    String dateCell = "xpath=(//td[@data-date='%s'])[2]";
+    String createEventTitle = "xpath=//div[@id='addEvent']/descendant::input[@id='txtTitle']";
+    String createEventCategoryDropdown = "id=slcCategory";
+    String createEventSubjectDropdown = "id=txtSubject";
+    String createEventLessonNumberDropdown = "id=txtLessonNumber";
+    String createEventDescription = "id=txtDescription";
+    String createEventCreateButton = "id=btnCreate";
+    String calendarAccountCheckbox = "xpath=//span[@class='tab-name' and normalize-space(text())='%s']/parent::div/preceding-sibling::div[@class='tab-form']/descendant::input[@type='checkbox']";
+    String deleteEventButton = "id=btnDelete";
+    String deleteDialogButton = "id=DeleteDialogBtn";
+    String calendarEventEditBtn = "id=EditEventPreviewBtn";
+    String calendarEventSaveBtn = "id=btnSave";
+    String calendarCategory = "id=matserTab_Categories";
+    String categoryCheckBoxy = "xpath=//input[@type='checkbox' and @data-text='%s']";
 }

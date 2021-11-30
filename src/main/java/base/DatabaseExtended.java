@@ -4,7 +4,6 @@ import constants.CommonConstants;
 import lombok.SneakyThrows;
 import oracle.jdbc.pool.OracleDataSource;
 
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
-    public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery, String dataBase){
+    public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery, String dataBase, boolean ignoreNoRecordsFound){
         ArrayList<HashMap<String,String>> resultSetRowList = new ArrayList<>();
         int retryCount = 0;
         while (resultSetRowList.size()==0 && retryCount < 3) {
@@ -77,8 +76,10 @@ public class DatabaseExtended extends BaseClass {
             retryCount++;
             if(resultSetRowList.size() == 0)Thread.sleep(5000);
         }
-        if(resultSetRowList.size()==0)softAssertions.fail("No DB records found for following query: \n"
-                +selectQuery+"\n DB"+dataBase);
+        if(!ignoreNoRecordsFound) {
+            if (resultSetRowList.size() == 0) softAssertions.fail("No DB records found for following query: \n"
+                    + selectQuery + "\n DB" + dataBase);
+        }
         return resultSetRowList;
     }
 

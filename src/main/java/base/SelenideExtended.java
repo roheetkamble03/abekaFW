@@ -399,6 +399,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @param identifier element identifier
      */
     public void clickByJavaScript(String identifier) {
+        log("clicked by java script");
             JavascriptExecutor executor = (JavascriptExecutor) getDriver();
             executor.executeScript("arguments[0].click();", getElement(identifier));
     }
@@ -981,15 +982,16 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void waitForPageTobeLoaded(){
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
+            waitForElementTobeDisappear(CommonConstants.loading);
             wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
         }catch (TimeoutException|UnhandledAlertException e){
             log("Page load time out error :"+e.getMessage());
         }
     }
 
-    public void selectValueFromDropDownVideoLibrary(String dropDownIdentifier, String value){
+    public void selectValueFromDropDownVideo(String dropDownIdentifier, String value){
         bringElementIntoView(dropDownIdentifier).click();
-        click(getChildElement(getElement(dropDownIdentifier),String.format(CommonConstants.dropDownOption,value)));
+        click(getChildElement(getElement(dropDownIdentifier),value));
         waitForPageTobeLoaded();
     }
 
@@ -1017,6 +1019,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void navigateToHeaderBannerSubmenu(String menu, String submenu){
         mouseOverOnElement(menu);
         click(bringElementIntoView(String.format(AbekaHome.HEADER_SUB_MENU,submenu)));
+        waitAndCloseWidgetTourPopup();
     }
 
     public SelenideElement getElement() {

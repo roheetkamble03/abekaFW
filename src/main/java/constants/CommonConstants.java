@@ -19,6 +19,9 @@ public @interface CommonConstants {
     String MINUS = "MINUS";
     String PLUS = "PLUS";
     String AUTOMATION_TEST = "Automation Test";
+    String MISC_AUTOMATION_TEST = "Misc Automation Test";
+    String AUTOMATION_TEST_EDIT = "Automation Test Edit";
+    String SIX_PM = "— 6:00 pm";
     String LESSON_COMPLETED_CLASS_VALUE = "lessonComplete";
     String STUDENT_CREDENTIALS = "StudentCredentials";
     String USER_ID = "UserId";
@@ -69,4 +72,7 @@ public @interface CommonConstants {
     String POPUP_TITLE = "PopupTitle";
     String POPUP_TYPE = "PopupType";
     String PREVIEW_DESCRIPTION = "PreviewDescription";
+    String VIDEO = "Video";
+    String loading = "text=Loading";
+    String MISC_ASSIGNMENTS = "Misc. Assignments";
 }

@@ -4,16 +4,14 @@ import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.google.common.base.CaseFormat;
 import constants.Calendar;
-import constants.CommonConstants;
 import constants.DataBaseQueryConstant;
+import constants.StudentDetails;
 import constants.TableColumn;
 import dataProvider.DataProviders;
 import elementConstants.ProgressReportEventPreviewTestData;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.Days360;
 import utility.HolidayList;
-import utility.ParentAccountDetails;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -110,7 +108,7 @@ public class CalendarScreen extends GenericAction {
                 .replaceAll(TableColumn.STUDENT_ID_DATA,studentId)
                 .replaceAll(TableColumn.ACCOUNT_NUMBER_DATA,accountNumber)
                 .replaceAll(TableColumn.START_DATE_DATA,startDate)
-                .replaceAll(TableColumn.END_DATE_DATA,endDate), AD_DATA_BASE);
+                .replaceAll(TableColumn.END_DATE_DATA,endDate), AD_DATA_BASE, false);
     }
 
     private void validateCalendarEvents(ArrayList<HashMap<String,String>> calendarEventsDBResult, boolean isOpenAndValidateEachEventPreview){
@@ -370,6 +368,12 @@ public class CalendarScreen extends GenericAction {
         }
     }
 
+    public CalendarScreen selectStudent(StudentDetails studentDetails){
+        clickByJavaScript(String.format(calendarAccountCheckbox,studentDetails.getStudentUserId()));
+        waitForPageTobeLoaded();
+        return this;
+    }
+
     public CalendarScreen navigateToCalendarDate(LocalDate progressReportEventDate){
         waitForElementTobeExist(monthButton);
         click(monthButton);
@@ -377,7 +381,7 @@ public class CalendarScreen extends GenericAction {
         int counter = 0;
         while (!isElementExists(String.format(dateCellOnCalendar,
                 CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,progressReportEventDate.getMonth()
-                        .toString())+" "+progressReportEventDate.getYear(), progressReportEventDate.getDayOfMonth()), false, elementLoadWait/4) && counter < 13){
+                        .toString())+" "+progressReportEventDate.getYear(), progressReportEventDate.getDayOfMonth()), false, 5) && counter < 13){
             if (isClickNext) {
                 click(calendarNextButton);
                 waitForPageTobeLoaded();
@@ -390,12 +394,9 @@ public class CalendarScreen extends GenericAction {
     }
 
     public void validateProgressReportEventPreview(ProgressReportEventPreviewTestData progressReportEventPreviewTestData){
-        Map<String,Map<String,Integer>> dateRowMap = getDateRowCombinationMap();
-        LocalDate date = progressReportEventPreviewTestData.getProgressReportEventDate().get(0);
-        Integer rowPosition = dateRowMap.get(date.toString()).get(ROW);
-        Integer cellPosition = dateRowMap.get(date.toString()).get(CELL);
-        bringElementIntoView(String.format(showMoreLink,rowPosition, cellPosition));
-        click(String.format(showMoreLink,rowPosition, cellPosition));
+        String dateShowMoreLinkXpath = getShowMoreLinkXpathOfGivenDate(progressReportEventPreviewTestData.getProgressReportEventDate().get(0));
+        bringElementIntoView(dateShowMoreLinkXpath);
+        click(dateShowMoreLinkXpath);
         click(String.format(eventBox,progressReportEventPreviewTestData.getEventID().get(0)));
         softAssertions.assertThat(isElementExists(String.format(eventPreviewTitle,progressReportEventPreviewTestData.getPopupTitle().get(0),progressReportEventPreviewTestData.getPopupType().get(0))
                 , false)).as("Event preview is not expected as "+ progressReportEventPreviewTestData.getPreviewTitle()).isTrue();
@@ -406,7 +407,90 @@ public class CalendarScreen extends GenericAction {
                 .as("Event preview description is not expected as "+ progressReportEventPreviewTestData.getPreviewDescription()).isTrue();
     }
 
+    private String getShowMoreLinkXpathOfGivenDate(LocalDate localDate) {
+        Map<String,Map<String,Integer>> dateRowMap = getDateRowCombinationMap();
+        LocalDate date = localDate;
+        Integer rowPosition = dateRowMap.get(date.toString()).get(ROW);
+        Integer cellPosition = dateRowMap.get(date.toString()).get(CELL);
+        return String.format(showMoreLink,rowPosition, cellPosition);
+    }
+
+    public CalendarScreen addNewEventToCalendar(LocalDate date, String category, String eventName){
+        click(bringElementIntoView(String.format(dateCell, date)));
+        type(createEventTitle, eventName);
+        selectByIndex(createEventCategoryDropdown, (category.equals(VIDEO))?1:5);
+        selectByIndex(createEventSubjectDropdown, 1);
+        selectByIndex(createEventLessonNumberDropdown, 1);
+        type(createEventDescription, AUTOMATION_TEST);
+        click(createEventCreateButton);
+        waitForPageTobeLoaded();
+        return this;
+    }
+
+    public CalendarScreen openEventBox(LocalDate date, String eventName){
+        String dateShowMoreLinkXpath = getShowMoreLinkXpathOfGivenDate(date);
+        click(bringElementIntoView(dateShowMoreLinkXpath));
+        if(!isElementExists(String.format(eventBoxTitle,eventName),false, 10)){
+            click(bringElementIntoView(dateShowMoreLinkXpath));
+        }
+        clickByJavaScript(String.format(eventBoxTitle,eventName));
+        return this;
+    }
+
+    public CalendarScreen validateNewlyAddedEvent(LocalDate date){
+        openEventBox(date, AUTOMATION_TEST);
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewTitle,AUTOMATION_TEST,VIDEO)
+                , false)).as("Event preview is not expected as "+ AUTOMATION_TEST+" and "+VIDEO).isTrue();
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewPopUpDate,
+                date.format(DateTimeFormatter.ofPattern(MMM_dd_yyyy))),false)).as("Event preview pop up is not showing expected date "
+                +date.format(DateTimeFormatter.ofPattern(MMM_dd_yyyy))).isTrue();
+       // softAssertions.assertThat(isElementExists(String.format(eventPreviewTime, SIX_PM), false, 10)).as("Newly created event preview showing wrong time, other than "+ SIX_PM).isTrue();
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewDescriptionText,AUTOMATION_TEST), false))
+                .as("Event preview description is not expected as "+ AUTOMATION_TEST).isTrue();
+        return this;
+    }
+
+    public CalendarScreen editCreatedEvent(LocalDate date){
+        //openEventBox(date);
+        click(calendarEventEditBtn);
+        type(createEventDescription, AUTOMATION_TEST_EDIT);
+        click(calendarEventSaveBtn);
+        openEventBox(date, AUTOMATION_TEST);
+        softAssertions.assertThat(isElementExists(String.format(eventPreviewDescriptionText,AUTOMATION_TEST_EDIT), false))
+                .as("After edit Event preview description is not expected as "+ AUTOMATION_TEST_EDIT).isTrue();
+        return this;
+    }
+
+    public CalendarScreen deleteAndVerifyCreatedEvent(LocalDate date){
+        click(deleteEventButton);
+        waitForElementTobeExist(sureDeleteEvent);
+        if(isElementDisplayed(sureDeleteEvent)){
+            click(deleteDialogButton);
+            waitForPageTobeLoaded();
+        }
+        validateIsEventBoxPresent(date, AUTOMATION_TEST);
+        return this;
+    }
+
+    public CalendarScreen selectDeselectCalendarCategory(String category){
+        click(calendarCategory);
+        clickByJavaScript(String.format(categoryCheckBoxy,category));
+        implicitWaitInSeconds(10);
+        waitForPageTobeLoaded();
+        return this;
+    }
+
+    public CalendarScreen validateIsEventBoxPresent(LocalDate date, String eventName){
+        String dateShowMoreLinkXpath = getShowMoreLinkXpathOfGivenDate(date);
+        click(bringElementIntoView(dateShowMoreLinkXpath));
+        softAssertions.assertThat(isElementExists(String.format(eventBoxTitle,eventName), false, 10))
+                .as(date+eventName+" Event is present, but it should not").isFalse();
+        return this;
+    }
+
     private Map<String, Map<String,Integer>> getDateRowCombinationMap() {
+        waitForElementTobeExist(Calendar.tableRows);
+        implicitWaitInSeconds(10);
         List<SelenideElement> tableRows = getElements(Calendar.tableRows);
         Map<String, Map<String,Integer>> tableRowCellCombination = new HashMap<>();
         Map<String, Integer> rowCellCombination = new HashMap<>();

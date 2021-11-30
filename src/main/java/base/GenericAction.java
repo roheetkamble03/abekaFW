@@ -199,13 +199,13 @@ public abstract class GenericAction extends SelenideExtended{
      */
     public void setStudentAccountDetailsFromDB(String userId, boolean isFetchSubscriptionNumber){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
-                .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
-        String applicationNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_AD_DB.replaceAll(STUDENT_ID_DATA, userLoginDetails.get(STUDENT_ID)), AD_DATA_BASE).get(0).get(APPLICATION_NUMBER);
+                .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE, false).get(0);
+        String applicationNumber = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_APPLICATION_NUMBER_AD_DB.replaceAll(STUDENT_ID_DATA, userLoginDetails.get(STUDENT_ID)), AD_DATA_BASE, false).get(0).get(APPLICATION_NUMBER);
         String subscriptionNumber = "";
 
         if(isFetchSubscriptionNumber) {
             HashMap<String, String> subscriptionAccountDetails = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_SUBSCRIPTION_ACCOUNT_DETAILS_SD_DB
-                    .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber), SD_DATA_BASE).get(0);
+                    .replaceAll(APPLICATION_NUMBER_DATA, applicationNumber), SD_DATA_BASE, false).get(0);
             subscriptionNumber = subscriptionAccountDetails.get(SUBSCRIPTION_NUMBER_PK);
         }
 
@@ -215,7 +215,7 @@ public abstract class GenericAction extends SelenideExtended{
 
     public String getStudentIDFromDB(String userId){
         HashMap<String,String> userLoginDetails =  executeAndGetSelectQueryData(DataBaseQueryConstant.LOGIN_DETAILS_SD_DB
-                .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE).get(0);
+                .replaceAll(TableColumn.STUDENT_ID_DATA,userId),SD_DATA_BASE, false).get(0);
         return userLoginDetails.get(STUDENT_ID);
     }
 
@@ -228,7 +228,7 @@ public abstract class GenericAction extends SelenideExtended{
             setStudentAccountDetailsFromDB(studentName, true);
         }
         for(HashMap<String,String> row: executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_SUBJECT_DETAILS_SD_DB
-                .replaceAll(LOGIN_ID_DATA, getUserAccountDetails().getLoginId()).replaceAll(SUBSCRIPTION_NUMBER_DATA, getUserAccountDetails().getSubscriptionNumber()),SD_DATA_BASE)){
+                .replaceAll(LOGIN_ID_DATA, getUserAccountDetails().getLoginId()).replaceAll(SUBSCRIPTION_NUMBER_DATA, getUserAccountDetails().getSubscriptionNumber()),SD_DATA_BASE, false)){
 
             studentSubjectDetailsList.put(row.get(SUBJECT_NAME).trim(),new SubjectDetails(row.get(SUBJECT_NAME).trim(),row.get(TableColumn.SUBJECT_ID).trim(),
                     row.get(TableColumn.SUBSCRIPTION_ITEMS).trim(),row.get(SUBSCRIPTION_NUMBER).trim()));
@@ -420,9 +420,7 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public void updateCourseBeginDateToBackDateAndRemoveHolds(String studentUserName){
-        if(getUserAccountDetails().getApplicationNumber().length() == 0){
-            setStudentAccountDetailsFromDB(studentUserName, true);
-        }
+        setStudentAccountDetailsFromDB(studentUserName, false);
         removeAccountHoldsIfAny();
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -432,18 +430,20 @@ public abstract class GenericAction extends SelenideExtended{
     }
 
     public void removeAccountHoldsIfAny(){
-        ArrayList<HashMap<String,String>> holdReasonList = executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE);
-        if(holdReasonList.size()>0){
+        ArrayList<HashMap<String,String>> holdReasonList = executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE, true);
+        while (holdReasonList.size()>0){
             for(HashMap<String,String> holReasonMap:holdReasonList){
-                removeABAHold(getUserAccountDetails().getApplicationNumber(),holReasonMap.get(HOLD_REASON));
+                removeABAHold(getUserAccountDetails().getApplicationNumber(),holdReasonList.get(0).get(HOLD_REASON));
             }
+            implicitWaitInSeconds(10);
+            holdReasonList = executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE, true);
             markApplicationAsCompleted(getUserAccountDetails().getApplicationNumber());
         }
 
         ArrayList<HashMap<String,String>> navHoldReasonList = executeAndGetSelectQueryData(FETCH_NAV_HOLD_REASON_LIST
-                .replaceAll(ACCOUNT_NUMBER_DATA,getUserAccountDetails().getAccountNumber()).replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()),AD_DATA_BASE);
+                .replaceAll(ACCOUNT_NUMBER_DATA,getUserAccountDetails().getAccountNumber()).replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()),AD_DATA_BASE, true);
         if(navHoldReasonList.size()>0){
-
+            //Need to implement remove NAV hold
         }
     }
 }
