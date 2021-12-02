@@ -410,12 +410,15 @@ public class CalendarScreen extends GenericAction {
         Integer rowPosition = dateRowMap.get(localDate.toString()).get(ROW);
         Integer cellPosition = dateRowMap.get(localDate.toString()).get(CELL);
         List<SelenideElement> dateCells = getElements(String.format(tableRowDays, rowPosition));
-        int showMoreLinkPosition = 0;
+        int showMoreLinkPosition = 1;
         int i = 0;
         for(SelenideElement element : getElements(cellEventRow)){
-            if(getClassAttributeValue(element).equalsIgnoreCase(EVENT_PROPERTY)
-                    && !(getElementPropertyValue(dateCells.get(i), DATA_DATE).equals(localDate.toString()))){
-                showMoreLinkPosition++;
+            if(getClassAttributeValue(element).equalsIgnoreCase(EVENT_PROPERTY)){
+                    if(getElementPropertyValue(dateCells.get(i), DATA_DATE).equals(localDate.toString())) {
+                        break;
+                    }else {
+                        showMoreLinkPosition++;
+                    }
             }
             i++;
         }
