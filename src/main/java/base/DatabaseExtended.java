@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static constants.TableColumn.HOLD_CODE;
+
 public class DatabaseExtended extends BaseClass {
 
     ResultSet resultSet;
@@ -63,8 +65,8 @@ public class DatabaseExtended extends BaseClass {
     public ArrayList<HashMap<String,String>> executeAndGetSelectQueryData(String selectQuery, String dataBase, boolean ignoreNoRecordsFound){
         ArrayList<HashMap<String,String>> resultSetRowList = new ArrayList<>();
         int retryCount = 0;
+        connection = getDBConnection(dataBase);
         while (resultSetRowList.size()==0 && retryCount < 3) {
-            connection = getDBConnection(dataBase);
             try {
                 resultSet = connection.createStatement().executeQuery(selectQuery);
                 log("\n\nExecuted query:\n" + selectQuery);
@@ -72,10 +74,10 @@ public class DatabaseExtended extends BaseClass {
                 throw new Exception(e + "\n\nExecute query failed for \n\n" + selectQuery);
             }
             resultSetRowList = convertResultSetToArrayList();
-            connection.close();
             retryCount++;
-            if(resultSetRowList.size() == 0)Thread.sleep(5000);
+            if(resultSetRowList.size() == 0)Thread.sleep(3000);
         }
+        connection.close();
         if(!ignoreNoRecordsFound) {
             if (resultSetRowList.size() == 0) softAssertions.fail("No DB records found for following query: \n"
                     + selectQuery + "\n DB" + dataBase);
@@ -189,7 +191,7 @@ public class DatabaseExtended extends BaseClass {
     }
 
     @SneakyThrows
-    public void executeRemoveABAHoldStoredProcedure(String storedProcedure, String applicationNumber, String holdReasonCode, String releasedBy, String dataBase){
+    public void executeRemoveABAHoldStoredProcedure(String storedProcedure, String applicationNumber, ArrayList<HashMap<String,String>> holdReasonCodeList, String releasedBy, String dataBase){
         log("Executing stored procedure to remove ABA hold");
         connection = getDBConnection(dataBase);
         CallableStatement callableStatement = connection.prepareCall(storedProcedure);
@@ -197,11 +199,13 @@ public class DatabaseExtended extends BaseClass {
         callableStatement.registerOutParameter(2, Types.INTEGER);
         callableStatement.registerOutParameter(3, Types.VARCHAR);
         callableStatement.setInt(1,Integer.parseInt(applicationNumber));
-        callableStatement.setInt(2,Integer.parseInt(holdReasonCode));
-        callableStatement.setString(3,releasedBy);
-        callableStatement.execute();
-        log("Successfully executed the stored procedure on AD DB:\n"+storedProcedure+"\n applicationNumber:"
-                +applicationNumber+"\n holdReasonCode:"+holdReasonCode+"\n releasedBy:"+releasedBy);
+        for(HashMap<String,String> holdReasonCode:holdReasonCodeList){
+            callableStatement.setInt(2,Integer.parseInt(holdReasonCode.get(HOLD_CODE)));
+            callableStatement.setString(3,releasedBy);
+            callableStatement.execute();
+            log("Successfully executed the stored procedure on AD DB:\n"+storedProcedure+"\n applicationNumber:"
+                    +applicationNumber+"\n holdReasonCode:"+holdReasonCode.get(HOLD_CODE)+"\n releasedBy:"+releasedBy);
+        }
         callableStatement.close();
         connection.close();
     }

@@ -12,7 +12,7 @@ public class OrderConfirmationScreen extends GenericAction {
     public AcademyEnrollmentsScreen clickOnFinishYourEnrollment(){
         waitForElementTobeExist(OrderConfirmation.finishYourEnrollment, veryLongWait);
         bringElementIntoView(OrderConfirmation.finishYourEnrollment);
-        click(OrderConfirmation.finishYourEnrollment);
+        click(OrderConfirmation.finishYourEnrollment, false);
         return new AcademyEnrollmentsScreen();
     }
 }

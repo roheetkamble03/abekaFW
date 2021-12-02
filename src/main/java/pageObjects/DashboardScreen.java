@@ -12,7 +12,6 @@ import java.util.Arrays;
 import static com.codeborne.selenide.Selenide.back;
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static elementConstants.Dashboard.GRADUATION_PETITION;
-import static elementConstants.Dashboard.widgetTourPopupClose;
 
 public class DashboardScreen extends GenericAction {
     public DashboardScreen validateDashboardNewTab(){
@@ -125,7 +124,7 @@ public class DashboardScreen extends GenericAction {
         return new GraduationPetition();
     }
     public CalendarScreen navigateToFullCalendarView(){
-        click(Dashboard.FULL_CALENDAR_VIEW);
+        click(Dashboard.FULL_CALENDAR_VIEW, false);
         waitForPageTobeLoaded();
         return new CalendarScreen();
     }

@@ -10,15 +10,16 @@ public class SearchScreen extends GenericAction {
     }
 
     public BookDescriptionScreen selectProduct(String productName){
-        implicitWaitInSeconds(5);
+        //implicitWaitInSeconds(5);
+        waitForElementTobeExist(productName);
         softAssertions.assertThat(isElementExists(productName, false));
-        click(productName);
+        click(productName, false);
         return new BookDescriptionScreen();
     }
 
     public SearchScreen searchProduct(String productName){
         type(Search.searchBox,productName);
-        click(Search.searchBtn);
+        click(Search.searchBtn, false);
         return this;
     }
 }

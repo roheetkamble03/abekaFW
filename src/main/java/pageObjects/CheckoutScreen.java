@@ -3,6 +3,7 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.Condition;
 import constants.CheckoutCriteria;
+import elementConstants.AbekaHome;
 import elementConstants.Checkout;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -26,7 +27,7 @@ public class CheckoutScreen extends GenericAction {
 
     public void selectPaymentTerm(String paymentTerm){
         bringElementIntoView(String.format(Checkout.paymentTermRadio, paymentTerm));
-        click(String.format(Checkout.paymentTermRadio, paymentTerm));
+        click(String.format(Checkout.paymentTermRadio, paymentTerm), false);
         waitForAbekaBGProcessLogoDisappear();
         waitForOrderProcessingMsgDisappear();
     }
@@ -34,18 +35,18 @@ public class CheckoutScreen extends GenericAction {
     public void selectShippingAddress(String shippingAddress){
         if(shippingAddress.equalsIgnoreCase(Checkout.DEFAULT_SHIPPING_ADDRESS)) {
             bringElementIntoView(Checkout.shippingAddressMainRadio);
-            click(Checkout.shippingAddressMainRadio);
+            click(Checkout.shippingAddressMainRadio, false);
             waitForAbekaBGProcessLogoDisappear();
             waitForOrderProcessingMsgDisappear();
         }
         if(isElementExists(Checkout.suggestedShipAddresBtn, false)){
-            click(Checkout.suggestedShipAddresBtn);
+            click(Checkout.suggestedShipAddresBtn, false);
         }
     }
 
     public void selectShippingMethod(String shippingMethod){
         bringElementIntoView(shippingMethod);
-        click(shippingMethod);
+        click(shippingMethod, false);
         waitForAbekaBGProcessLogoDisappear();
         waitForOrderProcessingMsgDisappear();
     }
@@ -54,7 +55,7 @@ public class CheckoutScreen extends GenericAction {
         if(isBillingAndShippingAddressSame){
             if(!getElement(Checkout.shippingBillingSameChkBox).is(Condition.checked)){
                 bringElementIntoView(Checkout.shippingBillingSameChkBox);
-                click(Checkout.shippingBillingSameChkBox);
+                click(Checkout.shippingBillingSameChkBox, false);
                 waitForAbekaBGProcessLogoDisappear();
                 waitForOrderProcessingMsgDisappear();
             }
@@ -63,7 +64,7 @@ public class CheckoutScreen extends GenericAction {
 
     public void selectPaymentMethod(String paymentMethod){
         if(paymentMethod.equalsIgnoreCase(Checkout.DEFAULT)){
-            click(Checkout.newCreditCardRadio);
+            click(Checkout.newCreditCardRadio, false);
             type(Checkout.ccNumber, Checkout.CC_NUMBER);
             clickByJavaScript(Checkout.ccExpiryMonthTextBox);
             clickByJavaScript(Checkout.ccExpiryMonth);
@@ -72,7 +73,7 @@ public class CheckoutScreen extends GenericAction {
             type(Checkout.ccSecurityCode,RandomStringUtils.randomNumeric(3));
         }else {
             bringElementIntoView(Checkout.savedCreditCard);
-            click(Checkout.savedCreditCard);
+            click(Checkout.savedCreditCard, false);
             waitForAbekaBGProcessLogoDisappear();
             waitForOrderProcessingMsgDisappear();
         }
@@ -82,7 +83,7 @@ public class CheckoutScreen extends GenericAction {
         if(isAcceptTermsAndCondition){
             if(!getElement(Checkout.termsAgreedChkBox).is(Condition.checked)){
                 bringElementIntoView(Checkout.termsAgreedChkBox);
-                click(Checkout.termsAgreedChkBox);
+                click(Checkout.termsAgreedChkBox, false);
                 waitForAbekaBGProcessLogoDisappear();
             }
         }
@@ -90,10 +91,12 @@ public class CheckoutScreen extends GenericAction {
 
     public OrderConfirmationScreen clickOnPlaceOrder(){
         bringElementIntoView(Checkout.placeOrder);
-        click(Checkout.placeOrder);
+        click(Checkout.placeOrder, false);
+        implicitWaitInSeconds(2);
         waitForAbekaBGProcessLogoDisappear();
+        waitForElementTobeDisappear(AbekaHome.waitMessage);
         if(isElementDisplayed(Checkout.placeOrder)){
-            click(Checkout.placeOrder);
+            click(Checkout.placeOrder, false);
             waitForAbekaBGProcessLogoDisappear();
         }
         return new OrderConfirmationScreen();

@@ -1593,13 +1593,31 @@ public @interface DataBaseQueryConstant {
             "                     where aph_apref = APPLICATION_NUMBER_DATA\n" +
             "                     order by aph_cre_dt desc, aph_cre_tm desc";
 
-    String FETCH_NAV_HOLD_REASON_LIST = "/* Fetching NAV hold reason list*/" +
+    String FETCH_NAV_HOLD_REASON_LIST_AD_DB = "/* Fetching NAV hold reason list*/" +
             "SELECT Description, HoldCode, SetBy, SetAt, DocumentNbr\n" +
             "FROM table(abadb.Holds.GetAppNavHolds(p_AccountNumber => ACCOUNT_NUMBER_DATA, p_ApplicationNumber => APPLICATION_NUMBER_DATA))";
+
+    String SET_PROOF_OF_COMPLETION_NO_AD_DB = "/* Setting proof of completion no*/" +
+            "UPDATE linc.abadb_appld SET ap_pofc = 'X' WHERE ap_apref = APPLICATION_NUMBER_DATA";
 
     String REMOVE_ABA_HOLD_SP_AD_DB = "/*Removing ABA hold, application number, hold code, held released by*/ \n" +
             "{CALL ABADB.HOLDS.REMOVEHOLD(?,?,?)}";
 
     String MARK_APPLICATION_AS_COMPLETED = "/*Marking application as completed application number, changed by*/" +
             "{CALL ABADB.applications.CompleteApplication(?,?)}";
+
+    String REMOVE_ABA_HOLD_AD_DB = "/*Remove ABA hold AD DB*/\n" +
+            "BEGIN\n" +
+            "  FOR r_Hold IN (select aph_apref, aph_hold\n" +
+            "                  from linc.abadb_aphld\n" +
+            "                  where aph_apref = APPLICATION_NUMBER_DATA\n" +
+            "                  order by aph_cre_dt desc, aph_cre_tm desc)\n" +
+            "  LOOP\n" +
+            "    abadb.holds.removehold(\n" +
+            "    p_ApplicationNumber => APPLICATION_NUMBER_DATA,\n" +
+            "    p_HoldCode          => r_Hold.aph_hold,\n" +
+            "    p_HeldReleasedBy    => 'IT-Test'\n" +
+            "  );\n" +
+            "  END LOOP\n" +
+            "END";
 }

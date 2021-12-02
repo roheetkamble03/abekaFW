@@ -16,7 +16,7 @@ public class GraduationPetition extends GenericAction {
     public static String DOCUMENT_PROCESSING = "Document Processing";
 
     public GraduationPetition startPetition(){
-        click(START_NEXT);
+        click(START_NEXT, false);
         return this;
     }
 

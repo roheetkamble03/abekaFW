@@ -16,7 +16,7 @@ public class AbekaHomeScreen extends GenericAction {
     }
 
     public ShoppingCartPage navigateToShoppingCartPage(){
-        click(AbekaHome.cart);
+        click(AbekaHome.cart, false);
         waitForElementTobeVisibleOrMoveAhead(ShoppingCart.checkOutBtn);
         return new ShoppingCartPage();
     }

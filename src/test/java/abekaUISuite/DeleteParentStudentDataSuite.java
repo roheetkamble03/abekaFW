@@ -19,7 +19,7 @@ public class DeleteParentStudentDataSuite extends GenericAction {
     @DataRowNumber(fromDataRowNumber = "2")
     @Test(testName = "deleteStudentTestData", dataProvider = DataProviderName.STUDENT_CREDENTIALS,
             dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = "deleteParentTestData")
-    public void deleteStudentTestData(String userId, String password, String signature, String customerNumber){
+    public void deleteStudentTestData(String userId, String password, String signature, String customerNumber, String cartNumber){
         deleteStudentAccountFromSystem(userId);
     }
 }

@@ -45,15 +45,16 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.firstGrade).searchProduct(Enrollments.GRADE_ONE_VIDEO).selectProduct(Enrollments.GRADE_ONE_VIDEO).
                 selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
-        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut(2).
                 selectCheckoutCriteria(checkoutCriteria).
                 clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_ONE_ACCREDITED);
         abekaHomeScreen.logoutFromAbeka();
         softAssertions.assertAll();
     }
 
+    //validateCourseBeginDateFormatGradeOne
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
-    @Test(testName = "validateAddNewStudentGradeOne", dataProvider = DataProviderName.PARENT_CREDENTIALS,
+    @Test(testName = "validateAddNewStudentGradeOne", dataProvider = PARENT_CREDENTIALS,
             dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"enrollmentPurchaseGradeOne"})
     public void validateAddNewStudentGradeOne(String userId, String password, String signature, String customerNumber) {
         dashboardScreen = new DashboardScreen();
@@ -67,7 +68,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
         enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_ONE_ACCREDITED)
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, true).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
-                .clickOnNextButton().validateBeginDate().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
+                .clickOnNextButton().validateBeginDate().validateCourseBeginDateFormat().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
                 .clickOnNextButton().submitEnrollment().validateAllSetMessage().updateCourseBeginDateToBackDateAndRemoveHolds(studentDetails.getStudentUserId());
         setStudentAccountDetailsInTestDataExcel(studentDetails, 2);
         softAssertions.assertAll();
@@ -76,7 +77,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
     @Test(testName = "validateSubjectListOnProgressPage", dataProvider = DataProviderName.PARENT_CREDENTIALS,
             dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
-    public void validateSubjectListOnProgressPage(String userId, String password, String signature, String customerNumber){
+    public void validateSubjectListOnProgressPageOne(String userId, String password, String signature, String customerNumber){
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         StudentDetails studentDetails = getStudentAccountDetails(2);
@@ -88,8 +89,8 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
     @Test(testName = "validateSwitchPenmanShipScenario", dataProvider = STUDENT_CREDENTIALS,
-            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
-    public void validateSwitchPenmanShipScenarioGradeOne(String userId, String password, String signature, String customerNumber){
+            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void validateSwitchPenmanShipScenarioGradeOne(String userId, String password, String signature, String customerNumber, String cartNumber){
         StudentsScreen studentsScreen = new StudentsScreen();
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
         StudentDetails studentDetails = getStudentAccountDetails(2);
@@ -111,32 +112,32 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         softAssertions.assertAll();
     }
 
-    @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
-    @Test(testName = "validateCourseBeginDateFormatGradeOne", dataProvider = DataProviderName.PARENT_CREDENTIALS,
-            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"enrollmentPurchaseGradeOne"})
-    public void validateCourseBeginDateFormatGradeOne(String userId, String password, String signature, String customerNumber) {
-        enrollmentPurchaseGradeOne();
-        ParentAccountDetails parentAccountDetails = getParentAccountDetails(2);
-        userId = parentAccountDetails.getParentUserName();
-        password = parentAccountDetails.getParentPassword();
-        dashboardScreen = new DashboardScreen();
-        enrollmentsScreen = new EnrollmentsScreen();
-        StudentDetails studentDetails = StudentAccountDetails.getGradeOneAccreditedStudentDetails();
-        EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
-
-        loginToAbeka(userId, password, false).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        dashboardScreen.waitAndCloseWidgetTourPopup();
-        dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
-        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_ONE_ACCREDITED)
-                .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, true).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
-                .clickOnNextButton().validateCourseBeginDateFormat();
-        softAssertions.assertAll();
-    }
+//    @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
+//    @Test(testName = "validateCourseBeginDateFormatGradeOne", dataProvider = DataProviderName.PARENT_CREDENTIALS,
+//            dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+//    public void validateCourseBeginDateFormatGradeOne(String userId, String password, String signature, String customerNumber) {
+//        enrollmentPurchaseGradeOne();
+//        ParentAccountDetails parentAccountDetails = getParentAccountDetails(2);
+//        userId = parentAccountDetails.getParentUserName();
+//        password = parentAccountDetails.getParentPassword();
+//        dashboardScreen = new DashboardScreen();
+//        enrollmentsScreen = new EnrollmentsScreen();
+//        StudentDetails studentDetails = StudentAccountDetails.getGradeOneAccreditedStudentDetails();
+//        EnrollmentOptions enrollmentOptions = new EnrollmentOptions();
+//
+//        loginToAbeka(userId, password, false).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
+//        dashboardScreen.waitAndCloseWidgetTourPopup();
+//        dashboardScreen.navigateToMyOrderLink(Dashboard.ENROLLMENTS);
+//        enrollmentsScreen.validateEnrollmentPageSection().openSectionLink(Enrollments.NEW,Enrollments.GRADE_ONE_ACCREDITED)
+//                .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, true).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
+//                .clickOnNextButton().validateCourseBeginDateFormat();
+//        softAssertions.assertAll();
+//    }
 
     //Grade one
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
-    @Test(testName = "testValidateStudentCursiveVideoLessonOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
-    public void testValidateStudentCursiveVideoLessonOfGradeOne(String userId, String password, String studentName, String signature){
+    @Test(testName = "testValidateStudentCursiveVideoLessonOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentCursiveVideoLessonOfGradeOne(String userId, String password, String studentName, String signature, String cartNumber){
         StudentsScreen studentsScreen = new StudentsScreen();
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
@@ -147,8 +148,8 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade1
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
-    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
-    public void testValidateStudentCalendarEventsOfGradeOne(String userId, String password, String userName, String signature){
+    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentCalendarEventsOfGradeOne(String userId, String password, String userName, String signature, String cartNumber){
         setStudentAccountDetailsFromDB(userId, true);
         loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
         navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.CALENDAR);
@@ -158,8 +159,8 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade1
     @DataRowNumber(fromDataRowNumber = "2", toDataRowNumber = "2")
-    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeOne"})
-    public void testValidateStudentCalendarEventsOfProgressReportOfGradeOne(String userId, String password, String userName, String signature){
+    @Test(testName = "testValidateStudentCalendarEventsOfGradeOne", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentCalendarEventsOfProgressReportOfGradeOne(String userId, String password, String userName, String signature, String cartNumber){
         CalendarScreen calendarScreen = new CalendarScreen();
         StudentsScreen studentsScreen = new StudentsScreen();
         //Change day count according to validation http://abatestweb.pcci.int/abadb/abaweb/aba_grading/viewonlinepr.aspx
@@ -228,7 +229,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.fourthGrade).searchProduct(Enrollments.GRADE_FOUR_VIDEO).selectProduct(Enrollments.GRADE_FOUR_VIDEO).
                 selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
-        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut(3).
                 selectCheckoutCriteria(checkoutCriteria).
                 clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_FOUR_ACCREDITED);
         abekaHomeScreen.logoutFromAbeka();
@@ -257,7 +258,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade 4
     @DataRowNumber(fromDataRowNumber = "3", toDataRowNumber = "3")
-    @Test(testName = "testManageStudentInformationFromDashboardOfGradeFour", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeFour"})
+    @Test(testName = "testManageStudentInformationFromDashboardOfGradeFour", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testManageStudentInformationFromDashboardOfGradeFour(String userId, String password, String userName, String signature){
         StudentDetails studentDetails = getStudentAccountDetails(3);
         setStudentAccountDetailsFromDB(studentDetails.getStudentUserId(), true);
@@ -272,7 +273,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade 4
     @DataRowNumber(fromDataRowNumber = "3", toDataRowNumber = "3")
-    @Test(testName = "testValidateStudentAssessmentDetailsOnCalendarGradeFour", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeFour"})
+    @Test(testName = "testValidateStudentAssessmentDetailsOnCalendarGradeFour", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateStudentAssessmentDetailsOnCalendarGradeFour(String userId, String password, String userName, String signature){
         CalendarScreen calendarScreen = new CalendarScreen();
         StudentDetails studentDetails = getStudentAccountDetails(3);
@@ -287,7 +288,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     @DataRowNumber(fromDataRowNumber = "3", toDataRowNumber = "3")
     @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeFour", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void testValidateStudentAbleToWatchVideoStreamingOfGradeFour(String userId, String password, String userName, String signature){
+    public void testValidateStudentAbleToWatchVideoStreamingOfGradeFour(String userId, String password, String userName, String signature, String cartNumber){
         StudentsScreen studentsScreen = new StudentsScreen();
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
@@ -314,7 +315,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.ninthGrade).searchProduct(Enrollments.GRADE_NINE_VIDEO).selectProduct(Enrollments.GRADE_NINE_VIDEO).
                 selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
-        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut(4).
                 selectCheckoutCriteria(checkoutCriteria).
                 clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_NINE_ACCREDITED);
         abekaHomeScreen.logoutFromAbeka();
@@ -322,7 +323,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     }
 
     @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
-    @Test(testName = "validateAddNewStudentGradeNine", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "validateAddNewStudentGradeNine", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"enrollmentPurchaseGradeNine"})
     public void validateAddNewStudentGradeNine(String userId, String password, String signature, String customerNumber) {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
@@ -342,7 +343,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade 9
     @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
-    @Test(testName = "testModifyStudentAssessmentDetailsOnCalendarOfGradeNine", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeNine"})
+    @Test(testName = "testModifyStudentAssessmentDetailsOnCalendarOfGradeNine", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testModifyStudentAssessmentDetailsOnCalendarOfGradeNine(String userId, String password, String userName, String signature){
         StudentsScreen studentsScreen = new StudentsScreen();
         StudentDetails studentDetails = getStudentAccountDetails(4);
@@ -357,8 +358,8 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade 9
     @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
-    @Test(testName = "testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeNine"})
-    public void testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine(String userId, String password, String studentName, String signature){
+    @Test(testName = "testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine(String userId, String password, String studentName, String signature, String cartNumber){
         loginToAbeka(userId,password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD).waitAndCloseWidgetTourPopup();
         navigateToHeaderBannerSubmenu(AbekaHome.DASHBOARD,AbekaHome.DIGITAL_ASSESSMENTS);
         setStudentAccountDetailsFromDB(userId, true);
@@ -386,7 +387,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     //Grade 9 change to 4 currently fetching data for syed
     @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
     @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void testValidateStudentAbleToWatchVideoStreamingOfGradeNine(String userId, String password, String userName, String signature){
+    public void testValidateStudentAbleToWatchVideoStreamingOfGradeNine(String userId, String password, String userName, String signature, String cartNumber){
         StudentsScreen studentsScreen = new StudentsScreen();
         AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
@@ -410,7 +411,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 //    //Grade 9
 //    @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
 //    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-//    public void testValidateStudentAbleToWatchVideoStreamingOfGradeNineByUsingDB(String userId, String password, String userName, String signature){
+//    public void testValidateStudentAbleToWatchVideoStreamingOfGradeNineByUsingDB(String userId, String password, String userName, String signature, String cartNumber){
 //        StudentsScreen studentsScreen = new StudentsScreen();
 //        AbekaHomeScreen abekaHomeScreen = new AbekaHomeScreen();
 //        loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
@@ -433,8 +434,8 @@ public class ParentAndStudentSuiteTest extends GenericAction {
 
     //Grade 12
     @DataRowNumber(fromDataRowNumber = "4", toDataRowNumber = "4")
-    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"validateAddNewStudentGradeNine"})
-    public void testValidateStudentDashboardDataOfGradeNine(String userId, String password, String studentName, String signature){
+    @Test(testName = "testValidateStudentAbleToWatchVideoStreamingOfGradeNine", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    public void testValidateStudentDashboardDataOfGradeNine(String userId, String password, String studentName, String signature, String cartNumber){
         StudentsScreen studentsScreen = new StudentsScreen();
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
@@ -462,7 +463,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.twelfthGrade).searchProduct(Enrollments.GRADE_TWELVE_VIDEO).selectProduct(Enrollments.GRADE_TWELVE_VIDEO).
                 selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
-        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut(5).
                 selectCheckoutCriteria(checkoutCriteria).
                 clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_TWELVE_ACCREDITED);
         abekaHomeScreen.logoutFromAbeka();
@@ -470,7 +471,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     }
 
     @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
-    @Test(testName = "validateAddNewStudentGradeTwelve", dataProvider = DataProviderName.PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"enrollmentPurchaseGradeTwelve"})
+    @Test(testName = "validateAddNewStudentGradeTwelve", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class, dependsOnMethods = {"enrollmentPurchaseGradeTwelve"})
     public void validateAddNewStudentGradeTwelve(String userId, String password, String signature, String customerNumber) {
         dashboardScreen = new DashboardScreen();
         enrollmentsScreen = new EnrollmentsScreen();
@@ -510,7 +511,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
         abekaHomeScreen.navigateToShopByGrade(AbekaHome.twelfthGrade).searchProduct(Enrollments.GRADE_TWELVE_VIDEO).selectProduct(Enrollments.GRADE_TWELVE_VIDEO).
                 selectBookingCriteria(BookDescription.fullYear, BookDescription.videoAndBooks, BookDescription.accredited, CommonTexts.one).
                 clickOnAddToCart();
-        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut().
+        abekaHomeScreen.navigateToShoppingCartPage().validateProductInCart(productList).clickOnCheckOut(5).
                 selectCheckoutCriteria(checkoutCriteria).
                 clickOnPlaceOrder().clickOnFinishYourEnrollment().validateNewlyEnrolledCourses(Enrollments.GRADE_TWELVE_ACCREDITED);
 
@@ -522,7 +523,7 @@ public class ParentAndStudentSuiteTest extends GenericAction {
     }
 
     @DataRowNumber(fromDataRowNumber = "5", toDataRowNumber = "5")
-    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(enabled = false, testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         setStudentAccountDetailsFromDB(getStudentAccountDetails(5).getStudentUserId(), true);

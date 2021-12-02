@@ -55,6 +55,7 @@ public @interface CommonConstants {
     String PARENT_CREDENTIALS = "ParentCredentials";
     String HOLIDAY_LIST = "HolidayList";
     String STUDENT_NAME = "StudentName";
+    String CART_NUMBER = "CartNumber";
     String GRADE_WISE_VIDEO_LIST = "GradeWiseVideoList";
     String MY_LESSONS_TODAY_SUBJECT_LIST = "MyLessonsTodaySubjectList";
     String MY_LESSONS_TODAY_LESSON_LIST = "MyLessonsTodayLessonList";

@@ -58,10 +58,10 @@ public class EnrollmentsScreen extends GenericAction {
             validateUserNameAlreadyExistsMessage();
         }
         type(Enrollments.formUserNameInputBox,studentDetails.getStudentUserId());
-        click(Enrollments.formPasswordInputBox);
-        implicitWaitInSeconds(3);
+        click(Enrollments.formPasswordInputBox, false);
+        //implicitWaitInSeconds(3);
         type(Enrollments.formPasswordInputBox,studentDetails.getPassword());
-        click(Enrollments.CREATE);
+        click(Enrollments.CREATE, false);
         waitForPageTobeLoaded();
         log("Student account created with following details:\n" +
                 "UserName:"+studentDetails.getStudentUserId()+"\n" +
@@ -87,13 +87,13 @@ public class EnrollmentsScreen extends GenericAction {
 
     public void validateUserNameAlreadyExistsMessage(){
         type(Enrollments.formUserNameInputBox,"test");
-        click(Enrollments.formPasswordInputBox);
+        click(Enrollments.formPasswordInputBox, false);
         isElementDisplayed(Enrollments.userNameAlreadyExists);
     }
 
     public EnrollmentsScreen clickOnNextButton(){
         bringElementIntoView(Enrollments.nextButton);
-        click(Enrollments.nextButton);
+        click(Enrollments.nextButton, false);
         waitForPageTobeLoaded();
         return this;
     }
@@ -162,7 +162,7 @@ public class EnrollmentsScreen extends GenericAction {
 
     public EnrollmentsScreen removeExistingGuardianIfExists(){
         if(isElementExists(Enrollments.existingGuardianRemove, false)) {
-            click(Enrollments.existingGuardianRemove);
+            click(Enrollments.existingGuardianRemove, false);
         }
         return this;
     }
@@ -174,8 +174,8 @@ public class EnrollmentsScreen extends GenericAction {
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getPenmanship())));
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
-                click(enrollmentOptions.getGuardians());
-                implicitWaitInSeconds(3);
+                click(enrollmentOptions.getGuardians(), false);
+                //implicitWaitInSeconds(3);
                 if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
                 }else {
@@ -185,8 +185,8 @@ public class EnrollmentsScreen extends GenericAction {
             case (Enrollments.GRADE_FOUR_ACCREDITED):
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
-                click(enrollmentOptions.getGuardians());
-                implicitWaitInSeconds(3);
+                click(enrollmentOptions.getGuardians(), false);
+                //implicitWaitInSeconds(3);
                 if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
                 } else {
@@ -197,8 +197,8 @@ public class EnrollmentsScreen extends GenericAction {
             case (GRADE_TWELVE):
                 click(bringElementIntoView(String.format(Enrollments.enrollmentOptionRadioBtn,enrollmentOptions.getStreaming())));
                 bringElementIntoView(enrollmentOptions.getGuardians());
-                click(enrollmentOptions.getGuardians());
-                implicitWaitInSeconds(3);
+                click(enrollmentOptions.getGuardians(), false);
+                //implicitWaitInSeconds(3);
                 if(enrollmentOptions.getGuardians().equals(Enrollments.EXISTING_PARENT)){
                     confirmExistingParentGuardian(enrollmentOptions.getParentName(),enrollmentOptions.getRelation());
                 } else {
@@ -215,7 +215,7 @@ public class EnrollmentsScreen extends GenericAction {
     public EnrollmentsScreen confirmExistingParentGuardian(String parent, String relation){
         selectByVisibleText(Enrollments.parentSelectBox,parent);
         selectByVisibleText(Enrollments.relationSelectBox,relation);
-        click(Enrollments.confirmButton);
+        click(Enrollments.confirmButton, false);
         waitForPageTobeLoaded();
         return this;
     }
@@ -297,10 +297,10 @@ public class EnrollmentsScreen extends GenericAction {
             clickIfExists(NEW_PARENT);
             selectByIndex(guardianRelation, 1);
         }
-        click(addNewParentDoneBtn);
-        implicitWaitInSeconds(3);
+        click(addNewParentDoneBtn, false);
+        //implicitWaitInSeconds(3);
         waitForElementTobeDisappear(pleaseWait);
-        implicitWaitInSeconds(3);
+        //implicitWaitInSeconds(3);
         return this;
     }
 }

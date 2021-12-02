@@ -21,6 +21,7 @@ public @interface Calendar {
     String BIBLE = "Bible";
     String LESSON_ONE = "Lesson 1";
     String sureDeleteEvent = "Are you sure you want to delete this event?";
+    String EVENT_PROPERTY = "fc-event-container";
 
     String studentSelectionCheckBox = "xpath=//span[normalize-space(text())='%s']/parent::div/preceding-sibling::div[position()=1]/descendant::input[@type='checkbox']";
     String calendarSection = "id=calendar";
@@ -47,6 +48,7 @@ public @interface Calendar {
     String dateCellOnCalendar = "xpath=//h2[normalize-space(text())='%s']/ancestor::div[@id='calendar']/descendant::span[@class='fc-day-number' and normalize-space(text())='%s']";
     String tableRows = "xpath=//div[@class='fc-content-skeleton']";
     String tableRowDays = "xpath=(//div[@class='fc-content-skeleton'])[%s]/descendant::td[contains(@class,'fc-future')]";
+    String cellEventRow = "xpath=(//div[@class='fc-content-skeleton'])[2]/descendant::tbody/tr[1]/descendant::td";
     String showMoreLink = "xpath=((//div[@class='fc-content-skeleton'])[%s]/descendant::tbody/tr[3]/descendant::a[@class='fc-more'])[%s]";
     String eventBox = "xpath=(//a[contains(@class,'%s')])[last()]";
     String eventBoxTitle = "xpath=//div[@class='fc-event-container']/descendant::span[@class='fc-title' and normalize-space(text())='%s']";

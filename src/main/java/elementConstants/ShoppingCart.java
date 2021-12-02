@@ -21,5 +21,5 @@ public @interface ShoppingCart {
     String subTotal = "/descendant::div[position()=7]";
     String shoppingCartTitle = "id=cartItems";
     String checkOutBtn = "id=lbnFinishOrder";
-
+    String cartNumber = "xpath=//span[normalize-space(text())='Cart Number']/following-sibling::span[string-length(text())>1]";
 }

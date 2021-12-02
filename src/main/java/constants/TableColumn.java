@@ -70,5 +70,5 @@ public @interface TableColumn {
     String ITEM_NUMBER_DATA= "ITEM_NUMBER_DATA";
     String TABLE_NAME = "TABLE_NAME";
     String TABLE_NAME_DATA = "TABLE_NAME_DATA";
-    String HOLD_REASON = "APH_HOLD";
+    String HOLD_CODE = "APH_HOLD";
 }

@@ -30,7 +30,7 @@ public class AccessibilityAndWidgetValidationTestSuite extends GenericAction {
 
     @DataRowNumber(fromDataRowNumber = "1",toDataRowNumber = "1")
     @Test(testName = "testValidateStudentDashboardAccessControl", dataProvider = STUDENT_CREDENTIALS, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
-    public void testValidateStudentDashboardAccessControl(String userId, String password, String userName, String signature) {
+    public void testValidateStudentDashboardAccessControl(String userId, String password, String userName, String signature, String cartNumber) {
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
         dashboardScreen.waitAndCloseWidgetTourPopup();
         new AbekaHomeScreen().validatedURLContent(AbekaHome.STUDENT_ACCESS_CONTROL_URL_CONTENT);

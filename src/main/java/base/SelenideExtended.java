@@ -3,7 +3,6 @@ package base;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
-import constants.CommonConstants;
 import constants.EnumUtil;
 import elementConstants.AbekaHome;
 import elementConstants.Dashboard;
@@ -22,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,14 +41,15 @@ public abstract class SelenideExtended extends DatabaseExtended {
     String textContainsXpath = "(//*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|//text()[contains(normalize-space(),'%s')])[1]";
     SelenideElement element;
 
-    public void click(String identifier){
+    public void click(String identifier, boolean isIgnoreFailure){
         waitForElementTobeExist(identifier);
         try {
-            if(browser.equals(SAFARI)){
-                clickByJavaScript(identifier);
-            }else {
-                click(bringElementIntoView(identifier));
-            }
+            click(bringElementIntoView(identifier));
+//            if(browser.equals(SAFARI)){
+//                clickByJavaScript(identifier);
+//            }else {
+//                click(bringElementIntoView(identifier));
+//            }
         }catch (Throwable e){
             log("Clicked by java script");
             clickByJavaScript(getElement(identifier));
@@ -61,7 +60,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public void clickIfExists(String identifier){
         if(isElementExists(identifier, false)){
-            click(identifier);
+            click(identifier, false);
         }
     }
 
@@ -79,17 +78,18 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void click(SelenideElement element){
         log("Clicking on element");
         waitForElementTobeExist(element);
+        implicitWaitInSeconds(1);
         try {
-            if(browser.equals(SAFARI)) {
-                log("Clicked by java script for safari browser");
-                clickByJavaScript(element);
-            }else {
+            //if(browser.equals(SAFARI)) {
+//                log("Clicked by java script for safari browser");
+//                clickByJavaScript(element);
+            //}else {
                 element.click();
-            }
+            //}
         }catch (Throwable e){
             log("Clicked by java script");
             waitForElementTobeExist(element);
-            implicitWaitInSeconds(elementLoadWait);
+            //implicitWaitInSeconds(elementLoadWait);
             clickByJavaScript(element);
         }
     }
@@ -260,7 +260,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public String getElementText(String identifier, int... waitTimeInSeconds){
         try{
             waitForElementTobeVisibleOrMoveAhead(identifier, waitTimeInSeconds);
-            implicitWaitInSeconds(3);
+            //implicitWaitInSeconds(3);
             return getElementText(getElement(identifier));
         }catch (Throwable e){
             return "";
@@ -339,10 +339,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
      *
      */
     public void selectByIndex(String identifier, int index) {
-            waitForElementTobeExist(identifier);
-            implicitWaitInSeconds(2);
-            Select s = new Select(getElement(identifier));
-            s.selectByIndex(index);
+        waitForElementTobeExist(identifier);
+        implicitWaitInSeconds(2);
+        Select s = new Select(getElement(identifier));
+        s.selectByIndex(index);
     }
 
     /**
@@ -752,7 +752,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public SelenideElement getVisibleElement(String identifier, int... timeOut){
         log("Getting visible element:"+identifier);
         for (SelenideElement element: getElements(identifier)){
-            implicitWaitInSeconds(1);
+            //implicitWaitInSeconds(1);
             if (isElementDisplayed(element)) {
                 log("Visible element found");
                 return element;
@@ -769,12 +769,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void waitForElementTobeExist(String identifier, int... timeout) {
         try {
             log("Waiting for element to be exist:"+identifier);
-            getElements(identifier).get(0).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
+            getElement(identifier).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
         }catch (Throwable t){
             logger.info("Following Element not found \n" +
                     getByClause(identifier));
             if(t.getCause().toString().contains("StaleElementReferenceException")){
-                getElements(identifier).get(0).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
+                getElement(identifier).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
             }
             throw new Exception(t);
         }
@@ -785,7 +785,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @param identifier
      */
     public void waitForElementTobeExist(String identifier, int timeInSeconds) {
-        getElements(identifier).get(0).shouldBe(Condition.exist,Duration.ofSeconds(timeInSeconds));
+        getElement(identifier).shouldBe(Condition.exist,Duration.ofSeconds(timeInSeconds));
     }
 
     /**
@@ -803,7 +803,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     }
 
     public void waitForElementTobeEnabled(String identifier){
-        getElements(identifier).get(0).shouldBe(Condition.enabled,Duration.ofSeconds(elementLoadWait));
+        getElement(identifier).shouldBe(Condition.enabled,Duration.ofSeconds(elementLoadWait));
     }
 
     /**
@@ -811,9 +811,11 @@ public abstract class SelenideExtended extends DatabaseExtended {
      * @param timeOutInSeconds
      */
     public void implicitWaitInSeconds(int... timeOutInSeconds) {
-        LocalTime waitTime = LocalTime.now().plusSeconds((timeOutInSeconds.length>0)?timeOutInSeconds[0]:commonWait);
+        int timeToWait = (timeOutInSeconds.length>0)?timeOutInSeconds[0]:commonWait;
+        LocalTime waitTime = LocalTime.now().plusSeconds(timeToWait);
+        log("Implicit wait of "+timeToWait+" seconds");
         while (waitTime.isAfter(LocalTime.now())) {
-            log("Implicit wait is in progress, time remaining:["+ (waitTime.getSecond()-LocalTime.now().getSecond())+"] seconds");
+            //log("Implicit wait is in progress, time remaining:["+ (waitTime.getSecond()-LocalTime.now().getSecond())+"] seconds");
         }
     }
 
@@ -953,9 +955,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void waitForElementTobeDisappear(String identifier) {
         log("Waiting for element to disappear:"+identifier);
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime stopTime = currentTime.plusSeconds(elementLoadWait/2);
-        while (stopTime.isAfter(currentTime)) {
+        LocalDateTime stopTime = currentTime.plusSeconds(180);
+        while (isElementDisplayed(identifier) && currentTime.isBefore(stopTime)) {
                 try {
+                    log("Waiting for element to disappear:"+identifier);
                     if (!isElementDisplayed(identifier)) {
                         break;
                     }
@@ -976,13 +979,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public void waitForOrderProcessingMsgDisappear(){
         log("Waiting for process log to disappear");
         waitForElementTobeDisappear(Enrollments.orderProcessingMessage);
-        implicitWaitInSeconds(2);
+        //implicitWaitInSeconds(2);
     }
 
     public void waitForPageTobeLoaded(){
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), pageLoadTimeOut);
-            waitForElementTobeDisappear(CommonConstants.loading);
             wait.until(webDriver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString().equals("complete"));
         }catch (TimeoutException|UnhandledAlertException e){
             log("Page load time out error :"+e.getMessage());
@@ -1007,7 +1009,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
     public boolean waitAndCloseWidgetTourPopup(){
         try {
             waitForElementTobeExist(Dashboard.widgetTourPopupClose,elementLoadWait);
-            click(Dashboard.widgetTourPopupClose);
+            click(Dashboard.widgetTourPopupClose, false);
             waitForPageTobeLoaded();
             return true;
         }catch (Throwable e){

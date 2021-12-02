@@ -15,4 +15,9 @@ public @interface ApiServiceConstants {
     String customerNumber = "CustomerNumber";
     String createRequestType = "CreateCustomer";
     String deleteRequestType = "DeleteCustomer";
+    String resolveHold = "ResolveHold";
+    String cart = "Cart";
+    String holdReasonCode = "HoldReasonCode";
+    String impersonationCode = "ImpersonationCode";
+    String navService = "NAVSERVICE";
 }

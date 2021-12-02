@@ -41,30 +41,30 @@ public class StudentsScreen extends GenericAction {
             for (String widget : widgetList) {
                 try {
                     oldURL = getCurrentURL();
-                    click(String.format(Students.widgetLink, getStudentInformationWidgetLinkId(widget)));
+                    click(String.format(Students.widgetLink, getStudentInformationWidgetLinkId(widget)), false);
                     switch (widget) {
                         case Students.CALENDAR_SETTINGS:
                             String calendarHeader = String.format(Students.calendarPopupHeader, String.format(Students.CHANGE_CALENDAR_LENGTH, studentName));
                             softAssertions.assertThat(isElementExists(calendarHeader, false))
                                     .as(calendarHeader + " setting header is not appeared").isTrue();
-                            click(String.format(CommonConstants.closeXpath, Students.calendarPopup));
+                            click(String.format(CommonConstants.closeXpath, Students.calendarPopup), false);
                             break;
                         case Students.IMAGE:
                             String imageHeader = String.format(Students.imagePopupHeader, String.format(Students.CHANGE_IMAGE, studentName));
                             softAssertions.assertThat(isElementExists(imageHeader, false))
                                     .as(imageHeader + " setting header is not appeared").isTrue();
-                            click(String.format(CommonConstants.closeXpath, Students.imagePopup));
+                            click(String.format(CommonConstants.closeXpath, Students.imagePopup), false);
                             break;
                         case Students.LOGIN_INFORMATION:
                             softAssertions.assertThat(getElementText(Students.loginInfoPopupHeader).trim().equals(String.format(Students.CHANGE_LOGIN_INFO, studentName)))
                                     .as(String.format(Students.CHANGE_LOGIN_INFO, studentName) + " setting header is not appeared identifier:\n" + Students.loginInfoPopupHeader).isTrue();
-                            click(String.format(CommonConstants.closeXpath, Students.loginInfoPopup));
+                            click(String.format(CommonConstants.closeXpath, Students.loginInfoPopup), false);
                             break;
                         case Students.GRADE_ALERT_SETTING:
                             String gradeAlertSettingHeader = String.format(Students.gradeAlertHeader, Students.GRADE_ALERT_SETTING_HEADER);
                             softAssertions.assertThat(isElementExists(gradeAlertSettingHeader, false))
                                     .as(gradeAlertSettingHeader + " setting header is not appeared").isTrue();
-                            click(String.format(CommonConstants.closeXpath, Students.gradeAlertSettingPopup));
+                            click(String.format(CommonConstants.closeXpath, Students.gradeAlertSettingPopup), false);
                             break;
                         case Students.PROGRESS_REPORTS:
                             waitForPageTobeLoaded();
@@ -168,13 +168,13 @@ public class StudentsScreen extends GenericAction {
 
     @Step("Changing the student assessment details")
     public StudentsScreen changeStudentAssessmentDetails(String months, String permissionToMakeCalendarChanges) {
-        click(String.format(Students.calendarAssessmentModificationRadioBtn, months));
-        click(Students.updateCalendarBtn);
+        click(String.format(Students.calendarAssessmentModificationRadioBtn, months), false);
+        click(Students.updateCalendarBtn, false);
         waitForPageTobeLoaded();
         if (permissionToMakeCalendarChanges.length() > 0) {
             navigateToCalendarSettingsWidget();
             click(bringElementIntoView(String.format(calendarAssessmentModificationRadioBtn, permissionToMakeCalendarChanges)));
-            click(Students.saveCalendarPermission);
+            click(Students.saveCalendarPermission, false);
             waitForPageTobeLoaded();
         }
         return this;
@@ -186,7 +186,7 @@ public class StudentsScreen extends GenericAction {
                 .as(selectedMonth + " is not selected on Student's assessment(Calendar settings) page").isTrue();
         softAssertions.assertThat(isSelected(String.format(Students.calendarAssessmentModificationRadioBtn, selectedPermission)))
                 .as(selectedPermission + " is not selected on Student's assessment(Calendar settings) page").isTrue();
-        click(String.format(CommonConstants.closeXpath, Students.calendarPopup));
+        click(String.format(CommonConstants.closeXpath, Students.calendarPopup), false);
         return this;
     }
 
@@ -344,7 +344,7 @@ public class StudentsScreen extends GenericAction {
         }
         tempXpath = String.format(Students.gradeAverageXpath, getSectionID(sectionName), gradeTableName, Students.AVERAGE);
         String expectedAverage = String.format("%.1f",(Float.parseFloat(String.valueOf(totalGrade)) / (100 * givenGradeList.size())) * 100);
-        implicitWaitInSeconds(3);
+        //implicitWaitInSeconds(3);
         softAssertions.assertThat(getElementText(tempXpath).equals(expectedAverage))
                 .as(sectionName + "->" + gradeTableName + "'s average is not matching with table average. \nexpected average:"
                         + expectedAverage + "actual average:" + getElementText(tempXpath)).isTrue();
@@ -387,13 +387,13 @@ public class StudentsScreen extends GenericAction {
     private void completeComposition(String sectionName, String gradeTableName, String lesson, String description) {
         tempXpath = String.format(compositionSubmitLink, getSectionID(sectionName), gradeTableName, lesson,
                 description);
-        click(tempXpath);
+        click(tempXpath, false);
         waitForPageTobeLoaded();
-        click(submitOnline);
+        click(submitOnline, false);
         type(fileUpload,uploadWordFilePath);
         submitProgressReport();
         waitForElementTobeVisibleOrMoveAhead(BACK_TO_SERVICE_REPORT);
-        click(BACK_TO_SERVICE_REPORT);
+        click(BACK_TO_SERVICE_REPORT, false);
     }
 
     private StudentsScreen validateGradeInputBox(HashMap<String,String> tableRow, String sectionName, String gradeTableName) {
@@ -444,7 +444,7 @@ public class StudentsScreen extends GenericAction {
             String startDate;
             String lesson;
 
-            click(Students.updateAll);
+            click(Students.updateAll, false);
             softAssertions.assertThat(isElementTextEquals(Students.toDoListHeader, Students.MY_TO_DO_LIST))
                     .as("My to do list header is not equal to " + Students.MY_TO_DO_LIST).isTrue();
 
@@ -486,12 +486,12 @@ public class StudentsScreen extends GenericAction {
                 .as("Forgot password message of Change Password pop-up is not equal to " + Students.FORGOT_PASSWORD_MESSAGE).isTrue();
         softAssertions.assertThat(isElementExists(Students.changePasswordSubmitBtn, false))
                 .as("Change Password button is not present on Change Password pop-up.").isTrue();
-        click(String.format(CommonConstants.closeXpath, Students.changePasswordPopup));
+        click(String.format(CommonConstants.closeXpath, Students.changePasswordPopup), false);
         return this;
     }
 
     public StudentsScreen navigateToAccountInfoWidget(String widgetName) {
-        click(String.format(Students.accountInfoWidgetLink, widgetName));
+        click(String.format(Students.accountInfoWidgetLink, widgetName), false);
         waitForPageTobeLoaded();
         return this;
     }
@@ -515,7 +515,7 @@ public class StudentsScreen extends GenericAction {
             softAssertions.fail("Phone number box is not present on Transcript Request pop-up");
         }
         if (isElementExists(Students.sendMyTranscriptToPCCRadio, false)) {
-            click(Students.sendMyTranscriptToPCCRadio);
+            click(Students.sendMyTranscriptToPCCRadio, false);
         } else {
             softAssertions.fail("Send my transcript to PCC ratio button is not present on Transcript Request pop-up");
         }
@@ -525,7 +525,7 @@ public class StudentsScreen extends GenericAction {
             softAssertions.fail("Attention line text box is not present on Transcript Request pop-up");
         }
         if (isElementExists(Students.sendImmediately, false)) {
-            click(Students.sendImmediately);
+            click(Students.sendImmediately, false);
         } else {
             softAssertions.fail("Send transcript immediately with current status. radio button is not present on Transcript Request pop-up");
         }
@@ -567,7 +567,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen openTranScriptRequestPopUp() {
-        click(Students.requestTranScriptBtn);
+        click(Students.requestTranScriptBtn, false);
         waitForElementTobeExist(Students.submitTranScriptBtn);
         return this;
     }
@@ -602,7 +602,7 @@ public class StudentsScreen extends GenericAction {
         softAssertions.assertThat(isElementExists(seatworkExplanationCursive, true)).as(seatworkExplanationCursive + " lesson is not present on UI").isTrue();
         softAssertions.assertThat(isElementExists(seatworkExplanationCursive, true)).as(cursiveWriting + " lesson is not present on UI").isTrue();
         selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, WRITING_1);
-        click(lessonOne);
+        click(lessonOne, false);
         softAssertions.assertThat(isElementExists(cursiveWritingVideo,false)).as("Cursive writing video is not played").isTrue();
         return this;
     }
@@ -809,10 +809,10 @@ public class StudentsScreen extends GenericAction {
 
         while (!isElementExists(String.format(Students.playingVideoTitle, subject + " - " + longDescription), false) && retry < 3) {
             bringElementIntoView(tempXpath);
-            implicitWaitInSeconds(2);
+            //implicitWaitInSeconds(2);
             clickByJavaScript(tempXpath);
             if (isElementExists(Students.restartVideo, false)) {
-                click(restartVideo);
+                click(restartVideo, false);
             }
             retry++;
         }
@@ -958,7 +958,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     private void validateVideoLibraryDropDownList(List<String> videosInDropdown) {
-        click(videoLibrarySubjectDropDown);
+        click(videoLibrarySubjectDropDown, false);
         for(String subjectTitle: videosInDropdown){
             softAssertions.assertThat(isElementExists(String.format(videoNameInLibraryDropDown,subjectTitle.trim()),true))
                     .as(subjectTitle.trim()+" video is not present in video library dropdown list").isTrue();
@@ -992,7 +992,7 @@ public class StudentsScreen extends GenericAction {
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, videoListTestData.getNextDayLessonOfVideoLibrary().get(counter)))));
                 tempXpath = String.format(Students.lessonLockedCloseButton, LESSON_LOCKED, YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON, CLOSE);
                 if (isElementExists(tempXpath, false)) {
-                    click(tempXpath);
+                    click(tempXpath, false);
                 } else {
                     softAssertions.fail(Students.YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON + " message popup is not appeared.");
                 }
@@ -1018,7 +1018,7 @@ public class StudentsScreen extends GenericAction {
                     click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLinkWithSubId, lesson, subscriptionItem))));
                     tempXpath = String.format(Students.lessonLockedCloseButton, LESSON_LOCKED, YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON, CLOSE);
                     if (isElementExists(tempXpath, false)) {
-                        click(tempXpath);
+                        click(tempXpath, false);
                     } else {
                         softAssertions.fail(Students.YOU_HAVE_NOT_COMPLETED_THE_PREVIOUS_LESSON + " message popup is not appeared.");
                     }
@@ -1099,10 +1099,10 @@ public class StudentsScreen extends GenericAction {
                 }catch (Exception e){
                     softAssertions.fail("ASSESSMENT_LOCK column value is not in sync with UI");
                 }
-                click(String.format(Students.assessmentUnlocked, subject, assignmentName));
+                click(String.format(Students.assessmentUnlocked, subject, assignmentName), false);
                 if(isElementDisplayed(Students.signature)) {
                     type(Students.signature, userName);
-                    click(Students.signPledgeBtn);
+                    click(Students.signPledgeBtn, false);
                     clickIfExists(Students.signPledgeBtn);
                 }
                 waitForPageTobeLoaded();
@@ -1127,7 +1127,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     private void goToAnotherSession() {
-        click(Students.linkitStartAnotherSession);
+        click(Students.linkitStartAnotherSession, false);
         waitForPageTobeLoaded();
     }
 
@@ -1162,19 +1162,19 @@ public class StudentsScreen extends GenericAction {
                     break;
                 case DICTATION:
                     type(getVisibleElement(Students.linkitDictationTextBox),"Answered by automation test");
-                    click(linkitNextQuestionBtn);
+                    click(linkitNextQuestionBtn, false);
                     break;
                 case SPELLING:
                     type(getVisibleElement(Students.linkitDictationTextBox),"Answered by automation test for spelling");
-                    click(linkitNextQuestionBtn);
+                    click(linkitNextQuestionBtn, false);
                     break;
                 case VOCABULARY:
                     clickByJavaScript(Students.linkitVocabDropDown);
-                    click(linkitNextQuestionBtn);
+                    click(linkitNextQuestionBtn, false);
                     break;
                 case SHORT_ANSWER:
                     type(getVisibleElement(Students.linkitDictationTextBox),"Short answer");
-                    click(linkitNextQuestionBtn);
+                    click(linkitNextQuestionBtn, false);
                     break;
                 case CHOOSE_CORRECT_ANSWER:
                     click(getVisibleElement(linkitChooseCorrectAnswerFirst));
@@ -1183,15 +1183,15 @@ public class StudentsScreen extends GenericAction {
                     getDriver().switchTo().frame(getVisibleElement(linkitFrame));
                     type(getVisibleElement(linkitFrameBody),"Answered by automation");
                     switchToDefaultFrame(getDriver());
-                    click(linkitNextQuestionBtn);
+                    click(linkitNextQuestionBtn, false);
                     break;
                 default:
                     if(isElementDisplayed(linkitTextArea)){
                         type(getVisibleElement(linkitTextArea),"Answered by automation");
-                        click(linkitNextQuestionBtn);
+                        click(linkitNextQuestionBtn, false);
                         break;
                     }else {
-                        click(linkitNextQuestionBtn);
+                        click(linkitNextQuestionBtn, false);
                         click(getVisibleElement(linkitSkipQuestionYes));
                     }
             }
@@ -1201,7 +1201,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     public StudentsScreen navigateToPreviewVideoStudentScreen(){
-        click(studentPreviewVideoLink);
+        click(studentPreviewVideoLink, false);
         return this;
     }
 

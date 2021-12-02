@@ -3,10 +3,8 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.google.common.base.CaseFormat;
+import constants.*;
 import constants.Calendar;
-import constants.DataBaseQueryConstant;
-import constants.StudentDetails;
-import constants.TableColumn;
 import dataProvider.DataProviders;
 import elementConstants.ProgressReportEventPreviewTestData;
 import io.qameta.allure.Step;
@@ -33,7 +31,7 @@ public class CalendarScreen extends GenericAction {
         waitForPageTobeLoaded();
         tempXpath = String.format(Calendar.studentSelectionCheckBox,studentName);
         bringElementIntoView(tempXpath);
-        click(tempXpath);
+        click(tempXpath, false);
         waitForPageTobeLoaded();
         return this;
     }
@@ -44,12 +42,12 @@ public class CalendarScreen extends GenericAction {
         List<HolidayList> holidayListArrayList = new ArrayList<>();
         List<HolidayList> finalHolidayListArrayList = holidayListArrayList;
         dataMapList.stream().forEach(e-> finalHolidayListArrayList.add(HolidayList.builder().holiday(e.get(0)).beginDate(LocalDate.parse(e.get(1), DateTimeFormatter.ofPattern("yyyyMMdd"))).endDate(LocalDate.parse(e.get(2), DateTimeFormatter.ofPattern("yyyyMMdd"))).build()));
-        courseBeginDate = "11/22/2021";
+        courseBeginDate = "12/03/2021";
         LocalDate courseBeginDateLocal = LocalDate.parse(courseBeginDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         LocalDate courseDayCounter = LocalDate.parse(courseBeginDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         List<LocalDate> localDateList = new ArrayList<>();
         for(Integer dayCount: dayCountList) {
-            LocalDate progressReportEventDate = courseBeginDateLocal.plusDays(dayCount);
+            LocalDate progressReportEventDate = courseBeginDateLocal.plusDays(dayCount-1);
             holidayListArrayList = finalHolidayListArrayList.stream().filter(e -> e.getBeginDate().isAfter(courseBeginDateLocal)).collect(Collectors.toList());
 
             while (!courseDayCounter.equals(progressReportEventDate)) {
@@ -82,7 +80,7 @@ public class CalendarScreen extends GenericAction {
     public CalendarScreen validateStudentCalendarEvents(boolean isOpenAndValidateEachEventPreview) {
         waitAndCloseWidgetTourPopup();
         if(isElementExists(Calendar.calendarSection, false)){
-            bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(0));
+            bringElementIntoView(getElement(Calendar.CALENDAR_MONTH_DAYS));
             validateCalendarEvents(getCalendarDataFromDB(), isOpenAndValidateEachEventPreview);
         }else {
             softAssertions.fail("Calendar section not appeared for selected student");
@@ -101,7 +99,7 @@ public class CalendarScreen extends GenericAction {
     private  ArrayList<HashMap<String,String>> getCalendarDataFromDB(){
         String studentId = getUserAccountDetails().getStudentId();
         String accountNumber = getUserAccountDetails().getAccountNumber();
-        String startDate = getFormattedDate(bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(0)).getAttribute(DATA_DATE_ATTRIBUTE),Calendar.yyyy_MM_dd,Calendar.yyyyMMdd);
+        String startDate = getFormattedDate(bringElementIntoView(getElement(Calendar.CALENDAR_MONTH_DAYS)).getAttribute(DATA_DATE_ATTRIBUTE),Calendar.yyyy_MM_dd,Calendar.yyyyMMdd);
         String endDate = getFormattedDate(bringElementIntoView(getElements(Calendar.CALENDAR_MONTH_DAYS).get(getElements(Calendar.CALENDAR_MONTH_DAYS).size()-1)).getAttribute("data-date"),"yyyy-MM-dd","yyyyMMdd");
 
         return executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_CALENDER_EVENTS_AD_DB
@@ -232,7 +230,7 @@ public class CalendarScreen extends GenericAction {
         }else {
             tempXpath = String.format(Calendar.moreEventsLink,rowCounter,dayPosition);
             try {
-                click(tempXpath);
+                click(tempXpath, false);
                 isMoreEventPopupLinkExists = validateMoreEventPopUpHeader(moreEventPopupHeader);
             }catch (Throwable t){
                 isMoreEventPopupLinkExists = false;
@@ -255,14 +253,14 @@ public class CalendarScreen extends GenericAction {
         if(getElementText(Calendar.moreEventsPopUpHeader).equals(moreEventPopupHeader)){
             return true;
         }
-        click(Calendar.moreEventPopupCloseBtn);
+        click(Calendar.moreEventPopupCloseBtn, false);
         return false;
     }
 
     private void openAndValidateEventDetailsPopUp(int rowCounter, int gridPosition, int dayPosition, String date, String textToCompare){
         tempXpath = getElementText(String.format(Calendar.eventGridText,rowCounter,gridPosition,dayPosition));
         if(isElementExists(tempXpath, false)){
-            click(tempXpath);
+            click(tempXpath, false);
             validateEventPreviewPopUp(date,textToCompare);
         }else{
             softAssertions.fail(date+" day's ["+ gridPosition+"] grid is not present.");
@@ -278,7 +276,7 @@ public class CalendarScreen extends GenericAction {
                 .as(date+" day event's preview date is not matching \nActual:"+getElementText(eventPreviewDate)+"\nExpected:"+date).isTrue();
         softAssertions.assertThat(getElementText(Calendar.eventPreviewDescription).equals(compareTextArray[1]))
                 .as(date+" day event's preview description is not matching \nActual:"+getElementText(eventPreviewDescription)+"\nExpected:"+compareTextArray[2]).isTrue();
-        click(Calendar.eventPreviewCloseBtn);
+        click(Calendar.eventPreviewCloseBtn, false);
     }
 
     private ArrayList<String> getEventListFromMoreEventsPopup(){
@@ -301,7 +299,7 @@ public class CalendarScreen extends GenericAction {
             softAssertions.assertThat(getEventListFromMoreEventsPopup().equals(dayTasksList))
                     .as(date+":More events expected event list ["+dayTasksList+"] is not equal to actual event list["+ getEventListFromMoreEventsPopup()+"]").isTrue();
         }
-        click(Calendar.moreEventPopupCloseBtn);
+        click(Calendar.moreEventPopupCloseBtn, false);
         waitForPageTobeLoaded();
     }
 
@@ -376,17 +374,17 @@ public class CalendarScreen extends GenericAction {
 
     public CalendarScreen navigateToCalendarDate(LocalDate progressReportEventDate){
         waitForElementTobeExist(monthButton);
-        click(monthButton);
+        click(monthButton, false);
         boolean isClickNext = progressReportEventDate.isAfter(LocalDate.now());
         int counter = 0;
         while (!isElementExists(String.format(dateCellOnCalendar,
                 CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,progressReportEventDate.getMonth()
                         .toString())+" "+progressReportEventDate.getYear(), progressReportEventDate.getDayOfMonth()), false, 5) && counter < 13){
             if (isClickNext) {
-                click(calendarNextButton);
+                click(calendarNextButton, false);
                 waitForPageTobeLoaded();
             } else {
-                click(calendarPrevButton);
+                click(calendarPrevButton, false);
             }
             counter++;
         }
@@ -396,8 +394,8 @@ public class CalendarScreen extends GenericAction {
     public void validateProgressReportEventPreview(ProgressReportEventPreviewTestData progressReportEventPreviewTestData){
         String dateShowMoreLinkXpath = getShowMoreLinkXpathOfGivenDate(progressReportEventPreviewTestData.getProgressReportEventDate().get(0));
         bringElementIntoView(dateShowMoreLinkXpath);
-        click(dateShowMoreLinkXpath);
-        click(String.format(eventBox,progressReportEventPreviewTestData.getEventID().get(0)));
+        click(dateShowMoreLinkXpath, false);
+        click(String.format(eventBox,progressReportEventPreviewTestData.getEventID().get(0)), false);
         softAssertions.assertThat(isElementExists(String.format(eventPreviewTitle,progressReportEventPreviewTestData.getPopupTitle().get(0),progressReportEventPreviewTestData.getPopupType().get(0))
                 , false)).as("Event preview is not expected as "+ progressReportEventPreviewTestData.getPreviewTitle()).isTrue();
         softAssertions.assertThat(isElementExists(String.format(eventPreviewPopUpDate,
@@ -409,10 +407,19 @@ public class CalendarScreen extends GenericAction {
 
     private String getShowMoreLinkXpathOfGivenDate(LocalDate localDate) {
         Map<String,Map<String,Integer>> dateRowMap = getDateRowCombinationMap();
-        LocalDate date = localDate;
-        Integer rowPosition = dateRowMap.get(date.toString()).get(ROW);
-        Integer cellPosition = dateRowMap.get(date.toString()).get(CELL);
-        return String.format(showMoreLink,rowPosition, cellPosition);
+        Integer rowPosition = dateRowMap.get(localDate.toString()).get(ROW);
+        Integer cellPosition = dateRowMap.get(localDate.toString()).get(CELL);
+        List<SelenideElement> dateCells = getElements(String.format(tableRowDays, rowPosition));
+        int showMoreLinkPosition = 0;
+        int i = 0;
+        for(SelenideElement element : getElements(cellEventRow)){
+            if(getClassAttributeValue(element).equalsIgnoreCase(EVENT_PROPERTY)
+                    && !(getElementPropertyValue(dateCells.get(i), DATA_DATE).equals(localDate.toString()))){
+                showMoreLinkPosition++;
+            }
+            i++;
+        }
+        return String.format(showMoreLink,rowPosition, showMoreLinkPosition);
     }
 
     public CalendarScreen addNewEventToCalendar(LocalDate date, String category, String eventName){
@@ -422,7 +429,8 @@ public class CalendarScreen extends GenericAction {
         selectByIndex(createEventSubjectDropdown, 1);
         selectByIndex(createEventLessonNumberDropdown, 1);
         type(createEventDescription, AUTOMATION_TEST);
-        click(createEventCreateButton);
+        click(createEventCreateButton, false);
+        waitForElementTobeDisappear(CommonConstants.loading);
         waitForPageTobeLoaded();
         return this;
     }
@@ -452,9 +460,9 @@ public class CalendarScreen extends GenericAction {
 
     public CalendarScreen editCreatedEvent(LocalDate date){
         //openEventBox(date);
-        click(calendarEventEditBtn);
+        click(calendarEventEditBtn, false);
         type(createEventDescription, AUTOMATION_TEST_EDIT);
-        click(calendarEventSaveBtn);
+        click(calendarEventSaveBtn, false);
         openEventBox(date, AUTOMATION_TEST);
         softAssertions.assertThat(isElementExists(String.format(eventPreviewDescriptionText,AUTOMATION_TEST_EDIT), false))
                 .as("After edit Event preview description is not expected as "+ AUTOMATION_TEST_EDIT).isTrue();
@@ -462,10 +470,11 @@ public class CalendarScreen extends GenericAction {
     }
 
     public CalendarScreen deleteAndVerifyCreatedEvent(LocalDate date){
-        click(deleteEventButton);
+        click(deleteEventButton, false);
         waitForElementTobeExist(sureDeleteEvent);
         if(isElementDisplayed(sureDeleteEvent)){
-            click(deleteDialogButton);
+            click(deleteDialogButton, false);
+            waitForElementTobeDisappear(CommonConstants.loading);
             waitForPageTobeLoaded();
         }
         validateIsEventBoxPresent(date, AUTOMATION_TEST);
@@ -473,9 +482,10 @@ public class CalendarScreen extends GenericAction {
     }
 
     public CalendarScreen selectDeselectCalendarCategory(String category){
-        click(calendarCategory);
+        click(calendarCategory, false);
         clickByJavaScript(String.format(categoryCheckBoxy,category));
         implicitWaitInSeconds(10);
+        waitForElementTobeDisappear(CommonConstants.loading);
         waitForPageTobeLoaded();
         return this;
     }
@@ -497,11 +507,11 @@ public class CalendarScreen extends GenericAction {
         int rowCounter = 1;
         int cellCounter = 1;
         for(SelenideElement element:tableRows){
-            rowCellCombination = new HashMap<>();
-            rowCellCombination.put(ROW, rowCounter);
-            rowCellCombination.put(CELL, cellCounter);
             cellCounter = 1;
             for(SelenideElement dateElement:getElements(String.format(tableRowDays, rowCounter))){
+                rowCellCombination = new HashMap<>();
+                rowCellCombination.put(ROW, rowCounter);
+                rowCellCombination.put(CELL, cellCounter);
                 tableRowCellCombination.put(getElementPropertyValue(dateElement, DATA_DATE), rowCellCombination);
                 cellCounter++;
                 cellCounter = (cellCounter == 8)?1:cellCounter;

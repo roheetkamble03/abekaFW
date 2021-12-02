@@ -24,6 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static constants.ApiServiceConstants.customerNumber;
+import static constants.ApiServiceConstants.navService;
 import static constants.Calendar.dayMonthSingleDate;
 import static constants.Calendar.weekDayMonthDayOfMonth;
 import static constants.CommonConstants.*;
@@ -69,7 +70,7 @@ public abstract class GenericAction extends SelenideExtended{
         log("Password: "+ password);
         type(Login.emailAddress,userId);
         type(Login.password,password);
-        click(Login.loginBtn);
+        click(Login.loginBtn, false);
         waitForAbekaBGProcessLogoDisappear();
         //waitForElementTobeExist(userName);//"text=Hello, RCG");
         return new AbekaHomeScreen();
@@ -99,17 +100,17 @@ public abstract class GenericAction extends SelenideExtended{
         log("Waiting for sign up popup");
         if(isSignUpPopAppears) {
             waitForElementTobeVisibleOrMoveAhead(AbekaHome.closeSignup, veryLongWait);
-            if (browser.equals(SAFARI)) {
-                clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
-            } else {
+            //if (browser.equals(SAFARI)) {
+                //clickByJavaScript(getVisibleElement(AbekaHome.closeSignup));
+            //} else {
                 try {
                     click(getVisibleElement(AbekaHome.closeSignup, veryLongWait));
                 } catch (Exception e) {
                     log("Sign up pop up on page load not appeared");
                 }
-            }
-            click(AbekaHome.login);
-            click(AbekaHome.logInCreateAccount);
+            //}
+            click(AbekaHome.login, false);
+            click(AbekaHome.logInCreateAccount, false);
         }else {
             navigateToAccountGreetingSubMenu(AbekaHome.login);
         }
@@ -411,8 +412,8 @@ public abstract class GenericAction extends SelenideExtended{
         executeDeleteStudentAccountStoredProcedure(DELETE_STUDENT_ACCOUNT_SP_AD_DB, getStudentIDFromDB(studentUserId), AD_DATA_BASE);
     }
 
-    public void removeABAHold(String applicationNumber, String holdCode){
-        executeRemoveABAHoldStoredProcedure(REMOVE_ABA_HOLD_SP_AD_DB, applicationNumber,holdCode, BY_AUTOMATION, AD_DATA_BASE);
+    public void removeABAHold(String applicationNumber, ArrayList<HashMap<String,String>> holdCodeList){
+        executeRemoveABAHoldStoredProcedure(REMOVE_ABA_HOLD_SP_AD_DB, applicationNumber,holdCodeList, BY_AUTOMATION, AD_DATA_BASE);
     }
 
     public void markApplicationAsCompleted(String applicationNumber){
@@ -424,26 +425,32 @@ public abstract class GenericAction extends SelenideExtended{
         removeAccountHoldsIfAny();
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        localDate = localDate.minusMonths(3);
+        //localDate = localDate.minusMonths(3);
         String pastCourseBeginDate = localDate.format(formatter);
         executeUpdateCourseBeginDateToBackDate(UPDATE_COURSE_BEGIN_DATE_TO_BACK_DATE_SP_AD_DB, getUserAccountDetails().getApplicationNumber(), pastCourseBeginDate, studentUserName, AD_DATA_BASE);
     }
 
     public void removeAccountHoldsIfAny(){
-        ArrayList<HashMap<String,String>> holdReasonList = executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE, true);
-        while (holdReasonList.size()>0){
-            for(HashMap<String,String> holReasonMap:holdReasonList){
-                removeABAHold(getUserAccountDetails().getApplicationNumber(),holdReasonList.get(0).get(HOLD_REASON));
-            }
-            implicitWaitInSeconds(10);
+        executeQuery(SET_PROOF_OF_COMPLETION_NO_AD_DB.replaceAll(APPLICATION_NUMBER_DATA,getUserAccountDetails().getApplicationNumber()),AD_DATA_BASE);
+        ArrayList<HashMap<String,String>> holdReasonList;
+        while (executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE, true).size()>0){
             holdReasonList = executeAndGetSelectQueryData(FETCH_HOLD_REASON_LIST_AD_DB.replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()), AD_DATA_BASE, true);
+            removeABAHold(getUserAccountDetails().getApplicationNumber(),holdReasonList);
             markApplicationAsCompleted(getUserAccountDetails().getApplicationNumber());
+            implicitWaitInSeconds(10);
         }
 
-        ArrayList<HashMap<String,String>> navHoldReasonList = executeAndGetSelectQueryData(FETCH_NAV_HOLD_REASON_LIST
+        ArrayList<HashMap<String,String>> navHoldReasonList = executeAndGetSelectQueryData(FETCH_NAV_HOLD_REASON_LIST_AD_DB
                 .replaceAll(ACCOUNT_NUMBER_DATA,getUserAccountDetails().getAccountNumber()).replaceAll(APPLICATION_NUMBER_DATA, getUserAccountDetails().getApplicationNumber()),AD_DATA_BASE, true);
         if(navHoldReasonList.size()>0){
-            //Need to implement remove NAV hold
+            for(HashMap<String,String> navHoldReason:navHoldReasonList){
+                given().when().multiPart(ApiServiceConstants.request,ApiServiceConstants.resolveHold)
+                        .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
+                        .multiPart(ApiServiceConstants.cart,navHoldReason.get(HOLD_CODE))
+                        .multiPart(ApiServiceConstants.impersonationCode,navService)
+                        .header(CommonConstants.AUTHORIZATION, CommonConstants.BEARER + properties.getProperty(API_AUTH_KEY))
+                        .get(properties.get(CommonConstants.API_END_URL).toString());
+            }
         }
     }
 }

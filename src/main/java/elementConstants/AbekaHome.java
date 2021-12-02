@@ -22,6 +22,7 @@ public @interface AbekaHome {
     String cart = "text=Cart";
     String closeSignup = "xpath=//form[@id='aspnetForm']//div[@id='newsLetterSignup']//button[@onclick='dockEmailSubscribe()']";
     String abekaBGProcessLogo = "xpath=//i[@class='abekaLogoLoading']";
+    String waitMessage = "xpath=//div[@id='loaderText' and normalize-space(text())='Please wait while we update your shipping method…']";
     String accountGreeting = "xpath=//*[@id='AccountGreeting']/a";
     String account = "text=Account";
     String HOME = "Home";
