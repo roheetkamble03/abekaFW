@@ -17,9 +17,9 @@ public class ShoppingCartPage extends GenericAction {
 
     }
 
-    public CheckoutScreen clickOnCheckOut(int rowNumber){
+    public CheckoutScreen clickOnCheckOut(int rowNumber, String testDataExcelName){
         waitForElementTobeExist(cartNumber, elementLoadWait*2);
-        ExcelUtils excelUtils = new ExcelUtils();
+        ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
         excelUtils.setCellData(STUDENT_CREDENTIALS, CommonConstants.CART_NUMBER, rowNumber, getElementText(cartNumber).trim().split("\\n")[0].trim());
         bringElementIntoView(ShoppingCart.checkOutBtn);
         click(ShoppingCart.checkOutBtn, false);

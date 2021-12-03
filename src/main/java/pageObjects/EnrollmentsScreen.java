@@ -275,9 +275,9 @@ public class EnrollmentsScreen extends GenericAction {
         return this;
    }
 
-    public EnrollmentsScreen addParentAccountDetailsToTestData(String userName, String password){
-        ExcelUtils excelUtils = new ExcelUtils();
-        excelUtils.setCellData("ParentCredentials",new String[]{userName,password});
+    public EnrollmentsScreen addParentAccountDetailsToTestData(String userName, String password, String testDataExcelName){
+        ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
+        excelUtils.setCellData("ParentCredentials",new String[]{userName,password}, 0, false, testDataExcelName);
         return this;
     }
 

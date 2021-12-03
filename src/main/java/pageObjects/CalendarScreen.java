@@ -37,8 +37,8 @@ public class CalendarScreen extends GenericAction {
     }
 
     @Step("Fetch progress report event date")
-    public List<LocalDate> fetchProgressReportEventDate(List<Integer> dayCountList){
-        List<Map<Integer,String>> dataMapList = new DataProviders().getExcelData(HOLIDAY_LIST, 0, 0);
+    public List<LocalDate> fetchProgressReportEventDate(List<Integer> dayCountList, String testDataExcelName){
+        List<Map<Integer,String>> dataMapList = new DataProviders().getExcelData(HOLIDAY_LIST, 0, 0, testDataExcelName);
         List<HolidayList> holidayListArrayList = new ArrayList<>();
         List<HolidayList> finalHolidayListArrayList = holidayListArrayList;
         dataMapList.stream().forEach(e-> finalHolidayListArrayList.add(HolidayList.builder().holiday(e.get(0)).beginDate(LocalDate.parse(e.get(1), DateTimeFormatter.ofPattern("yyyyMMdd"))).endDate(LocalDate.parse(e.get(2), DateTimeFormatter.ofPattern("yyyyMMdd"))).build()));

@@ -171,8 +171,8 @@ public abstract class GenericAction extends SelenideExtended{
         }
     }
 
-    public ParentAccountDetails getParentAccountDetails(int rowNumber){
-        Map<Integer,String> dataMap = new DataProviders().getExcelData(PARENT_CREDENTIALS, rowNumber, rowNumber).get(0);
+    public ParentAccountDetails getParentAccountDetails(int rowNumber, String testDataExcelName){
+        Map<Integer,String> dataMap = new DataProviders().getExcelData(PARENT_CREDENTIALS, rowNumber, rowNumber, testDataExcelName).get(0);
         ParentAccountDetails parentDetails = new ParentAccountDetails();
         parentDetails.setParentUserName(dataMap.get(0));
         parentDetails.setParentPassword(dataMap.get(1));
@@ -182,8 +182,8 @@ public abstract class GenericAction extends SelenideExtended{
         return parentDetails;
     }
 
-    public StudentDetails getStudentAccountDetails(int rowNumber){
-        Map<Integer,String> dataMap = new DataProviders().getExcelData(STUDENT_CREDENTIALS, rowNumber, rowNumber).get(0);
+    public StudentDetails getStudentAccountDetails(int rowNumber, String testDataExcelName){
+        Map<Integer,String> dataMap = new DataProviders().getExcelData(STUDENT_CREDENTIALS, rowNumber, rowNumber, testDataExcelName).get(0);
         StudentDetails studentDetails = new StudentDetails();
         studentDetails.setStudentUserId(dataMap.get(0));
         studentDetails.setPassword(dataMap.get(1));
@@ -359,7 +359,7 @@ public abstract class GenericAction extends SelenideExtended{
         return getCurrentURL().indexOf(text)>0;
     }
 
-    public ParentAccountDetails createAndGetParentAccountDetails(int rowNumber, boolean isSetDataToExcel){
+    public ParentAccountDetails createAndGetParentAccountDetails(int rowNumber, boolean isSetDataToExcel, String testDataExcelName){
         ParentAccountDetails parentAccountDetails = new ParentAccountDetails();
         CreateAccountApiResponsePojo response = given().when().multiPart(ApiServiceConstants.request,ApiServiceConstants.createRequestType)
                 .multiPart(ApiServiceConstants.key,properties.getProperty(APP_KEY))
@@ -382,17 +382,17 @@ public abstract class GenericAction extends SelenideExtended{
                 "User Id:"+parentAccountDetails.getParentUserName()+"\n" +
                 "Password:"+parentAccountDetails.getParentPassword());
         if(isSetDataToExcel) {
-            ExcelUtils excelUtils = new ExcelUtils();
+            ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
             excelUtils.setCellData(CommonConstants.PARENT_CREDENTIALS,
-                    new String[]{parentAccountDetails.getParentUserName(), parentAccountDetails.getParentPassword(), parentAccountDetails.getParentName(), parentAccountDetails.getParentCustomerNumber()}, rowNumber);
+                    new String[]{parentAccountDetails.getParentUserName(), parentAccountDetails.getParentPassword(), parentAccountDetails.getParentName(), parentAccountDetails.getParentCustomerNumber()}, rowNumber, true, testDataExcelName);
         }
         return parentAccountDetails;
     }
 
-    public void setStudentAccountDetailsInTestDataExcel(StudentDetails studentDetails, int rowNumber) {
-        ExcelUtils excelUtils = new ExcelUtils();
+    public void setStudentAccountDetailsInTestDataExcel(StudentDetails studentDetails, int rowNumber, String testDataExcelName) {
+        ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
         excelUtils.setCellData(STUDENT_CREDENTIALS,
-                new String[]{studentDetails.getStudentUserId(), studentDetails.getPassword(), studentDetails.getFirstName()+" "+studentDetails.getLastName(), studentDetails.getGrade()}, rowNumber);
+                new String[]{studentDetails.getStudentUserId(), studentDetails.getPassword(), studentDetails.getFirstName()+" "+studentDetails.getLastName(), studentDetails.getGrade()}, rowNumber, true, testDataExcelName);
     }
 
     public void deleteParentAccount(String parentCustomerNumber){

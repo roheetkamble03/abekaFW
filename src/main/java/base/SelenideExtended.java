@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static elementConstants.Students.videoDropdownValue;
 import static org.openqa.selenium.remote.BrowserType.SAFARI;
 
 public abstract class SelenideExtended extends DatabaseExtended {
@@ -993,7 +994,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
 
     public void selectValueFromDropDownVideo(String dropDownIdentifier, String value){
         bringElementIntoView(dropDownIdentifier).click();
-        click(getChildElement(getElement(dropDownIdentifier),value));
+        click(String.format(videoDropdownValue,value), false);
         waitForPageTobeLoaded();
     }
 

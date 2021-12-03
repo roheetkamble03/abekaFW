@@ -11,22 +11,65 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static constants.CommonConstants.*;
+
 public class DataProviders {
-    ExcelUtils excelUtils = new ExcelUtils();
+    //ExcelUtils excelUtils = new ExcelUtils();
 
 //Class --> LoginPageTest,HomePageTest Test Case--> loginTest, wishListTest, orderHistoryandDetailsTest
 
-    @DataProvider(name = "parentCredentials")
-    public Object[][] getParentCredentials(Method method) {
-        return getExcelData(CommonConstants.PARENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class));
+    @DataProvider(name = "getParentCredentialsGeneric")
+    public Object[][] getParentCredentialsGeneric(Method method) {
+        return getExcelData(CommonConstants.PARENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GENERIC);
     }
 
-    @DataProvider(name = "studentCredentials")
-    public Object[][] getCredentials(Method method) {
-        return getExcelData(CommonConstants.STUDENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class));
+    @DataProvider(name = "getStudentCredentialsGeneric")
+    public Object[][] getStudentCredentialsGeneric(Method method) {
+        return getExcelData(CommonConstants.STUDENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GENERIC);
     }
 
-    public Object[][] getExcelData(String sheetName, DataRowNumber dataRowNumber){
+    @DataProvider(name = "getParentCredentialsGradeOne")
+    public Object[][] getParentCredentialsGradeOne(Method method) {
+        return getExcelData(CommonConstants.PARENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_ONE);
+    }
+
+    @DataProvider(name = "getStudentCredentialsGradeOne")
+    public Object[][] getStudentCredentialsGradeOne(Method method) {
+        return getExcelData(CommonConstants.STUDENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_ONE);
+    }
+
+    @DataProvider(name = "getParentCredentialsGradeFour")
+    public Object[][] getParentCredentialsGradeFour(Method method) {
+        return getExcelData(CommonConstants.PARENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_FOUR);
+    }
+
+    @DataProvider(name = "getStudentCredentialsGradeFour")
+    public Object[][] getStudentCredentialsGradeFour(Method method) {
+        return getExcelData(CommonConstants.STUDENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_FOUR);
+    }
+
+    @DataProvider(name = "getParentCredentialsGradeNine")
+    public Object[][] getParentCredentialsGradeNine(Method method) {
+        return getExcelData(CommonConstants.PARENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_NINE);
+    }
+
+    @DataProvider(name = "getStudentCredentialsGradeNine")
+    public Object[][] getStudentCredentialsGradeNine(Method method) {
+        return getExcelData(CommonConstants.STUDENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_NINE);
+    }
+
+    @DataProvider(name = "getParentCredentialsGradeTwelve")
+    public Object[][] getParentCredentialsGradeTwelve(Method method) {
+        return getExcelData(CommonConstants.PARENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_TWELVE);
+    }
+
+    @DataProvider(name = "getStudentCredentialsGradeTwelve")
+    public Object[][] getStudentCredentialsGradeTwelve(Method method) {
+        return getExcelData(CommonConstants.STUDENT_CREDENTIALS, method.getAnnotation(DataRowNumber.class), TEST_DATA_GRADE_TWELVE);
+    }
+
+    public Object[][] getExcelData(String sheetName, DataRowNumber dataRowNumber, String testDataExcelName){
+        ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
         // Totals rows count
         int rows = excelUtils.getRowCount(sheetName);
         // Total Columns
@@ -60,7 +103,8 @@ public class DataProviders {
         return data;
     }
 
-    public ArrayList<Map<Integer,String>> getExcelData(String sheetName, int fromDataRowNumber, int toDataRowNumber){
+    public ArrayList<Map<Integer,String>> getExcelData(String sheetName, int fromDataRowNumber, int toDataRowNumber, String testDataExcelName){
+        ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
         // Totals rows count
         int rows = excelUtils.getRowCount(sheetName);
         // Total Columns
@@ -96,7 +140,8 @@ public class DataProviders {
             return excelDataMapList;
     }
 
-    public Map<String,ArrayList<String>> getExcelDataInHashTable(String sheetName, int fromDataRowNumber, int toDataRowNumber){
+    public Map<String,ArrayList<String>> getExcelDataInHashTable(String sheetName, int fromDataRowNumber, int toDataRowNumber, String testDataExcelName){
+        ExcelUtils excelUtils = new ExcelUtils(testDataExcelName);
         // Totals rows count
         int rows = excelUtils.getRowCount(sheetName);
         // Total Columns
@@ -113,7 +158,7 @@ public class DataProviders {
             }
         }
         //if to you need to read all rows pass toDataRowNumber as 0
-        toDataRowNumber = (toDataRowNumber == 0)? (toDataRowNumber == fromDataRowNumber) ? actRows+1:actRows:toDataRowNumber;
+        toDataRowNumber = (toDataRowNumber == 0)? actRows:toDataRowNumber;
 
         int columnHeader = 0;
         for (int i = 0; i < data[0].length; i++) {

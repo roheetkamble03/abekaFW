@@ -76,4 +76,9 @@ public @interface CommonConstants {
     String VIDEO = "Video";
     String loading = "text=Loading";
     String MISC_ASSIGNMENTS = "Misc. Assignments";
+    String TEST_DATA_GENERIC = "TestDataGeneric";
+    String TEST_DATA_GRADE_ONE = "TestDataGradeOne";
+    String TEST_DATA_GRADE_FOUR = "TestDataGradeFour";
+    String TEST_DATA_GRADE_NINE = "TestDataGradeNine";
+    String TEST_DATA_GRADE_TWELVE = "TestDataGradeTwelve";
 }

@@ -551,7 +551,7 @@ public class StudentsScreen extends GenericAction {
             int myRecentGradeRowCount = getElements(Students.myRecentGradeRows).size() - 1;
             //add getStudentIdFromDB(studentName) to string.format
             ArrayList<HashMap<String, String>> myGrades = executeAndGetSelectQueryData(DataBaseQueryConstant.STUDENT_GRADE_WITH_SUBJECT_AD_DB
-                    .replaceAll(TableColumn.ROW_COUNT_DATA, Integer.toString(myRecentGradeRowCount)).replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
+                    .replaceAll(TableColumn.ROW_COUNT_DATA, Integer.toString(myRecentGradeRowCount)).replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, true);
 
             for (HashMap<String, String> rowData : myGrades) {
                 assignment = rowData.get(TableColumn.ASSESSMENT).trim();
@@ -576,7 +576,7 @@ public class StudentsScreen extends GenericAction {
         boolean isValidationDone = false;
         if (isElementExists(Students.lastViewedVideoLessonsSection, false)) {
             String loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
-            ArrayList<HashMap<String, String>> lastViewedLessonsDataMapList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_LAST_VIEWED_LESSON_DATA_SD_DB.replaceAll(LOGIN_ID_DATA, loginId), SD_DATA_BASE, false);
+            ArrayList<HashMap<String, String>> lastViewedLessonsDataMapList = executeAndGetSelectQueryData(DataBaseQueryConstant.GET_LAST_VIEWED_LESSON_DATA_SD_DB.replaceAll(LOGIN_ID_DATA, loginId), SD_DATA_BASE, true);
             for (HashMap<String, String> lastViewedLesson : lastViewedLessonsDataMapList) {
 
             }
@@ -607,7 +607,21 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen validateDigitalAssessmentsAreLockedOrNot(boolean isValidateDataFromExcel) {
+    public StudentsScreen skipPracticeTest(){
+        click(getElement(takeMyPracticeTest));
+        waitForPageTobeLoaded();
+        waitForElementTobeExist(Students.linkitBeginBtn, veryLongWait);
+        click(getVisibleElement(Students.linkitBeginBtn));
+        waitForPageTobeLoaded();
+        waitForElementTobeVisibleOrMoveAhead(Students.linkitQuestionPanel, veryLongWait);
+        click(getElement(closeButton));
+        click(linkitstopTestButton, false);
+        click(linkitYesSubmit, false);
+        click(linkitStartAnotherSession, false);
+        return this;
+    }
+
+    public StudentsScreen validateDigitalAssessmentsAreLockedOrNot(boolean isValidateDataFromExcel, String testDataExcelName) {
         String subject;
         String lesson;
         boolean isLocked;
@@ -615,7 +629,7 @@ public class StudentsScreen extends GenericAction {
         List<DigitalAssessmentsTestData> fromExcelDigitalAssessmentsTestDataArrayList = new ArrayList<>();
         List<DigitalAssessmentsTestData> fromDataBaseDigitalAssessmentsTestDataArrayList = new ArrayList<>();
         if(isValidateDataFromExcel){
-            fromExcelDigitalAssessmentsTestDataArrayList = getDigitalAssessmentTestDataFromExcel();
+            fromExcelDigitalAssessmentsTestDataArrayList = getDigitalAssessmentTestDataFromExcel(testDataExcelName);
         } else {
             ArrayList<HashMap<String, String>> myAssessmentToday = executeAndGetSelectQueryData(DataBaseQueryConstant.MY_TO_DO_LIST_ASSIGNMENTS_AD_DB
                     .replaceAll(TableColumn.STUDENT_ID_DATA, studentID), AD_DATA_BASE, false);
@@ -662,7 +676,7 @@ public class StudentsScreen extends GenericAction {
      * @param fromDataRowNumber
      * @param toDataRowNumber
      */
-    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel, String videoListSheetName, int fromDataRowNumber, int toDataRowNumber) {
+    public StudentsScreen validateMyLessonsTodaySectionData(boolean isValidationWithExcel, String videoListSheetName, int fromDataRowNumber, int toDataRowNumber, String testDataExcelName) {
         //getExcelDataSet()
         if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
             if (isElementExists(Students.lessonsToday, false)) {
@@ -672,7 +686,7 @@ public class StudentsScreen extends GenericAction {
                 String lesson;
                 int counter = 0;
                 if(isValidationWithExcel){
-                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName, fromDataRowNumber, toDataRowNumber);
+                    VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName, fromDataRowNumber, toDataRowNumber, testDataExcelName);
                     for(String subjectName: videoListTestData.getMyLessonsTodaySubjectList()){
                         lesson = videoListTestData.getMyLessonsTodayLessonList().get(counter);
                         myLessonsVideoLink = String.format(Students.myLessonsTodayVideoLink, subjectName, lesson);
@@ -709,7 +723,7 @@ public class StudentsScreen extends GenericAction {
      * @param isValidationWithExcelData
      * @param videoListSheetName
      */
-    public StudentsScreen watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(boolean isValidationWithExcelData, String videoListSheetName) {
+    public StudentsScreen watchVideoAndValidateMyLessonsTodaySectionWithVideoLibrary(boolean isValidationWithExcelData, String videoListSheetName, String testDataExcelName) {
         if (isElementExists(Students.MY_LESSONS_TODAY, false)) {
             if (isElementExists(Students.lessonsToday, false)) {
                 String myLessonsVideoLink;
@@ -724,7 +738,7 @@ public class StudentsScreen extends GenericAction {
                 boolean isVideoAlreadyViewedInVideoLibrary = false;
                 int counter = 0;
                 String studentID = getUserAccountDetails().getStudentId();//userAccountDetails.get(STUDENT_ID);
-                VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName, 0, 0);
+                VideoListTestData videoListTestData = getVideoListTestDataFroExcel(videoListSheetName, 0, 0, testDataExcelName);
 
                 if(isValidationWithExcelData){
                     for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()) {
@@ -925,15 +939,15 @@ public class StudentsScreen extends GenericAction {
         return this;
     }
 
-    public StudentsScreen validateVideoListAvailableOnVideoLibrary(){
-        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(CommonConstants.GRADE_WISE_VIDEO_LIST, 0, 0);
+    public StudentsScreen validateVideoListAvailableOnVideoLibrary(String testDataExcelName){
+        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(CommonConstants.GRADE_WISE_VIDEO_LIST, 0, 0, testDataExcelName);
         validateMyLessonsTodayVideoList(removeBlankDataFromList(videoListTestData.getMyLessonsTodaySubjectList()), videoListTestData.getMyLessonsTodayLessonList());
         validateVideoLibraryDropDownList(removeBlankDataFromList(videoListTestData.getVideoLibraryDropdownSubjectList()));
         return this;
     }
 
-    private VideoListTestData getVideoListTestDataFroExcel(String sheetName, int fromDataRowNumber, int toDataRowNumber) {
-        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, fromDataRowNumber, toDataRowNumber);
+    private VideoListTestData getVideoListTestDataFroExcel(String sheetName, int fromDataRowNumber, int toDataRowNumber, String testDataExcelName) {
+        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, fromDataRowNumber, toDataRowNumber, testDataExcelName);
         VideoListTestData videoListTestData = VideoListTestData.builder()
                 .myLessonsTodaySubjectList(removeBlankDataFromList(excelDataHashTable.get(MY_LESSONS_TODAY_SUBJECT_LIST)))
                 .myLessonsTodayLessonList(removeBlankDataFromList(excelDataHashTable.get(MY_LESSONS_TODAY_LESSON_LIST)))
@@ -945,8 +959,8 @@ public class StudentsScreen extends GenericAction {
         return videoListTestData;
     }
 
-    public ProgressReportEventPreviewTestData getProgressReportPreviewEventDataFroExcel(String sheetName, int fromDataRowNumber, int toDataRowNumber) {
-        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, fromDataRowNumber, toDataRowNumber);
+    public ProgressReportEventPreviewTestData getProgressReportPreviewEventDataFroExcel(String sheetName, int fromDataRowNumber, int toDataRowNumber, String testDataExcelName) {
+        Map<String, ArrayList<String>> excelDataHashTable = new DataProviders().getExcelDataInHashTable(sheetName, fromDataRowNumber, toDataRowNumber, testDataExcelName);
         ProgressReportEventPreviewTestData progressReportEventPreviewTestData = ProgressReportEventPreviewTestData.builder()
                 .dayCount(removeBlankDataFromIntegerList(excelDataHashTable.get(DAY_COUNT).stream().map(Integer::parseInt).collect(Collectors.toList())))
                 .eventID(removeBlankDataFromList(excelDataHashTable.get(EVENT_ID)))
@@ -974,7 +988,7 @@ public class StudentsScreen extends GenericAction {
         }
     }
 
-    public StudentsScreen validateStudentShouldNotAbleToWatchNextDayLessonFromVideoLibrary(boolean isValidationWithExcelData) {
+    public StudentsScreen validateStudentShouldNotAbleToWatchNextDayLessonFromVideoLibrary(boolean isValidationWithExcelData, String testDataExcelName) {
         String subject;
         String lesson;
         String subscriptionItem;
@@ -986,7 +1000,7 @@ public class StudentsScreen extends GenericAction {
         String loginId = getUserAccountDetails().getLoginId();//getUserAccountDetails().get(LOGIN_ID);
         int counter = 0;
         if(isValidationWithExcelData){
-            VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST, 0, 0);
+            VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_NINE_VIDEO_LIST, 0, 0, testDataExcelName);
             for(String subjectName: videoListTestData.getVideoLibraryDropdownSubjectList()){
                 selectValueFromDropDownVideo(Students.videoLibrarySubjectDropDown, subjectName);
                 click(bringElementIntoView(getElement(String.format(Students.videoLibraryVideoLink, videoListTestData.getNextDayLessonOfVideoLibrary().get(counter)))));
@@ -1110,7 +1124,7 @@ public class StudentsScreen extends GenericAction {
                 click(getVisibleElement(Students.linkitBeginBtn));
                 waitForPageTobeLoaded();
                 waitForElementTobeVisibleOrMoveAhead(Students.linkitQuestionPanel, veryLongWait);
-                answerQuestions();
+                answerQuestions(false);
                 submitQuestion();
                 goToAnotherSession();
                 submittedAssessmentList.add(new String[]{subject,assignmentName});
@@ -1137,7 +1151,7 @@ public class StudentsScreen extends GenericAction {
     }
 
     @SneakyThrows
-    private void answerQuestions() {
+    private void answerQuestions(boolean isCloseButtonAppear) {
         String questionType;
         waitForElementTobeVisibleOrMoveAhead(Students.linkitTotalQuestions, veryLongWait);
 
@@ -1192,8 +1206,15 @@ public class StudentsScreen extends GenericAction {
                         break;
                     }else {
                         click(linkitNextQuestionBtn, false);
-                        click(getVisibleElement(linkitSkipQuestionYes));
+                        if(isCloseButtonAppear){
+                            click(closeButton, true);
+                        }else {
+                            click(getVisibleElement(linkitSkipQuestionYes));
+                        }
                     }
+            }
+            if(isCloseButtonAppear){
+                click(closeButton, true);
             }
             implicitWaitInSeconds(5);
             if(isLastQuestion)break;
@@ -1209,24 +1230,24 @@ public class StudentsScreen extends GenericAction {
         softAssertions.assertThat(isElementExists(videoLibrarySubjectDropDown, false)).as("Video library page is not loaded successfully").isTrue();
     }
 
-    public List<DigitalAssessmentsTestData> getDigitalAssessmentTestDataFromExcel() {
-        ArrayList<Map<Integer,String>> digitalAssessmentList = new DataProviders().getExcelData(DIGITAL_ASSESSMENT_LIST, 0, 0);
+    public List<DigitalAssessmentsTestData> getDigitalAssessmentTestDataFromExcel(String testDataExcelName) {
+        ArrayList<Map<Integer,String>> digitalAssessmentList = new DataProviders().getExcelData(DIGITAL_ASSESSMENT_LIST, 0, 0, testDataExcelName);
         List<DigitalAssessmentsTestData> digitalAssessmentsTestDataList = new ArrayList<>();
                 digitalAssessmentList.stream()
                 .forEach(e->digitalAssessmentsTestDataList.add(DigitalAssessmentsTestData.builder().subject(e.get(0)).quiz(e.get(1)).segmentId(e.get(2)).isLocked(Boolean.parseBoolean(e.get(3))).build()));
         return digitalAssessmentsTestDataList;
     }
 
-    public List<DigitalAssessmentsTestData> getGradeOneVideoListTestDataFromExcel() {
-        ArrayList<Map<Integer,String>> digitalAssessmentList = new DataProviders().getExcelData(GRADE_ONE_VIDEO_LIST, 0, 0);
+    public List<DigitalAssessmentsTestData> getGradeOneVideoListTestDataFromExcel(String testDataExcelName) {
+        ArrayList<Map<Integer,String>> digitalAssessmentList = new DataProviders().getExcelData(GRADE_ONE_VIDEO_LIST, 0, 0, testDataExcelName);
         List<DigitalAssessmentsTestData> videoListTestDataList = new ArrayList<>();
         digitalAssessmentList.stream()
                 .forEach(e->videoListTestDataList.add(DigitalAssessmentsTestData.builder().subject(e.get(0)).quiz(e.get(1)).segmentId(e.get(2)).isLocked(Boolean.parseBoolean(e.get(3))).build()));
         return videoListTestDataList;
     }
 
-    public void validateSubjectListInSubjectProgressSection() {
-        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_ONE_VIDEO_LIST, 0, 0);
+    public void validateSubjectListInSubjectProgressSection(String testDataExcelName) {
+        VideoListTestData videoListTestData = getVideoListTestDataFroExcel(GRADE_ONE_VIDEO_LIST, 0, 0, testDataExcelName);
         bringElementIntoView(subjectProgressSection);
         for(String subject: videoListTestData.getMyLessonsTodaySubjectList()){
             softAssertions.assertThat(isElementExists(subject, true)).as(subject+" not found on Screen").isTrue();

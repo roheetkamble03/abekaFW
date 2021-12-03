@@ -50,6 +50,7 @@ public @interface Students {
     String PAGES_READ = "Pages Read";
     String BACK_TO_SERVICE_REPORT = "Back to Progress Report";
     String WRITING_1 = "Writing 1";
+    String DROPDOWN_LIST = "Drop-Down List";
 
 
     /**
@@ -87,6 +88,7 @@ public @interface Students {
     String subjectWithGradeRow = "xpath=//table[@id='gdvRecentGrades']/descendant::tr/descendant::td[normalize-space(text())='%s']/following-sibling::td/descendant::span[@id='lblGrade' and normalize-space(text())='%s']";
     String myRecentGradeSection = "id=RecentGrades";
     String lastViewedVideoLessonsSection = "id=VODVideos";
+    String videoDropdownValue = "xpath=//div[@id='subjectsDropDown']/descendant::span[@class='subjectInfo' and normalize-space(text())='%s']";
     String startWatchingYourLessonsLin = "xpath=./descendant::a[@href='/Video2/streaming/']";
     String lessonsToday = "id=dvLessonsToday";
     String myLessonsTodayVideoLink = "xpath=//ul[@id='ulDailyLessons']/descendant::h3[normalize-space(text())='%s']/following-sibling::span[@id='linkVideo' and normalize-space(text())='%s']";
@@ -124,6 +126,11 @@ public @interface Students {
     String myToDoListLesson = "xpath=//div[@id='updatePanel']/descendant::*[normalize-space(text())='%s']/parent::div/descendant::span[normalize-space(text())='%s']/ancestor::div[normalize-space(@class)='dailyLesson']/descendant::*[normalize-space(text())='%s']";
     String signature = "id=txtSignature";
     String signPledgeBtn = "id=lbtnSignPledge";
+    String takeMyPracticeTest = "id=lbtnPracticeTest";
+    String closeButton = "id=closeButton";
+    String linkitstopTestButton = "id=stopTestButton";
+    String linkitYesSubmit = "id=acceptCompleteTestButtonRechecked";
+    String linkitEndTest = "id=noEndSectionorTest";
     String linkitBeginBtn = "id=startButton";
     String linkitQuestionPanel = "id=questionItemPanel";
     String linkitTotalQuestions = "xpath=//div[@class='currentQuestion']";
@@ -137,6 +144,8 @@ public @interface Students {
     String linkitDictationTextBox = "xpath=//input[@class='textEntryInteraction' and @type='text']|//div[@class='questionItem']/descendant::textarea";
     String linkitVocabDropDown = "xpath=(//ul[@class='sbOptions']/li/div)[2]";
     String linkitTextArea = "xpath=//div[@class='questionItem']/descendant::textarea";
+    String questionTitle = "id=sectionTitle";
+    String linkitDropDown = "xpath=(//ul[@class='sbOptions'])";
     String linkitSkipQuestionYes = "id=yesAllAnswer";
     String linkitFrame = "xpath=//iframe";
     String linkitFrameBody = "xpath=//body";

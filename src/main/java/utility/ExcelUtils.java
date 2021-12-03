@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 
 public class ExcelUtils extends BaseClass {
     public String path = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\TestData.xlsx");
+    public String customPath = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\%s.xlsx");
 
     //	public  String path;
     public FileInputStream fis = null;
@@ -18,23 +19,21 @@ public class ExcelUtils extends BaseClass {
     private XSSFRow row = null;
     private XSSFCell cell = null;
 
-    public ExcelUtils() {
-        try {
-            fis = new FileInputStream(path);
-            workbook = new XSSFWorkbook(fis);
-            sheet = workbook.getSheetAt(0);
-            fis.close();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+//    public ExcelUtils() {
+//        try {
+//            fis = new FileInputStream(path);
+//            workbook = new XSSFWorkbook(fis);
+//            sheet = workbook.getSheetAt(0);
+//            fis.close();
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 
-    public ExcelUtils(String path) {
-
-        this.path = path;
+    public ExcelUtils(String testDataExcelName) {
         try {
-            fis = new FileInputStream(path);
+            fis = new FileInputStream(String.format(customPath,testDataExcelName));
             workbook = new XSSFWorkbook(fis);
             sheet = workbook.getSheetAt(0);
             fis.close();
@@ -109,9 +108,21 @@ public class ExcelUtils extends BaseClass {
             return cell.getStringCellValue();
     }
 
-    public boolean setCellData(String sheetName, String[] data, int... rowNumber){
-        try{
+    private void setExcelDetails(){
+        try {
             fis = new FileInputStream(path);
+            workbook = new XSSFWorkbook(fis);
+            sheet = workbook.getSheetAt(0);
+            fis.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+    }
+
+    public boolean setCellData(String sheetName, String[] data, int rowNumber, boolean isCustomRowNumber, String testDataExcelName){
+        try{
+            fis = new FileInputStream(String.format(customPath,testDataExcelName));
             workbook = new XSSFWorkbook(fis);
 
             int index = workbook.getSheetIndex(sheetName);
@@ -120,13 +131,14 @@ public class ExcelUtils extends BaseClass {
                 return false;
 
             sheet = workbook.getSheetAt(index);
-            int rowNum = sheet.getLastRowNum()+1;
 
             row=sheet.getRow(0);
-
-            rowNum = (rowNum == 0)?sheet.getLastRowNum()+1:rowNum;
             sheet.autoSizeColumn(colNum);
-            rowNum = (rowNumber.length>0)?rowNumber[0]:rowNum;
+
+            int rowNum = sheet.getLastRowNum()+1;
+            //rowNum = (rowNum == 0)?sheet.getLastRowNum()+1:rowNum;
+
+            rowNum = (isCustomRowNumber)?rowNumber:rowNum;
             row = sheet.getRow(rowNum);
 
             if (row == null)

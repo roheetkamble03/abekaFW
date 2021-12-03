@@ -146,6 +146,7 @@ public abstract class BaseClass {
 
     private void quitEachDriver(Map<String,WebDriver> driverMap){
         for(String driverKey:driverMap.keySet()){
+            driverMap.get(driverKey).close();
             driverMap.get(driverKey).quit();
         }
     }
