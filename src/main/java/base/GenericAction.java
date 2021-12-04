@@ -10,7 +10,9 @@ import elementConstants.Login;
 import io.restassured.common.mapper.TypeRef;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import pageObjects.AbekaHomeScreen;
@@ -51,6 +53,12 @@ public abstract class GenericAction extends SelenideExtended{
 
     @AfterMethod
     public void tearDown(){
+        log("After each method tearing down the test in GenericAction.class");
+        super.tearDown();
+    }
+
+    @AfterThrowing
+    public void tearDownAfterError(){
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();
     }

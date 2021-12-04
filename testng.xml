@@ -5,14 +5,14 @@
         <parameter name = "browser" value = "chrome"/>
         <parameter name = "platform" value = "Mac"/>
         <classes>
-            <class name="abekaUISuite.AccessibilityAndWidgetValidationTestSuite">
-<!--                <methods>-->
-<!--                    <include name="testValidateGraduationPetitionFunctionality"></include>-->
-<!--                </methods>-->
-            </class>
+<!--            <class name="abekaUISuite.AccessibilityAndWidgetValidationTestSuite">-->
+<!--&lt;!&ndash;                <methods>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="testValidateGraduationPetitionFunctionality"></include>&ndash;&gt;-->
+<!--&lt;!&ndash;                </methods>&ndash;&gt;-->
+<!--            </class>-->
             <class name="abekaUISuite.ParentAndStudentSuiteTest">
                 <methods>
-                    <include name="testValidateStudentCalendarCategoryGradeOne"></include>
+<!--                    <include name="testValidateStudentCalendarCategoryGradeOne"></include>-->
                     <include name="enrollmentPurchaseGradeOne"></include>
                     <include name="validateAddNewStudentGradeOne"></include>
                     <include name="enrollmentPurchaseGradeFour"></include>

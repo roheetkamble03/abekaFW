@@ -12,6 +12,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -47,7 +49,7 @@ public abstract class BaseClass {
     public static String domainURL;
     public static String afterLoginURL;
     public static String browser;
-    protected Map<String,WebDriver> sessionMap = new HashMap<>();
+    private HashMap<WebDriver,WebDriver> sessionMap = null;
     protected DesiredCapabilities desiredCapabilities;
     protected int pageLoadTimeOut;
     public static int veryLongWait;
@@ -66,7 +68,6 @@ public abstract class BaseClass {
         getLogger().info(message);
     }
 
-    @BeforeMethod
     public void setUp(String browserName, String platform){
         log("Setting up the test");
         browser = browserName;
@@ -77,7 +78,6 @@ public abstract class BaseClass {
         log("setUp done successfully");
     }
 
-    @AfterMethod
     public void tearDown(){
         log("Tearing down the test");
         quitEachDriver(sessionMap);
@@ -141,15 +141,21 @@ public abstract class BaseClass {
             }
         }
         log("Setting driver in default session");
-        sessionMap.put("DefaultSession",getDriver());
+        if(sessionMap == null){
+            sessionMap = new HashMap<>();
+        }
+        sessionMap.put(getDriver(),getDriver());
     }
 
-    private void quitEachDriver(Map<String,WebDriver> driverMap){
-        for(String driverKey:driverMap.keySet()){
-            driverMap.get(driverKey).close();
-            driverMap.get(driverKey).quit();
+    private void quitEachDriver(Map<WebDriver,WebDriver> driverMap){
+        try {
+                //if(driverMap.get(driverKey).equals(threadLocalDriver.get())) {
+                    driverMap.get(getDriver()).quit();
+                //}
+            }catch (Throwable e){
+                log("Session not found");
+            }
         }
-    }
 
     public void launchApp(String grid, String browser, String platform){
         switch (grid.toLowerCase()){

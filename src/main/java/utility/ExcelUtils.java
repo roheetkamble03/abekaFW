@@ -8,7 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class ExcelUtils extends BaseClass {
-    public String path = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\TestData.xlsx");
+    //public String path = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\TestData.xlsx");
+    public String path = null;
     public String customPath = implementPath(System.getProperty("user.dir") + "\\src\\main\\resources\\testData\\%s.xlsx");
 
     //	public  String path;
