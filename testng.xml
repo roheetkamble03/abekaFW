@@ -10,17 +10,18 @@
 <!--&lt;!&ndash;                    <include name="testValidateGraduationPetitionFunctionality"></include>&ndash;&gt;-->
 <!--&lt;!&ndash;                </methods>&ndash;&gt;-->
 <!--            </class>-->
+            <class name="abekaUISuite.UnitTestApiTesting"></class>
             <class name="abekaUISuite.ParentAndStudentSuiteTest">
                 <methods>
-<!--                    <include name="testValidateStudentCalendarCategoryGradeOne"></include>-->
+                    <include name="testValidateStudentCalendarCategoryGradeOne"></include>
                     <include name="enrollmentPurchaseGradeOne"></include>
                     <include name="validateAddNewStudentGradeOne"></include>
-                    <include name="enrollmentPurchaseGradeFour"></include>
-                    <include name="validateAddNewStudentGradeFour"></include>
-                    <include name="enrollmentPurchaseGradeNine"></include>
-                    <include name="validateAddNewStudentGradeNine"></include>
-                    <include name="enrollmentPurchaseGradeTwelve"></include>
-                    <include name="validateAddNewStudentGradeTwelve"></include>
+<!--                    <include name="enrollmentPurchaseGradeFour"></include>-->
+<!--                    <include name="validateAddNewStudentGradeFour"></include>-->
+<!--                    <include name="enrollmentPurchaseGradeNine"></include>-->
+<!--                    <include name="validateAddNewStudentGradeNine"></include>-->
+<!--                    <include name="enrollmentPurchaseGradeTwelve"></include>-->
+<!--                    <include name="validateAddNewStudentGradeTwelve"></include>-->
                     <include name="validateSubjectListOnProgressPageOne"></include>
                     <include name="validateSwitchPenmanShipScenarioGradeOne"></include>
                     <include name="validateCourseBeginDateFormatGradeOne"></include>
@@ -28,15 +29,14 @@
                     <include name="testValidateStudentCalendarEventsOfGradeOne"></include>
                     <include name="testValidateStudentCalendarEventsOfProgressReportOfGradeOne"></include>
                     <include name="testValidateStudentCalendarAddEditDeleteEventsOfGradeOne"></include>
-                    <include name="testManageStudentInformationFromDashboardOfGradeFour"></include>
-                    <include name="testValidateStudentAssessmentDetailsOnCalendarGradeFour"></include>
-                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeFour"></include>
-                    <include name="testModifyStudentAssessmentDetailsOnCalendarOfGradeNine"></include>
-                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine"></include>
-                    <include name="validatePreviewStudentVideoLessonsGradeNine"></include>
-                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeNine"></include>
-                    <include name="testValidateStudentDashboardDataOfGradeNine"></include>
-<!--                    <include name="validateCourseBeginDateFieldGradeTwelve"></include>-->
+<!--                    <include name="testManageStudentInformationFromDashboardOfGradeFour"></include>-->
+<!--                    <include name="testValidateStudentAssessmentDetailsOnCalendarGradeFour"></include>-->
+<!--                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeFour"></include>-->
+<!--                    <include name="testModifyStudentAssessmentDetailsOnCalendarOfGradeNine"></include>-->
+<!--                    <include name="testValidateStudentAbleToCompleteDigitalAssessmentSuccessfullyOfGradeNine"></include>-->
+<!--                    <include name="validatePreviewStudentVideoLessonsGradeNine"></include>-->
+<!--                    <include name="testValidateStudentAbleToWatchVideoStreamingOfGradeNine"></include>-->
+<!--                    <include name="testValidateStudentDashboardDataOfGradeNine"></include>-->
                 </methods>
             </class>
         </classes>

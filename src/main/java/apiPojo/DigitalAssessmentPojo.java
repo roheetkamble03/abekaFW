@@ -1,4 +1,4 @@
-package abekaUISuite;
+package apiPojo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

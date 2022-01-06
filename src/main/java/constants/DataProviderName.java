@@ -1,10 +1,5 @@
 package constants;
 
-import dataProvider.DataRowNumber;
-import org.testng.annotations.DataProvider;
-
-import java.lang.reflect.Method;
-
 public @interface DataProviderName {
     String STUDENT_CREDENTIALS = "studentCredentials";
     //String PARENT_CREDENTIALS = "parentCredentials";

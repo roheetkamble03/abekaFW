@@ -1,6 +1,7 @@
 package utility;
 
 import base.BaseClass;
+import lombok.SneakyThrows;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -121,9 +122,11 @@ public class ExcelUtils extends BaseClass {
             }
     }
 
+    @SneakyThrows
     public boolean setCellData(String sheetName, String[] data, int rowNumber, boolean isCustomRowNumber, String testDataExcelName){
         try{
-            fis = new FileInputStream(String.format(customPath,testDataExcelName));
+            path = String.format(customPath,testDataExcelName);
+            fis = new FileInputStream(path);
             workbook = new XSSFWorkbook(fis);
 
             int index = workbook.getSheetIndex(sheetName);
@@ -157,7 +160,7 @@ public class ExcelUtils extends BaseClass {
             fileOut.close();
         } catch(Exception e){
             e.printStackTrace();
-            return false;
+            throw e;
         }
         return true;
     }

@@ -12,7 +12,6 @@ import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import pageObjects.AbekaHomeScreen;
@@ -34,7 +33,6 @@ import static constants.DataBaseQueryConstant.*;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.*;
 import static io.restassured.RestAssured.given;
-import static org.openqa.selenium.remote.BrowserType.SAFARI;
 
 public abstract class GenericAction extends SelenideExtended{
 
@@ -51,7 +49,7 @@ public abstract class GenericAction extends SelenideExtended{
         //Allure report writing will be done later
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown(){
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();

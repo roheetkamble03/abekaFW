@@ -16,7 +16,7 @@ public class CheckoutScreen extends GenericAction {
     }
 
     public CheckoutScreen selectCheckoutCriteria(CheckoutCriteria checkoutCriteria){
-        selectPaymentTerm(checkoutCriteria.getPaymentTerm());
+        //selectPaymentTerm(checkoutCriteria.getPaymentTerm());
         selectShippingAddress(checkoutCriteria.getShippingAddress());
         selectShippingMethod(checkoutCriteria.getShippingMethod());
         selectBillingAddress(checkoutCriteria.isBillingAndShippingAddressSame());

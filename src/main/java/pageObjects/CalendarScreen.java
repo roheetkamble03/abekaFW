@@ -3,8 +3,8 @@ package pageObjects;
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
 import com.google.common.base.CaseFormat;
-import constants.*;
 import constants.Calendar;
+import constants.*;
 import dataProvider.DataProviders;
 import elementConstants.ProgressReportEventPreviewTestData;
 import io.qameta.allure.Step;
@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 import static constants.Calendar.*;
 import static constants.CommonConstants.*;
-import static constants.TableColumn.*;
 import static constants.TableColumn.EVENT_ID;
+import static constants.TableColumn.*;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class CalendarScreen extends GenericAction {

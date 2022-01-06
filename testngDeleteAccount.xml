@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="DeleteAccountSuite">
+<suite name="TestNgPractice">
 
-    <test verbose="2" preserve-order="true" name="Smoke Suite test">
+    <test verbose="3" preserve-order="false" name="testNGPracticeTest" parallel="classes" thread-count="0">
         <parameter name = "browser" value = "chrome"/>
-        <parameter name = "platform" value = "Mac"/>
+        <parameter name = "browser1" value = "chrome1"/>
+        <parameter name = "browser2" value = "chrome2"/>
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="smoke"></include>-->
+<!--            </run>-->
+<!--        </groups>-->
+
         <classes>
-            <class name="abekaUISuite.DeleteParentStudentDataSuite"></class>
+
+<!--            <class name="abekaUISuite.TestNGPracticeAnnotations"></class>-->
+<!--            <class name="abekaUISuite.TestNGPractice"></class>-->
+<!--            <class name="abekaUISuite.TestNGPracticeTwo">-->
+<!--                <methods>-->
+<!--                    <exclude name=""></exclude>-->
+<!--                </methods>-->
+<!--            </class>-->
+
         </classes>
     </test>
 </suite>

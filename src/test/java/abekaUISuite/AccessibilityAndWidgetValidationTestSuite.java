@@ -11,7 +11,8 @@ import pageObjects.DashboardScreen;
 import pageObjects.StudentsScreen;
 import utility.RetryUtility;
 
-import static constants.DataProviderName.*;
+import static constants.DataProviderName.PARENT_CREDENTIALS_GENERIC;
+import static constants.DataProviderName.STUDENT_CREDENTIALS_GENERIC;
 
 public class AccessibilityAndWidgetValidationTestSuite extends GenericAction {
     DashboardScreen dashboardScreen = new DashboardScreen();

@@ -19,9 +19,8 @@ import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.back;
 import static com.codeborne.selenide.Selenide.refresh;
-import static constants.CommonConstants.*;
 import static constants.CommonConstants.EVENT_ID;
-import static constants.CommonConstants.MY_LESSONS_TODAY_LESSON_LIST;
+import static constants.CommonConstants.*;
 import static constants.TableColumn.*;
 import static elementConstants.Enrollments.CURSIVE;
 import static elementConstants.Students.*;
