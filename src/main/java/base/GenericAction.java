@@ -49,7 +49,7 @@ public abstract class GenericAction extends SelenideExtended{
         //Allure report writing will be done later
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod
     public void tearDown(){
         log("After each method tearing down the test in GenericAction.class");
         super.tearDown();
