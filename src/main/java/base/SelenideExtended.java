@@ -7,6 +7,7 @@ import constants.EnumUtil;
 import elementConstants.AbekaHome;
 import elementConstants.Dashboard;
 import elementConstants.Enrollments;
+import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -42,15 +43,12 @@ public abstract class SelenideExtended extends DatabaseExtended {
     String textContainsXpath = "(//*[contains(normalize-space(text()),'%s') or contains(normalize-space(@value),'%s')]|//text()[contains(normalize-space(),'%s')])[1]";
     SelenideElement element;
 
+    @Step("Clicking on {identifier}")
     public void click(String identifier, boolean isIgnoreFailure){
+        waitForPageTobeLoaded();
         waitForElementTobeExist(identifier);
         try {
-            click(bringElementIntoView(identifier));
-//            if(browser.equals(SAFARI)){
-//                clickByJavaScript(identifier);
-//            }else {
-//                click(bringElementIntoView(identifier));
-//            }
+            getElement(identifier).click();
         }catch (Throwable e){
             log("Clicked by java script");
             clickByJavaScript(getElement(identifier));
@@ -81,16 +79,10 @@ public abstract class SelenideExtended extends DatabaseExtended {
         waitForElementTobeExist(element);
         implicitWaitInSeconds(1);
         try {
-            //if(browser.equals(SAFARI)) {
-//                log("Clicked by java script for safari browser");
-//                clickByJavaScript(element);
-            //}else {
-                element.click();
-            //}
+            element.click();
         }catch (Throwable e){
             log("Clicked by java script");
             waitForElementTobeExist(element);
-            //implicitWaitInSeconds(elementLoadWait);
             clickByJavaScript(element);
         }
     }
