@@ -50,8 +50,9 @@ public abstract class SelenideExtended extends DatabaseExtended {
         try {
             getElement(identifier).click();
         }catch (Throwable e){
+
             log("Clicked by java script");
-            clickByJavaScript(getElement(identifier));
+            if(!isIgnoreFailure)clickByJavaScript(getElement(identifier));
         }
         waitForPageTobeLoaded();
         log("Clicked on "+identifier);

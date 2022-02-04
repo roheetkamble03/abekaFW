@@ -61,7 +61,7 @@ public class EnrollmentsScreen extends GenericAction {
         click(Enrollments.formPasswordInputBox, false);
         //implicitWaitInSeconds(3);
         type(Enrollments.formPasswordInputBox,studentDetails.getPassword());
-        click(Enrollments.CREATE, false);
+        clickByJavaScript(getElement(Enrollments.CREATE));
         waitForPageTobeLoaded();
         log("Student account created with following details:\n" +
                 "UserName:"+studentDetails.getStudentUserId()+"\n" +

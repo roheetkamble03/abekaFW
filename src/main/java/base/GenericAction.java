@@ -76,7 +76,7 @@ public abstract class GenericAction extends SelenideExtended{
         log("Password: "+ password);
         type(Login.emailAddress,userId);
         type(Login.password,password);
-        click(Login.loginBtn, false);
+        click(Login.loginBtn, true);
         waitForAbekaBGProcessLogoDisappear();
         //waitForElementTobeExist(userName);//"text=Hello, RCG");
         return new AbekaHomeScreen();

@@ -1,0 +1,5 @@
+package abekaUISuite
+
+class WithoutMain {
+
+}
