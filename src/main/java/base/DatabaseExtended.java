@@ -3,10 +3,12 @@ package base;
 import constants.CommonConstants;
 import lombok.SneakyThrows;
 import oracle.jdbc.pool.OracleDataSource;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import static constants.TableColumn.HOLD_CODE;
 
@@ -71,6 +73,9 @@ public class DatabaseExtended extends BaseClass {
                 resultSet = connection.createStatement().executeQuery(selectQuery);
                 log("\n\nExecuted query:\n" + selectQuery);
             } catch (Throwable e) {
+                log(e + "\n\nExecute query failed for \n\n" + selectQuery);
+                getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                resultSet = connection.createStatement().executeQuery(selectQuery);
                 throw new Exception(e + "\n\nExecute query failed for \n\n" + selectQuery);
             }
             resultSetRowList = convertResultSetToArrayList();
