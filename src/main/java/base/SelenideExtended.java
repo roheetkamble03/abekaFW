@@ -767,7 +767,7 @@ public abstract class SelenideExtended extends DatabaseExtended {
         }catch (Throwable t){
             logger.info("Following Element not found \n" +
                     getByClause(identifier));
-            if(t.getCause().toString().contains("StaleElementReferenceException")){
+            if(t.toString().contains("StaleElementReferenceException")){
                 getElement(identifier).shouldBe(Condition.exist, Duration.ofSeconds(timeout.length>0?timeout[0]:elementLoadWait));
             }
             throw new Exception(t);
