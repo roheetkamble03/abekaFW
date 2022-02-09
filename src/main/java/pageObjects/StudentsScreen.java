@@ -168,6 +168,7 @@ public class StudentsScreen extends GenericAction {
     @Step("Changing the student assessment details")
     public StudentsScreen changeStudentAssessmentDetails(String months, String permissionToMakeCalendarChanges) {
         click(String.format(Students.calendarAssessmentModificationRadioBtn, months), false);
+        bringElementIntoView(Students.updateCalendarBtn);
         click(Students.updateCalendarBtn, false);
         waitForPageTobeLoaded();
         if (permissionToMakeCalendarChanges.length() > 0) {
