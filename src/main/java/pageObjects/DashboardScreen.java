@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import static com.codeborne.selenide.Selenide.back;
 import static com.codeborne.selenide.Selenide.closeWindow;
-import static elementConstants.Dashboard.GRADUATION_PETITION;
+import static elementConstants.Dashboard.*;
 
 public class DashboardScreen extends GenericAction {
     public DashboardScreen validateDashboardNewTab(){
@@ -27,7 +27,7 @@ public class DashboardScreen extends GenericAction {
     }
 
     public DashboardScreen navigateToMyOrderLink(String link){
-        click(bringElementIntoView(String.format(Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)));
+        click(bringElementIntoView(String.format((link.equals(GRADUATION))?myOrdersLinksOther:Dashboard.myOrdersLinks, link.replaceAll("\\s","").replaceAll("Clip",""),link)));
         waitForPageTobeLoaded();
         return this;
     }
@@ -119,8 +119,8 @@ public class DashboardScreen extends GenericAction {
     }
 
     public GraduationPetition navigateToGraduationPetitionPage() {
-        waitAndCloseWidgetTourPopup();
-        navigateToMyOrderLink(GRADUATION_PETITION);
+        click(bringElementIntoView(String.format(myOrdersLinksOther, GRADUATION,GRADUATION_PETITION)));
+        waitForPageTobeLoaded();
         return new GraduationPetition();
     }
     public CalendarScreen navigateToFullCalendarView(){

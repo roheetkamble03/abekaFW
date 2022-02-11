@@ -15,7 +15,7 @@ public @Data class StudentDetails extends GenericAction {
 
     private String firstName = "ATM"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern(CommonConstants.NAME_DATE_FORMAT));
 
-    private String middleName = "ATM"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern(CommonConstants.NAME_DATE_FORMAT));
+    private String middleName = "ATM";
 
     private String lastName = "ATM"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern(CommonConstants.NAME_DATE_FORMAT));
 

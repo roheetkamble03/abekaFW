@@ -444,16 +444,17 @@ public class ParentAndStudentSuiteTest extends GenericAction {
                 .validateStudentPageHeader().goToAddNewStudentPage().fillAndSubmitNewStudentDetails(studentDetails, false).clickOnNextButton().fillEnrollmentOptionsDetails(studentDetails, enrollmentOptions)
                 .clickOnNextButton().fillAvailableRecommendedCourses(Enrollments.GRADE_TWELVE).clickOnNextButton().addBeginDate().clickOnNextButton().signEnrollmentAgreement(enrollmentOptions.getSignature())
                 .clickOnNextButton().clickOnNextButton().fillProofOfCompletion(studentDetails.getGrade()).clickOnNextButton().fillAddClasses().clickOnNextButton().submitEnrollment().validateAllSetMessage().updateCourseBeginDateToBackDateAndRemoveHolds(studentDetails.getStudentUserId());
-        setStudentAccountDetailsInTestDataExcel(studentDetails,5, TEST_DATA_GRADE_TWELVE);
+        setStudentAccountDetailsInTestDataExcel(studentDetails,1, TEST_DATA_GRADE_TWELVE);
         softAssertions.assertAll();
     }
 
     @DataRowNumber(fromDataRowNumber = "1", toDataRowNumber = "1")
-    @Test(enabled = false, testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS_GRADE_TWELVE, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
+    @Test(testName = "testValidateGraduationPetitionFunctionality", dataProvider = PARENT_CREDENTIALS_GRADE_TWELVE, dataProviderClass = DataProviders.class, retryAnalyzer = RetryUtility.class)
     public void testValidateGraduationPetitionFunctionality(String userId, String password, String userName, String signature) {
         loginToAbeka(userId, password, true).navigateToAccountGreetingSubMenu(AbekaHome.DASHBOARD);
-        setStudentAccountDetailsFromDB(getStudentAccountDetails(5, TEST_DATA_GRADE_TWELVE).getStudentUserId(), true);
-        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm().approveSubmittedPetition();
+        setStudentAccountDetailsFromDB(getStudentAccountDetails(1, TEST_DATA_GRADE_TWELVE).getStudentUserId(), true);
+        waitAndCloseWidgetTourPopup();
+        dashboardScreen.navigateToGraduationPetitionPage().startPetition().fillGraduationPetitionForm(signature).approveSubmittedPetition();
         logoutFromAbeka();
         softAssertions.assertAll();
     }

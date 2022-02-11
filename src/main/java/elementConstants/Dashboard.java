@@ -13,6 +13,7 @@ public @interface Dashboard {
     String DIGITAL_TEXTBOOKS = "Digital Textbooks";
     String DIGITAL_TEACHING_AIDS = "Digital Teaching Aids";
     String GRADUATION_PETITION = "Graduation Petition";
+    String GRADUATION = "Graduation";
     String MY_ABEKA_NAV_PAGE_TITLE = "Abeka | %s";
     String MY_ABEKA_NAV_PAGE_URL = "%s/Fulfillment/%s/";
     String MY_ORDERS = "My Orders";
@@ -28,6 +29,7 @@ public @interface Dashboard {
      * Element xpath
      */
     String myOrdersLinks = "xpath=//a[@href='/Fulfillment/%s/']//label[normalize-space(text())='%s']";
+    String myOrdersLinksOther = "xpath=//a[@href='../Fulfillment/%s/']//label[normalize-space(text())='%s']";
     String videoManualPdfLink = "xpath=//div[@id='VideoManual']/descendant::li/descendant::a";
     String notificationLinks = "xpath=//div[@id='pnlMessageCenter']/descendant::table/descendant::td/a";
     String studentLink = "xpath=//li[@id='MyStudents']/descendant::*[@id='listStudent']/descendant::span[normalize-space(text())='%s']";
