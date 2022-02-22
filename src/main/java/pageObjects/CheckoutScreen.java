@@ -15,10 +15,14 @@ public class CheckoutScreen extends GenericAction {
 
     }
 
-    public CheckoutScreen selectCheckoutCriteria(CheckoutCriteria checkoutCriteria){
-        selectPaymentTerm(checkoutCriteria.getPaymentTerm());
+    public CheckoutScreen selectCheckoutCriteria(CheckoutCriteria checkoutCriteria, boolean isEnrollmentPurchase){
+        if (isEnrollmentPurchase) {
+            selectPaymentTerm(checkoutCriteria.getPaymentTerm());
+        }
         selectShippingAddress(checkoutCriteria.getShippingAddress());
-        selectShippingMethod(checkoutCriteria.getShippingMethod());
+        if(isEnrollmentPurchase) {
+            selectShippingMethod(checkoutCriteria.getShippingMethod());
+        }
         selectBillingAddress(checkoutCriteria.isBillingAndShippingAddressSame());
         selectPaymentMethod(checkoutCriteria.getPaymentInformation());
         selectTermsAndCondition(checkoutCriteria.isAcceptTermsAndCondition());

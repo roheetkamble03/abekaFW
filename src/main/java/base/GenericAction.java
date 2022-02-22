@@ -171,7 +171,7 @@ public abstract class GenericAction extends SelenideExtended{
             case GRADE_NINE:
                 return 15;
             case GRADE_TWELVE:
-                return 18;
+                return 17;
             default:
                 return 0;
         }
@@ -458,5 +458,10 @@ public abstract class GenericAction extends SelenideExtended{
                         .get(properties.get(CommonConstants.API_END_URL).toString());
             }
         }
+    }
+
+    public void navigateToHeaderBannerSubmenu(String menu, String submenu){
+        mouseOverOnElement(menu);
+        click(bringElementIntoView(String.format(AbekaHome.HEADER_SUB_MENU,submenu)));
     }
 }

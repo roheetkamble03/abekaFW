@@ -2,6 +2,7 @@ package pageObjects;
 
 import base.GenericAction;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ex.ElementNotFound;
 import constants.CommonConstants;
 import constants.EnrollmentOptions;
 import constants.StudentDetails;
@@ -246,7 +247,13 @@ public class EnrollmentsScreen extends GenericAction {
    }
 
    public EnrollmentsScreen fillAddClasses(){
-        waitForElementTobeExist(Enrollments.mailThisFormLaterChkBox, veryLongWait);
+        try {
+            waitForElementTobeExist(Enrollments.mailThisFormLaterChkBox, veryLongWait);
+        }catch (ElementNotFound e){
+            bringElementIntoView(Enrollments.nextButton);
+            click(Enrollments.nextButton, false);
+            waitForElementTobeExist(Enrollments.mailThisFormLaterChkBox, veryLongWait);
+        }
         clickByJavaScript(Enrollments.mailThisFormLaterChkBox);
         return this;
    }
