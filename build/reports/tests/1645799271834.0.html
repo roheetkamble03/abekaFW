@@ -1,0 +1,1755 @@
+<html lang="en" class=" webkit chrome mac js no-touch-device"><head><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+    <title>Test Taker</title>
+    <link rel="shortcut icon" href="linkit.ico">
+    <style>
+    .accessibility {
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      width: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0
+    }
+
+  </style>
+    <script type="text/javascript" async="" src="https://www.gstatic.com/recaptcha/releases/PdoyIVkd8v16xl_NMp3H0N1Y/recaptcha__en.js" crossorigin="anonymous" integrity="sha384-H9gCd9zWUuDGwBCK3dNkNOVKWM+ks8BlDGNUM/f1nDqdyoqjFoXF3EPTEVa8q2xg"></script><script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+    <script type="text/javascript">
+    var Loader = Loader || {};
+
+    (function(app) {
+      app.getScript = function(url, success) {
+        var head = document.getElementsByTagName('head')[0],
+          done = false;
+        var script = document.createElement('script');
+        script.src = url;
+        // Attach handlers for all browsers
+        script.onload = script.onreadystatechange = function() {
+          if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+            done = true;
+            if (typeof success === 'function') {
+              success();
+            }
+          }
+        };
+        head.appendChild(script);
+      };
+    })(Loader);
+
+    var now = (new Date()).getTime();
+    Loader.getScript('../testtaker/newrelic.js?t=' + now);
+
+  </script><script src="../testtaker/newrelic.js?t=1645799182797"></script>
+    <script type="text/javascript">
+    var myurl = window.location.toString();
+    var params = {},
+      queryString = myurl.substring(myurl.indexOf('?') + 1),
+      regex = /([^&=]+)=([^&]*)/g,
+      m;
+    //Extract query string
+    while (m = regex.exec(queryString)) {
+      params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+
+    if (localStorage.getItem('interviewTestCode') != null) {
+      params.code = localStorage.getItem('interviewTestCode');
+    }
+
+    // Redirect to login page incase it is normal login.
+    if (localStorage.getItem('testCode') == null && localStorage.getItem('data') == null) {
+      if (params.q == undefined && params.k == undefined) {
+        window.location.href = "testtaker.html";
+      }
+    }
+
+
+    var allText = "",
+      currentVersion = "",
+      currentVersion2 = "",
+      fileGlobal;
+    var LanIp = '';
+
+    var GLOBAL = GLOBAL || {};
+    var Testtaker;
+
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", 'lastupdate.txt?t=' + (new Date).getTime(), true);
+    rawFile.onreadystatechange = function() {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          allText = rawFile.responseText;
+
+          currentVersion = '?t=' + allText.substring(0, allText.indexOf(","));
+          currentVersion2 = '&t=' + allText.substring(0, allText.indexOf(","));
+
+          var head = document.getElementsByTagName('head')[0];
+
+          var script = document.createElement('script');
+          script.src = "../testtaker/config.js" + currentVersion;
+          script.type = 'text/javascript';
+          head.appendChild(script);
+        }
+      }
+    }
+
+    rawFile.send(null);
+    window.onload = function() {
+      //Make sure config has been loaded
+      var checkGlobal = setInterval(function() {
+        if (Object.keys(GLOBAL).length) {
+          fileGlobal = GLOBAL;
+          if (GLOBAL.FORCE_SSL == true && window.location.protocol != "https:") {
+            window.location = window.location.href.replace('http', 'https');
+          } else {
+            var head = document.getElementsByTagName('head')[0];
+
+            var scriptMath = document.createElement('script');
+            scriptMath.src = "../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" + currentVersion2;
+            scriptMath.type = 'text/javascript';
+            scriptMath.id = 'mathjax-script-link';
+            head.appendChild(scriptMath);
+
+            var script = document.createElement('script');
+            script.src = "../testtaker/scripts/ckeditor/ckeditor.js?testtaker" + currentVersion2;
+            script.type = 'text/javascript';
+            head.appendChild(script);
+
+            var scriptGetIp = document.createElement('script');
+            scriptGetIp.src = '../testtaker/scripts/getip.js?testtaker' + currentVersion2;
+            scriptGetIp.type = 'text/javascript';
+            head.appendChild(scriptGetIp);
+
+            var script = document.createElement('script');
+            script.src = "../steal/steal.production.js?testtaker" + currentVersion2;
+            script.type = 'text/javascript';
+            head.appendChild(script);
+
+            var GGAnalytis = GLOBAL.CONFIG.GGAnalytis;
+            GGAnalytis = GGAnalytis == undefined ? "" : GGAnalytis;
+            var div = document.createElement('div');
+            div.innerHTML = GGAnalytis;
+            for(var i = 0; i < div.childNodes.length; i++ ){
+              var script = document.createElement('script');
+              if (div.childNodes[i].src) {
+                script.src = div.childNodes[i].src;
+              }
+              script.type = 'text/javascript';
+              script.async = div.childNodes[i].async || false;
+              script.textContent = div.childNodes[i].textContent || '';
+              head.appendChild(script);
+            }
+          }
+
+          clearInterval(checkGlobal);
+        }
+      }, 1000);
+
+    }
+
+    if (document.all && !document.addEventListener) {
+      //redirect to error page
+      window.location.href = "unsupport.htm" + currentVersion;
+    }
+
+  </script>
+  <script src="../testtaker/config.js?t=v321" type="text/javascript"></script><script src="../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;t=v321" type="text/javascript" id="mathjax-script-link"></script><script src="../testtaker/scripts/ckeditor/ckeditor.js?testtaker&amp;t=v321" type="text/javascript"></script><script src="../testtaker/scripts/getip.js?testtaker&amp;t=v321" type="text/javascript"></script><script src="../steal/steal.production.js?testtaker&amp;t=v321" type="text/javascript"></script><script src="https://www.googletagmanager.com/gtag/js?id=UA-38417035-1" type="text/javascript" async=""></script><script type="text/javascript"> window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-38417035-1");</script><style>.cke{visibility:hidden;}</style><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="stylesheet" href="https://test.linkit.com/testtaker/production.css?t=v321" type="text/css"><link rel="stylesheet" href="./scripts/mxgraph/src/css/common.css" charset="UTF-8" type="text/css"><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; border: 0; padding: 0; margin: 0}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0 !important; padding: 0 !important; margin: 0 !important; vertical-align: 0 !important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap ! important}
+.MathJax img {display: inline ! important; float: none ! important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block; overflow: hidden; width: 1px; height: 60ex}
+.MathJax .MathJax_EmBox {display: block; overflow: hidden; width: 1px; height: 60em}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Blank; src: url('about:blank')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+  <body class="testtaker"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div>
+    <div class="banner"></div>
+    <div data-role="page" class="bodycontent">
+      <h1 class="accessibility">Test Taker</h1>
+      <div id="header" class="linkit_header_module"><div class="browserSupport">
+  <p class="alert-content"></p>
+  <a href="javascript:void(0);" class="close" onclick="closeBrowserSupportAlert()">✕</a>
+</div>
+</div>
+
+      <div id="testTakingModule" style="display: block;" class="linkit_test_taking_module"><div class="testTakingContainer">
+	
+		<div id="testStudentName" class="studentname">ATM202202142121 ATM202202142121</div>
+  		<div id="testname" class="testname" title="Abeka: Digital Sample Assessment">Abeka: Digital Sample Assessment</div>
+	
+	<div id="testTakingHeader" class="header">
+		<div id="toolPanel" class="tool-bar box-shadow">
+			
+				<div class="btn popup-button-wrapper tool-panel-btn">
+					<div id="icon-instrucitons" class="btn btn-large btn-toolbar" title="Instruction">
+						<div class="icon-toolbar icon-toolbar-icon-instruction"></div>
+					</div>
+				</div>
+				<div class="btn popup-button-wrapper tool-panel-btn">
+					<div id="flagNoteQuestion" class="btn btn-large btn-toolbar" title="Flags" style="display: block;">
+						<div class="icon-toolbar icon-toolbar-notes"></div>
+					</div>
+				</div>
+				<div class="btn popup-button-wrapper tool-panel-btn">
+					<div id="testSettingsButton" class="btn btn-large btn-toolbar popup-button" title="Tools">
+						<div class="icon-toolbar icon-toolbar-Service-Manager"></div>
+					</div>
+
+					<div id="testSettingsPopup" class="popup box-shadow">
+						<div class="content text-left" id="font-size-tool">
+							<span class="p-inline p-title">Font Size: </span>
+
+							<div id="font-decrease" class="p-inline btn btn-large btn-toolbar" title="Decrease Font Size">
+								<div class="icon-toolbar icon-toolbar-font-decrease"></div>
+							</div>
+							<div id="font-increase" class="p-inline btn btn-large btn-toolbar" title="Increase Font Size">
+								<div class="icon-toolbar icon-toolbar-font-increase"></div>
+							</div>
+						</div>
+						<div class="content text-left" id="zoom-tool">
+							<span class="p-inline p-zoom p-title">Zoom: </span>
+							<div id="zoom_in" class="btn btn-large btn-toolbar" title="Make Smaller" typezoom="zoom_in">
+								<div class="icon-toolbar icon-toolbar-ZoomInOut-48"></div>
+							</div>
+							<div id="zoom_out" class="btn btn-large btn-toolbar" title="Make Larger" typezoom="zoom_out">
+								<div class="icon-toolbar icon-toolbar-ZoomIn-48"></div>
+							</div>
+						</div>
+						<div class="content text-left" id="contrast-tool">
+							<span class="p-inline p-contrast p-title">Contrast: </span>
+							<div id="btnContrastButton" class="btn btn-large btn-contrast popup-button" title="Contrast">
+								<span class="largeBoxColor" title="Contrast">abc</span>
+							</div>
+							<div id="btnContrastPopup" class="popup popup-contrast">
+								<div class="content">
+									<div class="headingTitle"><span>Contrast Settings</span></div>
+									<div id="list_contrast_selector"></div>
+								</div>
+							</div>
+						</div>
+	                    <div class="content text-left" id="protractor-tool">
+	                        <span class="p-inline p-title">Protractor:</span>
+	                        <div id="protractor-enable" class="p-inline btn btn-large btn-toolbar" title="Show Protractor">
+	                            <span class="icon-protractor"></span>
+	                        </div>
+	                        <div id="protractor-disabled" class="p-inline btn btn-large btn-toolbar" title="Hide Protractor" style="display: none;">
+	                            <span class="icon-protractor"></span>
+                            </div>
+                        </div>
+                        <div class="content text-left" id="ruler-tool" style="">
+	                        <span class="p-inline p-title ruler-text">Ruler:</span>
+                            <div class="box-button-ruler">
+	                        <button id="ruler-6inch" class="p-inline btn btn-large btn-toolbar btn-ruler" title="Ruler 6inch" style="display: none;">
+	                            6"
+                            </button>
+                            <button id="ruler-15cm" class="p-inline btn btn-large btn-toolbar btn-ruler" title="Ruler 15cm">
+	                            15cm
+                            </button>
+                            <button id="ruler-12inch" class="p-inline btn btn-large btn-toolbar btn-ruler" title="Ruler 12inch" style="display: none;">
+	                            12"
+                            </button>
+
+                            <button id="ruler-30cm" class="p-inline btn btn-large btn-toolbar btn-ruler" title="Ruler 30cm" style="display: none;">
+	                            30cm
+	                        </button>
+                            </div>
+	                    </div>
+						<div class="content" id="calculator-function" style="display: none;">
+							<span>Calculator: </span>
+							<div id="calculator-normal" class="btn btn-large btn-toolbar" title="Calculator Standard" style="display: none;"> Standard</div>
+							<div id="calculator-scientific" class="btn btn-large btn-toolbar" title="Calculator Scientific" style="display: none;"> Scientific </div>
+							<div class="input-calculator" id="calculator-normal-input">
+								<label class="hidden" for="basicCalculator">x</label>
+								<input type="text" id="basicCalculator">
+							</div>
+							<div class="input-calculator" id="calculator-scientific-input">
+								<label class="hidden" for="sciCalculator">x</label>
+								<input type="text" id="sciCalculator">
+							</div>
+						</div>
+						<div class="content text-left" id="line-reader-tool">
+							<span class="p-inline">Line Reader: </span>
+							<div class="p-inline">
+								<div id="line-reader-status" class="btn btn-large btn-toolbar" title="Show Line Reader"><span class="line-reader-icon"></span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+					<div class="btn popup-button-wrapper tool-panel-btn">
+					<div id="pauseTestButton" class="btn btn-large btn-toolbar" title="Pause Session">
+							<div class="icon-toolbar icon-toolbar-pause-icon" id="pauseIcon"></div>
+							<div class="icon-toolbar icon-toolbar-Play-icon" id="playIcon" style="display: none;"></div>
+						</div>
+					</div>
+				
+				<div class="btn popup-button-wrapper tool-panel-btn" id="testSectionListButton" style="display: none">
+						<div id="testSectionButton" title="Test Sections" class="btn btn-large btn-toolbar">
+						<img src="images/to-do-list_checked2.png" alt="">
+					</div>
+				</div>
+
+				<div class="btn popup-button-wrapper tool-panel-btn" id="testQuestionListButton">
+					<div id="testQuestionsButton" title="Questions" class="btn btn-large btn-toolbar popup-button">
+						<div class="icon-toolbar icon-toolbar-to-do-list_checked2"></div>
+					</div>
+
+					<div id="testQuestionsPopup" class="popup box-shadow ui-resizable">
+						<div class="content">
+							<div id="test_question_list_selector" class="linkit_test_question_list_selector"><div id="testQuestionList" class="container">
+	<ul class="list_wrapper mxui_data_list">
+	
+	
+
+	
+		<li index="0" class="item activated" data-virtual-question-id="2159445">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159445" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159445" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159445" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Fill in the Blank/Completion/Short Answer</span> -
+			
+
+			
+				Question <span class="question-list-order">1</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div><span style="line-height: 1.57143em;">In the story "William the Silent," William′s country was under the control of </span><span stylename="underline" class="underline">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</span><span style="line-height: 1.57143em;">, king</span><span style="line-height: 1.57143em;">&nbsp;of&nbsp;Spain</span><span style="line-height: 1.57143em;">.</span></div><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp; &nbsp; &nbsp; &nbsp;<br>The first thing you saw after clicking "Begin" on this sample assessment was a box with the instructions for this question.<br><br><img class="imageupload" drawable="false" height="161.5" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/FulInstructions-202110281851249548.png" texttospeech="" width="737" alt=""><br><br>At the beginning of each new section on an assessment, you will see an instructions box and have to click close before you can see the first question. If you want to view the instructions again at any time, click the first icon on the tool bar above.<br><br><img class="imageupload" drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Instructions-202110281851421707.png" texttospeech="" width="84.80000000000001" alt=""><br><br>To answer this question correctly, click on the blank and then type <span stylename="italic" class="italic">Philip</span> in the space provided.&nbsp;<br><br>If <span stylename="italic" class="italic">Philip </span>is misspelled&nbsp;by one letter, one point will be deducted. If it is misspelled by more than one letter, the answer&nbsp;will be&nbsp;counted incorrect.<br><br>Once you have finished your answer, click on the arrow <img class="imageupload" drawable="false" height="33.5" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Next-202110281851577254.png" texttospeech="" width="47.5" alt="">&nbsp;to submit (save) your answer and go to the next question.<br><span stylename="bold" class="bold">Repeat this step throughout the assessment to continue to the next question.</span></div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="1" class="item" data-virtual-question-id="2159446">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159446" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159446" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159446" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Fill in the Blank/Completion/Short Answer</span> -
+			
+
+			
+				Question <span class="question-list-order">2</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="21" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div><span class="nobreak" stylename="nobreak">A(n)</span><span>&nbsp;</span><span stylename="bold" class="bold"><span stylename="underline" class="underline">&nbsp;&nbsp;(a)</span></span><span stylename="bold" class="bold"><span stylename="underline" class="underline">&nbsp;&nbsp;</span></span><span>&nbsp;is a word that shows <span stylename="underline" class="underline">&nbsp;&nbsp;<span stylename="bold" class="bold">(b)</span>&nbsp;&nbsp;</span> or&nbsp;strong&nbsp;feeling.</span></div><div><span stylename="bold" class="bold">(a)</span><span>&nbsp;</span><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp; &nbsp; &nbsp;</div><div><span stylename="bold" class="bold">(b)</span><span>&nbsp;</span><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_2" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp; &nbsp; &nbsp;<br>To answer this question correctly, type <span stylename="italic" class="italic">interjection</span> in the first blank and type <span stylename="italic" class="italic">sudden</span> in the second blank.&nbsp;<br><br>As you enter the answers, misspell one of the words by one letter so you can see how the system marks your test to show that you misspelled a word when it is submitted.<br><br>If you misspell either of these words by one letter, one point will be deducted. If you misspell either of the words by more than one letter, that answer&nbsp;will be&nbsp;counted incorrect.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="2" class="item" data-virtual-question-id="2159453">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159453" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159453" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159453" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Multiple Choice</span> -
+			
+
+			
+				Question <span class="question-list-order">3</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="1" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">In the poem "Casey at the Bat," Casey&nbsp;<span stylename="underline" class="underline">&nbsp;&nbsp;&nbsp;? &nbsp; </span>.<choiceinteraction responseidentifier="RESPONSE_1" shuffle="false" maxchoices="1" data-display="vertical"><simplechoice identifier="A"><div class="answer" stylename="answer" style="margin-left: 0px;">walked to first base</div></simplechoice><simplechoice identifier="B"><div class="answer" stylename="answer" style="margin-left: 0px;">struck out</div></simplechoice><simplechoice identifier="C"><div class="answer" stylename="answer" style="margin-left: 0px;">got to second base</div></simplechoice><simplechoice identifier="D"><div class="answer" stylename="answer" style="margin-left: 0px;">made a home run</div></simplechoice></choiceinteraction></div><br><br>Clicking on an answer in multiple choice will automatically submit your answer and send you to the next question. &nbsp;You may notice that there is an "trash can" to the right of the answer choices. &nbsp;You may use these to eliminate answers that you know are not correct. &nbsp;Clicking on the "trash can" is not answering the question.&nbsp; You must click on the letter for the answer. &nbsp;If you have not answered the question, a warning message will appear notifying you that the question is unanswered.&nbsp; If this happens, click on the answer that you wanted and the test will send you to the next question.<br><br>To answer this question correctly,&nbsp;click on&nbsp;choice&nbsp;<span stylename="italic" class="italic">B. struck out.</span></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="3" class="item" data-virtual-question-id="2159447">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159447" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159447" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159447" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Map Skills</span> -
+			
+
+			
+				Question <span class="question-list-order">4</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div></div><div class="mainBody" stylename="mainBody"><div>Indian Ocean</div><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="5" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>To answer this question, find the requested location and its corresponding letter on the map provided. Type this letter in the space provided. <span stylename="bold" class="bold">No partial credit is given for misspellings on Map Skills questions.</span><br><br>Type the letter&nbsp;<span stylename="italic" class="italic">K&nbsp;</span>so you can see how the test marks your incorrect answers wrong.<br><br><span stylename="italic" class="italic">The correct answer for this question is</span>&nbsp;J.&nbsp;<br>&nbsp;</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="4" class="item" data-virtual-question-id="2159442">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159442" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159442" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159442" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Drop-Down List</span> -
+			
+
+			
+				Question <span class="question-list-order">5</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="8" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">I should&nbsp;<span stylename="underline" class="underline">&nbsp;&nbsp; ?&nbsp;&nbsp;&nbsp;</span> called to let you know I was running late.<br><br><inlinechoiceinteraction responseidentifier="RESPONSE_1" shuffle="false"><inlinechoice pointsvalue="" identifier="A"><span class="inlineChoiceAnswer">of</span></inlinechoice><inlinechoice pointsvalue="" identifier="B"><span class="inlineChoiceAnswer">have</span></inlinechoice></inlinechoiceinteraction><br><br>To answer this question correctly, click on the blank or the arrow symbol inside the blank and choose <span stylename="italic" class="italic">have </span>from the drop-down list.<br><br>Let′s try out a tool. Click on the&nbsp;<img class="imageupload" drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Flag-202110281854050468.png" texttospeech="" width="84.80000000000001" alt="">&nbsp;in the tools above&nbsp;to flag this question. Leave it flagged. We will see more of what this does later in the the test.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="5" class="item" data-virtual-question-id="2159443">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159443" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159443" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159443" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Drop-Down List</span> -
+			
+
+			
+				Question <span class="question-list-order">6</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="21" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody">The way <span stylename="italic" class="italic">to have friends </span>is to show yourself friendly.<br><br><span stylename="italic" class="italic">Kind of Phrase: &nbsp;</span><inlinechoiceinteraction responseidentifier="RESPONSE_1" shuffle="false"><inlinechoice pointsvalue="" identifier="A"><span class="inlineChoiceAnswer">prepositional</span></inlinechoice><inlinechoice pointsvalue="" identifier="B"><span class="inlineChoiceAnswer">infinitive</span></inlinechoice><inlinechoice pointsvalue="" identifier="C"><span class="inlineChoiceAnswer">participial</span></inlinechoice><inlinechoice pointsvalue="" identifier="D"><span class="inlineChoiceAnswer">gerund</span></inlinechoice></inlinechoiceinteraction><br>&nbsp;<br><span stylename="italic" class="italic">Use of Phrase: &nbsp;&nbsp;</span><inlinechoiceinteraction responseidentifier="RESPONSE_2" shuffle="false"><inlinechoice pointsvalue="" identifier="A"><span class="inlineChoiceAnswer">adjective</span></inlinechoice><inlinechoice pointsvalue="" identifier="B"><span class="inlineChoiceAnswer">noun</span></inlinechoice></inlinechoiceinteraction><br><br>To answer this question correctly, choose <span stylename="italic" class="italic">infinitive</span> from the first drop-down list and <span stylename="italic" class="italic">adjective</span> from the second drop-down list.<br><br>Click on&nbsp;<img class="imageupload " drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Tools-202110281857105535.png" texttospeech="" width="84.80000000000001" alt=""> in the tools above. You will see two more buttons&nbsp;<img class="imageupload" drawable="false" height="35.5" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Font size-201503121520412800.png" width="62.5" alt="">. These buttons allow you to increase or decrease the font size of the questions for readability. You will also see other tools in the drop-down list. Try out each one to see how they work. When you are finished, click on the&nbsp; <img class="imageupload " drawable="false" height="33.5" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Next-202110281857265264.png" texttospeech="" width="47.5" alt="">&nbsp;to submit your answer and go to the next question.</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="6" class="item" data-virtual-question-id="2159448">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159448" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159448" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159448" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Matching</span> -
+			
+
+			
+				Question <span class="question-list-order">7</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="8" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">invented the incandescent light bulb</div>&nbsp;<inlinechoiceinteraction responseidentifier="RESPONSE_1" shuffle="false"><inlinechoice pointsvalue="" identifier="A"><span class="inlineChoiceAnswer">Alexander Bell</span></inlinechoice><inlinechoice pointsvalue="" identifier="B"><span class="inlineChoiceAnswer">Andrew Carnegie</span></inlinechoice><inlinechoice pointsvalue="" identifier="C"><span class="inlineChoiceAnswer">George Washington Carver</span></inlinechoice><inlinechoice pointsvalue="" identifier="D"><span class="inlineChoiceAnswer">Thomas Edison</span></inlinechoice><inlinechoice pointsvalue="" identifier="E"><span class="inlineChoiceAnswer">George Eastman</span></inlinechoice><inlinechoice pointsvalue="" identifier="F"><span class="inlineChoiceAnswer">Henry Ford</span></inlinechoice></inlinechoiceinteraction><br><br>To answer the question correctly, choose <span stylename="italic" class="italic">Thomas Edison</span> from the drop-down list above.<br><br>Let′s learn about the tool&nbsp;<img class="imageupload " drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/PauseSession-202110281857569641.png" texttospeech="" width="84.80000000000001" alt="">&nbsp;that will allow you to pause your test. It will save your answers along with your place in the test, and will log you out until later when you are ready to finish the test.<br><br><span stylename="italic" class="italic">If you choose to try the pause tool at this time, be sure to choose</span>&nbsp;No&nbsp;<span stylename="italic" class="italic">in order to remain on this test.</span><br><br>Click the arrow to submit your answer and go to the next question.</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="7" class="item" data-virtual-question-id="2159449">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159449" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159449" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159449" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Mathematic/Scientific Formulas/Fractions</span> -
+			
+
+			
+				Question <span class="question-list-order">8</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">area of a circle&nbsp;<br><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br><br><span stylename="italic" class="italic">The correct answer is</span> A=πr<sup>2</sup>. To answer this question, type <span stylename="italic" class="italic">A=</span>&nbsp;on your keyboard. Next,&nbsp;click on the icon&nbsp;at the&nbsp;end of the answer blank&nbsp;to display a list of special characters called the <span stylename="bold" class="bold">character palette</span>. In the palette, click on the pi symbol <span stylename="italic" class="italic">(π)</span> to enter it in the blank. Using the keyboard, type <span stylename="italic" class="italic">r </span>in the blank.<span stylename="italic" class="italic">&nbsp;</span>To finish the answer return to the character palette and choose the superscript <span stylename="italic" class="italic">2&nbsp;(<sup>2</sup>)</span> exponent. Do not include any spaces between the letters, numbers, or symbols.<br><br>If the list covers your answer blank, you can click on the list and drag it to a different place on your screen. Be sure to hold the button down as you drag. Try it now. When you are finished, submit your answer and go to the next question.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="8" class="item" data-virtual-question-id="2159450">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159450" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159450" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159450" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Mathematic/Scientific Formulas/Fractions</span> -
+			
+
+			
+				Question <span class="question-list-order">9</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">The equation for heat capacity is&nbsp;<span stylename="underline" class="underline">&nbsp;&nbsp; ?&nbsp;&nbsp; </span>.</div>&nbsp;<textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br><br>When&nbsp;an answer&nbsp;contains a fraction, type the numerator, a forward slash (/),&nbsp;and the denominator.&nbsp;<span stylename="italic" class="italic">The correct answer for this question is</span> C=<span><span><span><span><span><span><span><span><span><span><span><span><span class="math-tex" texttospeech=""><span class="MathJax" id="MathJax-Element-1-Frame" role="textbox" aria-readonly="true" style=""><nobr><span class="math simpleFraction" id="MathJax-Span-1" style="width: 2.035em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.629em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(0.663em, 1000em, 3.001em, -0.353em); top: -2.182em; left: 0.003em;"><span class="mrow" id="MathJax-Span-2"><span class="mstyle" id="MathJax-Span-3"><span class="mrow" id="MathJax-Span-4"><span class="texatom" id="MathJax-Span-5"><span class="mrow" id="MathJax-Span-6"><span class="mfrac" id="MathJax-Span-7" style="padding-left: 0.104em; padding-right: 0.104em;"><span style="display: inline-block; position: relative; width: 1.425em; height: 0px;"><span style="position: absolute; clip: rect(1.73em, 1000em, 2.848em, -0.404em); top: -3.199em; left: 50%; margin-left: -0.353em;"><span class="mn" id="MathJax-Span-8" style="font-family: STIXGeneral-Regular;">Q</span><span style="display: inline-block; width: 0px; height: 2.543em;"></span></span><span style="position: absolute; clip: rect(1.73em, 1000em, 2.696em, -0.404em); top: -1.878em; left: 50%; margin-left: -0.658em;"><span class="mn" id="MathJax-Span-9" style="font-family: STIXGeneral-Regular;">ΔT</span><span style="display: inline-block; width: 0px; height: 2.543em;"></span></span><span style="position: absolute; clip: rect(0.866em, 1000em, 1.222em, -0.455em); top: -1.268em; left: 0.003em;"><span style="border-left: 1.425em solid; display: inline-block; overflow: hidden; width: 0px; height: 1.25px; vertical-align: 0.003em;"></span><span style="display: inline-block; width: 0px; height: 1.07em;"></span></span></span></span></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="border-left: 0.003em solid; display: inline-block; overflow: hidden; width: 0px; height: 2.628em; vertical-align: -0.872em;"></span></span></nobr></span><script type="math/mml" id="MathJax-Element-1"><math class="simpleFraction" xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mrow class="MJX-TeXAtom-ORD"><mfrac><mn>Q</mn><mn>ΔT</mn></mfrac></mrow></mstyle></math></script></span></span></span></span></span></span></span></span></span></span></span></span></span>.&nbsp;&nbsp;Using the keyboard, type <span stylename="italic" class="italic">C=Q/</span> in the space provided. Next, click on the icon in the blank to show the list of special characters. From the character palette, choose the <span stylename="italic" class="italic">Δ</span> symbol. Finally, type&nbsp;<span stylename="italic" class="italic">T</span> on the keyboard to finish the answer.&nbsp; Do not include any spaces between the letters, numbers, and symbols.<br><br>Take a moment and click on any of the other characters that you would like to try. When you are finished, submit your answer and go to the next question.</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="9" class="item" data-virtual-question-id="4199578">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-4199578" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-4199578" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-4199578" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Mathematic/Scientific Formulas/Fractions</span> -
+			
+
+			
+				Question <span class="question-list-order">10</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div><span>Type the fraction equivalent of .875.</span></div><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_2" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br><br>This answer contains a simple fraction. The answer is&nbsp;<span><span><span><span><span class="math-tex" texttospeech=""><span class="MathJax" id="MathJax-Element-2-Frame" role="textbox" aria-readonly="true" style=""><nobr><span class="math simpleFraction" id="MathJax-Span-10" style="width: 1.019em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.816em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(0.714em, 1000em, 3.051em, -0.353em); top: -2.182em; left: 0.003em;"><span class="mrow" id="MathJax-Span-11"><span class="mstyle" id="MathJax-Span-12"><span class="mrow" id="MathJax-Span-13"><span class="texatom" id="MathJax-Span-14"><span class="mrow" id="MathJax-Span-15"><span class="mfrac" id="MathJax-Span-16" style="padding-left: 0.104em; padding-right: 0.104em;"><span style="display: inline-block; position: relative; width: 0.612em; height: 0px;"><span style="position: absolute; clip: rect(1.73em, 1000em, 2.696em, -0.455em); top: -3.199em; left: 50%; margin-left: -0.252em;"><span class="mn" id="MathJax-Span-17" style="font-family: STIXGeneral-Regular;">7</span><span style="display: inline-block; width: 0px; height: 2.543em;"></span></span><span style="position: absolute; clip: rect(1.73em, 1000em, 2.696em, -0.404em); top: -1.878em; left: 50%; margin-left: -0.252em;"><span class="mn" id="MathJax-Span-18" style="font-family: STIXGeneral-Regular;">8</span><span style="display: inline-block; width: 0px; height: 2.543em;"></span></span><span style="position: absolute; clip: rect(0.866em, 1000em, 1.222em, -0.455em); top: -1.268em; left: 0.003em;"><span style="border-left: 0.612em solid; display: inline-block; overflow: hidden; width: 0px; height: 1.25px; vertical-align: 0.003em;"></span><span style="display: inline-block; width: 0px; height: 1.07em;"></span></span></span></span></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="border-left: 0.003em solid; display: inline-block; overflow: hidden; width: 0px; height: 2.628em; vertical-align: -0.934em;"></span></span></nobr></span><script type="math/mml" id="MathJax-Element-2"><math class="simpleFraction" xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mrow class="MJX-TeXAtom-ORD"><mfrac><mn>7</mn><mn>8</mn></mfrac></mrow></mstyle></math></script></span></span></span></span></span>&nbsp;. Type the numerator, a forward slash (/), and the denominator using the keyboard.&nbsp;<br><br>Frequently in math questions, you will see the following instructions: Do not include any spaces between the letters, numbers, or symbols. This simply means: Do not type spaces between the numerator, forward slash, or the denominator. There will be times when an answer has letters as well such as&nbsp;2a+3a=5a. These directions will help you remember the best way to type your answer is <span stylename="italic" class="italic">without</span> any spaces.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="10" class="item" data-virtual-question-id="2159454">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159454" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159454" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159454" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Spanish Questions</span> -
+			
+
+			
+				Question <span class="question-list-order">11</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div><span>What′s the weather like?</span></div><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="60" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br><br>To answer this question correctly, click on the icon to show the character palette. Click on the word<span stylename="italic" class="italic">&nbsp;</span><span stylename="italic" class="italic">Spanish&nbsp;</span>at the top to display the Spanish palette. From this palette, choose the inverted question mark <span class="nobreak" stylename="nobreak">symbol<span stylename="italic" class="italic">( ¿ ).</span></span>&nbsp;Using the keyboard,&nbsp;<span class="nobreak" stylename="nobreak">type <span stylename="italic" class="italic">Qu.</span></span>&nbsp;Next,&nbsp;choose the <span class="nobreak" stylename="nobreak">accented </span><span stylename="italic" class="italic"><span class="nobreak" stylename="nobreak">e (é)</span></span>from the character palette. Insert a space using the keyboard and then type<span stylename="italic" class="italic"> tiempo&nbsp;</span><span stylename="italic" class="italic">hace?.&nbsp;</span>The answer should look like this: <span class="nobreak" stylename="nobreak"><span stylename="italic" class="italic">¿Qué tiempo hace?</span></span><br><br>Take a moment and click any other characters that you would like to see. When you are finished, submit your answer and go to the next question.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="11" class="item" data-virtual-question-id="2159444">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159444" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159444" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159444" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Essay</span> -
+			
+
+			
+				Question <span class="question-list-order">12</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="10" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">Explain how rain forms by the collision-coalescence process.<br><br>To complete this type of question, type the answer below in the space provided. Answers should be given using complete sentences and placed in paragraph form. These types of questions will be graded&nbsp;later by a teacher&nbsp;and points will be awarded for correctly and completely answering the question as well as for correct grammar usage. Items may also be graded on focus, detail, and organization.&nbsp;Just above the answer box is a tool bar with a few tools that you may use including undo last 30s and redo last 30s buttons.<br><br><span stylename="italic" class="italic">Rain forms by the&nbsp;collision-coalescence process in clouds with temperatures above freezing such as in the Tropics. Larger than normal condensation nuclei cause the formation of giant cloud droplets. As these droplets drift downward, they collide with smaller droplets and stick to them, growing bigger in the process. Eventually, the growing droplets become too big to remain suspended in the air and they begin to fall.</span></div><extendedtextinteraction placeholdertext="" responseidentifier="RESPONSE_1" expectedlength="3000" style="height: 90px;" formattext="true" data-ungraded="false"></extendedtextinteraction></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="12" class="item" data-virtual-question-id="2159455">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159455" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159455" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159455" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">True/False</span> -
+			
+
+			
+				Question <span class="question-list-order">13</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="1" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">Holland is another name for the Netherlands.</div><choiceinteraction subtype="TrueFalse" responseidentifier="RESPONSE_1" shuffle="false" maxchoices="1"><simplechoice identifier="A"><div class="answer" stylename="answer" style="margin-left: 0px;">true</div></simplechoice><simplechoice identifier="B"><div class="answer" stylename="answer" style="margin-left: 0px;">false</div></simplechoice></choiceinteraction><br><span stylename="italic" class="italic">A. True.</span></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="13" class="item" data-virtual-question-id="2159456">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159456" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159456" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159456" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">True/False</span> -
+			
+
+			
+				Question <span class="question-list-order">14</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="1" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">XVI = 26<choiceinteraction subtype="TrueFalse" responseidentifier="RESPONSE_1" shuffle="false" maxchoices="1"><simplechoice identifier="A"><div class="answer" stylename="answer" style="margin-left: 0px;">true</div></simplechoice><simplechoice identifier="B"><div class="answer" stylename="answer" style="margin-left: 0px;">false</div></simplechoice></choiceinteraction></div>Before we answer this question, let′s try another tool. This is the <span stylename="bold" class="bold">highlighting tool</span>:&nbsp;<img class="imageupload " drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/HighlightTextOff-202110281904262075.png" texttospeech="" width="84.80000000000001" alt="">&nbsp;When you click on this tool, it will change to&nbsp;<img class="imageupload " drawable="false" height="84.80000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/HighlightTextOn-202110281904539636.png" texttospeech="" width="84.80000000000001" alt="">. This shows that the tool is on and ready to use. Give it a try. Click on the tool to turn it on. Now use your mouse to select XVI = 26; it will highlight it yellow. Try this tool on the next two questions as well.<br><br>To answer this question correctly, choose <span stylename="italic" class="italic">B. False.</span></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="14" class="item" data-virtual-question-id="2159441">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159441" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159441" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159441" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Drag and Drop</span> -
+			
+
+			
+				Question <span class="question-list-order">15</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="30" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody">To answer this question, select (pick up) your answer choice by holding down the left mouse button&nbsp;over your choice. Still holding down the left mouse button, move (drag) the answer choice&nbsp;to the desired location and place (drop) the choice by releasing the mouse button.<br>&nbsp;<destinationobject percent="undefined" imgorgw="undefined" imgorgh="undefined" partialid="Partial_1" src="/ItemSet_49528/KeyboardingQuiz06_Correct-201410212055162826.png" width="445" height="225" type="image" texttospeech="undefined"><destinationitem destidentifier="DEST_1" left="105" top="82" width="304.77" height="30" order="1" numberdroppable="1"></destinationitem><destinationitem destidentifier="DEST_2" left="105" top="120" width="305.77" height="30" order="2" numberdroppable="1"></destinationitem><destinationitem destidentifier="DEST_3" left="105" top="159" width="305.77" height="30" order="3" numberdroppable="1"></destinationitem></destinationobject><br><sourceobject partialid="Partial_1" style="width: 300px; height: 20px;" srcidentifier="SRC_1" type="text" data-limit="unlimited">forearms parallel to the keyboard</sourceobject><br><sourceobject partialid="Partial_1" style="width: 300px; height: 20px;" srcidentifier="SRC_2" type="text" data-limit="unlimited">forearms parallel to the floor</sourceobject><br><sourceobject partialid="Partial_1" style="width: 300px; height: 20px;" srcidentifier="SRC_3" type="text" data-limit="unlimited">body leaning forward from the waist</sourceobject><br><sourceobject partialid="Partial_1" style="width: 300px; height: 20px;" srcidentifier="SRC_4" type="text" data-limit="unlimited">body centered in front of the "h" key</sourceobject><br><sourceobject partialid="Partial_1" style="width: 300px; height: 20px;" srcidentifier="SRC_5" type="text" data-limit="unlimited">straight fingers</sourceobject><br><sourceobject partialid="Partial_1" style="width: 300px; height: 20px;" srcidentifier="SRC_6" type="text" data-limit="unlimited">curved fingers</sourceobject><br>&nbsp;<destinationobject percent="undefined" imgorgw="undefined" imgorgh="undefined" partialid="Partial_1" src="/ItemSet_49528/KeyboardingQuiz06_Incorrect-201410212056238622.png" width="445" height="225" type="image" texttospeech="undefined"><destinationitem destidentifier="DEST_4" left="105" top="80" width="302.77" height="30" order="4" numberdroppable="1"></destinationitem><destinationitem destidentifier="DEST_5" left="105.1" top="120.09" width="302.77" height="30" order="5" numberdroppable="1"></destinationitem><destinationitem destidentifier="DEST_6" left="104" top="159" width="303.77" height="30" order="6" numberdroppable="1"></destinationitem></destinationobject><br><br><span stylename="italic" class="italic">Correct Answer:</span><table class="linkit-table linkit-table linkit-table" style="height: 100px; width: 327px;"><tbody><tr><td class="center" style="width: 255px;" stylename="center"><span stylename="bold" class="bold">Correct Keying Technique</span></td><td class="center" style="width: 261px;" stylename="center"><span stylename="bold" class="bold">Inorrect Keying Technique</span></td></tr><tr><td class="center" style="width: 255px;" stylename="center"><span stylename="italic" class="italic">forearms parallel to the&nbsp;</span><span stylename="italic" class="italic">keyboard</span></td><td class="center" style="width: 261px;" stylename="center"><span stylename="italic" class="italic">forearms parallel to the floor</span></td></tr><tr><td class="center" style="width: 255px;" stylename="center"><span stylename="italic" class="italic">body leaning forward from the waist</span></td><td class="center" style="width: 261px;" stylename="center"><span stylename="italic" class="italic">body centered in front of the "h" key</span></td></tr><tr><td class="center" style="width: 255px;" stylename="center"><span stylename="italic" class="italic">curved fingers</span></td><td class="center" style="width: 261px;" stylename="center"><span stylename="italic" class="italic">straight fingers</span></td></tr></tbody></table></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="15" class="item" data-virtual-question-id="2159438">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159438" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159438" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159438" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Labeling</span> -
+			
+
+			
+				Question <span class="question-list-order">16</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div></div><div class="mainBody" stylename="mainBody"><div><span>C.&nbsp;</span><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_2" expectedlengthmax="60" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp; &nbsp; &nbsp;<br>To answer this question correctly, type<span stylename="italic" class="italic">&nbsp;small intestine&nbsp;</span>in the space provided. If&nbsp;<span stylename="italic" class="italic">small intestine&nbsp;</span>is misspelled by one letter, one point will be deducted. <span stylename="bold" class="bold">If it is misspelled by more than one letter, the answer&nbsp;will be&nbsp;counted incorrect.</span></div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="16" class="item" data-virtual-question-id="2159439">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159439" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159439" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159439" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">English Diagrams</span> -
+			
+
+			
+				Question <span class="question-list-order">17</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="21" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div></div><div class="mainBody" stylename="mainBody"><div><span>Ryan and&nbsp;Kathy sent us a good report from Peru.</span></div><div><span stylename="bold" class="bold">a. </span><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div><span stylename="bold" class="bold">b.&nbsp;</span><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_2" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div><span stylename="bold" class="bold">c.&nbsp;</span><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_3" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>To answer this question correctly, type <span stylename="italic" class="italic">us</span> in blank&nbsp;<span stylename="italic" class="italic"><span stylename="bold" class="bold">a.</span>, Peru </span>in blank <span stylename="italic" class="italic"><span stylename="bold" class="bold">b.</span></span> and<span stylename="italic" class="italic">&nbsp;report </span>in blank&nbsp;<span stylename="italic" class="italic"><span stylename="bold" class="bold">c.</span></span><br><br>If&nbsp;a word is misspelled by one letter, one point will be deducted. If a word is misspelled by more than one letter, the answer&nbsp;will be&nbsp;counted incorrect.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="17" class="item" data-virtual-question-id="4120485">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-4120485" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-4120485" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-4120485" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">English Diagrams</span> -
+			
+
+			
+				Question <span class="question-list-order">18</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="30" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody">The kitten pounced on the string.<div>&nbsp;<span class="speChar">&nbsp;</span></div>&nbsp;<destinationobject percent="10" imgorgw="311" imgorgh="45" partialid="Partial_1" src="/ItemSet_49528/GC1_Quiz5_9-201706221857361238.png" width="311" height="45" type="image" texttospeech=""><destinationitem destidentifier="DEST_1" left="2" top="1" width="147" height="21" order="1" numberdroppable="1"></destinationitem><destinationitem destidentifier="DEST_2" left="159" top="0" width="148" height="23" order="2" numberdroppable="1"></destinationitem></destinationobject>&nbsp;<div>&nbsp;<span class="speChar">&nbsp;</span></div><sourceobject partialid="Partial_1" style="width: 30px; height: 20px;" srcidentifier="SRC_1" type="text" data-limit="unlimited">The</sourceobject><br><sourceobject partialid="Partial_1" style="width: 45px; height: 20px;" srcidentifier="SRC_2" type="text" data-limit="unlimited">kitten</sourceobject><br><sourceobject partialid="Partial_1" style="width: 65px; height: 20px;" srcidentifier="SRC_3" type="text" data-limit="unlimited">pounced</sourceobject><br><sourceobject partialid="Partial_1" style="width: 20px; height: 20px;" srcidentifier="SRC_4" type="text" data-limit="unlimited">on</sourceobject><br><sourceobject partialid="Partial_1" style="width: 25px; height: 20px;" srcidentifier="SRC_5" type="text" data-limit="unlimited">the</sourceobject><br><sourceobject partialid="Partial_1" style="width: 45px; height: 20px;" srcidentifier="SRC_6" type="text" data-limit="unlimited">string</sourceobject><br><sourceobject partialid="Partial_1" style="width: 10px; height: 20px;" srcidentifier="SRC_7" type="text" data-limit="unlimited">x</sourceobject><br><br>To answer this question, select (pick up) your answer choice by holding down the left mouse button&nbsp;over your choice. Still holding down the left mouse button, move (drag) the answer choice&nbsp;to the desired location and place (drop) the choice by releasing the mouse button. Any word in the sentence can be used. The option <span stylename="italic" class="italic">X</span> exists to serve as the understood you in a sentence if it is needed.<br><br><span stylename="italic" class="italic">The correct answer for the first space is</span>&nbsp;kitten&nbsp;<span stylename="italic" class="italic">which is the subject.The second space should be</span>&nbsp;pounced&nbsp;<span stylename="italic" class="italic">which is the verb.</span><br>&nbsp;</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="18" class="item" data-virtual-question-id="4120484">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-4120484" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-4120484" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-4120484" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Grammar</span> -
+			
+
+			
+				Question <span class="question-list-order">19</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="31" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><sourcetext identifier="HS_1" pointvalue="0">Maria&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_2" pointvalue="0">thought&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_3" pointvalue="0">the&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_4" pointvalue="0">black&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_5" pointvalue="0">one&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_6" pointvalue="0">was&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_7" pointvalue="0">his&nbsp;</sourcetext>&nbsp;<sourcetext identifier="HS_8" pointvalue="0">jacket</sourcetext>.<br><br>This type of question allows you to select a single word or more than one word as your answer depending on the question.<br><br>To answer this question correctly, click on the word <span stylename="italic" class="italic">one</span>&nbsp;in the sentence. The word should turn green. If you hold your cursor over any word in the sentence, the word will turn light green, indicating that the word can be selected. Only when clicked will it turn a slightly darker green and stay that color.</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="19" class="item" data-virtual-question-id="2159440">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159440" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159440" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159440" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Dictation</span> -
+			
+
+			
+				Question <span class="question-list-order">20</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody audioref="/ItemSet_49528/Lighthouse_converted-201807231511042821.mp3"><div class="mainBody" stylename="mainBody"><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="30" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp; &nbsp; &nbsp;<br>Click the play button to listen to the dictated word. To correctly answer this question, type <span stylename="italic" class="italic">lighthouse</span> in the space provided. If&nbsp;lighthouse is misspelled, it will be considered incorrect.&nbsp;<span stylename="bold" class="bold">No partial credit will be given for misspelling a word from a spelling list.</span><br><br>Let′s try the next tool.<br><br>The <span stylename="bold" class="bold">Test Questions </span><span stylename="bold" class="bold">tool</span>&nbsp;<img class="imageupload " drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Questions-202110281908004528.png" texttospeech="" width="84.80000000000001" alt="">&nbsp;displays a list of all the questions included on the current assessment.<br>You will see&nbsp;<img class="imageupload" drawable="false" height="26.599999999999998" percent="7" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/unanswered question-201503121528183953.png" width="24.5" alt="">&nbsp;for unanswered questions,&nbsp;<img class="imageupload" drawable="false" height="30.799999999999997" percent="7" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Answered question-201503121528490805.png" width="27.299999999999997" alt="">&nbsp;for answered questions,&nbsp; and&nbsp; &nbsp;<img class="imageupload" drawable="false" height="28.7" percent="7" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Flagged question-201503121529196721.png" width="28" alt="">&nbsp;for questions you have flagged.<br><br>Clicking on a question number will take you directly to that question. Try it now, clicking on the question you flagged earlier in the test. Once you have answered the question, use the tool again to move on to the next unanswered question.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="20" class="item" data-virtual-question-id="2316660">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2316660" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2316660" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2316660" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Drawing Tool - Graphs</span> -
+			
+
+			
+				Question <span class="question-list-order">21</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="21" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div></div><div></div><div class="mainBody" stylename="mainBody">4<span stylename="italic" class="italic">x</span>&nbsp;+ 3<span stylename="italic" class="italic">y</span>&nbsp;= 12<br>&nbsp;<table class="linkit-table" style="height: 100px; width: 400px;"><tbody><tr><td class="center" stylename="center"><span stylename="italic" class="italic">x</span></td><td class="center" stylename="center"><span stylename="italic" class="italic">y</span></td></tr><tr><td class="center"><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;</td><td class="center"><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_2" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;</td></tr><tr><td class="center"><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_3" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;</td><td class="center"><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_4" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;</td></tr><tr><td class="center"><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_6" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;</td><td class="center"><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_5" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;&nbsp;&nbsp;</td></tr></tbody></table>&nbsp;<div><extendedtextinteraction drawable="true" responseidentifier="RESPONSE_7" width="401" height="400"><img worgimage="801" horgimage="800" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Graph-202110291817145680.png" drawable="true" width="401" height="400" texttospeech="" alt=""></extendedtextinteraction><br><br>Take some time to play with the different drawing tools so that you are familiar with how they work. The ruler tool from the Tools drop-down menu can also be used on top of the graph to help in drawing a straight line.&nbsp;<br><br>To the right of your screen are two reference images showing the answer to this question. Click on the tabs at the top to view each part of the answer.<br><br>When you are finished, continue on to the next question.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="21" class="item" data-virtual-question-id="2324101">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2324101" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2324101" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2324101" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Number Lines</span> -
+			
+
+			
+				Question <span class="question-list-order">22</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="32" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div class="no-hover">-4, 5, 0,&nbsp;-<span class="smallText" stylename="smallText" style="font-size: 10px;"><span><span><span><span><span><span><span><span><span class="math-tex" texttospeech=""><span class="MathJax" id="MathJax-Element-3-Frame" role="textbox" aria-readonly="true" style=""><nobr><span class="math simpleFraction" id="MathJax-Span-19" style="width: 1.019em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.816em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(0.663em, 1000em, 3.001em, -0.353em); top: -2.182em; left: 0.003em;"><span class="mrow" id="MathJax-Span-20"><span class="mstyle" id="MathJax-Span-21"><span class="mrow" id="MathJax-Span-22"><span class="texatom" id="MathJax-Span-23"><span class="mrow" id="MathJax-Span-24"><span class="mfrac" id="MathJax-Span-25" style="padding-left: 0.104em; padding-right: 0.104em;"><span style="display: inline-block; position: relative; width: 0.612em; height: 0px;"><span style="position: absolute; clip: rect(1.73em, 1000em, 2.696em, -0.404em); top: -3.199em; left: 50%; margin-left: -0.252em;"><span class="mn" id="MathJax-Span-26" style="font-family: STIXGeneral-Regular;">3</span><span style="display: inline-block; width: 0px; height: 2.543em;"></span></span><span style="position: absolute; clip: rect(1.73em, 1000em, 2.696em, -0.404em); top: -1.878em; left: 50%; margin-left: -0.252em;"><span class="mn" id="MathJax-Span-27" style="font-family: STIXGeneral-Regular;">2</span><span style="display: inline-block; width: 0px; height: 2.543em;"></span></span><span style="position: absolute; clip: rect(0.866em, 1000em, 1.222em, -0.455em); top: -1.268em; left: 0.003em;"><span style="border-left: 0.612em solid; display: inline-block; overflow: hidden; width: 0px; height: 1.25px; vertical-align: 0.003em;"></span><span style="display: inline-block; width: 0px; height: 1.07em;"></span></span></span></span></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="border-left: 0.003em solid; display: inline-block; overflow: hidden; width: 0px; height: 2.628em; vertical-align: -0.872em;"></span></span></nobr></span><script type="math/mml" id="MathJax-Element-3"><math class="simpleFraction" xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mrow class="MJX-TeXAtom-ORD"><mfrac><mn>3</mn><mn>2</mn></mfrac></mrow></mstyle></math></script></span></span></span></span></span></span></span></span></span></span>, 2.5</div><imagehotspot responseidentifier="RESPONSE_1" src="/ItemSet_49528/Line-201507101718433055.png" percent="10" imgorgw="640" imgorgh="89.81333333333333" width="640" height="89" maxhotspot="5" texttospeech=""><sourceitem identifier="IHS_1" pointvalue="0" left="38" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_2" pointvalue="0" left="60" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_3" pointvalue="0" left="82" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_4" pointvalue="0" left="105" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_5" pointvalue="2" left="126" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_6" pointvalue="0" left="150" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_7" pointvalue="0" left="172" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_8" pointvalue="0" left="193" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_9" pointvalue="0" left="217" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_10" pointvalue="2" left="239" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_11" pointvalue="0" left="261" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_12" pointvalue="0" left="285" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_13" pointvalue="2" left="305" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_14" pointvalue="0" left="328" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_15" pointvalue="0" left="351" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_16" pointvalue="0" left="372" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_17" pointvalue="0" left="394" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_18" pointvalue="2" left="418" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_19" pointvalue="0" left="440" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_20" pointvalue="0" left="462" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_21" pointvalue="0" left="484" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_22" pointvalue="0" left="507" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_23" pointvalue="2" left="529" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_24" pointvalue="0" left="552" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem><sourceitem identifier="IHS_25" pointvalue="0" left="574" top="17" width="30" height="30" typehotspot="circle" hiddenhotspot="true">&nbsp;</sourceitem></imagehotspot><br>&nbsp; &nbsp; &nbsp;<br>To answer this question correctly, place the mouse over the bar line for <span stylename="italic" class="italic">-4.</span>&nbsp;A box with a circle will appear also known as a hot spot. Click on the circle inside the box to mark your answer. An <span stylename="italic" class="italic">x&nbsp;</span>will appear marking your choice. Continue until you have marked the other locations on the number line, then submit your answer.<br><br><br><br>&nbsp;</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="22" class="item" data-virtual-question-id="2159452">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159452" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159452" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159452" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Modified True-False</span> -
+			
+
+			
+				Question <span class="question-list-order">23</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div>The most common North American squirrel is the <span stylename="italic" class="italic">flying </span>squirrel<span>.</span></div><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp;&nbsp; &nbsp;&nbsp;<br>Because the answer to this question is false, the italicized word needs to be replaced with the word(s) that will make the statement true.<br><br>To answer this question correctly, type the word&nbsp;<span stylename="italic" class="italic">gray </span>in the space&nbsp;above (<span stylename="italic" class="italic">gray</span> replaces the italicized word<span stylename="italic" class="italic">&nbsp;flying </span>to make the statement true). If&nbsp;<span stylename="italic" class="italic">gray </span>is misspelled by one letter, one point will be deducted. If it is misspelled by more than one letter, it will be counted incorrect.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="23" class="item" data-virtual-question-id="2159451">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-2159451" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-2159451" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-2159451" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Modified True-False</span> -
+			
+
+			
+				Question <span class="question-list-order">24</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody"><div>God promised to bless the world through Abraham′s son, <span stylename="italic" class="italic">Isaac</span>.</div><div><textentryinteraction expectedwidth="100" customrule="" addpadding="undefined" validation="undefined" responseidentifier="RESPONSE_1" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction><br>&nbsp; &nbsp; &nbsp;<br>This is an&nbsp;example of a modified true/false question that is true.<br>&nbsp;<br>To answer this question correctly, type <span stylename="italic" class="italic">true</span> in the space above. If you misspell <span stylename="italic" class="italic">true </span>by one letter, one point will be deducted. If you misspell true by more than one letter,&nbsp;the answer will be counted incorrect.</div></div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+	
+	
+
+	
+		<li index="24" class="item" data-virtual-question-id="6835817">
+			<div class="expandable">
+	<div>
+		<span id="questionIcon-6835817" class="icon-expandable icon-expandable-question"></span>
+		<span id="answerIcon-6835817" class="icon-expandable icon-expandable-answer" style="display:none"></span>
+		<span id="flagQuestion-6835817" class="icon-expandable icon-expandable-flag-question" style="display:none"></span>
+		<span class="question-list-number">
+			
+				<span class="section-name-question-list">Measuring</span> -
+			
+
+			
+				Question <span class="question-list-order">25</span>
+			
+     	</span>
+	</div>
+	<assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itembody><div class="mainBody" stylename="mainBody">Use the protractor and ruler tools to measure the number of degrees in this angle.<br>&nbsp;&nbsp; &nbsp;&nbsp;<br><img class="imageupload" drawable="false" height="86" percent="10" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Math_Test4_42-202110261559027798.svg" texttospeech="" width="116" alt=""><br>&nbsp; &nbsp; &nbsp;<br><textentryinteraction expectedwidth="150" customrule="" addpadding="1" validation="0" responseidentifier="RESPONSE_1" expectedlengthmax="15" expectedlengthmin="0" data-ungraded="false"></textentryinteraction>&nbsp;<br>&nbsp; &nbsp;&nbsp;<br>Let′s use two more of the tools under the Tools icon above to answer this question. Click the Tools icon&nbsp;<img class="imageupload" drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Tools-202110282013302746.png" texttospeech="" width="84.80000000000001" alt="">&nbsp;and choose the protractor <img class="imageupload" drawable="false" height="64.8" percent="2" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Protractor-202110282013417534.png" texttospeech="" width="121.2" alt="">. The double-sided red curved arrow on the left corner can be used to rotate the protractor to match the angle you are measuring. The smaller double-sided arrow at the right corner can be used to make the protractor bigger or smaller. Try out those two features and then use the protractor to measure the degrees in the angle above by putting the center point at the point of the angle.<br><br>A second tool under the Tools icon is the ruler. Click on the 15 cm Ruler <img class="imageupload" drawable="false" height="65.2" percent="4" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/RulerImg-202110261642354390.png" texttospeech="" width="238.8" alt="">. The double-sided red curved arrow on the left side can be used to rotate the ruler as well. You will notice if you rotate the ruler all the way upside down that there are inch measurements on the other side. This tool may be helpful for measuring the angle above by rotating it to use the straight edge. You can then carry out the upper line segment of the angle until it meets the angle marking lines on the protractor. The red x for each tool will close them.<br><br><span stylename="italic" class="italic">The answer is </span>47°<span stylename="italic" class="italic">. The degree symbol is in the character palette.</span><br><br><br>This is the last question on the test. Clicking on the right arrow on the bottom of the page to submit your answer will&nbsp;<span stylename="bold" class="bold">not</span>&nbsp;take you to another question. You may click on the bottom left arrow to go back through your answers and check them or use the Question List Tool to see which ones are unanswered, answered, or flagged. If you have more work to do, now is the time to do it.<br><br>If you are finished and would like to turn your test in and see how you did, click on&nbsp;<img class="imageupload" drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/SubmitTest-202110282014375203.png" texttospeech="" width="84.80000000000001" alt="">&nbsp;to submit your test. &nbsp;You will need to answer yes to submit the test and click the "Review Session" button when it appears to see how you did. Be sure to notice how your answers are marked. You will see a&nbsp;<img class="imageupload" drawable="false" height="35" percent="7" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/ScreenShot20211026at11.25.32-202110261626324027.png" texttospeech="" width="34.3" alt="">&nbsp;when your answer is wrong, a&nbsp;<img class="imageupload" drawable="false" height="36.800000000000004" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/ScreenShot20211026at11.25.09-202110261626256128.png" texttospeech="" width="39.2" alt="">&nbsp;when the answer is correct, and a <img class="imageupload" drawable="false" height="35" percent="7" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/ScreenShot20211026at11.28.05-202110261628278707.png" texttospeech="" width="34.3" alt="">&nbsp;when the answer is misspelled or partial credit is given.</div></itembody></assessmentitem>
+	<div class="expander">
+		<span class="expander_open icon-expandable icon-expandable-down"></span>
+		<span class="expander_close icon-expandable icon-expandable-up" style="display: none;"></span>
+	</div>
+</div>
+
+		</li>
+	
+
+</ul>
+</div>
+</div>
+						</div>
+					<div class="ui-resizable-handle ui-resizable-e" title="Drag here to resize the window" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" title="Drag here to resize the window" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" title="Drag here to resize the window" style="z-index: 90;"></div></div>
+				</div>
+
+
+					<div id="highlight-tool-testtaker" class="btn popup-button-wrapper tool-panel-btn">
+						<div id="highlight" class="btn btn-large btn-toolbar" title="Highlight Text">
+							<div class="icon-toolbar icon-toolbar-highlight"></div>
+						</div>
+						<div id="unhighlight" class="btn btn-large btn-toolbar" title="Stop Highlight" style="display: none;">
+							<div class="icon-toolbar icon-toolbar-unhighlight"></div>
+						</div>
+						<div id="disabledhighlight" class="btn btn-large btn-toolbar" title="Highlight Text disabled for MathML Items" style="display: none;">
+							<div class="icon-toolbar icon-toolbar-highlight"></div>
+						</div>
+					</div>
+
+
+				
+					
+					    <div class="btn popup-button-wrapper tool-panel-btn" title="Submit Session." id="div-submit-test">
+					
+					    <div id="stopTestButton" class="btn btn-large btn-toolbar">
+							<div class="icon-toolbar icon-toolbar-Stop-48"></div>
+					    </div>
+					</div>
+				
+				<div class="btn popup-button-wrapper tool-panel-btn hide" title="Submit Section">
+				    <div id="submitSectionButton" class="btn btn-large btn-toolbar">
+						<div class="icon-toolbar icon-toolbar-Stop-48"></div>
+				    </div>
+				</div>
+            
+        </div>
+		<div id="timeBoardContent" title="Timing Board">
+			<div id="timeBoard" style="display:none"></div>
+		</div>
+		<div style="clear"></div>
+	</div>
+
+	
+		<div id="pauseTestPopup" class="popup box-shadow" style="display:none">
+			<div class="content">
+				<div class="msgTextpause">
+					<p class="alert-warning">
+						<span class="ic ic-warning"></span>
+						<span>Session is Paused</span>
+					</p>
+				</div>
+				<div class="clear"></div>
+				<h2 class="heading header2 js-heading-large">Save and finish later?</h2>
+				<div id="cancelFinishLaterButton" class="btn btn-large btn-cancel">
+					<div class="button button-cancel-white"></div> No
+				</div>
+				<div id="acceptFinishLaterButton" class="btn btn-large btn-highlight">
+					<div class="button button-accept-white"></div> Yes
+				</div>
+			</div>
+		</div>
+
+		<div id="submitTestVerificationPopup" class="popup box-shadow" style="display:none">
+			<div class="content">
+				<div id="allQuestionsAnsweredMessage" style="display: none;">
+					<p class="alert-warning">
+						<span class="ic ic-warning"></span>
+						<span>All Questions Answered</span>
+					</p>
+				</div>
+				<div id="notAllQuestionsAnsweredMessage" style="display: block;">
+					<p class="alert-warning">
+						<span class="ic ic-warning"></span>
+						<span>Not All Questions Answered</span>
+					</p>
+				</div>
+				<div class="clear"></div>
+				<span class="heading header2">Ready to turn in your session?</span>
+				<div id="cancelCompleteTestButton" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+				<div id="acceptCompleteTestButton" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+			</div>
+		</div>
+
+		<div id="savingTestPopup" class="popup box-shadow" style="display:none">
+			<div class="content saving">
+				<div class="progressIndicator"></div>
+				<span class="heading header3"><span>Saving Session...</span></span>
+			</div>
+		</div>
+
+		<div id="submittingCompletedTestPopup" class="popup popup-section box-shadow" style="display:none">
+			<div class="content">
+				<h1>Submitting...</h1>
+			</div>
+		</div>
+	
+	<div class="wrapTestContentArea" style="height: 537px;">
+		<div id="testContentArea" class="content" style="width: 100%;">
+			<div id="questionItemPanel" class="panel testItemPanel box-shadow questionPanel ui-resizable" style="height: auto; top: 0px; width: 753px;">
+				<div id="blur" class="testBlur" style="width: 753px; height: 523px; z-index: 1001; display: block;"></div>
+				<div class="header" style="">
+					<div class="sectionTitle" style="width: 693px;">Fill in the Blank/Completion/Short Answer</div>
+					<div class="currentQuestion">1 of 25</div>
+					<div class="clear"></div>
+				</div>
+				<div id="scrollTaker">
+					<div class="scrollLeft ui-droppable" direction="W">&nbsp;</div>
+					<div class="scrollTopLeft ui-droppable" direction="NW">&nbsp;</div>
+					<div class="scrollTop ui-droppable" direction="N">&nbsp;</div>
+					<div class="scrollTopRight ui-droppable" direction="NE">&nbsp;</div>
+					<div class="scrollRight ui-droppable" direction="E">&nbsp;</div>
+					<div class="scrollBottomRight ui-droppable" direction="SE">&nbsp;</div>
+					<div class="scrollBottom ui-droppable" direction="S">&nbsp;</div>
+					<div class="scrollBottomLeft ui-droppable" direction="SW">&nbsp;</div>
+					<div class="scroll-down-icon" style="bottom: 36px; display: block;">
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 62 90">
+							<circle cx="45" cy="13" r="3"></circle>
+							<path d="M45,0.5c-8.284,0-15,6.717-15,15.002v24.996C30,48.783,36.716,55.5,45,55.5s15-6.717,15-15.002V15.502  C60,7.217,53.284,0.5,45,0.5z M58,40.498C58,47.667,52.168,53.5,45,53.5c-7.168,0-13-5.833-13-13.002V15.502  C32,8.333,37.832,2.5,45,2.5c7.168,0,13,5.833,13,13.002V40.498z"></path>
+							<path class="arrow-down" d="M58.293,59.793L45,73.086L31.707,59.793c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14,14  C44.488,75.402,44.744,75.5,45,75.5s0.512-0.098,0.707-0.293l14-14c0.391-0.391,0.391-1.023,0-1.414S58.684,59.402,58.293,59.793z"></path>
+							<path class="arrow-down" d="M58.293,73.793L45,87.086L31.707,73.793c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14,14  C44.488,89.402,44.744,89.5,45,89.5s0.512-0.098,0.707-0.293l14-14c0.391-0.391,0.391-1.023,0-1.414S58.684,73.402,58.293,73.793z"></path>
+            </svg>
+            <p class="title-scroll">Scroll down to see more</p>
+					</div>
+					<div class="content" id="testContent" style="height: 431px;" namecolor="black-white">
+						<div id="qtiItemView" class="linkit_qti_item_view alphaAnswerLabels content-scroll" namecolor="black-white"><img class="flag" src="images/icon_flag_mark.png" style="display: none;" alt=""><div><div class="questionItem" qtiitemid="1077898" virtualquestionid="2159445"><assessmentitem xsi:schemalocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd" adaptive="false" timedependent="false" xmlunicode="true" toolname="linkitTLF" toolversion="2.0" qtischemeid="9" texttospeechrate="0.8" texttospeechvolume="0.5" texttospeechenable="true" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><stylesheet href="stylesheet/linkitStyleSheet.css" type="text/css"></stylesheet><responsedeclaration identifier="RESPONSE_1" basetype="string" cardinality="single" method="default" casesensitive="false" type="string" pointsvalue="4" range="false" spelling="true" ignoreextraspace="true" spellingdeduction="1"></responsedeclaration><itembody><div class="mainBody" stylename="mainBody"><div class="questionNumber" style="margin-left: -30px; margin-right: 0px; display: inline-block;">1.</div><div><span style="line-height: 1.57143em;">In the story "William the Silent," William′s country was under the control of </span><span stylename="underline" class="underline">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</span><span style="line-height: 1.57143em;">, king</span><span style="line-height: 1.57143em;">&nbsp;of&nbsp;Spain</span><span style="line-height: 1.57143em;">.</span></div><div><div class="input-wrapper input-entry"><input type="text" class="textEntryInteraction" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" size="37" maxlengthold="30" responseidentifier="RESPONSE_1" virtualquestionid="" style="width: 100px; display: none; font-size: 14px;" data-ungraded="false" data-id="2159445RESPONSE_1" addpadding="undefined" validation="undefined" customrule="" expectedlengthmax="30" expectedlengthmin="0" expectedwidth="100"><div class="textarea-wrapper"><textarea spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" maxlength="30" style="width: 100px; font-size: 14px;" id="2159445RESPONSE_1" addpadding="undefined" validation="undefined" customrule="" expectedlengthmax="30" expectedlengthmin="0" placeholder="" wrap="off"></textarea></div><span class="show-popup"></span></div>
+<br>&nbsp; &nbsp; &nbsp; &nbsp;<br>The first thing you saw after clicking "Begin" on this sample assessment was a box with the instructions for this question.<br><br><img class="imageupload" drawable="false" height="161.5" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/FulInstructions-202110281851249548.png" texttospeech="" width="737" alt=""><br><br>At the beginning of each new section on an assessment, you will see an instructions box and have to click close before you can see the first question. If you want to view the instructions again at any time, click the first icon on the tool bar above.<br><br><img class="imageupload" drawable="false" height="85.60000000000001" percent="8" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Instructions-202110281851421707.png" texttospeech="" width="84.80000000000001" alt=""><br><br>To answer this question correctly, click on the blank and then type <span stylename="italic" class="italic">Philip</span> in the space provided.&nbsp;<br><br>If <span stylename="italic" class="italic">Philip </span>is misspelled&nbsp;by one letter, one point will be deducted. If it is misspelled by more than one letter, the answer&nbsp;will be&nbsp;counted incorrect.<br><br>Once you have finished your answer, click on the arrow <img class="imageupload" drawable="false" height="33.5" percent="5" src="https://testitemmedia.s3.amazonaws.com/ItemSet_49528/Next-202110281851577254.png" texttospeech="" width="47.5" alt="">&nbsp;to submit (save) your answer and go to the next question.<br><span stylename="bold" class="bold">Repeat this step throughout the assessment to continue to the next question.</span></div></div></itembody></assessmentitem></div></div></div>
+					</div>
+				</div>
+				<div class="footer" style="">
+					
+						<div id="divPrevQuestionButton" class="bntDisable">
+							<button id="prevQuestionButton" title="Save answer and go to previous question" class="btn btn-large btn-primary btn-question-action floatLeft">
+								<span class="icon-button-prev">Previous</span>
+							</button>
+						</div>
+	        			<div class="logo">Powered by LinkIt!</div>
+						<div id="divNextQuestionButton">
+							<button id="nextQuestionButton" title="Save answer and go to next question" class="btn btn-large btn-primary btn-question-action floatRight">
+								<span class="icon-button-next">Next</span>
+							</button>
+						</div>
+					
+				</div>
+				<div id="progressOverlay" class="overlay">
+					<div class="indeterminateProgressIndicator"></div>
+				</div>
+			<div class="ui-resizable-handle ui-resizable-e" title="Drag here to resize the window" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" title="Drag here to resize the window" style="z-index: 90;"></div></div>
+			<div id="referenceItemPanel" class="panel testItemPanel box-shadow refPanel ui-resizable" style="height: auto; top: 0px; width: 753px; display: none;">
+				<div id="blurReference" class="testBlur" style="width: 753px; height: 559px; z-index: 1001; display: block;"></div>
+				<div class="bigheader" style="">
+					<div class="header">Reference</div>
+					<div id="passageTab"></div>
+					<div class="clear"></div>
+				</div>
+				<div class="scroll-down-icon" title="Scroll down to see more" style="bottom: 36px; display: none;">
+					<svg width="60" height="90" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 62 90">
+						<circle cx="45" cy="13" r="3"></circle>
+						<path d="M45,0.5c-8.284,0-15,6.717-15,15.002v24.996C30,48.783,36.716,55.5,45,55.5s15-6.717,15-15.002V15.502  C60,7.217,53.284,0.5,45,0.5z M58,40.498C58,47.667,52.168,53.5,45,53.5c-7.168,0-13-5.833-13-13.002V15.502  C32,8.333,37.832,2.5,45,2.5c7.168,0,13,5.833,13,13.002V40.498z"></path>
+						<path class="arrow-down" d="M58.293,59.793L45,73.086L31.707,59.793c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14,14  C44.488,75.402,44.744,75.5,45,75.5s0.512-0.098,0.707-0.293l14-14c0.391-0.391,0.391-1.023,0-1.414S58.684,59.402,58.293,59.793z"></path>
+						<path class="arrow-down" d="M58.293,73.793L45,87.086L31.707,73.793c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14,14  C44.488,89.402,44.744,89.5,45,89.5s0.512-0.098,0.707-0.293l14-14c0.391-0.391,0.391-1.023,0-1.414S58.684,73.402,58.293,73.793z"></path>
+          </svg>
+          <p class="title-scroll">Scroll down to see more</p>
+	        	</div>
+				<div class="content" id="referenceItemPanelContent" style="height: 467px;" namecolor="black-white">
+					<div id="referenceView" class="referenceViewContent content-scroll linkit_reference_view" namecolor="black-white" style=""></div>
+				</div>
+				<div class="footer"></div>
+				<div id="progressOverlay" class="overlay">
+					<div class="indeterminateProgressIndicator"></div>
+				</div>
+			<div class="ui-resizable-handle ui-resizable-e" title="Drag here to resize the window" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" title="Drag here to resize the window" style="z-index: 90;"></div></div>
+		</div>
+	</div>
+<div id="protractor" class="protractor ui-draggable" style="display: none;"><div id="protractor-element" class="protractor-element ui-resizable"><div id="protractor-close" class="protractor-close"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-rotatable-handle ui-draggable"></div><img src="./images/protractor.png" alt=""></div></div><div id="protractor_4" class="protractor protractor-ruler-element ui-draggable" style="display: none; position: relative;"><div id="protractor-element" class="protractor-element"><div id="protractor-close" class="protractor-close"></div><div class="ui-rotatable-handle ui-draggable"></div><div class="block-img"><img src="./images/ruler.jpg" alt=""></div></div></div></div>
+
+
+<div id="preloader" class="overlay-window box-shadow" style="display:none;">
+	<div class="content">
+		<div id="preloaderProgress">
+			<div class="progressIndicator"></div>
+			<span class="heading header3"><span id="progressMessage">Loading session...</span></span>
+		</div>
+		<div id="preloaderDone" style="display: none;">
+			<span class="heading header3">Your session is ready to continue.</span>
+			<span class="alignLeft safafi-note"><span class="heading header5">* Note: Your internet browser (Safari v.<span class="safafi-version"></span>) does not support all features when the full-screen browser test preference is enabled. To take the test in full-screen browser mode, please use another browser or upgrade to Safari v10.1.</span></span>
+			<div class="honorcode-content"></div>
+
+			<input id="disagreeButton" type="button" value="Disagree" class="btn btn-large btn-primary" style="display:none;">
+			<input id="startButton" type="button" value="Continue" class="btn btn-large btn-primary">
+			<input id="backButtonSeb" type="button" value="Back" class="btn btn-large btn-primary" style="display:none;">
+			<input id="startButtonSeb" type="button" value="Launch" class="btn btn-large btn-primary" style="display:none;">
+            <div class="testInstruction" id="testStateInstruction"></div>
+            <div class="sectionInstruction" id="sectionStateInstruction"></div>
+		</div>
+	</div>
+</div>
+
+
+<div id="preloader-instruction-section" class="overlay-window box-shadow" style="display:none;">
+	<div class="content">
+		<div id="preloaderDone-instruction-section">
+            <div class="sectionInstruction" id="sectionStateInstruction">In the space provided, type the word(s) that <em>best</em> completes the statement.</div>
+            <input id="closeButton" type="button" value="Close" class="btn btn-large btn-primary">
+		</div>
+	</div>
+</div>
+
+<div id="preloader_overlay" style="display:none;">
+	<div class="progressIndicator"></div>
+</div>
+
+
+
+	<div id="PreSubmitWarningClicked" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">Are you sure you want to submit your session now?</span>
+			<span class="heading header6">*Note: You can no longer change your answers once submitted.</span>
+			<div id="cancelCompleteTestButtonRechecked" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No (Keep Working)</div>
+			<div id="acceptCompleteTestButtonRechecked" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes (Submit Now)</div>
+		</div>
+	</div>
+
+	<div id="PreSubmitWarning" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<div id="allQuestionsAnsweredMessage">
+				<p class="alert-warning">
+					<span class="ic ic-warning"></span>
+					<span>You have answered all questions.</span>
+				</p>
+			</div>
+			<div class="clear"></div>
+			<span class="heading header2">Would you like to submit your session now?</span>
+			<span class="heading header6">*Note: You can no longer change your answers once submitted.</span>
+			<div id="cancelCompleteTestButtonRechecked" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No (Keep Working)</div>
+			<div id="acceptCompleteTestButtonRechecked" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes (Submit Now)</div>
+		</div>
+	</div>
+
+	<span id="simplemodal-placeholder" style="display: none;"></span>
+
+	<div id="FirstPreSubmitWarning" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<div id="allQuestionsAnsweredMessage">
+				<p class="alert-warning">
+					<span class="ic ic-warning"></span>
+					<span>You have answered all questions.</span>
+				</p>
+			</div>
+			<div class="clear"></div>
+			<span class="heading header2">You have completed the session.</span>
+			<span class="heading header3">Would you like to submit now or keep working?</span>
+			<span class="heading header6">*Note: You can no longer change your answers once submitted.</span>
+				<div id="cancelCompleteTestButton" class="btn btn-large btn-cancel" style="font-size: 14px;">
+					<div class="button button-cancel-white"></div> No (Keep Working)</div>
+			    <div id="acceptCompleteTestButton" class="btn btn-large btn-highlight" style="font-size: 14px;">
+					<div class="button button-accept-white"></div> Yes (Submit Now)</div>
+		</div>
+	</div>
+
+	<div id="TextEntryChecking" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">Are you sure you want to submit a blank answer?</span>
+			<div id="noTextEntry" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesTextEntry" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+	<div id="TextEntryCheckingQuestionList" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">Do you want to save your answer before moving to the next question?</span>
+			<span class="heading header6">*Note: If you click "No", your answer to this question will not be saved.</span>
+			<div id="noTextEntryQuestionList" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesTextEntryQuestionList" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+
+	<div id="timerPopup" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<div class="msgTextpause">
+				<p class="alert-warning">
+					<span class="ic ic-warning"></span>
+					<span id="timerWarning">You have 5 minutes remaining to complete this session</span>
+				</p>
+				<br class="clear">
+			</div>
+			<div class="clear"></div>
+			<div id="okTimeBoard" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div>OK</div>
+		</div>
+	</div>
+
+	<div id="timerPopupEnd" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<div class="msgTextpause">
+				<div id="timerWarningEnd">Time is up. Submitting the session...</div>
+			</div>
+		</div>
+	</div>
+	<div id="timerPopupTimeOut" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<div class="msgTextpause">
+				<p class="alert-warning">
+					<span class="ic ic-warning"></span>
+					<span id="timeOutWarning"></span>
+				</p>
+			</div>
+			<div class="clear"></div>
+			<div id="okTimeOut" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div>OK</div>
+		</div>
+	</div>
+
+	<div id="ServerErrorSingleSelect" class="popup popup-preview box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">An error has occurred and your answer was not saved. <br> Please select it again.</span>
+			<div id="okServerErrorSingleSelect" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div>OK</div>
+		</div>
+	</div>
+
+	<div id="ServerErrorComplex" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">An error has occurred and your answer was not saved. <br> Please submit it again.</span>
+			<div id="okServerErrorComplex" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div>OK</div>
+		</div>
+	</div>
+
+	<div id="ServerErrorHighlight" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">An error has occurred and your answer was not saved. <br> Do you want to submit it again?</span>
+			<div id="noServerErrorHighlight" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesServerErrorHighlight" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+	<div id="ServerErrorPostTestTool" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">An error has occurred and your answer was not saved. <br> Do you want to submit it again?</span>
+			<div id="noServerErrorPostTestTool" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesServerErrorPostTestTool" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+	<div id="ServerErrorRetrying" class="popup popup-preview box-shadow" style="display:none">
+	  <div class="content">
+		<p></p><div class="progressIndicator"></div><p></p>
+		<h2>.</h2>
+	    <div id="okServerErrorRetrying" class="btn btn-large btn-highlight" style="display:none"><div class="button button-accept-white"></div>OK</div>
+	  </div>
+	</div>
+	<div id="AllAnswerChecking" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2 normalText">You have not answered all parts of the question.<br>Are you sure you want to move to the next question?</span>
+			<h2 class="numericalText hide">
+			You have not filled in all the blanks.<br>Are you sure you want to move to the next question?
+			</h2>
+			<div id="noAllAnswer" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesAllAnswer" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+	<div id="popupNextSection" class="popup popup-section box-shadow" style="display:none">
+	    <div class="content">
+	        <p class="alert-warning hide">
+	            <span class="ic ic-warning"></span><span class="important"> There are still unanswered questions</span>
+	        </p>
+	        <p class="alert-success hide">
+	            <span class="ic ic-success"></span> You have answered all the questions in this section.
+			</p>
+			<span class="heading header2">Would you like to submit this section now?</span>
+	        <span class="heading header4 important">*Note: You cannot return to this section once you have submitted it.</span>
+	        <div id="noNextSection" class="btn btn-large btn-cancel">
+				<div class="button button-cancel-white"></div> No (Keep Working)
+			</div>
+	        <div id="yesNextSection" class="btn btn-large btn-highlight">
+				<div class="button button-accept-white"></div> Yes (Submit Now)
+			</div>
+	    </div>
+	</div>
+	<div id="errorMessage" class="popup box-shadow" style="display:none">
+	  <div class="content">
+	    <div class="msgTextpause">
+	        <div id="messageContent">
+	            <p>You have already chosen the maximum number of hot spots.</p>
+	            <p>Click (or touch) your selection(s) to deselect and choose again.</p>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+	    <div id="okMessage" class="btn btn-large btn-highlight">
+	        <div class="button button-accept-white"></div>OK
+	    </div>
+	  </div>
+	</div>
+	<div id="line-reader" class="line-reader ui-draggable" style="display: none; position: relative;">
+		<div id="line-reader-close" class="line-reader-close"></div>
+		<div class="line-reader-screen ui-resizable">
+			<div class="ui-resizable-handle ui-resizable-se" id="line-reader-se"></div>
+		</div>
+		<div class="line-reader-body ui-resizable">
+			<div class="ui-resizable-handle ui-resizable-s" id="line-reader-s" title="Drag here to resize the window"></div>
+		</div>
+		</div>
+	<div id="popupSectionCompleted" class="popup popup-section box-shadow" style="display:none">
+	    <div class="content">
+	        <p class="alert-warning hide">
+	            <span class="ic ic-warning"></span><span class="important">There are still unanswered questions</span>
+	        </p>
+	        <p class="alert-success hide">
+	            <span class="ic ic-success"></span>You have answered all the questions in this section.
+	        </p>
+	        <p class="alert-success hide">
+	            <span class="ic ic-success"></span>You have answered all the questions on the test.
+			</p>
+			<span class="heading header2">Are you sure you want to submit now?</span>
+			<span class="heading header4 important">*Note: You can no longer change your answers once submitted.</span>
+	        <div id="noSectionCompleted" class="btn btn-large btn-cancel">
+				<div class="button button-cancel-white"></div> No (Keep Working)
+			</div>
+	        <div id="yesSectionCompleted" class="btn btn-large btn-highlight">
+				<div class="button button-accept-white"></div> Yes (Submit Now)
+			</div>
+	    </div>
+	</div>
+	<div id="popupEndSectionorTest" class="popup box-shadow" style="display:none;">
+		<div class="content">
+			<span class="heading header3">You have reached the end of the <span class="section-or-test">section</span>, but not all questions have been answered. Go back to unanswered questions?</span>
+			<div id="noEndSectionorTest" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesEndSectionorTest" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+	<div id="popupTestInstrucitons" class="popup box-shadow popupTestInstrucitons" style="display:none;">
+		<div class="container-popup">
+            <div class="content">
+                <div id="testInstruciton" class="testInstrucitonPopup"></div><div class="sectionInstructor">In the space provided, type the word(s) that <em>best</em> completes the statement.</div>
+            </div>
+            <div id="closeTestInstrucitons" class="btn btn-large btn-highlight">Close</div>
+        </div>
+	</div>
+	<div id="autoSaveRemindMessage" class="popup box-shadow autoSaveRemindMessage" style="display:none">
+	  <div class="content">
+			<p class="heading header4">Please choose from below which version you would like to keep.</p>
+			<h4 class="question-name">Question #<span id="questionOrder"></span></h4>
+			<div class="remind-div">
+				<div class="remind-header">
+					<select data-response="" name="listAnswerHistory" id="listAnswerHistory" class="h-100">
+						<option value="">Answer History</option>
+					</select>
+				</div>
+				<div id="remindContent" data-binding="" class="remind-content"></div>
+			</div>
+			<div class="btn-autoSave">
+				<div id="yesAutoSave" class="btn btn-large btn-highlight mx-1">OK</div>
+				<div id="cancelAutoSave" class="btn btn-highlight mx-1">Cancel	</div>
+			</div>
+	  </div>
+	</div>
+	<div id="displayGuidancePopup" class="popup popup-guidance box-shadow" style="display:none">
+		<div class="content">
+			<div class="content-guidance"></div>
+			<div class="content-guidance-actions m-t-15">
+				<div id="btn-guidance-popup-close" class="btn ">Close Window</div>
+				<div id="btn-guidance-popup-next" class="btn ">Next Question</div>
+			</div>
+		</div>
+	</div>
+	<div id="MOIErrorMessage" class="popup box-shadow" style="display:none">
+	  <div class="content">
+	    <span class="heading header2">
+	      Error message for MOI
+	    </span>
+	    <div id="okMOIErrorMessage" class="btn btn-large btn-highlight">
+	      <div class="button button-accept-white"></div>OK
+	    </div>
+	  </div>
+	</div>
+	<div id="ShuffleErrorMessage" class="popup box-shadow" style="display:none">
+		<div class="content">
+		  <span class="heading header2">
+			The test was updated! you may need to contact your teacher.
+		  </span>
+		</div>
+	  </div>
+	<div id="testcodeDeactivated" class="popup box-shadow" style="display:none">
+		<div class="content">
+			<span class="heading header2">Your teacher has deactivated the session.</span>
+			<div id="yesTestcodeDeactivated" class="btn btn-large btn-highlight">
+				<div class="button button-accept-white"></div> OK
+			</div>
+		</div>
+	</div>
+	<div id="displayExpiresPopup" class="popup popup-preview box-shadow" style="display:none">
+		<div class="content">
+			<h2>.</h2>
+			<button id="yesExpiresPopup" class="btn btn-large btn-primary">OK</button>
+		</div>
+	</div>
+	<div id="minTextEntry" class="popup box-shadow" style="display:none">
+		<div class="content ">
+			<div class="contentAlert"></div>
+			<div id="noAllAnswer" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No</div>
+			<div id="yesAllAnswer" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes</div>
+		</div>
+	</div>
+
+	<div class="popup popup-section box-shadow js-popup-moi-select-sections" style="display:none">
+		<div class="content">
+			<h3>Please Select a Section</h3>
+			<div class="c-sections" id="listSection">
+			</div>
+			<div class="btn btn-large btn-cancel js-popup-moi-submit-test-action">Submit Test</div>
+		</div>
+	</div>
+
+	<div class="popup popup-section box-shadow js-popup-moi-completed-section" style="display:none">
+		<div class="content">
+			<p class="alert-success">
+				<span class="ic ic-success"></span>You have completed this section.
+			</p>
+			<h2>You have reached the end of this section.</h2>
+			<h2>Would you like to continue testing?</h2>
+				<div class="btn btn-large btn-highlight js-popup-moi-select-another-section-action">
+					<div class="button button-accept-white"></div>
+					Yes (Select another section)
+				</div>
+				<div class="btn btn-large btn-cancel js-popup-moi-submit-test-action">
+					<div class="button button-cancel-white"></div>
+					No (Submit Test)
+				</div>
+
+			<h4 class="important">* Note: You will no longer be able to access this student's session once this test is submitted</h4>
+		</div>
+	</div>
+
+	<div class="popup popup-section box-shadow js-popup-moi-not-completed-section" style="display:none">
+		<div class="content">
+			<p class="alert-warning">
+				<span class="ic ic-warning"></span>This section has not been completed.
+			</p>
+			<h2>Are you sure you want to submit your test now?</h2>
+			<h4 class="important">* Note: You will no longer be able to access this student's session once this test is submitted</h4>
+			<div class="btn btn-large btn-cancel js-popup-moi-cancel-action">
+				<div class="button button-cancel-white"></div>
+				No (Keep Working)
+			</div>
+			<div class="btn btn-large btn-highlight js-popup-moi-submit-test-action">
+				<div class="button button-accept-white"></div>
+				Yes (Submit Now)
+			</div>
+		</div>
+	</div>
+
+	<div class="popup popup-section box-shadow js-popup-moi-leave-section" style="display:none">
+		<div class="content">
+			<p class="alert-warning">
+				<span class="ic ic-warning"></span>This section has not been completed.
+			</p>
+			<h2>Are you sure you would like to leave this section?</h2>
+			<h4 class="important">Your responses to this point will be saved.</h4>
+			<div class="btn btn-large btn-cancel js-popup-moi-cancel-action">
+				<div class="button button-cancel-white"></div>
+				No (Keep Working)
+			</div>
+			<div class="btn btn-large btn-highlight js-popup-moi-leave-section-action">
+				<div class="button button-accept-white"></div>
+				Yes (Leave Section)
+			</div>
+		</div>
+	</div>
+
+
+
+<div id="glossaryMessage" class="popup box-shadow" style="display:none">
+  <div class="content">
+    <div id="infoContent">
+      <div class="glossaryText"></div>
+      <div class="glossaryDefine"></div>
+    </div>
+    <div class="clear"></div>
+	<div id="okInfo" class="btn btn-large btn-highlight">
+		<div class="icon-toolbar icon-toolbar-accept_icon_white"></div> OK
+    </div>
+  </div>
+</div>
+</div>
+
+      <div id="studentLoginSelector" class="linkit_student_login_selector" style="display: none;"><div id="studentLoginSelectorPanel" class="">
+	<div class="panel">
+		<div class="header">Student Name</div>
+		<div class="content">
+			<h2 class="login_title">Select Your Name:</h2>
+
+			<div id="studentsList" class="container">
+				<ul class="list_wrapper mxui_data_list" aria-labelledby="studentsList"></ul>
+			</div>
+
+			<input id="cancelButton" type="button" value="Cancel" class="btn-logout">
+			<input id="selectButton" type="button" value="Select" class="btn-submit" disabled="true">
+		</div>
+		<div id="progressOverlay" class="overlay">
+			<div class="indeterminateProgressIndicator"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+      <div id="testLogin" class="linkit_student_test_login" style="display: none;"></div>
+      <div id="footer" style="bottom: 1px;"></div>
+    <div class="copyButton" style="display: none;">Copy</div><div class="pasteButton" style="display: none;">Paste</div></div>
+    <div class="calculator-scientific" style="display: none;">
+      <button class="calculator-close-button" title="Close the calculator" data-keystroke="@X" type="button">x</button>
+      <div class="calculator">
+        <input type="text" id="screen" maxlength="20">
+        <div class="calc-buttons">
+          <div class="functions-one">
+            <button class="button triggers">C</button>
+            <button class="button basic-stuff">(</button>
+            <button class="button basic-stuff">)</button>
+            <button class="button numbers">7</button>
+            <button class="button numbers">8</button>
+            <button class="button numbers">9</button>
+            <button class="button numbers">4</button>
+            <button class="button numbers">5</button>
+            <button class="button numbers">6</button>
+            <button class="button numbers">1</button>
+            <button class="button numbers">2</button>
+            <button class="button numbers">3</button>
+            <button class="button basic-stuff">±</button>
+            <button class="button numbers">0</button>
+            <button class="button basic-stuff">.</button>
+          </div>
+          <div class="functions-two">
+            <button class="button triggers">&lt;=</button>
+            <button class="button complex-stuff">%</button>
+            <button class="button complex-stuff">x !</button>
+            <button class="button complex-stuff">x^</button>
+            <button class="button basic-stuff">*</button>
+            <button class="button basic-stuff">/</button>
+            <button class="button complex-stuff">ln</button>
+            <button class="button complex-stuff">e</button>
+            <button class="button basic-stuff">+</button>
+            <button class="button complex-stuff">x ²</button>
+            <button class="button complex-stuff">log</button>
+            <button class="button complex-stuff">cos</button>
+            <button class="button basic-stuff">-</button>
+            <button class="button complex-stuff">√</button>
+            <button class="button complex-stuff">sin</button>
+            <button class="button complex-stuff">tan</button>
+            <button class="button triggers">=</button>
+            <button class="button complex-stuff">π</button>
+            <button class="button complex-stuff">∘</button>
+            <button class="button complex-stuff">rad</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+<link href="https://linkit-css.s3.amazonaws.com/TestTaker/Production/2479.css?t=v321" type="text/css" rel="stylesheet"><div class="calculator-popup ui-draggable" style="display: none; position: relative;"></div><div id="guidance" style="display: none;"><div></div></div><div class="palette-dialog ui-draggable ui-resizable" namecolor="black-white" style="top: 129px; left: 548px; width: 440px;"><div class="palette-tittle">Palettes</div><span class="close-popup"></span><p class="wrap-tab-button"><a class="tab tabselect" rel="tab2">Math/Science</a><a class="tab" rel="tab1">Spanish</a><a class="tab" rel="tab3">French</a></p><div class="button-wapper" id="tab2" style="display: block;"><h3>Math Symbols:</h3><ul class="keys-list" id="tabRow2_0"><li namecolor="black-white">+</li><li namecolor="black-white">-</li><li namecolor="black-white">÷</li><li namecolor="black-white">·</li><li namecolor="black-white">×</li><li namecolor="black-white">=</li><li namecolor="black-white">≠</li><li namecolor="black-white">≤</li><li namecolor="black-white">≥</li><li namecolor="black-white">°</li><li namecolor="black-white">′</li><li namecolor="black-white">″</li><li namecolor="black-white">√</li><li namecolor="black-white">~</li><li namecolor="black-white">≈</li><li namecolor="black-white">≅</li><li namecolor="black-white">±</li><li namecolor="black-white">∓</li><li namecolor="black-white">∠</li><li namecolor="black-white">⊥</li><li namecolor="black-white">∥</li><li namecolor="black-white">π</li><li namecolor="black-white">∞</li><li namecolor="black-white">∫</li><li namecolor="black-white">¢</li><li namecolor="black-white">⟶</li></ul><h3>Greek Letters:</h3><ul class="keys-list" id="tabRow2_1"><li namecolor="black-white">α</li><li namecolor="black-white">β</li><li namecolor="black-white">γ</li><li namecolor="black-white">Δ</li><li namecolor="black-white">η</li><li namecolor="black-white">θ</li><li namecolor="black-white">κ</li><li namecolor="black-white">λ</li><li namecolor="black-white">μ</li><li namecolor="black-white">ρ</li><li namecolor="black-white">Σ</li><li namecolor="black-white">σ</li><li namecolor="black-white">τ</li><li namecolor="black-white">ϕ</li><li namecolor="black-white">Ψ</li><li namecolor="black-white">Ω</li><li namecolor="black-white">ω</li><li namecolor="black-white">ℓ</li></ul><h3>Superscripts:</h3><ul class="keys-list" id="tabRow2_2"><li namecolor="black-white">⁰</li><li namecolor="black-white">¹</li><li namecolor="black-white">²</li><li namecolor="black-white">³</li><li namecolor="black-white">⁴</li><li namecolor="black-white">⁵</li><li namecolor="black-white">⁶</li><li namecolor="black-white">⁷</li><li namecolor="black-white">⁸</li><li namecolor="black-white">⁹</li><li namecolor="black-white">⁺</li><li namecolor="black-white">⁻</li></ul><h3>Subscripts:</h3><ul class="keys-list" id="tabRow2_3"><li namecolor="black-white">₀</li><li namecolor="black-white">₁</li><li namecolor="black-white">₂</li><li namecolor="black-white">₃</li><li namecolor="black-white">₄</li><li namecolor="black-white">₅</li><li namecolor="black-white">₆</li><li namecolor="black-white">₇</li><li namecolor="black-white">₈</li><li namecolor="black-white">₉</li><li namecolor="black-white">₊</li><li namecolor="black-white">₋</li></ul></div><div class="button-wapper" id="tab1"><ul class="keys-list" id="tabRow1_3"><li namecolor="black-white">Á</li><li namecolor="black-white">É</li><li namecolor="black-white">Í</li><li namecolor="black-white">Ó</li><li namecolor="black-white">Ú</li><li namecolor="black-white">Ü</li><li namecolor="black-white">Ñ</li><li namecolor="black-white">?</li><li namecolor="black-white">¿</li></ul><ul class="keys-list" id="tabRow1_4"><li namecolor="black-white">á</li><li namecolor="black-white">é</li><li namecolor="black-white">í</li><li namecolor="black-white">ó</li><li namecolor="black-white">ú</li><li namecolor="black-white">ü</li><li namecolor="black-white">ñ</li><li namecolor="black-white">!</li><li namecolor="black-white">¡</li></ul></div><div class="button-wapper" id="tab3"><ul class="keys-list" id="tabRow3_0"><li namecolor="black-white">Á</li><li namecolor="black-white">á</li><li namecolor="black-white">À</li><li namecolor="black-white">à</li><li namecolor="black-white">Â</li><li namecolor="black-white">â</li><li namecolor="black-white">ä</li></ul><ul class="keys-list" id="tabRow3_1"><li namecolor="black-white">É</li><li namecolor="black-white">é</li><li namecolor="black-white">È</li><li namecolor="black-white">è</li><li namecolor="black-white">Ê</li><li namecolor="black-white">ê</li><li namecolor="black-white">ë</li></ul><ul class="keys-list" id="tabRow3_2"><li namecolor="black-white">Í</li><li namecolor="black-white">í</li><li namecolor="black-white">Ì</li><li namecolor="black-white">ì</li><li namecolor="black-white">Î</li><li namecolor="black-white">î</li><li namecolor="black-white">ï</li></ul><ul class="keys-list" id="tabRow3_3"><li namecolor="black-white">Ó</li><li namecolor="black-white">ó</li><li namecolor="black-white">Ò</li><li namecolor="black-white">ò</li><li namecolor="black-white">Ô</li><li namecolor="black-white">ô</li><li namecolor="black-white">ö</li></ul><ul class="keys-list" id="tabRow3_4"><li namecolor="black-white">Ú</li><li namecolor="black-white">ú</li><li namecolor="black-white">Ù</li><li namecolor="black-white">ù</li><li namecolor="black-white">Û</li><li namecolor="black-white">û</li><li namecolor="black-white">ü</li></ul><ul class="keys-list" id="tabRow3_5"><li namecolor="black-white">Ç</li><li namecolor="black-white">ç</li></ul></div><div class="palette-cancel"><button class="button-cancel">Cancel</button></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div></div><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: STIXSizeOneSym, sans-serif;">ˆ</div><div id="simplemodal-overlay" class="simplemodal-overlay" style="opacity: 0.5; height: 726px; width: 1536px; position: fixed; left: 0px; top: 0px; z-index: 1001;"></div><div id="simplemodal-container" class="simplemodal-container" style="position: fixed; z-index: 1002; height: 221px; width: 679px; left: 428.5px; top: 252.5px;"><a class="modalCloseImg simplemodal-close" title="Close"></a><div tabindex="-1" class="simplemodal-wrap" style="height: 100%; outline: 0px; width: 100%; overflow: visible;"><div id="PreSubmitWarningNotCompleted" class="popup box-shadow simplemodal-data" style="display: block;">
+		<div class="content">
+			<div id="allQuestionsAnsweredMessage">
+				<p class="alert-warning">
+					<span class="ic ic-warning"></span>
+					<span>There are still unanswered questions.</span>
+				</p>
+			</div>
+			<div class="clear"></div>
+			<span class="heading header2">Are you sure you want to submit your session now?</span>
+			<span class="heading header6">*Note: You can no longer change your answers once submitted.</span>
+			<div id="cancelCompleteTestButtonRechecked" class="btn btn-large btn-cancel"><div class="button button-cancel-white"></div> No (Keep Working)</div>
+			<div id="acceptCompleteTestButtonRechecked" class="btn btn-large btn-highlight"><div class="button button-accept-white"></div> Yes (Submit Now)</div>
+		</div>
+	</div></div></div></body></html>

@@ -1,0 +1,130 @@
+<html><head>
+        <title>ORA-04063: package body "GRADUATION.PETITION_QUERIES" has errors</title>
+        <meta name="viewport" content="width=device-width">
+        <style>
+         body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} 
+         p {font-family:"Verdana";font-weight:normal;color:black;margin-top: -5px}
+         b {font-family:"Verdana";font-weight:bold;color:black;margin-top: -5px}
+         H1 { font-family:"Verdana";font-weight:normal;font-size:18pt;color:red }
+         H2 { font-family:"Verdana";font-weight:normal;font-size:14pt;color:maroon }
+         pre {font-family:"Consolas","Lucida Console",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}
+         .marker {font-weight: bold; color: black;text-decoration: none;}
+         .version {color: gray;}
+         .error {margin-bottom: 10px;}
+         .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:pointer; }
+         @media screen and (max-width: 639px) {
+          pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }
+         }
+         @media screen and (max-width: 479px) {
+          pre { width: 280px; }
+         }
+        </style>
+    </head>
+
+    <body bgcolor="white">
+
+            <span><h1>Server Error in '/' Application.<hr width="100%" size="1" color="silver"></h1>
+
+            <h2> <i>ORA-04063: package body "GRADUATION.PETITION_QUERIES" has errors</i> </h2></span>
+
+            <font face="Arial, Helvetica, Geneva, SunSans-Regular, sans-serif ">
+
+            <b> Description: </b>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+            <br><br>
+
+            <b> Exception Details: </b>Oracle.ManagedDataAccess.Client.OracleException: ORA-04063: package body "GRADUATION.PETITION_QUERIES" has errors<br><br>
+
+            <b>Source Error:</b> <br><br>
+
+            <table width="100%" bgcolor="#ffffcc">
+               <tbody><tr>
+                  <td>
+                      <code><pre>
+Line 228:        List&lt;int&gt; students = new List&lt;int&gt;();
+Line 229:
+<font color="red">Line 230:        DataTable t = GetData(GetDBConnection(Connections.abadb), @"SELECT StudentID, CeremonyDate
+</font>Line 231:                                                                      FROM TABLE(graduation.petition_queries.GetAllApprovedPetByAccount(p_AccountNumber =&gt; :AccountNumber))
+Line 232:                                                                     WHERE CeremonyDate &gt;= sysdate</pre>                      </code>
+
+                  </td>
+               </tr>
+            </tbody></table>
+
+            <br>
+
+            <b> Source File: </b> E:\WebSiteFolders\new.abekaacademy.org\App_Code\Graduation_DataProvider.cs<b> &nbsp;&nbsp; Line: </b> 230
+            <br><br>
+
+            <b>Stack Trace:</b> <br><br>
+
+            <table width="100%" bgcolor="#ffffcc">
+               <tbody><tr>
+                  <td>
+                      <code><pre>
+[OracleException (0x80004005): ORA-04063: package body "GRADUATION.PETITION_QUERIES" has errors]
+   OracleInternal.ServiceObjects.OracleConnectionImpl.VerifyExecution(Int32&amp; cursorId, Boolean bThrowArrayBindRelatedErrors, SqlStatementType sqlStatementType, Int32 arrayBindCount, OracleException&amp; exceptionForArrayBindDML, Boolean&amp; hasMoreRowsInDB, Boolean bFirstIterationDone) +1134
+   OracleInternal.ServiceObjects.OracleCommandImpl.ExecuteReader(String commandText, OracleParameterCollection paramColl, CommandType commandType, OracleConnectionImpl connectionImpl, OracleDataReaderImpl&amp; rdrImpl, Int32 longFetchSize, Int64 clientInitialLOBFS, OracleDependencyImpl orclDependencyImpl, Int64[] scnForExecution, Int64[]&amp; scnFromExecution, OracleParameterCollection&amp; bindByPositionParamColl, Boolean&amp; bBindParamPresent, Int64&amp; internalInitialLOBFS, OracleException&amp; exceptionForArrayBindDML, OracleConnection connection, OracleLogicalTransaction&amp; oracleLogicalTransaction, IEnumerable`1 adrianParsedStmt, Boolean isDescribeOnly, Boolean isFromEF) +11085
+   Oracle.ManagedDataAccess.Client.OracleCommand.ExecuteReader(Boolean requery, Boolean fillRequest, CommandBehavior behavior) +4755
+   Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior) +974
+   System.Data.Common.DbDataAdapter.Fill(DataTable dataTable) +147
+   PCC.Data.DataProvider.DBExecute(OracleConnection connection, ConnectionString connectionString, CommandType type, String command, DBParam[] parameters, DBOutParamCollection outputParameters, DPSettings settings, SourceMethod source, String callingMethod) +7685
+   PCC.Data.DataProvider.GetData(OracleConnection connection, String command, DBParam[] parameters) +81
+   Graduation_DataProvider.GetStudentsWithCompletedPetition(Int64 accountNumber) in E:\WebSiteFolders\new.abekaacademy.org\App_Code\Graduation_DataProvider.cs:230
+   MasterPages_Includes_MainMenu.ShowDashboardMenu() in E:\WebSiteFolders\new.abekaacademy.org\MasterPages\Includes\MainMenu.ascx.cs:179
+   MasterPages_Includes_MainMenu.Page_Load(Object sender, EventArgs e) in E:\WebSiteFolders\new.abekaacademy.org\MasterPages\Includes\MainMenu.ascx.cs:26
+   System.Web.UI.Control.OnLoad(EventArgs e) +108
+   System.Web.UI.Control.LoadRecursive() +90
+   System.Web.UI.Control.LoadRecursive() +185
+   System.Web.UI.Control.LoadRecursive() +185
+   System.Web.UI.Control.LoadRecursive() +185
+   System.Web.UI.Control.LoadRecursive() +185
+   System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +1533
+</pre>                      </code>
+
+                  </td>
+               </tr>
+            </tbody></table>
+
+            <br>
+
+            <hr width="100%" size="1" color="silver">
+
+            <b>Version Information:</b>&nbsp;Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.8.4465.0
+
+            </font>
+
+    
+
+<!-- 
+[OracleException]: ORA-04063: package body &quot;GRADUATION.PETITION_QUERIES&quot; has errors
+   at OracleInternal.ServiceObjects.OracleConnectionImpl.VerifyExecution(Int32& cursorId, Boolean bThrowArrayBindRelatedErrors, SqlStatementType sqlStatementType, Int32 arrayBindCount, OracleException& exceptionForArrayBindDML, Boolean& hasMoreRowsInDB, Boolean bFirstIterationDone)
+   at OracleInternal.ServiceObjects.OracleCommandImpl.ExecuteReader(String commandText, OracleParameterCollection paramColl, CommandType commandType, OracleConnectionImpl connectionImpl, OracleDataReaderImpl& rdrImpl, Int32 longFetchSize, Int64 clientInitialLOBFS, OracleDependencyImpl orclDependencyImpl, Int64[] scnForExecution, Int64[]& scnFromExecution, OracleParameterCollection& bindByPositionParamColl, Boolean& bBindParamPresent, Int64& internalInitialLOBFS, OracleException& exceptionForArrayBindDML, OracleConnection connection, OracleLogicalTransaction& oracleLogicalTransaction, IEnumerable`1 adrianParsedStmt, Boolean isDescribeOnly, Boolean isFromEF)
+   at Oracle.ManagedDataAccess.Client.OracleCommand.ExecuteReader(Boolean requery, Boolean fillRequest, CommandBehavior behavior)
+   at Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   at PCC.Data.DataProvider.DBExecute(OracleConnection connection, ConnectionString connectionString, CommandType type, String command, DBParam[] parameters, DBOutParamCollection outputParameters, DPSettings settings, SourceMethod source, String callingMethod)
+   at PCC.Data.DataProvider.GetData(OracleConnection connection, String command, DBParam[] parameters)
+   at Graduation_DataProvider.GetStudentsWithCompletedPetition(Int64 accountNumber) in E:\WebSiteFolders\new.abekaacademy.org\App_Code\Graduation_DataProvider.cs:line 230
+   at MasterPages_Includes_MainMenu.ShowDashboardMenu() in E:\WebSiteFolders\new.abekaacademy.org\MasterPages\Includes\MainMenu.ascx.cs:line 179
+   at MasterPages_Includes_MainMenu.Page_Load(Object sender, EventArgs e) in E:\WebSiteFolders\new.abekaacademy.org\MasterPages\Includes\MainMenu.ascx.cs:line 26
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+[HttpUnhandledException]: Exception of type &#39;System.Web.HttpUnhandledException&#39; was thrown.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.account_default_aspx.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.<>c__DisplayClass285_0.<ExecuteStepImpl>b__0()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--><!-- 
+This error page might contain sensitive information because ASP.NET is configured to show verbose error messages using &lt;customErrors mode="Off"/&gt;. Consider using &lt;customErrors mode="On"/&gt; or &lt;customErrors mode="RemoteOnly"/&gt; in production environments.--></body></html>

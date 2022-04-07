@@ -1,0 +1,1939 @@
+<html lang="en" class="desktop landscape sb-init"><head id="Head1"><meta charset="utf-8"><title>
+	Abeka | Enrollments
+</title><meta name="format-detection" content="telephone=no">
+
+   <!-- Latest compiled and minified CSS -->
+
+   <link rel="stylesheet" href="/Includes/css/bootstrap.css?update=94SM"><link href="/Includes/css/jquery.confirm.css?update=1" rel="stylesheet" type="text/css"><link rel="icon" href="/images/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png"><meta name="msapplication-TileColor" content="#93328e"><meta name="msapplication-TileImage" content="/images/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#93328e"><link rel="stylesheet" href="/Includes/css/grid.css?update=1"><link rel="stylesheet" href="/Includes/css/search-form.css?update=2"><link rel="stylesheet" href="/Includes/css/jquery-ui2014.css?update=2"><link rel="stylesheet" href="/Includes/css/style.css?update=JM1292021"><link rel="stylesheet" href="/Includes/css/print.css?update=2"><link id="lnkAtHome" rel="stylesheet" href="/Includes/css/styleathome.css?update=2"><link rel="stylesheet" href="/Includes/css/slidebars.css?update=4"><link rel="stylesheet" href="/Includes/css/meganizr.css?update=4" media="only screen and (min-width:480px)"><link rel="stylesheet" href="/Includes/fonts/abekadigital-icon-font/styles.css"><link rel="stylesheet" href="/Includes/css/dotNet.css"><link rel="stylesheet" href="/Includes/css/AcademicColors.css?v=1"><link rel="stylesheet" href="/Includes/css/select2.css"><link rel="stylesheet" href="/Includes/css/ABAForms.css"><link rel="stylesheet" href="/Includes/css/jquery.mCustomScrollbar.css?update=1"><link rel="stylesheet" href="/Includes/css/form.css"><link rel="stylesheet" href="/Includes/css/flexslider.css"><link rel="stylesheet" href="/Includes/css/animate.css"><link rel="stylesheet" href="/Includes/css/swiftype.autocomplete.css?update=1"><link rel="stylesheet" href="/Includes/css/genesysChat.css?update=TA242021+"><link rel="stylesheet" href="/Includes/css/chat-template.css?update=TA1282021">
+   <link rel="stylesheet" type="text/css" id="portalLinkCSS" href="/Includes/css/theme/GenerateTheme.aspx?theme=">
+   
+   
+   <link rel="stylesheet" href="/Includes/css/enrollments.css">
+   <style>
+      span.enrollment {
+         display: block;
+         font-size: 20px;
+         font-style: italic;
+      }
+      .form label.DateFormat {
+         width: 150px;
+         text-align: center;
+         margin-top: 0px;
+         font-size: 9pt;
+      }
+      .selectStudentDDL {
+         margin-bottom: 20px !important;
+      }
+      .selectStudent {
+         width: 210px;
+      }
+      .form {
+         text-align: left;
+         padding: 0px 0px;
+         background: transparent;
+         margin-bottom: 0;
+      }
+      .select2-container--default .select2-selection--single .select2-selection__placeholder {
+         font-size: 14px;
+      }
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+         width: 100% !important;
+         font-size: 14px;
+      }
+      .theme-checkbox {
+         margin-right: 5px;
+      }
+      div#divSingleCourseEnrollments span.select2.select2-container.select2-container--default  {
+        margin: 0px 0px 20px;
+      }
+      #divDualEnrollmentRequirements {
+          margin-top: 30px;
+      }
+      #deRequirementText {
+          box-sizing: border-box;
+          overflow-y: auto;
+          padding: 30px;
+      }
+      @media (max-width: 768px){
+         .selectStudent {
+            margin: auto;
+         }
+      }
+      .textWhite {
+         color: #ffffff;
+      }
+      @media (max-width: 565px) and (min-width: 324px) {
+         .no-wrap-break {
+            white-space: nowrap;
+         }
+      }
+      .ui-datepicker .ui-datepicker-title select {
+         text-decoration: underline;
+         background: #92278f;
+         font-weight: bold;
+      }
+   </style>
+
+
+
+      <meta property="og:url" content="https://www.athome.abeka.com/">
+      <meta property="og:title" content="Abeka | Enrollments">
+      <meta property="og:description" content="Excellence in Education from a Christian Perspective">
+      <meta property="og:site_name" content="Abeka Dashboard">
+      <meta property="og:image" content="https://www.abeka.com/Images/ABBSocialShare.jpg">
+      <meta property="fb:app_id" content="1727410397523598">
+      <meta property="og:type" content="website">
+      <meta property="og:locale" content="en_US">
+   
+
+  <script async="" src="//www.google-analytics.com/analytics.js"></script><script>
+    window.GlobalVariables = window.GlobalVariables || {};
+    window.GlobalVariables.UserId = '27585338';
+   </script>
+   <script src="/Includes/javascript/jquery-3.5.1.js?update=EH20201118"></script>
+   <script src="/Includes/javascript/jquery-migrate-3.3.2.min.js"></script>
+   <script src="/Includes/javascript/jquery-ui-1.12.1.min.js"></script>
+   <script src="/Includes/javascript/jquery.swiftype.search.js"></script>
+   <script src="/Includes/javascript/jquery.swiftype.autocomplete.js?update=1"></script>
+   <script src="/Includes/javascript/slidebars-0.10.3.min.js"></script>
+   <script src="/Includes/javascript/wow/wow.js"></script>
+   <script src="/Includes/javascript/jquery-custom.js?update=1"></script>
+   <script src="/Includes/javascript/CommonScripts.js?update=TA9821"></script>
+   <script src="/Includes/javascript/sly.js"></script>
+   <script src="/Includes/javascript/jquery.confirm.min.js?update=1"></script>
+   <script src="/Includes/javascript/ZeroClipboard.js"></script>
+   <script src="/Includes/javascript/jquery.mousewheel.js"></script>
+   <script src="/Includes/javascript/_min/select2.full.min.js"></script>
+   <script src="/Includes/javascript/stacktable.js"></script>
+   <script src="/Includes/javascript/jquery.mCustomScrollbar.concat-3.1.7.min.js"></script>
+   <script src="/Includes/javascript/jquery.cookie.js?update=2"></script>
+   <script src="/Includes/javascript/moment-2.24.0.min.js"></script><!-- Parses dates correctly -->
+   <script src="//test.static.abeka.com/Shared/JavaScript/SiteIdentifier.js"></script>
+   
+
+
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="/Includes/javascript/bootstrap-3.4.1.min.js?update=EH20201118"></script>
+
+   <script>
+      $(document).ready(function () {
+
+       $('.modal').on('show.bs.modal', function() {
+         window.setTimeout((function() {$(".modal-backdrop").appendTo("#aspnetForm");}), 50);
+       })
+     });
+   </script>
+   <script src="/Includes/javascript/jquery.matchHeight-0.7.2.min.js"></script>
+
+   <script>
+      $(function () {
+         // Swiftype autosuggest initialization
+         $('#txtSearch').swiftype({
+            renderFunction: customAutosuggestRender,
+            resultContainingElement: '.searchRelated.searchInput',
+            engineKey: "_61FC3EPeaa525sDCiiM",
+            highlightFields: { 'page': { 'sections': { 'size': 50, 'fallback': true } } }
+         })
+
+         // Detect a search, and go to the search page.
+         $('#frmMainSearch').on("submit", function (e) {
+            e.preventDefault(); // Go to the search page manually instead
+            let query = $('#txtSearch').val();
+            window.location = "/Search.aspx#stq=" + query; // Send the search query as a hash (this is what Swiftype does)
+         });
+
+         // Mobile Swiftype autosuggest
+         $('#txtSearchMobile').swiftype({
+            renderFunction: customAutosuggestRender,
+            resultContainingElement: '.mobile-search-form-wrapper',
+            engineKey: "_61FC3EPeaa525sDCiiM",
+            highlightFields: { 'page': { 'sections': { 'size': 50, 'fallback': true } } }
+         })
+
+         // Mobile search detection
+         $('.mobile-search-form-wrapper').on('submit', function (e) {
+            e.preventDefault();
+            let query = $('#txtSearchMobile').val();
+            window.location = "/Search.aspx#stq=" + query;
+         });
+      });
+
+      (function ($) {
+         $(document).ready(function () {
+            $.slidebars();
+         });
+      })(jQuery);
+
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown('toggle');
+     });
+
+     $(document).ready(function () {
+        var ua = navigator.userAgent.toLowerCase();
+        // Android 4.4 and lower
+        if ((ua.indexOf("android") !== -1) &&
+            (ua.indexOf("chrome")   == -1) &&
+            (ua.indexOf("firefox")  == -1) &&
+            (ua.indexOf("iemobile") == -1) &&
+            (ua.indexOf("opera")    == -1))
+        {
+           $("#banner").css('display', 'block');
+           $("#browserLink").attr('href', 'https://www.google.com/chrome/');
+        }
+
+        if ($('#banner').is(':visible'))
+        {
+            $('#Menu').css('position', 'relative');
+            $('#nav-toggle').css('top', '20px');
+        }
+
+        // Temporary Closure Announcement
+        getAnnouncement();
+     });
+   </script>
+
+    
+    <script>
+        
+        (function () {
+            let getAdvancedConfig_old = window.getAdvancedConfig;
+            window.getAdvancedConfig = function() {
+                return $.extend(true,
+                    getAdvancedConfig_old(),
+                    {
+                        form: {
+                            firstname: ' ',
+                            email: 'rcg+27585338@pcci.edu'
+                        }
+                    });
+            }
+        })();
+        
+    </script>
+
+   
+   
+   <meta name="ABA_Tour" content="NO_TOUR">
+   
+   <script>
+   //<![CDATA[
+      var scrollPos
+      function disableScrollInPopUp() {
+         $("#CreateStudentModal").scrollTop(scrollPos);
+      }
+
+      function disableScroll() {
+         scrollPos = $("#CreateStudentModal").scrollTop();
+         if ($("#CreateStudentModal").css("display") == "block") {
+            document.getElementById('CreateStudentModal').addEventListener("scroll", disableScrollInPopUp);
+         }
+      }
+
+      function enableScroll() {
+         document.getElementById('CreateStudentModal').removeEventListener('scroll', disableScrollInPopUp);
+      }
+
+      $(document).ready(function () {
+         $("#txtStdBirthDate").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            yearRange: 'c-75:c',
+            onSelect: function (dateText) {
+               $("#txtStdBirthDate").addClass('FieldValid').removeClass('FieldError');
+               $('#cmpStdBirthDate').hide();
+            }
+         });
+
+         // When the birth datepicker is displayed, disable page scroll (this fixes the inability of the datepicker to scroll with the 
+         // modal when parent container is fixed)
+         document.getElementById("txtBirthDate").addEventListener("focus", disableScroll);
+
+         document.getElementById("txtBirthDate").addEventListener("focusout", enableScroll);
+
+         /* The following script was added to solve window resizing issue with date picker:
+           - when opened, date picker is absolutely positioned-> result: if window is resized while date picker is opened, date picker
+             is awkwardly positioned in the screen */
+
+         var savedWindowWidth, windowWidth;
+         savedWindowWidth = window.innerWidth;
+
+         window.addEventListener("resize", function () {
+            windowWidth = window.innerWidth;
+
+            // Focusing on date picker txt input opens virtual keyboard for Android which in turn triggers resize event.
+            // Therefore, hide date picker only on window width change.
+            if (savedWindowWidth != windowWidth) {
+               $.datepicker._hideDatepicker();
+               $(".hasDatepicker").blur();
+
+               savedWindowWidth = windowWidth;
+            }
+
+            return;
+         });
+
+//         if (false) {
+//             $("#divDualEnrollmentRequirements").show();
+//         } else {
+//             $("#divDualEnrollmentRequirements").hide();
+//         }
+//
+//         $("#cboxIsDualEnrollment").on("click",
+//             function () {
+//                 if ($(this).is(":checked")) {
+//                     $("#divDualEnrollmentRequirements").slideDown(300);
+//                 } else {
+//                     $("#divDualEnrollmentRequirements").slideUp(300);
+//                 }
+//             }
+//         );
+      });
+
+      function base_ClientValidated(sender, e) {
+         var list = sender.controlsToValidate;
+         for (var i = 0; i < list.length; i++) {
+            if (list[i].invalidClass) {
+               $(list[i].GetControl()).removeClass('FieldValid');
+               if (e.IsValid) {
+                  $(list[i].GetControl()).addClass('FieldValid');
+               }
+            }
+         }
+      }
+
+      function select2_Change(e) {
+         if (typeof select2_Change.running == 'undefined') {
+            select2_Change.running = false;
+         }
+         if (!select2_Change.running) {
+            var event;
+
+            select2_Change.running = true;
+
+            if (document.createEvent) {
+               event = document.createEvent('HTMLEvents');
+               event.initEvent('change', true, true);
+            } else {
+               event = document.createEventObject();
+               event.eventType = 'change';
+            }
+
+            event.eventName = 'change';
+
+            if (document.createEvent) {
+               e.target.dispatchEvent(event);
+            } else {
+               e.target.fireEvent('on' + event.eventType, event);
+            }
+
+            select2_Change.running = false;
+         }
+      }
+
+      function cmpBirthDate_ClientValidating(sender, e) {
+         if (!e.valueToValidate) {
+            if (!$("#lblBirthDate").hasClass("RequiredFieldLabel")) {
+               e.Cancel = true;
+               sender.Reset();
+            }
+         }
+         $('[id$=csvStudentBirthDate]').html("");
+      }
+    //]]>
+    </script>
+
+   <script>
+   //<![CDATA[
+      function setVisibility(itemID, show, duration) {
+         if (show) {
+            itemID.slideDown(duration);
+         }
+         else {
+            itemID.slideUp(duration);
+         }
+      }
+
+      function ScrollIntoItem(itemID) {
+         $('html, body').animate({ scrollTop: $('#' + itemID).offset().top - 50 }, 500);
+      }
+
+      function ScrollIntoItemDelay(itemID, delayTime) {
+         setTimeout(function ScrollTimer() { ScrollIntoItem(itemID); }, delayTime);
+      }
+
+      function ddlTempEnrollType() {
+         var ddlTempEnrollType = $('[id$=ddlTempEnrollType]');
+         var ddlTempGrade = $('[id$=ddlTempGrade]');
+         var ddlTempGradePreSelected = ddlTempGrade.val();
+         ddlTempGrade.empty();
+
+         if (ddlTempEnrollType.val() == "F") {
+            ddlTempGrade.append(
+                        $('<option></option>').val("14").text("K4")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("15").text("K5")
+                     );
+         }
+
+         if (ddlTempEnrollType.val() == "F" || ddlTempEnrollType.val() == "L" || ddlTempEnrollType.val() == "A") {
+            ddlTempGrade.append(
+                        $('<option></option>').val("1").text("Grade 1")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("2").text("Grade 2")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("3").text("Grade 3")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("4").text("Grade 4")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("5").text("Grade 5")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("6").text("Grade 6")
+                     );
+         }
+
+         if (ddlTempEnrollType.val() == "F" || ddlTempEnrollType.val() == "C") {
+            ddlTempGrade.append(
+                        $('<option></option>').val("7").text("Grade 7")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("8").text("Grade 8")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("9").text("Grade 9")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("10").text("Grade 10")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("11").text("Grade 11")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("12").text("Grade 12")
+                     );
+         }
+
+         ddlTempGrade.val(ddlTempGradePreSelected);
+         if (ddlTempGrade.val() == null) {
+            $("#ddlTempGrade")[0].selectedIndex = 0;
+         }
+         ddlTempGrade.change();
+      }
+   //]]>
+   </script>
+
+   <script src="/Includes/javascript/jquery.gridster.scripts.js?update=917SM" class="iniGridsterSector"></script>
+   <script src="/Includes/javascript/sideControls.js"></script>
+   <script>
+      $(document).ready(function () {
+         $('.themeOption').on("click", function (event) {
+            event.preventDefault();
+            $(document).dashboardTheme($(this).attr('data-theme'));
+         }).dashboardTheme();
+      });
+   </script>
+<script async="" src="https://static.hotjar.com/c/hotjar-608300.js?sv=6"></script><script async="" src="https://script.hotjar.com/modules.923ec619fec69a542e35.js" charset="utf-8"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/widgets-core.min.js" charset="UTF-8"></script><style type="text/css">.cx-widget *{box-sizing:border-box;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}.cx-widget{font-family:Roboto;font-size:1em;transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;-webkit-transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;-moz-transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;-o-transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease}.cx-widget article,.cx-widget aside,.cx-widget details,.cx-widget figcaption,.cx-widget figure,.cx-widget footer,.cx-widget header,.cx-widget hgroup,.cx-widget main,.cx-widget nav,.cx-widget section,.cx-widget summary{display:block}.cx-widget audio,.cx-widget canvas,.cx-widget progress,.cx-widget video{display:inline-block;vertical-align:baseline}.cx-widget audio:not([controls]){display:none;height:0}.cx-widget [hidden],.cx-widget template{display:none}.cx-widget a{background:transparent;text-decoration:underline;background:0 0}.cx-widget abbr[title]{border-bottom:1px dotted}.cx-widget b,.cx-widget strong{font-weight:700}.cx-widget dfn{font-style:italic}.cx-widget h1{margin:.67em 0;font-size:2em}.cx-widget mark{background:#ff0}.cx-widget small{font-size:80%}.cx-widget sub,.cx-widget sup{position:relative;font-size:75%;line-height:0;vertical-align:baseline}.cx-widget sup{top:-.5em}.cx-widget sub{bottom:-.25em}.cx-widget img{border:0}.cx-widget svg:not(:root){overflow:hidden;-webkit-transform:scale(1);transform:scale(1)}.cx-widget figure{margin:1em 40px}.cx-widget hr{height:0;-moz-box-sizing:content-box;box-sizing:content-box}.cx-widget pre{overflow:auto}.cx-widget code,.cx-widget kbd,.cx-widget pre,.cx-widget samp{font-family:monospace,monospace;font-size:1em}.cx-widget button,.cx-widget input,.cx-widget optgroup,.cx-widget select,.cx-widget textarea{margin:0;font:inherit;color:inherit}.cx-widget button,.cx-widget select{text-transform:none}.cx-widget button,.cx-widget input[type=button],.cx-widget input[type=reset],.cx-widget input[type=submit]{-webkit-appearance:button;cursor:pointer}.cx-widget button[disabled],.cx-widget input[disabled]{cursor:default}.cx-widget button::-moz-focus-inner,.cx-widget input::-moz-focus-inner{padding:0;border:0}.cx-widget input{line-height:normal}.cx-widget input[type=checkbox],.cx-widget input[type=radio]{-moz-box-sizing:border-box;box-sizing:border-box;padding:0}.cx-widget input[type=number]::-webkit-inner-spin-button,.cx-widget input[type=number]::-webkit-outer-spin-button{height:auto}.cx-widget input[type=search]{-moz-box-sizing:content-box;box-sizing:content-box;-webkit-appearance:textfield}.cx-widget input[type=search]::-webkit-search-cancel-button,.cx-widget input[type=search]::-webkit-search-decoration{-webkit-appearance:none}.cx-widget fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid}.cx-widget textarea{overflow:auto}.cx-widget optgroup{font-weight:700}.cx-widget table{border-spacing:0;border-collapse:collapse}.cx-widget td,.cx-widget th{padding:0}.cx-widget th{text-align:left}.cx-widget label{margin-bottom:0!important;color:inherit!important}.cx-widget button{margin:0;font:inherit;overflow:visible;text-rendering:auto;letter-spacing:normal;word-spacing:normal;text-indent:0;-webkit-writing-mode:horizontal-tb}.cx-widget .cx-icon-debug .cx-icon-debug-set>div{display:inline-block;width:58px;padding:10px;margin:5px;font-size:.625em;text-align:center}.cx-widget .cx-icon-debug .cx-icon-debug-set>div span{white-space:nowrap}.cx-widget .cx-form-control{height:32px;border:1px solid;border-width:1px;border-style:solid}.cx-widget .cx-btn{display:inline-block;padding:5px 24px;margin-bottom:0;font-size:.75em;font-weight:700;line-height:1.66666667em;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;-o-user-select:none;user-select:none;background-image:none;border:1px solid;border-radius:2px;text-shadow:none}.cx-widget .cx-btn:focus{border-width:2px;padding-top:4px;padding-bottom:4px}.cx-widget .cx-full-screen-view{position:absolute;z-index:999999;top:0;left:0;height:100%;width:100%;padding:0;margin:0}.cx-widget fieldset{min-width:0;padding:0;margin:0;border:0}.cx-widget legend{display:block;width:100%;padding:0;margin-bottom:20px;font-size:1.125em;line-height:inherit;border:0;border-bottom:1px solid}.cx-widget label{display:inline;margin-bottom:5px;font-size:.75em;font-weight:700;line-height:1rem}.cx-widget input[type=search]{-moz-box-sizing:border-box;box-sizing:border-box}.cx-widget input[type=radio]{margin-top:4px;margin-right:5px;cursor:pointer;width:auto;display:inline;height:auto}.cx-widget input[type=radio].cx-radiobtn{display:none}.cx-widget input[type=radio].cx-radiobtn+span{position:relative;top:1px;display:inline;margin-right:7px;font-size:.9375em;line-height:.75em;cursor:pointer;outline:none}.cx-widget input[type=checkbox]{margin-top:4px;margin-right:5px;cursor:pointer;width:auto!important;float:left}.cx-widget input[type=checkbox].cx-form-control{margin-top:1px;height:auto}.cx-widget input[type=checkbox].cx-checkbox{display:none}.cx-widget input[type=checkbox].cx-checkbox+span{position:relative;top:1px;display:inline;margin-right:7px;font-size:.875em;line-height:1rem;cursor:pointer;outline:none}.cx-widget input[type=file]{display:block}.cx-widget input[type=range]{display:block;width:100%}.cx-widget select[multiple],.cx-widget select[size]{height:auto}.cx-widget input[type=checkbox]:focus,.cx-widget input[type=file]:focus,.cx-widget input[type=radio]:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}.cx-widget output{padding-top:5px}.cx-widget .cx-form-control,.cx-widget output{display:block;font-size:.75em;line-height:1.86666667em}.cx-widget .cx-form-control{width:100%;padding:4px 12px;background-image:none;border-radius:2px}.cx-widget .cx-form-control:focus{outline:0;border-width:2px}.cx-widget .cx-form-control[disabled],.cx-widget .cx-form-control[readonly],.cx-widget fieldset[disabled] .cx-form-control{cursor:not-allowed;opacity:1}.cx-widget textarea.cx-form-control{height:auto;resize:none}.cx-widget textarea.cx-form-control:focus{padding-top:3px;padding-bottom:3px}.cx-widget input[type=date]{line-height:2em}.cx-widget .cx-form-group{margin-bottom:15px}.cx-widget .cx-checkbox,.cx-widget .cx-radio{display:block;min-height:20px;margin-top:10px;margin-bottom:10px}.cx-widget .cx-checkbox label,.cx-widget .cx-radio label{display:inline;font-weight:400;cursor:pointer}.cx-widget .cx-checkbox-inline input[type=checkbox],.cx-widget .cx-checkbox input[type=checkbox],.cx-widget .cx-radio-inline input[type=radio],.cx-widget .cx-radio input[type=radio]{float:left}.cx-widget .cx-checkbox+.checkbox,.cx-widget .cx-radio+.radio{margin-top:-5px}.cx-widget .cx-checkbox-inline,.cx-widget .cx-radio-inline{display:inline-block;padding-left:20px;margin-bottom:0;font-weight:400;line-height:1.25em;vertical-align:middle;cursor:pointer}.cx-widget .cx-checkbox-inline+.cx-checkbox-inline,.cx-widget .cx-radio-inline+.cx-radio-inline{margin-top:0;margin-left:1px}.cx-widget .cx-checkbox-inline[disabled],.cx-widget .cx-checkbox[disabled],.cx-widget .cx-radio-inline[disabled],.cx-widget .cx-radio[disabled],.cx-widget fieldset[disabled] .cx-checkbox,.cx-widget fieldset[disabled] .cx-checkbox-inline,.cx-widget fieldset[disabled] .cx-radio,.cx-widget fieldset[disabled] .cx-radio-inline,.cx-widget fieldset[disabled] input[type=checkbox],.cx-widget fieldset[disabled] input[type=radio],.cx-widget input[type=checkbox][disabled],.cx-widget input[type=radio][disabled]{cursor:not-allowed}.cx-widget .cx-input-sm{height:32px;padding:5px 10px;font-size:.6875em;line-height:1.5;border-radius:3px}.cx-widget select.cx-input-sm{height:32px;line-height:2em}.cx-widget select[multiple].cx-input-sm,.cx-widget textarea.cx-input-sm{height:auto}.cx-widget .cx-input-lg{height:32px;padding:10px 16px;font-size:.875em;line-height:1.33em;border-radius:6px}.cx-widget select.cx-input-lg{height:32px;line-height:2em}.cx-widget select[multiple].cx-input-lg,.cx-widget textarea.cx-input-lg{height:auto}.cx-widget .ui-draggable-handle{-ms-touch-action:none;touch-action:none}@keyframes opacityZeroToFull{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes opacityIncreaseToFull{0%{opacity:.5}to{opacity:1}}.cx-widget:hover{z-index:1000000!important}.cx-widget .cx-mobile input.cx-form-control,.cx-widget .cx-mobile text-area.cx-form-control{font-size:1em}.cx-button-group{overflow:auto}.cx-buttons-single{text-align:center}.cx-buttons-single .cx-btn-default,.cx-buttons-single .cx-btn-primary{float:none}.cx-buttons-binary .cx-btn-primary{float:right}.cx-buttons-binary .cx-btn-default{float:left}.cx-buttons-primary .cx-btn-primary{float:right}.cx-buttons-primary .cx-text{float:left;margin-left:16px}.cx-buttons-default .cx-btn-default{float:left}.cx-buttons-default .cx-text{float:right;margin-right:16px}.cx-ac-wrapper{position:relative;width:100%}.cx-ac-wrapper input{padding-right:30px}.cx-ac-dropdown-menu{position:absolute;top:100%;left:0;right:0;z-index:1;padding:4px 0;cursor:pointer;display:none;border:1px solid}.cx-ac-suggestion{padding:8px 12px}.cx-countdown{font-size:1.5em;font-weight:300}.cx-countdown .cx-icon{display:inline-block;width:16px;height:16px;margin-right:7px}.cx-mobile .cx-countdown .cx-icon{width:18px;height:18px}.cx-screen-reader-only{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}.cx-common-screen-reader{width:1px;height:1px;overflow:hidden;text-indent:-9999px;border:0}.cx-widget.cx-desktop .cx-input-focus{border-width:1px!important;box-shadow:0 2px 2px #23adff;transition:all .2s ease-out;border-color:#75a8ff!important}.cx-widget.cx-desktop .cx-input-focus:focus{outline:none}</style><style type="text/css">.cx-common-container.cx-loading .cx-loading-screen,.cx-common-container.cx-loading .cx-smokescreen{display:block}.cx-common-container.cx-waiting .cx-loading-screen{display:block;pointer-events:none;background:none}.cx-loading-screen{display:none;position:absolute;top:0;left:0;height:100%;width:100%}.cx-loading-container{display:none;position:relative}.cx-loading-container .cx-loading-icon,.cx-loading-screen .cx-loading-icon{display:inline-block;height:50px;width:50px;left:-25px;margin-left:50%;position:relative;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.cx-loading-container svg,.cx-loading-screen svg{-webkit-animation:cxloadingspin 4s linear infinite;-moz-animation:cxloadingspin 4s linear infinite;animation:cxloadingspin 4s linear infinite}@-moz-keyframes cxloadingspin{0%{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(1turn)}}@-webkit-keyframes cxloadingspin{0%{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(1turn)}}@keyframes cxloadingspin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.cx-common-container,.cx-drop-shadow{-webkit-box-shadow:0 0 21px 2px rgba(0,0,0,.2);box-shadow:0 0 21px 2px rgba(0,0,0,.2)}.cx-common-container{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}.cx-common-container button,.cx-common-container form{outline:none}.cx-common-container *{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}.cx-common-container ::-webkit-scrollbar{width:5px;height:5px}.cx-common-container .cx-titlebar{clear:both;border-width:0 0 1px;border-style:solid;padding:14px 20px;background-color:inherit}.cx-common-container .cx-titlebar .cx-icon{float:left;width:24px;height:24px;margin-top:2px}.cx-common-container .cx-titlebar .cx-title{display:inline-block;font-size:1.5em;margin:0 0 0 8px;font-weight:lighter}.cx-common-container .cx-titlebar .cx-close{float:right}.cx-common-container .cx-titlebar .cx-close .cx-button-close{font-size:1em}.cx-common-container .cx-body{padding:24px 24px 0;overflow:auto;clear:both;position:relative}.cx-common-container .cx-body ::-webkit-scrollbar{width:5px;height:5px}.cx-common-container .cx-button-container{font-size:.75em;line-height:1em}.cx-common-container .cx-button-container .cx-button-group .cx-btn{margin:12px 0 0}.cx-common-container .cx-button-container .cx-button-group .cx-text{margin:20px 0;line-height:1em}.cx-common-container .cx-dialog-container,.cx-common-container .cx-smokescreen{position:absolute;top:0;left:0;height:100%;width:100%;display:none}.cx-common-container .cx-dialog-container{padding:48px 96px;font-size:.875em}.cx-common-container .cx-dialog-container .cx-dialog{border:1px solid;padding:24px;top:28px;position:relative;display:none}.cx-common-container .cx-footer{padding:14px 24px 18px;background-color:inherit}.cx-common-container .cx-footer .cx-powered-by{font-size:.625em}.cx-common-container .cx-branding{padding:10px 12px 26px 15px}.cx-common-container .cx-branding .cx-icon{float:left;width:16px;height:16px}.cx-common-container .cx-email-link{font-weight:700}.cx-common-container .cx-powered-by .cx-icon{position:relative;top:2px}.cx-common-container .cx-powered-by .cx-icon svg{width:59px;height:14px}.cx-common-container .cx-buttons-window-control{position:absolute;top:12px;right:12px;font-size:1em;overflow:hidden}.cx-common-container .cx-buttons-window-control button{display:none;padding:0;background-color:transparent;border:0;width:20px;height:20px;padding:2px;margin-left:6px}.cx-common-container .cx-buttons-window-control button:focus{border:1px solid;border-width:2px;padding:1px}.cx-footer .cx-button-group .cx-button-group{margin-bottom:0}.cx-button-group{overflow:auto}.cx-buttons-single{text-align:center}.cx-buttons-single .cx-btn-default,.cx-buttons-single .cx-btn-primary{float:none}.cx-buttons-binary .cx-btn-primary{float:right}.cx-buttons-binary .cx-btn-default{float:left}.cx-buttons-primary .cx-btn-primary{float:right}.cx-buttons-primary .cx-text{float:left;margin-left:16px}.cx-buttons-default .cx-btn-default{float:left}.cx-buttons-default .cx-text{float:right;margin-right:16px}.cx-common-container.cx-close .cx-buttons-window-control button.cx-button-close,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-maximize,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-minimize{display:inline-block}.cx-common-container.cx-minimized .cx-buttons-window-control .cx-button-maximize svg{-ms-transform:rotate(180deg);-webkit-transform:rotate(180deg);transform:rotate(180deg);border-bottom:1px transparent}.cx-common-container.cx-mobile .cx-btn{padding:5px 14px}.cx-common-container.cx-mobile .cx-titlebar{padding:9px 11px}.cx-common-container.cx-mobile .cx-titlebar .cx-icon{margin-left:13px}.cx-common-container.cx-mobile .cx-buttons-window-control{top:7px;right:0;overflow:visible!important}.cx-common-container.cx-mobile .cx-buttons-window-control>button{margin-right:10px;padding:4px;width:24px;height:32px}.cx-common-container.cx-mobile .cx-buttons-window-control>button:focus{padding:3px}.cx-common-container.cx-mobile .cx-button-container .cx-text{margin:16px 9px 16px 0}.cx-common-container.cx-mobile .cx-footer{border-width:1px 0 0;border-style:solid;width:100%;position:absolute;bottom:0;left:0}.cx-common-container.cx-mobile .cx-dialog-container{padding:20px}</style><style type="text/css">.cx-common-container.cx-close .cx-buttons-window-control button.cx-button-close,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-maximize,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-minimize{display:inline-block}</style><style type="text/css">.cx-common-container.cx-overlay.cx-desktop{padding:28px 48px 0;min-width:688px;width:auto}.cx-common-container.cx-overlay.cx-desktop .cx-button-group{padding-bottom:0}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar{border:0;padding:0 0 17px}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar .cx-icon{float:left;width:24px;height:24px;margin-right:12px;margin-top:0}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar .cx-title{margin-top:0;margin-left:0;padding:0;line-height:1.75em;font-size:1.5em}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar .cx-subtitle{font-size:.875em;line-height:2.5em;clear:both}.cx-common-container.cx-overlay.cx-desktop .cx-body{padding:17px 0;min-height:66px;border-width:1px 0;border-style:solid}.cx-common-container.cx-overlay.cx-desktop .cx-footer{padding:8px 0 24px}.cx-common-container.cx-overlay.cx-desktop .cx-button-container{margin-bottom:12px}.cx-widget.ow-modal.cx-mobile{top:inherit!important;right:inherit!important;height:100%;width:100%;position:fixed;z-index:1000000!important}.cx-widget.ow-modal.cx-mobile.ow-full-screen{margin-left:0!important;left:0!important;bottom:0!important}.cx-widget.ow-modal.ow-fit-content{top:50px!important;height:auto;width:auto;max-width:96%;z-index:1000020!important}.cx-common-container.cx-overlay.cx-mobile{min-width:auto}.cx-common-container.cx-overlay.cx-mobile .cx-subtitle{font-size:.875em;line-height:2.5em;clear:both}.cx-common-container.cx-overlay.cx-mobile .cx-footer{padding:14px 24px 18px}.cx-common-container.cx-overlay.cx-mobile.cx-portrait{padding:0;height:100%;width:100%}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-close{padding:4px 8px;font-size:1.5em}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-body{max-height:none;padding:16px 24px 17px;border-width:1px 0;border-style:solid}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-body .cx-wrapper{height:100%;max-height:none}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-button-container .cx-button-group .cx-btn{margin:8px 24px}.cx-common-container.cx-overlay.cx-mobile.cx-landscape{height:100%;width:100%;padding:0}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-close{padding:4px 8px;font-size:1.5em}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-body{border-width:0;border-style:solid;padding:16px 24px 17px;border-top:0}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-body .wrapper{max-height:none;height:100%}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-button-container .cx-button-group .cx-btn{height:32px;margin:8px 24px}@media screen and (max-width:1099px) and (min-width:650px){.cx-common-container.cx-overlay.cx-desktop{min-width:550.4px}}</style><style type="text/css">.cx-common-container.cx-toast .cx-button-container{padding:0 24px}</style><style type="text/css">.cx-widget.cx-theme-dark{color:#fdfdfd;background-color:#33383d;scrollbar-face-color:#a3a8ae;scrollbar-track-color:#212529;scrollbar-arrow-color:#a3a8ae}.cx-widget.cx-theme-dark .cx-theme{background-color:#33383d;color:#fdfdfd;border-color:#222529!important}.cx-widget.cx-theme-dark .cx-overlay{background-color:#33383d}.cx-widget.cx-theme-dark .cx-svg-icon-tone1{fill:#fdfdfd}.cx-widget.cx-theme-dark .cx-svg-icon-tone2{fill:#8c8c8c}.cx-widget.cx-theme-dark .cx-svg-icon-shadow1{fill:#000;opacity:.2}.cx-widget.cx-theme-dark .cx-svg-icon-shadow2{fill:#000;opacity:.1}.cx-widget.cx-theme-dark *{border-color:#222529}.cx-widget.cx-theme-dark .cx-titlebar .cx-title{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-buttons-window-control .cx-svg-icon-tone1,.cx-widget.cx-theme-dark .cx-input-icon-overlay .cx-svg-icon-tone1{fill:#98a7b8}.cx-widget.cx-theme-dark a,.cx-widget.cx-theme-dark a:hover,.cx-widget.cx-theme-dark label{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-icon-alert-circle{color:#f53131}.cx-widget.cx-theme-dark .cx-branding,.cx-widget.cx-theme-dark .cx-footer{color:#98a7b8}.cx-widget.cx-theme-dark .cx-branding *,.cx-widget.cx-theme-dark .cx-footer *{fill:#98a7b8}.cx-widget.cx-theme-dark .cx-form-control{background-color:#444a52;color:#fdfdfd}.cx-widget.cx-theme-dark .cx-form-control.cx-error{border-color:#f53131!important}.cx-widget.cx-theme-dark .cx-form-control::placeholder{color:#c5ccd6}.cx-widget.cx-theme-dark .cx-form-control:-moz-placeholder,.cx-widget.cx-theme-dark .cx-form-control::-moz-placeholder{color:#c5ccd6;opacity:1}.cx-widget.cx-theme-dark .cx-form-control:-ms-input-placeholder{color:#c5ccd6}.cx-widget.cx-theme-dark .cx-form-control::-webkit-input-placeholder{color:#c5ccd6}.cx-widget.cx-theme-dark .cx-btn:focus,.cx-widget.cx-theme-dark .cx-button-group button:focus,.cx-widget.cx-theme-dark .cx-form-control:not(.cx-error):focus,.cx-widget.cx-theme-dark input:focus,.cx-widget.cx-theme-dark textarea:focus{border-color:#75a8ff!important}.cx-widget.cx-theme-dark input,.cx-widget.cx-theme-dark select,.cx-widget.cx-theme-dark textarea{background-color:#444a52;color:#fdfdfd;border-color:#758384}.cx-widget.cx-theme-dark .intl-tel-input .selected-flag{border-color:#75a8ff}.cx-widget.cx-theme-dark .cx-btn-default{background:none;border-color:#222529!important;color:#fdfdfd;background-color:#222529}.cx-widget.cx-theme-dark .cx-btn.cx-disabled{background:#ccc}.cx-widget.cx-theme-dark .cx-btn-primary{color:#fdfdfd;border-color:#2e69db!important;background:#5081e1;background:-moz-linear-gradient(top,#5081e1 0,#4375d6 100%);background:-webkit-linear-gradient(top,#5081e1,#4375d6);background:linear-gradient(180deg,#5081e1 0,#4375d6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="@bg_color_4",endColorstr="@bg_color_5",GradientType=0)}.cx-widget.cx-theme-dark .cx-btn-primary:focus,.cx-widget.cx-theme-dark .cx-button-group .cx-btn-primary:focus{border-color:#dae6fc!important}.cx-widget.cx-theme-dark .cx-ac-dropdown-menu{background:#33383d;border-color:#222529!important}.cx-widget.cx-theme-dark .cx-ac-suggestion.cx-active,.cx-widget.cx-theme-dark .cx-ac-suggestion:hover{background-color:#75a8ff;color:#fdfdfd}.cx-widget.cx-theme-dark ::-webkit-scrollbar-thumb{background:#a3a8ae}.cx-widget.cx-theme-dark .cx-smokescreen{background-color:#33383d;opacity:.7}.cx-widget.cx-theme-dark .cx-dialog-container .cx-dialog{background-color:#33383d;border-color:#222529!important}.cx-widget.cx-theme-dark .cx-theme-background{background-color:#33383d}.cx-widget.cx-theme-dark .cx-theme-border{border:1px solid #222529!important}.cx-widget.cx-theme-dark .cx-theme-text{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-theme-icon-interactive1 svg .cx-svg-icon-tone1{fill:#5081e1}.cx-widget.cx-theme-dark .cx-theme-icon-positive svg .cx-svg-icon-tone1{fill:#4ac764}.cx-widget.cx-theme-dark .cx-theme-icon-negative svg .cx-svg-icon-tone1{fill:#f53131}.cx-widget.cx-theme-dark .cx-theme-icon-warning svg .cx-svg-icon-tone1{fill:#f8a740}.cx-widget.cx-theme-dark .cx-warning{color:#f53131!important}.cx-widget.cx-theme-dark .cx-warning .cx-icon svg *{fill:#f53131!important}.cx-widget.cx-theme-dark .cx-countdown{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-countdown .cx-icon svg *{fill:#fdfdfd}</style><style type="text/css">.cx-widget.cx-theme-light{color:#444a52;background-color:#fdfdfd;scrollbar-face-color:#ccc}.cx-widget.cx-theme-light .cx-theme{background-color:#fdfdfd;color:#444a52;border-color:#dae1e8!important}.cx-widget.cx-theme-light .cx-overlay{background-color:#fdfdfd}.cx-widget.cx-theme-light .cx-svg-icon-tone1{fill:#ff4f1f}.cx-widget.cx-theme-light .cx-svg-icon-tone2{fill:#8c8c8c}.cx-widget.cx-theme-light .cx-svg-icon-shadow1{fill:#000;opacity:.2}.cx-widget.cx-theme-light .cx-svg-icon-shadow2{fill:#000;opacity:.1}.cx-widget.cx-theme-light *{border-color:#dae1e8}.cx-widget.cx-theme-light .cx-titlebar .cx-title{color:#444a52}.cx-widget.cx-theme-light .cx-buttons-window-control .cx-svg-icon-tone1{fill:#8795a6}.cx-widget.cx-theme-light .cx-input-icon-overlay .cx-svg-icon-tone1{fill:#98a7b8}.cx-widget.cx-theme-light .cx-input-group-btn .cx-svg-icon-tone1{fill:#fdfdfd}.cx-widget.cx-theme-light label{color:#444a52}.cx-widget.cx-theme-light a,.cx-widget.cx-theme-light a:hover{color:#000}.cx-widget.cx-theme-light .cx-icon-alert-circle{color:#f53131}.cx-widget.cx-theme-light .cx-branding,.cx-widget.cx-theme-light .cx-footer{color:#66759b}.cx-widget.cx-theme-light .cx-branding *,.cx-widget.cx-theme-light .cx-footer *{fill:#66759b}.cx-widget.cx-theme-light .cx-form-control.cx-error{border-color:#f53131!important}.cx-widget.cx-theme-light .cx-form-control::placeholder{color:#6f7491}.cx-widget.cx-theme-light .cx-form-control:-moz-placeholder,.cx-widget.cx-theme-light .cx-form-control::-moz-placeholder{color:#6f7491;opacity:1}.cx-widget.cx-theme-light .cx-form-control:-ms-input-placeholder{color:#6f7491}.cx-widget.cx-theme-light .cx-form-control::-webkit-input-placeholder{color:#6f7491}.cx-widget.cx-theme-light .cx-btn:focus,.cx-widget.cx-theme-light .cx-button-group button:focus,.cx-widget.cx-theme-light .cx-form-control:not(.cx-error):focus,.cx-widget.cx-theme-light input:focus,.cx-widget.cx-theme-light textarea:focus{border-color:#5791fd!important}.cx-widget.cx-theme-light input,.cx-widget.cx-theme-light select,.cx-widget.cx-theme-light textarea{background-color:#fdfdfd;color:#444a52;border-color:#94948a}.cx-widget.cx-theme-light .intl-tel-input .selected-flag{border-color:#5791fd}.cx-widget.cx-theme-light .cx-btn-default{background:none;border-color:#dae1e8!important;color:#fdfdfd;background-color:#555d66}.cx-widget.cx-theme-light .cx-btn.cx-disabled{background:#ccc}.cx-widget.cx-theme-light .cx-btn-primary{color:#fdfdfd;border-color:#2e69db!important;background:#566dd9;background:-moz-linear-gradient(top,#566dd9 0,#4375d6 100%);background:-webkit-linear-gradient(top,#566dd9,#4375d6);background:linear-gradient(180deg,#566dd9 0,#4375d6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="@bg_color_4",endColorstr="@bg_color_5",GradientType=0);background-color:#566dd9}.cx-widget.cx-theme-light .cx-btn-default:focus,.cx-widget.cx-theme-light .cx-btn-primary:focus,.cx-widget.cx-theme-light .cx-button-group .cx-btn-default:focus,.cx-widget.cx-theme-light .cx-button-group .cx-btn-primary:focus{border-color:#000!important}.cx-widget.cx-theme-light .cx-ac-dropdown-menu{background:#fdfdfd;border-color:#dae1e8!important}.cx-widget.cx-theme-light .cx-ac-suggestion.cx-active,.cx-widget.cx-theme-light .cx-ac-suggestion:hover{background-color:#5791fd;color:#fdfdfd}.cx-widget.cx-theme-light ::-webkit-scrollbar-thumb{background:#939399}.cx-widget.cx-theme-light .cx-smokescreen{background-color:#fdfdfd;opacity:.7}.cx-widget.cx-theme-light .cx-dialog-container .cx-dialog{background-color:#fdfdfd;border-color:#dae1e8!important}.cx-widget.cx-theme-light .cx-theme-background{background-color:#fdfdfd}.cx-widget.cx-theme-light .cx-theme-border{border:1px solid #dae1e8!important}.cx-widget.cx-theme-light .cx-theme-text{color:#444a52}.cx-widget.cx-theme-light .cx-theme-icon-interactive1 svg .cx-svg-icon-tone1{fill:#5081e1}.cx-widget.cx-theme-light .cx-theme-icon-positive svg .cx-svg-icon-tone1{fill:#34a84f}.cx-widget.cx-theme-light .cx-theme-icon-negative svg .cx-svg-icon-tone1{fill:#f53131}.cx-widget.cx-theme-light .cx-theme-icon-warning svg .cx-svg-icon-tone1{fill:#d47f2f}.cx-widget.cx-theme-light .cx-warning{color:#f53131!important}.cx-widget.cx-theme-light .cx-warning .cx-icon svg *{fill:#f53131!important}.cx-widget.cx-theme-light .cx-countdown{color:#444a52}.cx-widget.cx-theme-light .cx-countdown .cx-icon svg *{fill:#444a52}.cx-widget.cx-theme-light .cx-loading-container .cx-loading-icon svg g g,.cx-widget.cx-theme-light .cx-loading-screen .cx-loading-icon svg g g{stroke:#2b74ff}.cx-widget.cx-theme-light .cx-loading-container .cx-loading-icon svg g:first-child g,.cx-widget.cx-theme-light .cx-loading-screen .cx-loading-icon svg g:first-child g{stroke:#72799d}</style><style type="text/css"></style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/webchat.min.js" charset="UTF-8"></script><style type="text/css">.cx-webchat{position:fixed;bottom:0;width:320px;z-index:999997}.cx-webchat .cx-body{padding:0;overflow:visible;position:relative}.cx-webchat .cx-parentDisable{opacity:.2}.cx-webchat .cx-spinner{display:none;z-index:2;position:relative;top:100%;left:45%}.cx-webchat .cx-history-loading{padding:16px}.cx-webchat .cx-history-loading .cx-loading-icon{width:26px;height:26px;top:14px;left:-16px}.cx-webchat i.fonticon.icon-alert-triangle{color:#f8a740;display:inline}.cx-webchat p.cx-reason{display:inline}.cx-webchat .cx-hidden-message{display:none}.cx-webchat.cx-minimized .cx-body,.cx-webchat.cx-minimized .cx-footer{display:none!important}.cx-webchat.cx-mobile.cx-minimized{height:auto!important}.cx-webchat.cx-mobile{top:inherit!important;right:inherit!important;bottom:0!important;left:0!important;height:100%!important;width:100%!important}.cx-webchat.cx-mobile .cx-form{border-width:0;border-style:none;padding:24px;overflow:hidden;-webkit-overflow-scrolling:touch}.cx-webchat.cx-mobile .cx-footer{display:none}@media screen and (min-device-width:360px) and (max-device-height:640px) and (-webkit-min-device-pixel-ratio:2) and (orientation:landscape),screen and (min-device-width:1200px){.cx-webchat.cx-mobile .cx-tooltip-menu{right:40px}}@-moz-document url-prefix(){@media screen and (min--moz-device-pixel-ratio:2) and (orientation:landscape){.cx-webchat.cx-mobile .cx-tooltip-menu{right:40px}}}.cx-webchat.cx-mobile .ie10up .cx-tooltip-menu,.cx-webchat.cx-mobile _:-ms-lang(x) .cx-tooltip-menu{right:40px}.cx-webchat.cx-mobile.cx-transcript-view .cx-footer{display:none!important}.cx-webchat.cx-theme-light .cx-message.cx-you .cx-bubble{background-color:#f2f4f7}.cx-webchat.cx-theme-light .cx-message.cx-them .cx-bubble{background-color:#ffc7b9}.cx-webchat.cx-theme-light .cx-message.cx-you .cx-bubble-arrow svg *{fill:#f2f4f7}.cx-webchat.cx-theme-light .cx-message.cx-them .cx-bubble-arrow svg *{fill:#ffc7b9}.cx-webchat.cx-theme-light .cx-time{color:#5c5c5b}.cx-webchat.cx-theme-light .cx-bubble-arrow svg{fill:#f2f4f7}.cx-webchat.cx-theme-light .cx-menu .cx-branding-icon svg *{fill:#8794ac}.cx-webchat.cx-theme-light .cx-input-container .cx-menu li .cx-char-count:focus,.cx-webchat.cx-theme-light .cx-input-container .cx-menu li .cx-icon:focus svg{border:1px solid #5292fc;border-width:2px}.cx-webchat.cx-theme-light .cx-input-container .cx-emoji-menu li,.cx-webchat.cx-theme-light .cx-input-container .cx-menu li{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}.cx-webchat.cx-theme-light .cx-carousel .cx-next,.cx-webchat.cx-theme-light .cx-carousel .cx-previous{border-color:#8795a6}.cx-webchat.cx-theme-light .cx-carousel .cx-next:focus,.cx-webchat.cx-theme-light .cx-carousel .cx-previous:focus{border-color:#5292fc}.cx-webchat.cx-theme-light .cx-menu li .cx-char-count{color:#75757b}.cx-webchat.cx-theme-light .cx-char-count.cx-warning{color:#ea0b2e!important}.cx-webchat.cx-theme-light .cx-emoji-item:hover{background-color:#dfdfdf}.cx-webchat.cx-theme-light .cx-emoji-item:active{background-color:#ccc}.cx-webchat.cx-theme-dark .cx-menu .cx-branding-icon svg *{fill:#98a7b8}.cx-webchat.cx-theme-dark .cx-char-count.cx-warning{color:#f9768c!important}.cx-webchat.cx-theme-dark .cx-transcript .cx-filename,.cx-webchat.cx-theme-dark .cx-transcript .cx-filesize,.cx-webchat.cx-theme-dark .cx-transcript .cx-message-text,.cx-webchat.cx-theme-dark .cx-transcript .cx-name{color:#fdfdfd!important}.cx-webchat.cx-theme-dark .cx-transcript .cx-message{border-color:#222529}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-you .cx-bubble{background-color:#4a525b}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-them .cx-bubble{background-color:#3168d2}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-you .cx-bubble-arrow svg *{fill:#4a525b}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-them .cx-bubble-arrow svg *{fill:#3168d2}.cx-webchat.cx-theme-dark .cx-transcript .cx-time{color:#fff}.cx-webchat.cx-theme-dark .cx-alert>.cx-wrapper{background-color:#33383d;border-color:#222529;color:#fdfdfd}.cx-webchat.cx-theme-dark .cx-alert b.cx-link{color:#3963b8;word-break:break-all}.cx-webchat.cx-theme-dark .cx-webchat-smokescreen{background-color:#33383d}.cx-webchat.cx-theme-dark .cx-webchat .cx-tooltip-menu.cx-emoji .cx-option{color:#33383d}.cx-webchat.cx-theme-dark .cx-input-container .cx-menu li .cx-char-count:focus,.cx-webchat.cx-theme-dark .cx-input-container .cx-menu li .cx-icon:focus svg{border:1px solid #75a8ff;border-width:2px}.cx-webchat.cx-theme-dark .cx-input-container .cx-emoji-menu li,.cx-webchat.cx-theme-dark .cx-input-container .cx-menu li{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}.cx-webchat.cx-theme-dark .cx-carousel .cx-next:focus,.cx-webchat.cx-theme-dark .cx-carousel .cx-previous:focus{border-color:#75a8ff}.cx-webchat.cx-theme-dark .cx-emoji-item:hover{background-color:#444a52}.cx-webchat.cx-theme-dark .cx-emoji-item:active{background-color:#666f7a}.cx-webchat *{box-sizing:border-box}.cx-webchat .cx-alert{display:none;z-index:999999;position:absolute;top:0;left:0;width:100%}.cx-webchat .cx-alert.cx-normal-alert .cx-buttons-binary{display:none}.cx-webchat .cx-alert.cx-normal-alert .cx-button-single{display:block;text-align:center}.cx-webchat .cx-alert.cx-binary-alert .cx-binary-button{display:block}.cx-webchat .cx-alert.cx-binary-alert .cx-button-single{display:none}.cx-webchat .cx-alert>.cx-wrapper{margin:0 16px;background-color:#fff;padding:0 24px 24px;border:1px solid #eee}.cx-webchat .cx-alert>.cx-wrapper .cx-warning{padding-top:12px}.cx-webchat .cx-alert>.cx-wrapper .cx-warning .cx-icon{display:inline-block;vertical-align:bottom;height:24px;width:24px}.cx-webchat .cx-alert.cx-async-chat-end{position:relative}.cx-webchat .cx-webchat-smokescreen{background-color:#fff;opacity:.8;z-index:999998}.cx-webchat .cx-overlay,.cx-webchat .cx-webchat-smokescreen{display:none;height:100%;position:absolute;top:0;left:0;width:100%}.cx-webchat .cx-overlay{background-color:inherit;padding:20px;z-index:999999;-webkit-box-shadow:0 8px 11px -4px rgba(0,0,0,.3);box-shadow:0 8px 11px -4px rgba(0,0,0,.3)}.cx-webchat .cx-form{padding:24px 24px 0;border-width:0}.cx-webchat .cx-form table{width:100%;margin-bottom:16px}.cx-webchat .cx-form table td{width:100%;padding:4px 0}.cx-webchat .cx-form table th{padding-right:8px}.cx-webchat .cx-form .cx-button-group{padding-bottom:0}.cx-webchat .cx-form .cx-form-group{margin-bottom:8px}.cx-webchat .cx-form th .cx-control-label{white-space:nowrap!important}.cx-webchat .cx-form-wrapper{overflow:auto;position:relative;-webkit-overflow-scrolling:touch}.cx-webchat .cx-transcript{overflow-y:auto;overflow-x:hidden;height:312px;font-size:.75em;line-height:18px;display:none;-webkit-overflow-scrolling:touch;overscroll-behavior:none;position:relative;font-weight:300;padding:0 24px}.cx-webchat .cx-transcript .cx-push-url a{color:#75a8ff!important}.cx-webchat .cx-transcript .cx-message{min-height:48px;margin:0;box-sizing:border-box;position:relative}.cx-webchat .cx-transcript .cx-message .cx-bubble{padding:10px 15px;padding:16px}.cx-webchat .cx-transcript .cx-message .cx-bubble-arrow{position:absolute;top:12px}.cx-webchat .cx-transcript .cx-message .cx-name{font-weight:bolder;color:#222;padding-right:5px;display:inline-block;width:100%;white-space:nowrap;overflow:hidden!important;text-overflow:ellipsis}.cx-webchat .cx-transcript .cx-message .cx-time{display:block;font-size:.92em}.cx-webchat .cx-transcript .cx-message.cx-date{text-align:center;min-height:18px;line-height:12px;padding:3px 12px;border:1px solid #dae1e8;border-radius:14px;max-width:fit-content;margin:12px auto;display:table}.cx-webchat .cx-transcript .cx-message .cx-message-text{word-wrap:break-word;display:block}.cx-webchat .cx-transcript .cx-message .cx-message-text>p{margin:0;white-space:pre-line}@-moz-document url-prefix(){.cx-webchat .cx-transcript .cx-message .cx-message-text>p{white-space:pre-wrap}}.cx-webchat .cx-transcript .cx-message .cx-message-text>p img{width:100%}.cx-webchat .cx-transcript .cx-message .cx-avatar-wrapper{width:24px;position:absolute;top:2px}.cx-webchat .cx-transcript .cx-message .cx-avatar img{width:auto;height:100%}.cx-webchat .cx-transcript .cx-message>div.cx-NewTextBubble{-webkit-animation:NewTextBubble .5s 1;animation:NewTextBubble .5s 1}.cx-webchat .cx-transcript .cx-avatar{height:24px;width:24px}.cx-webchat .cx-transcript .cx-name{font-weight:bolder;color:#222;white-space:nowrap;text-overflow:ellipsis}.cx-webchat .cx-transcript .cx-time{font-size:11px;display:block;margin-bottom:5px}.cx-webchat .cx-transcript .cx-rich-message .cx-avatar{float:left}.cx-webchat .cx-transcript .cx-rich-message .cx-name{display:inline-block;margin:5px 0 0 10px}.cx-webchat .cx-transcript .cx-message.cx-system{background:none;padding:0;margin:13px 0}.cx-webchat .cx-transcript .cx-message.cx-system .cx-message-text,.cx-webchat .cx-transcript .cx-message.cx-system .cx-time{min-height:18px}.cx-webchat .cx-transcript .cx-message.cx-system .cx-bubble{padding:0;background-color:transparent}.cx-webchat .cx-transcript .cx-message.cx-system .cx-avatar-wrapper,.cx-webchat .cx-transcript .cx-message.cx-system .cx-bubble-arrow,.cx-webchat .cx-transcript .cx-message.cx-system .cx-name{display:none}.cx-webchat .cx-transcript .cx-message.cx-them{border:0;color:#000;padding:6px 0;text-align:left}.cx-webchat .cx-transcript .cx-message.cx-them .cx-bubble{margin-left:40px;text-align:left;margin-top:0;border-radius:0 14px 14px 14px}.cx-webchat .cx-transcript .cx-message.cx-them .cx-bubble-arrow{left:33px}.cx-webchat .cx-transcript .cx-message.cx-them .cx-bubble-arrow .cx-right{display:none}.cx-webchat .cx-transcript .cx-message.cx-them .cx-avatar-wrapper{left:0}.cx-webchat .cx-transcript .cx-message.cx-you{border:0;color:#000;padding:6px 0;text-align:right}.cx-webchat .cx-transcript .cx-message.cx-you .cx-name{display:none}.cx-webchat .cx-transcript .cx-message.cx-you .cx-bubble{margin-top:0;margin-right:7px;text-align:left;border-radius:14px 0 14px 14px}.cx-webchat .cx-transcript .cx-message.cx-you .cx-bubble-arrow{right:-7px}.cx-webchat .cx-transcript .cx-message.cx-you .cx-avatar-wrapper,.cx-webchat .cx-transcript .cx-message.cx-you .cx-bubble-arrow .cx-left{display:none}.cx-webchat .cx-transcript .cx-message.cx-injected{border:0;padding:6px 0}.cx-webchat .cx-transcript .cx-message-group>.cx-message{padding:0!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant{margin-bottom:6px!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-avatar-wrapper,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-bubble-arrow,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-name,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-time{display:none!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-bubble{border-radius:10px;margin:0 0 0 40px}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant.cx-them:first-child .cx-avatar-wrapper{display:block!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant.cx-you .cx-bubble{margin:0!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:first-child .cx-bubble-arrow,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:first-child .cx-name{display:block!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:first-child .cx-bubble{border-top-left-radius:14px!important;border-top-right-radius:14px!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:last-child .cx-time{display:block!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:last-child .cx-bubble{border-bottom-left-radius:14px!important;border-bottom-right-radius:14px!important}.cx-webchat .cx-isTyping{color:#222;font-size:.6875em;font-style:italic}.cx-webchat div.cx-input-container{display:none;width:100%;padding:14px 16px 14px 24px;border-width:1px;border-style:solid}.cx-webchat div.cx-input-container .cx-textarea-cell{position:relative}.cx-webchat div.cx-input-container .cx-message-input{width:100%;resize:none;height:20px;line-height:20px;font-size:.75em;margin-bottom:14px;padding:0;font-weight:400;overflow:hidden;border:0;background-color:transparent;padding-right:40px}.cx-webchat div.cx-input-container .cx-input.cx-disabled{opacity:.5}.cx-webchat .cx-settings-group{display:none}.cx-webchat .cx-end{color:#fff;line-height:2.5625em;text-align:right;height:40px;position:absolute;top:13px;right:24px;-webkit-transition:opacity .22s ease-in-out;-moz-transition:opacity .22s ease-in-out;-o-transition:opacity .22s ease-in-out;transition:opacity .22s ease-in-out;display:none;display:none!important}.cx-webchat .cx-end:hover{cursor:pointer;opacity:.8;opacity:1}.cx-webchat .cx-send{height:20px;width:24px;top:0}.cx-webchat .cx-send,.cx-webchat .cx-start-cobrowse{display:none;position:absolute;right:0;cursor:pointer}.cx-webchat .cx-start-cobrowse{bottom:114px;background-color:#e3b33b;padding:3px 3px 3px 4px;border-radius:5px 0 0 0;color:#fff;font-size:.8125em}.cx-webchat .cx-a-disabled{color:currentColor;display:inline-block;pointer-events:none;text-decoration:none;cursor:not-allowed;opacity:.5;outline:none}.cx-webchat .cx-scroll-disabled{overflow:hidden}.cx-webchat .cx-countdown{font-size:2em}.cx-webchat-counter{display:none}.cx-webchat.cx-minimized .cx-webchat-counter{display:inline-block;border-radius:5px;background-color:#e3264f;color:#fff;font-size:.625em;padding:4px;text-align:center;margin-left:12px;cursor:pointer;min-width:25px;float:right}.cx-widget p .cx-file-transfer-block{display:block;height:110px}.cx-widget .cx-parentDisable{opacity:.2}.cx-widget span.cx-user-detail.cx-name{vertical-align:middle}.cx-widget .cx-user-detail .cx-filesentmsg,.cx-widget span.cx-user-detail.cx-name{width:auto!important;display:inline-block!important}.cx-widget .cx-filename{display:block}.cx-widget .cx-warning .cx-reason>strong>p.filename{margin-left:26px;margin-bottom:10px;margin-top:10px}.cx-widget .cx-warning .cx-reason .cx-advice{margin-left:28px}.cx-widget .cx-lastrow{display:inline-block;clear:both}.cx-widget .cx-lastrow>span{display:inline-block}.cx-widget .cx-download-btn{margin-top:4px!important;padding:5px!important;max-height:30px;width:80px;font-size:1em}.cx-widget .cx-filesize{margin-left:20px}.cx-widget.cx-webchat-chat-button{right:0;top:40%;font-weight:700;padding:10px 10px 4px!important;cursor:pointer}.cx-widget.cx-webchat-chat-button .cx-icon{height:23px;width:23px;margin-right:2px;display:inline-block}.cx-widget.cx-webchat-chat-button>span{white-space:nowrap;margin-bottom:-6px}.cx-widget.cx-webchat-chat-button .cx-chat-button-label{vertical-align:super}.cx-webchat.cx-mobile .cx-message-input{margin-top:10px!important;margin-bottom:16px!important;padding-right:51px!important;font-size:1em!important;line-height:1.125em!important;overflow:auto!important}.cx-webchat.cx-mobile .cx-send{right:16px}.cx-webchat.cx-mobile .cx-menu>li>.cx-menu-item{height:24px;width:24px;margin-right:20px}.cx-webchat.cx-mobile .cx-input-container{padding-top:6px!important;padding:14px 0 14px 24px!important}.cx-webchat.cx-mobile.cx-landscape .cx-message-input{margin-bottom:10px!important;padding-right:60px!important}.cx-webchat.cx-mobile.cx-landscape .cx-textarea-cell{width:100%}.cx-webchat.cx-mobile.cx-landscape .cx-branding-icon{position:relative!important;right:auto!important}.cx-webchat.cx-mobile.cx-landscape .cx-input-container{display:flex!important;padding-bottom:6px!important}.cx-webchat.cx-mobile.cx-landscape .cx-send{top:9px;right:24px}.cx-webchat.cx-mobile.cx-landscape .cx-menu-cell{margin-top:7px}.cx-webchat .cx-menu{display:flex;list-style:none;margin:0;padding:0;width:100%;min-height:16px}.cx-webchat .cx-menu>li>.cx-menu-item{display:inline-block;list-style:none;height:20px;width:20px;padding:2px;margin-right:18px;cursor:pointer;outline-style:none}.cx-webchat .cx-menu>li>.cx-menu-item:focus{padding:1px}.cx-webchat .cx-menu li:last-child{margin-right:0}.cx-webchat .cx-menu li .cx-inert{cursor:default}.cx-webchat .cx-menu li .cx-char-count{width:auto;font-style:italic;font-size:.6875em;line-height:18px;color:#aaa}.cx-webchat .cx-menu li .cx-branding-icon{position:absolute;right:10px}.cx-webchat .cx-menu li .cx-icon.cx-disabled:not(.cx-branding-icon){pointer-events:none;opacity:.5}.cx-webchat.cx-disabled .cx-char-count,.cx-webchat.cx-disabled .cx-message-input,.cx-webchat.cx-disabled .cx-send{visibility:hidden}.cx-webchat.cx-disabled .cx-input-container .cx-icon{opacity:.5}.cx-webchat.cx-disabled .cx-menu{pointer-events:none}.cx-webchat.cx-disabled.cx-theme-dark .cx-input-container{background:#4a525b;pointer-events:none}.cx-webchat.cx-disabled.cx-theme-light .cx-input-container{background:#f2f4f7;pointer-events:none}.cx-webchat .cx-emoji-menu{white-space:nowrap;border:1px solid;padding:0;margin:0 0 14px}.cx-webchat .cx-emoji-menu li,.cx-webchat .cx-emoji-menu span{padding:15px 5px;display:inline-block}.cx-webchat .cx-emoji-menu li:first-child,.cx-webchat .cx-emoji-menu span:first-child{padding-left:10px}.cx-webchat .cx-emoji-menu li:last-child,.cx-webchat .cx-emoji-menu span:last-child{padding-right:10px}.cx-emoji-selection-menu,.cx-tooltip-menu{display:inline-block;position:relative;outline-style:none}.cx-emoji-selection-menu{bottom:0;left:0;max-height:128px;overflow:auto;border-top:1px solid}.cx-webchat .cx-emoji-table{overflow-y:auto;overflow-x:hidden;padding:0;margin:0}.cx-webchat .cx-emoji-table .cx-emoji-item{padding:6px 6px 3px;display:inline-block;cursor:pointer;font-size:25px;width:12.5%;text-align:center}.cx-webchat .cx-overlay .cx-idle-alert{font-size:.75em;text-align:center}.cx-webchat.cx-mobile .cx-overlay .cx-idle-alert{font-size:.875em}.cx-webchat .cx-overlay .cx-idle-countdown{text-align:center;padding:10px}@keyframes NewMessage{to{background-color:#2293f9!important}}@-webkit-keyframes NewMessage{to{background-color:#2293f9!important}}@keyframes NewTextBubble{0%{opacity:0}to{opacity:1}}@-webkit-keyframes NewTextBubble{0%{opacity:0}to{opacity:1}}.cx-emoji-hasmenu{height:20px}</style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/richmediabridge.min.js" charset="UTF-8"></script><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/webchatservice.min.js" charset="UTF-8"></script><style type="text/css">.cx-carousel{display:block;position:relative;width:100%;height:auto;clear:both}.cx-carousel .cx-carousel-container{height:inherit;width:inherit}.cx-carousel .cx-carousel-container .cx-slide{display:none;float:left;width:100%;height:100%;position:relative;margin-left:-2000px;opacity:0}.cx-carousel .cx-carousel-container .cx-slide.active{margin:auto;opacity:1;display:block}.cx-carousel .cx-carousel-container .cx-animate-next{-webkit-animation:cx-slide-next .5s linear;-moz-animation:cx-slide-next .5s linear;animation:cx-slide-next .5s linear}.cx-carousel .cx-carousel-container .cx-animate-prev{-webkit-animation:cx-slide-prev .5s linear;-moz-animation:cx-slide-prev .5s linear;animation:cx-slide-prev .5s linear}@-moz-keyframes cx-slide-next{0%{-moz-transition:1s;left:350px;opacity:0}100%{-moz-transition:1s;left:0;opacity:1}}@-webkit-keyframes cx-slide-next{0%{-webkit-transition:1s;left:350px;opacity:0}100%{-webkit-transition:1s;left:0;opacity:1}}@keyframes cx-slide-next{0%{-webkit-transition:1s;transition:1s;left:350px;opacity:0}100%{-webkit-transition:1s;transition:1s;left:0;opacity:1}}@-moz-keyframes cx-slide-prev{0%{-moz-transition:1s;right:350px;opacity:0}100%{-moz-transition:1s;right:0;opacity:1}}@-webkit-keyframes cx-slide-prev{0%{-webkit-transition:1s;right:350px;opacity:0}100%{-webkit-transition:1s;right:0;opacity:1}}@keyframes cx-slide-prev{0%{-webkit-transition:1s;transition:1s;right:350px;opacity:0}100%{-webkit-transition:1s;transition:1s;right:0;opacity:1}}.cx-carousel .cx-next,.cx-carousel .cx-previous{cursor:pointer;position:absolute;top:70px;width:auto;border-style:solid;border-color:#98A7B8;background:none;border-width:0 2px 2px 0;padding:6px;margin:0 10px}.cx-carousel .cx-next{right:-22px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-ms-transform:rotate(-45deg)}.cx-carousel .cx-previous{left:-22px;transform:rotate(135deg);-webkit-transform:rotate(135deg);-moz-transform:rotate(135deg);-ms-transform:rotate(135deg)}.cx-carousel .cx-next[disabled],.cx-carousel .cx-previous[disabled]{border-color:#aeb0b2;cursor:default}.cx-carousel .cx-next:focus,.cx-carousel .cx-previous:focus{outline:none}</style><style type="text/css">.cx-rich-media a{text-decoration:none;color:blue}.cx-rich-media a,.cx-rich-media .cx-list a,.cx-rich-media .cx-generic a{color:#3333FB}.cx-rich-media a:focus,.cx-rich-media .cx-list a:focus,.cx-rich-media .cx-generic a:focus{color:#3333FB;text-decoration:underline}.cx-rich-media .cx-clickable{cursor:pointer}.cx-rich-media a:hover{text-decoration:underline;color:darkblue}.cx-rich-media.cx-quick-replies .cx-quick-reply{margin:5px;border-radius:10px;overflow:hidden;display:inline-block;cursor:pointer}.cx-rich-media.cx-quick-replies .cx-quick-reply>img{float:left;height:25px;width:25px;display:none}.cx-rich-media.cx-quick-replies .cx-quick-reply>div{display:inline-block;padding:3px 10px}.cx-rich-media .cx-markdown img{width:100%}.cx-rich-media .cx-generic{color:black;border-radius:15px;border:1px solid #DAE1E8;overflow:hidden;background-color:#FFF;margin:15px 0;padding:12px}.cx-rich-media .cx-generic a{text-decoration:none}.cx-rich-media .cx-generic .cx-main-image{display:none;height:auto;width:100%}.cx-rich-media .cx-generic video{display:none;height:auto;width:100%;background-color:black}.cx-rich-media .cx-generic h1{color:black;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-generic h2{color:#000;font-size:1em;padding:5px 0 0 0;margin:0;font-weight:normal}.cx-rich-media .cx-generic .cx-components{margin:0}.cx-rich-media .cx-generic .cx-components .cx-component{margin-bottom:5px;display:block}.cx-rich-media .cx-generic .cx-components .cx-component:last-child{margin-bottom:0}.cx-rich-media .cx-generic.cx-media{padding:0;border:0}.cx-rich-media .cx-generic.cx-media .cx-bottom-half{color:black;border-radius:15px;border:1px solid #DAE1E8;overflow:hidden;margin:0;padding:12px;border-radius:0 0 15px 15px;border-width:0 1px 1px 1px}.cx-rich-media .cx-button{display:block;width:100%;background-color:#3168D2;border-radius:2px;border-width:0;padding:5px;font-weight:bold;color:#FFF}.cx-rich-media .cx-button:hover{background-color:#2753A8}.cx-rich-media .cx-button:focus{border-color:#022A73;border-width:2px}.cx-rich-media .cx-link{color:black}.cx-rich-media .cx-list{color:black;border-radius:15px;border:1px solid #DAE1E8;overflow:hidden;background-color:#FFF;margin:15px 0;padding:12px}.cx-rich-media .cx-list h1{color:black;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-list h2{color:#000;font-size:1em;padding:5px 0 10px;margin:0;font-weight:normal}.cx-rich-media .cx-list .cx-list-item:first-child{border-top:1px solid #ccc}.cx-rich-media .cx-list .cx-list-item:hover{background-color:#f2f2f2;color:black;text-decoration:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big{display:flex}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-media-container{flex-basis:100%}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-media{max-width:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-text{padding-top:10px}.cx-rich-media .cx-list .cx-list-item{display:flex;color:black;padding:12px 0;border-bottom:1px solid #ccc;text-decoration:none}.cx-rich-media .cx-list .cx-list-item .cx-media{flex-shrink:0;max-width:70px}.cx-rich-media .cx-list .cx-list-item .cx-media img{display:none;padding:0;margin:0;width:100%;height:auto}.cx-rich-media .cx-list .cx-list-item .cx-text{padding-left:12px;flex-shrink:1}.cx-rich-media .cx-list .cx-list-item h3{margin:0 0 8px 0}.cx-rich-media .cx-list .cx-list-item p{margin:0}.cx-rich-media .cx-list .cx-list-item .cx-selectors{display:none}.cx-rich-media .cx-list.cx-single-select fieldset{margin:0;padding:0;border:0}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors{display:block;padding-left:1px}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input,.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors label{background-color:transparent}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors label{display:flex;height:100%}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='checkbox'],.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='radio']{align-self:center}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors label[name='rm-list-checkbox'],.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='checkbox']{display:none}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='radio']{display:block}.cx-rich-media .cx-list.cx-single-select .cx-submit{margin-top:10px}.cx-rich-media .cx-components .cx-text{color:black}.cx-rich-media .cx-spacer{height:10px}.cx-rich-media .cx-image-component{height:auto;width:100%}.cx-rich-media .cx-attachment-link img{height:auto;width:100%;margin:15px 0}</style><style type="text/css">.cx-webchat .cx-rich-media a{text-decoration:none;color:blue}.cx-webchat .cx-rich-media .cx-clickable{cursor:pointer}.cx-webchat .cx-rich-media a:hover{text-decoration:underline;color:#00008b}.cx-webchat .cx-rich-media.cx-quick-replies{position:relative;bottom:0;z-index:2;text-align:right}.cx-rich-media.cx-quick-replies .cx-quick-reply{margin:5px;border-radius:10px;overflow:hidden;display:inline-block;cursor:pointer}.cx-rich-media.cx-quick-replies .cx-quick-reply>img{float:left;height:25px;width:25px;display:none}.cx-rich-media.cx-quick-replies .cx-quick-reply>div{display:inline-block;padding:3px 10px}.cx-rich-media .cx-markdown img{width:100%}.cx-widget.cx-theme-light .cx-rich-media.cx-quick-replies .cx-quick-reply{color:#000;background-color:#fdfdfd;border:1px solid #c3cad4}.cx-widget.cx-theme-light .cx-rich-media.cx-quick-replies .cx-quick-reply:hover{color:#000;background-color:#f2f4f7;border:1px solid #9baab9}.cx-widget.cx-theme-dark .cx-rich-media.cx-quick-replies .cx-quick-reply{background-color:#33383d!important;color:#fdfdfd!important;border:1px solid #778290!important}.cx-widget.cx-theme-dark .cx-rich-media.cx-quick-replies .cx-quick-reply:hover{background-color:#4a525b!important;color:#fdfdfd!important;border:1px solid #fff!important}.cx-rich-media .cx-generic{color:#000;border-radius:15px;border:1px solid #dae1e8;overflow:hidden;background-color:#fff;margin:15px 0;padding:12px}.cx-rich-media .cx-generic a{text-decoration:none}.cx-rich-media .cx-generic .cx-main-image,.cx-rich-media .cx-generic video{display:none;height:auto;width:100%}.cx-rich-media .cx-generic video{background-color:#000}.cx-rich-media .cx-generic h1{color:#000;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-generic h2{color:#000;font-size:1em;padding:5px 0 0;margin:0;font-weight:400}.cx-rich-media .cx-generic .cx-components{margin:0}.cx-rich-media .cx-generic .cx-components .cx-component{margin-bottom:5px;display:block}.cx-rich-media .cx-generic .cx-components .cx-component:last-child{margin-bottom:0}.cx-rich-media .cx-generic.cx-media{padding:0;border:0}.cx-rich-media .cx-generic.cx-media .cx-bottom-half{color:#000;border-radius:15px;border:1px solid #dae1e8;overflow:hidden;margin:0;padding:12px;border-radius:0 0 15px 15px;border-width:0 1px 1px}.cx-rich-media .cx-button{display:block;width:100%;background-color:#3168d2;border-radius:2px;border-width:0;padding:5px;font-weight:700;color:#fff}.cx-rich-media .cx-button:hover{background-color:#2753a8}.cx-rich-media .cx-link{color:#000}.cx-rich-media .cx-list{color:#000;border-radius:15px;border:1px solid #dae1e8;overflow:hidden;background-color:#fff;margin:15px 0;padding:12px}.cx-rich-media .cx-list h1{color:#000;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-list h2{color:#000;font-size:1em;padding:5px 0 10px;margin:0;font-weight:400}.cx-rich-media .cx-list .cx-list-item:first-child{border-top:1px solid #ccc}.cx-rich-media .cx-list .cx-list-item:hover{background-color:#f2f2f2;color:#000;text-decoration:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big{display:flex}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-media{max-width:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-text{padding-top:10px}.cx-rich-media .cx-list .cx-list-item{display:flex;color:#000;padding:12px 0;border-bottom:1px solid #ccc;text-decoration:none}.cx-rich-media .cx-list .cx-list-item .cx-media{flex-shrink:0;max-width:70px}.cx-rich-media .cx-list .cx-list-item .cx-media img{display:none;padding:0;margin:0;width:100%;height:auto}.cx-rich-media .cx-list .cx-list-item .cx-text{padding-left:12px;flex-shrink:1}.cx-rich-media .cx-list .cx-list-item h3{margin:0 0 8px}.cx-rich-media .cx-list .cx-list-item p{margin:0}.cx-rich-media .cx-list .cx-list-item .cx-selectors{display:none}.cx-rich-media .cx-components .cx-text{color:#000}.cx-rich-media .cx-spacer{height:10px}.cx-rich-media .cx-image-component{height:auto;width:100%}.cx-rich-media .cx-attachment-link img{height:auto;width:100%;margin:15px 0}</style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/webchatservicenextgen.mod.js" charset="UTF-8"></script><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/pure-cloud-v2-sockets-transport.mod.js" charset="UTF-8"></script></head>
+<body data-swiftype-index="false" class="isDesktop modal-open" data-browser="Chrome 97">
+   
+    <div id="sb-site">
+        <form id="frmMainSearch">
+          <div class="searchWrapper">
+             <div class="searchBox searchRelated" id="search">
+                <input id="txtSearch" type="text" class="searchRelated searchInput" placeholder="What can we help you find?" autocomplete="off">
+                <input id="btnSearch" type="submit" class="themeBG searchRelated" value="Search">
+             </div>
+            </div>
+        </form>
+        <form method="post" action="./Student.aspx" id="aspnetForm">
+<div class="aspNetHidden">
+<input type="hidden" name="ScripManager1_HiddenField" id="ScripManager1_HiddenField" value="">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="czyWp7k0MF2VlSu0YueloCcv4XZcPPZQjyQ3N/ddByV05buVtqDwt3oXrEp0posL0QO0lpMyG5NJ5Sae4mdJ0yDk4ZVSp+vo47b1mR8nx62nkjP/WoqkZZtvbmd47OjNW3S5qkyeawvLLq7PIo79+E2v7RcOCSPx/c8HVHbVosQsq2IfnqRPGqWCP0WdfAz1CtLUFRHzTQ4zN91fQbSKsyPhnXPsLB3DvHEv+eamPWnZs76EaqbKUP+DZXFeoS5O6BL9c1ERTkA+a4MzJRKvREBVWsOuBRh+H5Vi1ao7vdrTvjOddjCP8mxdz4nSEv5LvJVGLA7kTDFKvghcoYMlKJaN6IPVf7q2xSbooCGcxAbiL6aPioczes1adKREeQCUnwHPcxleiDKHm/auprACdeRlY4ScpTnU7E6KIExc9dPB5ocIHM6QlhleBg+OBxsfw1N0vkS9E6UdgpY42B55Bai1UXqxZZoGdi4qBubQ+TA3A/2NTdkW8ICedTSSlJM4wW+gSiNaU+U4fMECLaIubDxhnRct0Drh5jgA7svmadh6WiKQHSiDhFrfFXGQ+cQXKysqAF4zcKTVeZlcgUL4kGKdHS1y/QupHzXeZH1J43rn1SdKBFLhKIVTFEtP/9NL/qvBp+pOC7Dtw7TUftmt5NNq7+jaxl9AM/ge3t8RuHyuuYxuIVr49z0A0zAoJwAZCvfVZBLQloblhpX/cYnQYrBMOUUT2VUMN//2j9yD14Ihr0inaE6HXwIXFg/0oeYhdlJDwnyOZC+GQ/DMD75bHSOp2yh+Wm+xrEFOKxxb29yciElS+eHpXvhxVe1TtXvDtMXw0KIm8k2cHu2Dm8tGdxG6qgcJh8x8EYwfHYHF9d7pedaELGSwpULJAmGycrQM1TZMJvNfj9EHWJmC7etMTviqgE0bEZj9+SmabGwnLGzIlUKahPg5j6svC/2owCtkna/RUdX5sinZgNzZdoxBaS9kfM8a1fxvA3yPPZHEyKwMuf2SNL6wOiMOBiJnLa4aFsXyo2PDGeAHO5AA5A5Qr0jR1cTTgrtxleMlJEIdqDTMeitr+Di8Uw7BBaitUrlCuDtAw2OQgK+J8kHdSunC2gzkwhwo3WSS2Q6yhRK9IrU7ScFK85rIjcBt6i3mXGfz6UNC3zLpWZ/NhxMX4xZO1YhF0eXpKAXTeUbfQ8h9V0xuXAsXXxnAY0uFJE0/AZ3qiLCtaatmm56IuLl/2OCPc4XY5R/hxnq3CySi1gVO3+2/+py2pIRwGKyTKpDS0HQTucIafEenYcN37yd/KX7lyBccfjv/Zg97U+9SZoFHoyRhw65Diz2ipHR+9pPPQLGjCKxfb9343AV6MWaIbLnOg5ANmNDA5Uz6id2pduyNZ3u/jsPiBljAiqrg4Amo3hovk56xzdWqepTdp0prG9/wqWfadnRBdpF4N0GX+OpQD2LwEYehaHQZMWkmFGZHKSqGAZGnrmY0Ni1fDlSKUPrxmICHC6mUZL4RZ9BKKIZjRZkhZqjR1lCNkKfNdGoOl7fhL0o9siNXAPHLFSljI+L6hAKkmYLks4ZJnJr2E/vJHeMFIOqwDqvJ6h/jwUMQNnRsdCD3F8QA3lIJnXw1GvqwyVicDbQmNwpANWIEMjjmPQS/q3cFrLZscuylGfBJfFAkKIwhgjyLXsCZvGJYPYpgHGaqftGLHJEDPf0fdiCCOfoDZa2lG/mhwPyt+xMW75TDCaXVCfV3FusxeSXM2vclr2n37kepRsE8EmrF7drmKRzxkbyVAFeik5c4WePvdvIaEyerAJKhaw04XDwpzqsaTgLxrqJuxles+eJU2uEJ3oj5q5Uhyj1jUbY5tvqOt4utgWP5eE74CRdM43kX1VQVfSWoTkxxVp7fyYA9i33EPwilZjQG9pffdO0n34PHkGKxmkVHCzonnx5ISzG5T4peR5Zm9imGoxG1HTfXFRhTvSUbE5k0QgaQBTichcg7kHc+rFpkMWt6w2d1wekgbv7rFOLCgBw6vrC75GS6qLk01Fup41HaXgwCmwXswmXSgYcTE3Pq4Q3Ma6KrgYQR5m96QHa8GPKV3RTt1z36Rf/FtLR4U6dtEbvGREZGRGls9sYUh13qOQq9l5znJCXLEWo7j5Yuq0PYFpBSVojHS+yexWkkLphpBkipTfJkyLTTCYuqxC+EGtOFGTuAu/2CUkZD2+Jzp/RvA/VUyQUw5Pxuw+II7dyldtEIR0IP5X3wZ6OM8U3oWO8PlrdBg/gqygUA8rXDWZspWUr4Xg9qgDwGk6I3EAWKUzPfgNA7yKi7pEkXkfKYr8HwI+MnRDwX3N2/C/4VjgLzhfTq4h57a+PTlUDxuzibg/lswxsllKCMvA3cd+Jpg3quaeoXGPw++w6vs2pgP/2ilASu3Uj8xvIG+n92DTh1bP08NSr3VrKf9LZgyeHHR5Hu3iY5vNsrimrfTAtsua1rmmLzECQ5deW/Ums3FuzPhSOGSELfScn7KXoAHreSUnato5elrZIlryEUXb5sTwmBffEGrwuTJL1f4EgeGGwT97WeE0DjAj2R3Wyx2EPTDVMclu2DHUlGq/PZks1otndrey/iZ+VSB+UH8yImMzucqS4rFeuFzwNqBGQpcY82rSS20VGIpUKOWwxBZqxA2BTZwJkNG7hOYcCalIK3m7UAMfKgkd0EOTvnTxCBRkF8XYNdbbZH0NPxkZ0v1bstRkn7jAUMTCq54LQU9VKxrOBw+GWsq76DmxDF102KS8e1EYDC1Poe8wNC9WG8+Kdk3Bn6+pPzh0wGKYsebO+f82TsSAVwNBJmMzhRWGOCP9EmkHeAHIzt6VgXOzqNEVIWoF4TkL4bsY1+GKD1mHligjrFCm4bq2/N+B3E/6g6jHBF5WwTP3Sw3XZyzBG5tiooFFliBLUYpfZKUAP6LLDoQ1+MvPh82DYD+dvgLIbQxfXUlhqV4oizacPFTlmGPhTnk51WanfvKRWwul08bjfPPt9prl8uK+OORd9KFoxls1+f8ZmSbn/C1xyamLvL9iqvVBh1oLFMUnmYfolS5GVewhUBYm6Q2ww2BhvJAodLVbaLH8hecJseJB8o0v8nsMr64pklgx/xIClJyZrCD00JIDVCbwKm1EHPX2Qt15ItRJhNN8P+MVxU3a0wwm2n2PinRgjDQzAkTwBebrH10SwPzNbH4nzSNKaHobl5qgiDeUb4Kaj8BdEW22tuBIQwjarKrLD84DihwcydQ50wSK6x7rrMJZ9Jit2l9AnDj/Nv">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZO5kuqXC2rYKCCtTL0uyf1MZL-swwXaqy_dkdmkzP6QrMOL8fNyAW9g8YIMKKc1-Kg2&amp;t=637729404413207958" type="text/javascript"></script>
+
+
+<script src="/WebResource.axd?d=zMZiFpoV05km13SjPpaDuSo0vsHroz2Ava_73_Bs83ZSPjLH87lUZtutlNY2Rr3vR3qEPVImBoSnj1yLq13cmK3x-_QoGASGeUbN4S4wWuY1&amp;t=637665325742576863" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var pccdebugboxerrorcolor = "#FFFF00";var pccdebugboxspecialcolor = "#FF0000";var pccdebugboxempty = true;var pccdebugboxenabled = false;//]]>
+</script>
+
+<script src="/WebResource.axd?d=KjOUUNeShA_p4DhYWydoe-E69qRQOdBxHHYGeoRSO2Jbhlvut95zt7KYI85cH3a_eh-KurBH-ieTaj-qtaQBtPMDQzfAlSjivmZni6tVDVo1&amp;t=637665325742576863" type="text/javascript"></script>
+<script src="/WebResource.axd?d=GAM4vFdCwL9nH6ZiFVpfdQG7z4EtG5zblOgjfQ94v6JET1ztkPUD9sJEUTgzLHSTwsUrrmoG9ktGYs7U-vCH54xUsSE8RkFeNUZg3RLsSb8B9jYUnW_6RFUEpH2dpH790&amp;t=637665325742576863" type="text/javascript"></script>
+<script src="/WebResource.axd?d=AamzAun8PVUJpVG3S_uPXOiWdMgblQMue85s-0S0DdqJ31gBBAcSKqowHcBfgR2ABFPDyolcIDjxebSIOgwaV4BixEc8NjJY5DxbzYQ8EzPnfmczXf9-TFYwKAcZZm-m0&amp;t=637665325742576863" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=x6wALODbMJK5e0eRC_p1LaoIw2fAKMIl91ZvaUjqmm4CcMZQ5myBP-JJy8aweDW5xdsQcXqeTFHmPCMn7_MZUTjhF42RY9oTGmQag9X3T87S4VFZAMGtMqwW5zcrqMzC0&amp;t=5f8643ea" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=P5lTttoqSeZXoYRLQMIScAdw1Z-kbkAV52v-aNuFMismZlu9J6pRFmLIq8qUmMO3H4rvu7y0UCiIqP6jcMou1674BzVsT2bQ7qYTlYugNHCYKjnLcUXOe9sjFqJilTFP0&amp;t=5f8643ea" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8A7142AB">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="i4bpbY2QnZhvmjCOqznCTrxRuy/Nhn7to7eWALp8vfbPUY0QSwsR0LsUGjijBp5zPvgURq6VLetfP0/dmRnrNzH4SWQFKThGDsnxZXbt4WeM7mnpXD1LV5v82206Q0ZYfWDvttoZCkE21W4/c3Un62mjxsnj/bc55IsHtZDtQyMMUwdh9JVl66zIbebH3b79WIsqNbtcIVflZHYhqB6CSLini2c+MPMfAzFzFj+TK5meewMuJqqQnhS/AFiiZeyfw0yv9bXwlhbf3Da28RA0akkuYaxuJmLNbGgvkosvrRdqoDdpGDp5gPbRdoE8KKPbhpyJjUg83Nu3jM530TAYzT8f44GLGFLDjj5tPWA/zsUtrsebgUKVjMQ0oDqqonrV04mFNhZ0Gw1WM+u7z/YcgqL9Dpp7ZkWnNJfcpSVwB33yY5o8QBDFE7XMSaZiL6xPLzZExBU9c1g/CVEzv6UUQ9AuQWHlyULvCYwilnXgK066/P0xRiGvXrGvyO/ynL1sdP+gVqA2H+mU6zVt+pyPnA==">
+</div>
+      
+   <div class="StickSideButtons">
+         <div id="themePicker" class="sideScreenTabBody" data-toggleinout="in">
+         	<div class="themeBg" id="t1id" style="display:none"></div>
+         	<div class="themeComplementBG" id="t2id" style="display:none"></div>
+            <div class="sideScreenThemes">
+               <div class="sideScreenTab"></div>
+               <a data-theme="Pink" class="themeOption gridsterBTN-pink"></a>
+               <a data-theme="Orange" class="themeOption gridsterBTN-orange"></a>
+               <a data-theme="Green" class="themeOption gridsterBTN-green"></a>
+               <a data-theme="Teal" class="themeOption gridsterBTN-teal"></a>
+               <a data-theme="Blue" class="themeOption gridsterBTN-blue"></a>
+               <a data-theme="Purple" class="themeOption gridsterBTN-purple"></a>
+            </div>
+         </div>
+   </div>
+   
+   
+
+            <!-- noindex -->
+            <!--========================================================
+                                      HEADER
+            =========================================================-->
+            <div id="header" class="bg_5">
+             <span id="isolatedBanner"></span>
+             
+   
+
+             <div id="banner" style=" clear: both; text-align:center; position: relative; display: none;">
+               <p style="background-color: #ffd700; color: black; padding-top: 5px; padding-bottom: 5px; font-family:Arial, Helvetica, sans-serif; margin-bottom: 0px">
+                  Your browser is out of date. Please
+                  <a id="browserLink" href="https://www.google.com/chrome/" style="color: black"><strong>update your browser</strong></a>
+                  for increased security and the best site experience. <br>
+               </p>
+            </div>
+
+            <div class="row bg_2a loginContainer">
+               <div class="container">
+                  <div class="TopLeftLinks">
+                     <a href="https://test.abeka.com" class="backToAbeka"><span>abeka.com</span></a>
+                  </div>
+                  <div class="TopRightLinks">
+                  <div id="Panel1">
+	
+                  
+                  <div id="AccountGreeting" class="dropdown AccountGreeting">
+                     <a data-toggle="dropdown" class="MobileArrow" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="openCloseArrow"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                        Hello
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="AccountGreeting">
+                        <li><a href="/Account/Settings.aspx">Settings</a></li>
+                           <li class="login loggedIn">
+                           <a class="dropdownLoginButton" href="/Logout.aspx">Log out</a>
+                        </li>
+                        <li><img src="/images/Graphics/AbekacomItems.jpg" alt="Abeka Menu Items"></li>
+                        <li><a href="https://test.abeka.com/ABekaOnline/CustomerService/AccountInfo.aspx ">My Account</a></li>
+                        <li><a href="https://test.abeka.com/ABekaOnline/ViewCart.aspx">Cart</a></li>
+                        <li><a href="https://test.abeka.com/ABekaOnline/Checkout/">Checkout</a></li>
+                        <li><a href="https://test.abeka.com/ContactInfo.aspx">Contact Us</a></li>
+
+                     </ul>
+                  </div>
+                  
+</div>
+                  </div>
+               </div>
+            </div>
+                <div class="row">
+               <div class="container menuContainer">
+                  <div id="fixed-top-left" style="margin-top: 8px; float: left;"> <span class="sb-toggle-left"></span></div> <!--added for mobile menu-->
+                  <div class="logo">
+                     <a href="/Account/" id="logoRedirect">
+
+                      
+                      <img src="//static.abeka.com/Abeka/images/Logo/logo.svg" id="imgSchool" alt="Abeka">
+
+                    </a>
+                  </div>
+                  
+<div id="Menu"> <a href="#" id="pull"></a> <span class="sb-toggle-left" id="nav-toggle"> <span></span> </span>
+	<ul class="meganizr mzr-fade">
+		
+			<li aria-haspopup="true" class="mzr-drop">
+<!--				<a href="/Account/" class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>-->
+				<a class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>
+				<ul class="mzr-content smallIconList" style="top: auto!important;">
+					<li>
+						<div class="menuContainer iconList article noBorder">
+							<div class="articleColumn mobileHidden">
+								
+							</div>
+							<div class="articleColumn">
+								<h3 class="articleHead">Dashboard</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Account/"> <span class="LinkwImage">&nbsp;&nbsp;Home</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Calendar/Calendar.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Calendar</span></a></h2>
+									</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Notifications.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Notifications</span></a></h2>
+										</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Students/Default.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Students</span></a></h2>
+										</li>
+									
+								</ul>
+							</div>
+					
+							<div class="articleColumn">
+								<h3 class="articleHead">My Orders</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/Enrollments/"> <span class="LinkwImage">Enrollments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalAssessments/"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalArt/"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTextbooks/"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTeachingAids/"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+									</li>
+								</ul>
+							</div>
+					
+						</div>
+					</li>
+				</ul>
+			</li>
+		
+		<li aria-haspopup="true" class="mzr-drop"><a class="MobileArrow mainMenu academy hasSubList">Academy</a>
+			<ul class="mzr-content smallIconList" style="top: auto!important;">
+				<!--
+            <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">About</h3>
+							<ul>
+								<li><a href="/about/AccreditationStatement.aspx"> <span class="LinkwImage">Accreditation</span></a></li>
+								<li><a href="/about/MissionPurpose.aspx"> <span class="LinkwImage">Mission, Purpose, and Philosophy</span></a></li>
+								<li><a href="/About/WhatWeBelieve.aspx"> <span class="LinkwImage">What We Believe</span></a></li>
+								<li><a href="https://test.abeka.com/OurApproach.aspx"> <span class="LinkwImage">Objectives + Learning Outcomes</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Academics</h3>
+							<ul>
+								<li><a href="/About/Overview.aspx"> <span class="LinkwImage">Overview</span></a></li>
+								<li><a href="/academic/graduation.aspx"> <span class="LinkwImage">Graduation</span></a></li>
+                                <li><a href="/Fulfillment/Graduation/"> <span class="LinkwImage">Petition to March</span></a></li>
+								
+								<li><a href="/GraduationEvent/"> <span class="LinkwImage">Graduation 2021 Ceremonies</span></a></li>
+
+								<li><a href="/Resources/Rings.aspx"> <span class="LinkwImage">Class Rings</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Teachers.aspx"> <span class="LinkwImage">Teacher Bios</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Courses/"> <span class="LinkwImage">Course Descriptions</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Resources</h3>
+							<ul>
+								
+								
+								<li><a href="https://test.abeka.com/Resources/SampleVideos.aspx"> <span class="LinkwImage">Sample Videos</span></a></li>
+								
+								<li><a href="https://test.abeka.com/HomeSchool/ScopeAndSequence.aspx"> <span class="LinkwImage">Scope and Sequence</span></a></li>
+								<!----> 
+
+								<!--<li><a href="#">Curriculum Song Downloads</a></li>
+											 <li><a href="#">Science Lab Outlines</a></li>-->
+
+								
+							</ul>
+						</div>
+
+						<!--<li class="mzr-drop mzr-drop-right"><a href="#">Gear</a>
+
+									 <ul>
+											 <li><a href="#">Tshirts</a></li>
+											 <li><a href="#">Cups</a></li>
+											 <li><a href="#">Letters</a></li>
+											 <li><a href="#">Jackets</a></li>
+											 <li><a href="#">Bags</a></li>
+											 <li><a href="/Resources/Rings.aspx">Rings</a></li>
+										 </ul>
+
+								 </li> --> 
+
+					</div>
+				</li>
+			</ul>
+		</li>
+	
+		<li class="marginB-0">
+			<a class="MobileArrow mainMenu connect hasSubList" href="https://test.abeka.com/ContactInfo.aspx" target="blank" style="cursor:pointer !important;">Contact Us</a>
+		</li>
+	
+		<li aria-haspopup="true" class="mzr-drop">
+			<a class="MobileArrow mainMenu help hasSubList">Help</a>
+			<ul class="mzr-content smallIconList  HelpMarginFix  " style="top: auto!important;">
+				
+				<!--          <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+            <div class="menuContainer iconList article noBorder">--> 
+				
+				<!--
+               <h3 class="articleHead">Guides</h3>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Calendar">
+                     <span class="LinkwImage">Calendar</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Dashboard">
+                     <span class="LinkwImage">Dashboard</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=My-Students">
+                     <span class="LinkwImage">My Students</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Notifications">
+                     <span class="LinkwImage">Notifications</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Video-Streaming">
+                     <span class="LinkwImage">Video Streaming</span></a></h2>
+               </li>
+
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx">
+                     <span class="LinkwImage">More <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                  </a></h2>
+               </li>
+--> 
+				
+				<!--
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Assessments.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Assessments</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Art.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Clip Art</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Textbooks.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Books</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/TeachingAids.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Teaching Aids</span></a></h2>
+            </li>
+          
+          --> 
+				<!--            </div>-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">FAQs</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AcademicsFAQs.aspx"> <span class="LinkwImage">Academics</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AdmissionsFAQs.aspx"> <span class="LinkwImage">Admissions</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/ArtFAQs.aspx"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsFAQs.aspx"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsTrialFAQ.aspx"> <span class="LinkwImage">Digital Assessments Trial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TextbooksFAQs.aspx"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TeachingAidsFAQs.aspx"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/DVDReturnsFAQ.aspx"> <span class="LinkwImage">DVD Returns</span></a></h2>
+								</li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead NoHeader">&nbsp;</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/EnrollmentFAQs.aspx"> <span class="LinkwImage">Enrollment</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/FinancialFAQs.aspx"> <span class="LinkwImage">Financial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/GradingFAQs.aspx"> <span class="LinkwImage">Grading</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/StudentFAQs.aspx"> <span class="LinkwImage">Student</span></a></h2>
+								</li>
+								
+									<li>
+										<h2 class="GroupTitlelink"><a href="/Help/Video.aspx"> <span class="LinkwImage">Video Streaming</span></a></h2>
+									</li>
+								
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx"> <span class="LinkwImage">Tour</span></a></h2>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</li>
+		
+		<!--
+    <li id="mobthemepicker">
+        <button data-theme="Pink" class="themeOption gridsterBTN-pink"></button>
+        <button data-theme="Orange" class="themeOption gridsterBTN-orange"></button>
+        <button data-theme="Green" class="themeOption gridsterBTN-green"></button><br>
+        <button data-theme="Teal" class="themeOption gridsterBTN-teal"></button>
+        <button data-theme="Blue" class="themeOption gridsterBTN-blue"></button>
+        <button data-theme="Purple" class="themeOption gridsterBTN-purple"></button>
+    </li>
+-->
+		
+		<li style="float: right;"><a class="searchButton" onclick="toggleSearch();"> <span class="searchIcon" aria-hidden="true"></span> </a></li>
+	</ul>
+	
+	<!-- end Meganizr Menu HTML --> 
+</div>
+
+
+               </div>
+                </div>
+            </div>
+
+            <!--========================================================
+                                      CONTENT
+            =========================================================-->
+            <!-- /noindex -->
+            <section id="content" data-swiftype-index="true">
+                
+   <div class="themeChooser"></div>
+   
+<div class="elementary">
+   
+
+   <div id="pnlProgressBar" class="container">
+	
+      <div class="wrapper2 breadcrumbWrapper">
+         <div class="row">
+            <div class="grid_12">
+               
+      <ul class="bubble-crumb dark-crumb default-crumb flex-none-crumb" id="EnrollmentProgressCrumb">
+         
+      <li data-step="Student" class="active-crumb">
+         <div class="crumb-inner">
+            <em class="themeBg"> 1 </em>
+            <p class="titletip" style="background-color: rgb(146, 39, 143); border-color: rgb(146, 39, 143);"> Student </p>
+         </div>
+      </li>
+   
+      <li data-step="Options">
+         <div class="crumb-inner">
+            <em> 2 </em>
+            <p class="titletip" style=""> Options </p>
+         </div>
+      </li>
+   
+      <li data-step="BeginDate">
+         <div class="crumb-inner">
+            <em> 3 </em>
+            <p class="titletip" style="">Begin Date</p>
+         </div>
+      </li>
+   
+      <li data-step="Agreement">
+         <div class="crumb-inner">
+            <em> 4 </em>
+            <p class="titletip" style=""> Agreement </p>
+         </div>
+      </li>
+   
+      <li data-step="Review">
+         <div class="crumb-inner">
+            <em> 5 </em>
+            <p class="titletip" style=""> Review </p>
+         </div>
+      </li>
+   
+      </ul>
+   
+
+<script>
+   $(document).ready(function () {
+      $('#EnrollmentProgressCrumb').bubbleCrumbs({
+         "size": "default",
+         "activate": (document.location.pathname.match(/[^\/]+$/)[0]).split('.')[0],
+         "title": false,
+         "tooltips": true,
+         "onClick": function (that, bubble) {
+            if (bubble.iscomplete) {
+               window.location.href = bubble.data('step') + ".aspx"
+            }
+         },
+         "titleShift": [
+         ["BeginDate", "Begin Date"]
+      ]
+      });
+   });
+</script>
+            </div>
+         </div>
+      </div>
+   
+</div>
+   
+   
+   <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$ScripManager1', 'aspnetForm', ['tctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$upStudent','upStudent'], [], [], 90, 'ctl00$ctl00$ctl00');
+//]]>
+</script>
+ 
+
+   <div class="container">
+      <div class="wrapper2">
+         <div class="row">
+            <div class="grid_12">
+               <div id="pnlErrors" class="FormValidationSummary">
+	
+                  
+               
+</div>
+            
+            <h1>Select or <span class="no-wrap-break">Add a Student</span></h1>
+               <p class="studentAppInfo">
+                  <span id="lblAppInfo"><span class="enrollment">Grade 4 Accredited Enrollment</span><span class="enrollmentDetails">Full Year, Full Grade, with Book Kit</span></span>
+               </p>
+               <div id="vlsPageErrors" class="ValidationSummary" style="display:none;">
+
+</div>
+      
+               <div id="upStudent">
+	
+                  
+                     <div class="selectStudent">
+                        
+                        <a id="btnAddNewStudent" data-toggle="modal" data-keyboard="false" data-target="#CreateStudentModal" class="gridsterBTN gridsterBTN-Alt">Add New Student</a> <br>
+                        <span id="csvStudentList" class="Validator" style="display:none;">Please add a student.</span>
+                        <br>
+                        
+                         <br>
+                     </div>
+                      
+                  
+</div>
+                <div class="buttons">
+                  <a id="btnNext" class="gridsterBTN-themed" href="javascript:void(0);">Next</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+</div>
+
+
+            </section>
+         <div class="sectionAngleDown" id="div_footer"></div>
+            <!-- noindex -->
+            <!--========================================================
+                                      FOOTER
+            =========================================================-->
+
+
+            
+
+<footer id="footer">
+   <div class="container">
+      <div class="wrapper4">
+         <div class="row">
+            <div class="col-md-12">
+               <p>
+               <span style="white-space:nowrap;">Abeka,</span>
+               <span style="white-space:nowrap;">P.O. Box 19100,</span>
+               <span style="white-space:nowrap;">Pensacola, FL&nbsp;&nbsp;32523-9100</span><br>
+               <span style="white-space:nowrap;">1-877-223-5226</span></p>
+
+               <p>Copyright © 2022 Pensacola Christian College. All rights reserved.</p>
+           
+               <p><a href="//test.abeka.com/privacypolicy.aspx">Privacy Policy</a><span class="bullet">&nbsp;&nbsp;•&nbsp;&nbsp;</span><a href="//test.abeka.com/TermsOfUse.aspx">Terms of Use</a><span class="bullet">&nbsp;&nbsp;•&nbsp;&nbsp;</span><a href="//test.abeka.com/HomeSchoolEnrollmentAgreement.aspx">Homeschool Enrollment Agreement</a>
+               </p>
+            </div>
+         </div>
+      </div>
+   </div> 
+</footer>
+
+
+            <script src="/Includes/javascript/script.js?update=3"></script><script src="/Includes/javascript/jquery.cookie.js?update=2"></script><script src="/Includes/javascript/device.min.js"></script><script src="/Includes/javascript/tmstickup.js"></script><script src="/Includes/javascript/jquery.easing-1.4.2.min.js"></script><script src="/Includes/javascript/jquery.ui.totop.js?update=1"></script><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+            <!-- /noindex -->
+         
+   
+   
+   <div id="CreateStudentModal" class="modal fade in" role="dialog" style="display: block; padding-left: 0px;">
+      <div class="modal-dialog">
+         
+
+<script>
+   var CreateNewStudentIsValid = true;
+
+   $(document).ready(function () {
+      var btnCreateStudent = document.getElementById($('#btnCreateStudent').attr('id'));
+      $('select').on('change.select2', select2_Change);
+      $("#txtBirthDate").datepicker({
+         changeYear: true,
+         changeMonth: true,
+         yearRange: 'c-75:c',
+         onSelect: function (dateText) {
+            $("#txtDOB").addClass('FieldValid').removeClass('FieldError');
+            $('#cmpDOB').hide();
+         }
+      });
+
+      $(".yearSelect").on("click", function () {
+         $(this).prev("select").click();
+      });
+
+      $(btnCreateStudent).on("click", function () {
+         if ($(btnCreateStudent).prop("value") == 'Please wait...') {
+            return false;
+         } else {
+            if (CreateNewStudentIsValid) {
+               btnCreateStudent.value = 'Please wait...';
+            } else {
+               btnCreateStudent.value = 'Create';
+            }
+            CreateNewStudentIsValid = true;
+         }
+      });
+
+      $('#iPassword').on("mouseenter", iPassword_MouseEnter).on("mouseleave", iPassword_MouseLeave);
+   });
+
+   function csvBirthDate_ClientValidate(sender, e) {
+      if (new Date() < new Date(document.getElementById('txtBirthDate').value)) {
+         e.IsValid = false;
+      }
+   }
+
+   function iPassword_MouseEnter(e) {
+      if (e.target.id == 'iPassword') {
+         $('#iPassword').removeClass('fa-eye').addClass('fa-eye-slash').prop('title', 'Hide Password');
+         $('#txtNewPassword').prop('type', 'text');
+      }
+   }
+
+   function iPassword_MouseLeave(e) {
+      if (e.target.id == 'iPassword') {
+         $('#iPassword').removeClass('fa-eye-slash').addClass('fa-eye').prop('title', 'Show Password');
+         $('#txtNewPassword').prop('type', 'password');
+      }
+   }
+
+   function csvNewUserName_ClientValidate(sender, e) {
+      var newUsername = document.getElementById('txtNewUserName').value.trim();
+      var newPassword = document.getElementById('txtNewPassword').value.trim();
+
+      $.ajax({
+         async: false,
+         type: "POST",
+         url: '/Includes/dotNet/ModalValidation.asmx/ValidateUsername',
+         contentType: "application/json; charset=utf-8",
+         dataType: 'json',
+         data: "{'userName' : '" + newUsername + "'}",
+         success: function (data) {
+            e.IsValid = data.d.isValid;
+            // do not need because of async: false
+            //sender.isValid = e.IsValid
+            //sender.UpdateDisplay();
+            //sender.UpdateFieldDisplay();
+            //sender.ClientValidated(sender, { IsValid: e.IsValid });
+            if (data.d.Message != null && data.d.Message.trim().length > 0) {
+               $("#csvNewUserName").html(data.d.Message);
+            }
+         },
+         error: function (data, text, error) {
+            e.IsValid = false;
+            // do not need because of async: false
+            //sender.isValid = e.IsValid
+            //sender.UpdateDisplay();
+            //sender.UpdateFieldDisplay();
+            //sender.ClientValidated(sender, { IsValid: e.IsValid });
+            $("#csvNewUserName").html("An error occurred while validating the username.");
+         }
+      });
+
+      if (newPassword.length > 0 && newUsername.length <= 0)
+      {
+         e.IsValid = false;
+         $("#txtNewUserName").removeClass('FieldValid');
+         $("#csvNewUserName").html("Username is required.");
+      }
+      else if (newUsername.length <= 0)
+      {
+         e.IsValid = true;
+      }
+   }
+
+   function csvNewPassword_ClientValidate(sender, e) {
+      var newUsername = document.getElementById('txtNewUserName').value.trim();
+      var newPassword = document.getElementById('txtNewPassword').value.trim();
+      var validLength = false;
+      var containsLetter = false;
+      var containsDigit = false;
+
+      if (newPassword.length <= 0 && newUsername.length > 0)
+      {
+         e.IsValid = false;
+         $("#txtNewPassword").removeClass('FieldValid');
+         $("#csvNewPassword").html("Password is required.");
+      }
+      else if (newPassword.length > 0)
+      {
+         if (newPassword.length > 6 && newPassword.length < 51)
+         {
+            validLength = true;
+
+            for (i = 0; i < newPassword.length; i++)
+            {
+               code = newPassword.charCodeAt(i);
+
+               if ((code > 47 && code < 58))
+               {
+                  containsDigit = true;
+               }
+
+               if ((code > 64 && code < 91) || (code > 96 && code < 123))
+               {
+                  containsLetter = true;
+               }
+            }
+         }
+
+         e.IsValid = validLength && containsDigit && containsLetter;
+
+         if (!e.IsValid)
+         {
+            $("#txtNewPassword").removeClass('FieldValid');
+            $("#csvNewPassword").html("Please enter a password that is 7&ndash;50 characters and contains a letter and a number.");
+         }
+      }
+   }
+
+   function select2_Change(e) {
+      if (typeof select2_Change.running == 'undefined') {
+         select2_Change.running = false;
+      }
+      if (!select2_Change.running) {
+         var event;
+
+         select2_Change.running = true;
+
+         if (document.createEvent) {
+            event = document.createEvent('HTMLEvents');
+            event.initEvent('change', true, true);
+         } else {
+            event = document.createEventObject();
+            event.eventType = 'change';
+         }
+
+         event.eventName = 'change';
+
+         if (document.createEvent) {
+            e.target.dispatchEvent(event);
+         } else {
+            e.target.fireEvent('on' + event.eventType, event);
+         }
+
+         select2_Change.running = false;
+      }
+   }
+
+   function base_ClientValidated(sender, e) {
+      var newPasswordIsEmpty = (document.getElementById('txtNewPassword').value.trim().length <= 0);
+      var newUsernameIsEmpty = (document.getElementById('txtNewUserName').value.trim().length <= 0);
+      
+      var list = sender.controlsToValidate;
+      for (var i = 0; i < list.length; i++) {
+         if (list[i].invalidClass) {
+            $(list[i].GetControl()).removeClass('FieldValid');
+            if (e.IsValid) {
+               $(list[i].GetControl()).addClass('FieldValid');
+            }
+         } else {
+            $(list[i].GetControl()).addClass('FieldValid');
+         }
+      }
+
+      //new custom val doesnt call this
+      if (newPasswordIsEmpty && newUsernameIsEmpty) {
+         $("#txtNewUserName").removeClass('FieldValid');
+         $("#txtNewUserName").removeClass('FieldError');
+         $("#csvNewUserName").css("display", "none");
+
+         $("#txtNewPassword").removeClass('FieldValid');
+         $("#txtNewPassword").removeClass('FieldError');
+         $("#csvNewPassword").css("display", "none");
+      }
+
+      if (!e.IsValid && CreateNewStudentIsValid) {
+         CreateNewStudentIsValid = false;
+      }
+   }
+</script>
+
+<!-- Modal content-->
+<div class="modal-content">
+   <div class="modal-header">
+      <button type="button" class="close btnDismiss" data-dismiss="modal">×</button>
+      <h4 class="modal-title themeColor">Add New Student</h4>
+   </div>
+   <div class="modal-body form">
+      <div id="vlsCreateStudentErrors" class="ValidationSummary" style="display:none;">
+
+</div>
+      <span id="csvCreateStudentErrors" class="Validator" style="display:none;"></span>
+
+      <div class="row bootstrapDefaultRow">
+         <div class="col-sm-6">
+            <label for="txtFirstName" class="RequiredFieldLabel">First Name</label>
+            <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtFirstName" type="text" maxlength="22" id="txtFirstName" onfocus="this.select();" style="width:22em;" class="FieldError FieldValid ">
+            <span id="rfvFirstName" class="Validator" style="display: none;">Please enter the student's first name.</span>
+         </div>
+         <div class="col-sm-6">
+            <label for="txtMiddleName">Middle Name</label>
+            <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtMiddleName" type="text" maxlength="20" id="txtMiddleName" onfocus="this.select();" style="width:20em;">
+         </div>
+      </div>
+
+      <div class="row bootstrapDefaultRow">
+         <div class="col-sm-6">
+            <label for="txtLastName" class="RequiredFieldLabel">Last Name</label>
+            <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtLastName" type="text" maxlength="25" id="txtLastName" onfocus="this.select();" style="width:25em;" class="FieldError FieldValid ">
+            <span id="rfvLastName" class="Validator" style="display: none;">Please enter the student's last name.</span>
+         </div>
+         <div class="col-sm-6">
+            <label for="drpSuffix">Suffix</label>
+            
+            <select name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$drpSuffix" id="drpSuffix" class="form-control DropDown select-dropdown-m select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+	<option selected="selected" value="X">Select</option>
+	<option value="Jr.">Jr.</option>
+	<option value="Sr.">Sr.</option>
+	<option value="I">I</option>
+	<option value="II">II</option>
+	<option value="III">III</option>
+	<option value="IV">IV</option>
+	<option value="V">V</option>
+	<option value="VI">VI</option>
+
+</select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 132px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-drpSuffix-container"><span class="select2-selection__rendered" id="select2-drpSuffix-container" title="Jr.">Jr.</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+         </div>
+      </div>
+<p class="nameNote">Please enter your student’s legal name. It will be used on any official records, like report cards or transcripts.<!--Your student&#8217;s legal name will be used on any official records, like report cards or transcripts.--></p>
+      <div class="row bootstrapDefaultRow">
+         <div class="col-sm-6">
+            <label for="drpGender" class="RequiredFieldLabel">Gender</label>
+            <select name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$drpGender" id="drpGender" class="DropDown select-dropdown-m select2-hidden-accessible FieldValid " tabindex="-1" aria-hidden="true">
+	<option selected="selected" value="X">Select</option>
+	<option value="M">Male</option>
+	<option value="F">Female</option>
+
+</select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 132px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-drpGender-container"><span class="select2-selection__rendered" id="select2-drpGender-container" title="Male">Male</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+            <span id="rfvGender" class="Validator" style="display:none;">Please enter the student's gender.</span>
+         </div>
+         <div class="col-sm-6">
+            <div id="pnlBirthDate" class="panelBlock">
+	
+               <label for="txtBirthDate" id="lblBirthDate" class="RequiredFieldLabel">Birth Date</label>
+               <span class="formFieldIcon">
+                  <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtBirthDate" id="txtBirthDate" class="form-control hasDatepicker FieldValid " autocomplete="off" type="text" placeholder="MM/DD/YYYY">
+                  <i class="formIcon fa fa-calendar"></i>
+               </span>
+               
+               <span id="rfvBirthday" class="Validator" style="display: none;">Please enter the student's Birth date.</span>
+               <span id="rxvBirthDate" class="Validator" style="display:none;">Please enter a valid date of the form: MM/DD/YYYY</span>
+               <span id="csvBirthDate" class="Validator" style="display:none;">Please enter a date in the past.</span>
+            
+</div>
+         </div>
+      </div>
+
+      <div id="pnlCreateLogin">
+	
+         <h4 class="themeColor" style="margin-top: 20px; text-align:center;">Create Student’s Login</h4>
+
+         <div class="row">
+            <div class="col-md-6">
+               <div id="UserNameChangeBox">
+                  <label id="lblNewUserName" for="txtNewUserName">Username</label>
+                  <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtNewUserName" type="text" maxlength="40" id="txtNewUserName" class="form-control ">
+               </div>
+               <span id="mlvNewUserName" class="Validator" validateemptytext="true" style="display:none;">Username must be no more than 40 characters.</span>
+               <span id="csvNewUserName" class="Validator" style="display:none;">Please enter a username.</span>
+            </div>
+            <div class="col-md-6">
+               <div id="ChangePasswordBox">
+                  <label id="lblNewPassword" for="txtNewPassword">Password</label>
+                  <span id="spnPassword">
+                     <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtNewPassword" type="password" maxlength="50" id="txtNewPassword" class="form-control">
+                     <i id="iPassword" class="fa fa-eye" title="Show Password"></i>
+                  </span>
+               </div>
+               <span id="csvNewPassword" class="Validator" style="display:none;"></span>
+            </div>
+         </div>
+      
+</div>
+   </div>
+   <div class="modal-footer buttons">
+      <input type="submit" name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$btnCreateStudent" value="Create" id="btnCreateStudent" class="gridsterBTN">
+   </div>
+</div>
+      </div>
+   </div>
+
+   
+
+
+        
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get('ScripManager1_HiddenField').value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();
+var _ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnNext = new OneClickLinkButton({
+    linkButton:'btnNext',
+    causesValidation:true,
+    confirmText:'',
+    disabledText:'Please wait...',
+    disableGroup:'',
+    eventTarget:'__EVENTTARGET',
+    postFunction:function() { __doPostBack('ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnNext',''); },
+    validationGroup:'',
+    disabledCssClass:'gridsterBTN-themed gridsterBTNLoading'
+});
+    new Validation.ValidationSummary({
+        displayMode:'BulletedList',
+        footerText:'',
+        headerText:'',
+        placeholder:'vlsPageErrors',
+        showSummaryWhen:'Always',
+        name:'ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$vlsPageErrors',
+        scrollToTop:true,
+        triggers:[
+            {
+                control:_ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnNext,
+                clientEvent:'click'
+            }
+        ]
+    });
+    new Validation.ValidationSummary({
+        displayMode:'BulletedList',
+        footerText:'',
+        headerText:'',
+        placeholder:'vlsCreateStudentErrors',
+        showSummaryWhen:'Always',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+        scrollToTop:true,
+        triggers:[
+            {
+                control:'btnCreateStudent',
+                clientEvent:'click'
+            }
+        ]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtFirstName',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtFirstName_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Please enter the student\'s first name.',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$rfvFirstName',
+        validatorIndex:8,
+        placeholder:'rfvFirstName',
+        text:'Please enter the student\'s first name.',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtLastName',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtLastName_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Please enter the student\'s last name.',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$rfvLastName',
+        validatorIndex:9,
+        placeholder:'rfvLastName',
+        text:'Please enter the student\'s last name.',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'X',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'drpGender',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$drpGender_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Please enter the student\'s gender.',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$rfvGender',
+        validatorIndex:10,
+        placeholder:'rfvGender',
+        text:'Please enter the student\'s gender.',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtBirthDate',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtBirthDate_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Please enter the student\'s Birth date.',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$rfvBirthday',
+        validatorIndex:11,
+        placeholder:'rfvBirthday',
+        text:'Please enter the student\'s Birth date.',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.CustomValidator({
+        clientValidate:'csvBirthDate_ClientValidate',
+        validateEmptyText:false,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtBirthDate',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtBirthDate_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Please enter a date in the past.',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$csvBirthDate',
+        validatorIndex:13,
+        placeholder:'csvBirthDate',
+        text:'Please enter a date in the past.',
+        setFocusOnError:true,
+        validateFirst:['ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$rxvBirthDate']
+    });
+    new Validation.MaxLengthValidator({
+        errorMessageFormat:'Username must be no more than <T> characters.',
+        maxLength:40,
+        setMaxLengthOnTextBox:true,
+        countCarriageReturns:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtNewUserName',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtNewUserName_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$mlvNewUserName',
+        validatorIndex:14,
+        placeholder:'mlvNewUserName',
+        text:'',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.CustomValidator({
+        clientValidate:'csvNewUserName_ClientValidate',
+        validateEmptyText:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtNewUserName',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtNewUserName_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$csvNewUserName',
+        validatorIndex:15,
+        placeholder:'csvNewUserName',
+        text:'',
+        setFocusOnError:true,
+        validateFirst:['ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$mlvNewUserName']
+    });
+    new Validation.CustomValidator({
+        clientValidate:'csvNewPassword_ClientValidate',
+        validateEmptyText:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtNewPassword',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$txtNewPassword_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$csvNewPassword',
+        validatorIndex:16,
+        placeholder:'csvNewPassword',
+        text:'',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    Validation.allGroups['ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$AddNewStudent$vlsCreateStudentErrors'].InitializationComplete();
+//]]>
+</script>
+<div class="modal-backdrop fade in"></div></form>
+    </div>
+    <div class="sb-slidebar sb-left">
+        <!-- Your left Slidebar content. -->
+    <form class="mobile-search-form-wrapper"><input id="txtSearchMobile" type="text" class="searchRelated searchInput" placeholder="What can we help you find?" name="txtSearch" autocomplete="off"><button id="btnSearchMobile" type="submit"><span class="searchIcon" aria-hidden="true"></span></button></form><ul class="mobile-menu">
+		
+			<li aria-haspopup="true" class="mzr-drop">
+<!--				<a href="/Account/" class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>-->
+				<a class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>
+				<ul class="mzr-content smallIconList" style="top: auto !important; display: none;">
+					<li>
+						<div class="menuContainer iconList article noBorder">
+							<div class="articleColumn mobileHidden">
+								
+							</div>
+							<div class="articleColumn">
+								<h3 class="articleHead">Dashboard</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Account/"> <span class="LinkwImage">&nbsp;&nbsp;Home</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Calendar/Calendar.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Calendar</span></a></h2>
+									</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Notifications.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Notifications</span></a></h2>
+										</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Students/Default.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Students</span></a></h2>
+										</li>
+									
+								</ul>
+							</div>
+					
+							<div class="articleColumn">
+								<h3 class="articleHead">My Orders</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/Enrollments/"> <span class="LinkwImage">Enrollments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalAssessments/"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalArt/"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTextbooks/"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTeachingAids/"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+									</li>
+								</ul>
+							</div>
+					
+						</div>
+					</li>
+				</ul>
+			</li>
+		
+		<li aria-haspopup="true" class="mzr-drop"><a class="MobileArrow mainMenu academy hasSubList">Academy</a>
+			<ul class="mzr-content smallIconList" style="top: auto !important; display: none;">
+				<!--
+            <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">About</h3>
+							<ul>
+								<li><a href="/about/AccreditationStatement.aspx"> <span class="LinkwImage">Accreditation</span></a></li>
+								<li><a href="/about/MissionPurpose.aspx"> <span class="LinkwImage">Mission, Purpose, and Philosophy</span></a></li>
+								<li><a href="/About/WhatWeBelieve.aspx"> <span class="LinkwImage">What We Believe</span></a></li>
+								<li><a href="https://test.abeka.com/OurApproach.aspx"> <span class="LinkwImage">Objectives + Learning Outcomes</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Academics</h3>
+							<ul>
+								<li><a href="/About/Overview.aspx"> <span class="LinkwImage">Overview</span></a></li>
+								<li><a href="/academic/graduation.aspx"> <span class="LinkwImage">Graduation</span></a></li>
+                                <li><a href="/Fulfillment/Graduation/"> <span class="LinkwImage">Petition to March</span></a></li>
+								
+								<li><a href="/GraduationEvent/"> <span class="LinkwImage">Graduation 2021 Ceremonies</span></a></li>
+
+								<li><a href="/Resources/Rings.aspx"> <span class="LinkwImage">Class Rings</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Teachers.aspx"> <span class="LinkwImage">Teacher Bios</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Courses/"> <span class="LinkwImage">Course Descriptions</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Resources</h3>
+							<ul>
+								
+								
+								<li><a href="https://test.abeka.com/Resources/SampleVideos.aspx"> <span class="LinkwImage">Sample Videos</span></a></li>
+								
+								<li><a href="https://test.abeka.com/HomeSchool/ScopeAndSequence.aspx"> <span class="LinkwImage">Scope and Sequence</span></a></li>
+								<!----> 
+
+								<!--<li><a href="#">Curriculum Song Downloads</a></li>
+											 <li><a href="#">Science Lab Outlines</a></li>-->
+
+								
+							</ul>
+						</div>
+
+						<!--<li class="mzr-drop mzr-drop-right"><a href="#">Gear</a>
+
+									 <ul>
+											 <li><a href="#">Tshirts</a></li>
+											 <li><a href="#">Cups</a></li>
+											 <li><a href="#">Letters</a></li>
+											 <li><a href="#">Jackets</a></li>
+											 <li><a href="#">Bags</a></li>
+											 <li><a href="/Resources/Rings.aspx">Rings</a></li>
+										 </ul>
+
+								 </li> --> 
+
+					</div>
+				</li>
+			</ul>
+		</li>
+	
+		<li class="marginB-0">
+			<a class="MobileArrow mainMenu connect hasSubList" href="https://test.abeka.com/ContactInfo.aspx" target="blank" style="cursor:pointer !important;">Contact Us</a>
+		</li>
+	
+		<li aria-haspopup="true" class="mzr-drop">
+			<a class="MobileArrow mainMenu help hasSubList">Help</a>
+			<ul class="mzr-content smallIconList  HelpMarginFix  " style="top: auto !important; display: none;">
+				
+				<!--          <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+            <div class="menuContainer iconList article noBorder">--> 
+				
+				<!--
+               <h3 class="articleHead">Guides</h3>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Calendar">
+                     <span class="LinkwImage">Calendar</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Dashboard">
+                     <span class="LinkwImage">Dashboard</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=My-Students">
+                     <span class="LinkwImage">My Students</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Notifications">
+                     <span class="LinkwImage">Notifications</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Video-Streaming">
+                     <span class="LinkwImage">Video Streaming</span></a></h2>
+               </li>
+
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx">
+                     <span class="LinkwImage">More <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                  </a></h2>
+               </li>
+--> 
+				
+				<!--
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Assessments.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Assessments</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Art.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Clip Art</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Textbooks.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Books</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/TeachingAids.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Teaching Aids</span></a></h2>
+            </li>
+          
+          --> 
+				<!--            </div>-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">FAQs</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AcademicsFAQs.aspx"> <span class="LinkwImage">Academics</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AdmissionsFAQs.aspx"> <span class="LinkwImage">Admissions</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/ArtFAQs.aspx"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsFAQs.aspx"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsTrialFAQ.aspx"> <span class="LinkwImage">Digital Assessments Trial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TextbooksFAQs.aspx"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TeachingAidsFAQs.aspx"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/DVDReturnsFAQ.aspx"> <span class="LinkwImage">DVD Returns</span></a></h2>
+								</li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead NoHeader">&nbsp;</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/EnrollmentFAQs.aspx"> <span class="LinkwImage">Enrollment</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/FinancialFAQs.aspx"> <span class="LinkwImage">Financial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/GradingFAQs.aspx"> <span class="LinkwImage">Grading</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/StudentFAQs.aspx"> <span class="LinkwImage">Student</span></a></h2>
+								</li>
+								
+									<li>
+										<h2 class="GroupTitlelink"><a href="/Help/Video.aspx"> <span class="LinkwImage">Video Streaming</span></a></h2>
+									</li>
+								
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx"> <span class="LinkwImage">Tour</span></a></h2>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</li>
+		
+		<!--
+    <li id="mobthemepicker">
+        <button data-theme="Pink" class="themeOption gridsterBTN-pink"></button>
+        <button data-theme="Orange" class="themeOption gridsterBTN-orange"></button>
+        <button data-theme="Green" class="themeOption gridsterBTN-green"></button><br>
+        <button data-theme="Teal" class="themeOption gridsterBTN-teal"></button>
+        <button data-theme="Blue" class="themeOption gridsterBTN-blue"></button>
+        <button data-theme="Purple" class="themeOption gridsterBTN-purple"></button>
+    </li>
+-->
+		
+		<li style="float: right;"><a class="searchButton" onclick="toggleSearch();"> <span class="searchIcon" aria-hidden="true"></span> </a></li>
+	</ul></div>
+
+<!-- Hotjar Tracking Code for abeka.com -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+    h._hjSettings = { hjid: 608300, hjsv: 6 };
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script'); r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
+
+<!-- Begin Genesys Chat Elements -->
+<div class="genesys-button-wrapper">
+  
+</div>
+<!-- End Genesys Chat -->
+
+
+<div class="swiftype-widget"><div class="autocomplete" style="position: absolute; z-index: 9999; top: 46px; left: 0px; width: 323px; display: none;"><ul></ul></div></div><div class="swiftype-widget"><div class="autocomplete" style="position: absolute; z-index: 9999; top: 1px; left: 0px; width: 0px; display: none;"><ul></ul></div></div><a href="#" id="toTop" class="fa fa-arrow-circle-up" style="display: none;"></a><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: fixed; top: 385.422px; left: 783px; z-index: 1000000; display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><select class="ui-datepicker-month" data-handler="selectMonth" data-event="change"><option value="0" selected="selected">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select><select class="ui-datepicker-year" data-handler="selectYear" data-event="change"><option value="1937">1937</option><option value="1938">1938</option><option value="1939">1939</option><option value="1940">1940</option><option value="1941">1941</option><option value="1942">1942</option><option value="1943">1943</option><option value="1944">1944</option><option value="1945">1945</option><option value="1946">1946</option><option value="1947">1947</option><option value="1948">1948</option><option value="1949">1949</option><option value="1950">1950</option><option value="1951">1951</option><option value="1952">1952</option><option value="1953">1953</option><option value="1954">1954</option><option value="1955">1955</option><option value="1956">1956</option><option value="1957">1957</option><option value="1958">1958</option><option value="1959">1959</option><option value="1960">1960</option><option value="1961">1961</option><option value="1962">1962</option><option value="1963">1963</option><option value="1964">1964</option><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012" selected="selected">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option></select></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">6</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">7</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">8</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">13</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">14</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">20</a></td><td class=" ui-datepicker-week-end ui-datepicker-days-cell-over  ui-datepicker-current-day" data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default ui-state-active ui-state-hover" href="#">21</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">27</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">28</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">30</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2012"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div><iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-21ccaa45726c0f3c8c458f7a87eb2298.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300,100"></body></html>

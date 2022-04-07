@@ -1,0 +1,2036 @@
+<html lang="en" class="desktop landscape sb-init"><head id="Head1"><meta charset="utf-8"><title>
+	Abeka | Enrollments
+</title><meta name="format-detection" content="telephone=no">
+
+   <!-- Latest compiled and minified CSS -->
+
+   <link rel="stylesheet" href="/Includes/css/bootstrap.css?update=94SM"><link href="/Includes/css/jquery.confirm.css?update=1" rel="stylesheet" type="text/css"><link rel="icon" href="/images/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png"><meta name="msapplication-TileColor" content="#93328e"><meta name="msapplication-TileImage" content="/images/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#93328e"><link rel="stylesheet" href="/Includes/css/grid.css?update=1"><link rel="stylesheet" href="/Includes/css/search-form.css?update=2"><link rel="stylesheet" href="/Includes/css/jquery-ui2014.css?update=2"><link rel="stylesheet" href="/Includes/css/style.css?update=JM1292021"><link rel="stylesheet" href="/Includes/css/print.css?update=2"><link id="lnkAtHome" rel="stylesheet" href="/Includes/css/styleathome.css?update=2"><link rel="stylesheet" href="/Includes/css/slidebars.css?update=4"><link rel="stylesheet" href="/Includes/css/meganizr.css?update=4" media="only screen and (min-width:480px)"><link rel="stylesheet" href="/Includes/fonts/abekadigital-icon-font/styles.css"><link rel="stylesheet" href="/Includes/css/dotNet.css"><link rel="stylesheet" href="/Includes/css/AcademicColors.css?v=1"><link rel="stylesheet" href="/Includes/css/select2.css"><link rel="stylesheet" href="/Includes/css/ABAForms.css"><link rel="stylesheet" href="/Includes/css/jquery.mCustomScrollbar.css?update=1"><link rel="stylesheet" href="/Includes/css/form.css"><link rel="stylesheet" href="/Includes/css/flexslider.css"><link rel="stylesheet" href="/Includes/css/animate.css"><link rel="stylesheet" href="/Includes/css/swiftype.autocomplete.css?update=1"><link rel="stylesheet" href="/Includes/css/genesysChat.css?update=TA242021+"><link rel="stylesheet" href="/Includes/css/chat-template.css?update=TA1282021">
+   <link rel="stylesheet" type="text/css" id="portalLinkCSS" href="/Includes/css/theme/GenerateTheme.aspx?theme=">
+   
+   
+   <link rel="stylesheet" href="/Includes/css/enrollments.css">
+   <style>
+      .Validator {
+         background: #EF4662 !important;
+         color: #FFF !important;
+         position: relative;
+         font: 13px/20px "SharpSans", Verdana, Arial, sans-serif;
+         margin-bottom: 5px;
+         padding: 10px 45px;
+         text-align: center;
+         -webkit-font-smoothing: initial;
+         font-style: italic;
+         margin-bottom: 20px;
+         margin-top: 0px;
+      }
+
+      h2 {
+         margin-bottom: 30px;
+      }
+
+      span#lblStudentName, span.enrollment {
+         font-size: 20px;
+         font-style: italic;
+      }
+
+      span.enrollmentDetails {
+         display: block;
+      }
+
+      .noteSmall {
+         font-size: 14px;
+         font-style: normal;
+      }
+
+      .sectionWrap {
+         margin: 50px 0 !important;
+      }
+
+      .col-md-2, .col-md-5 {
+         margin-bottom: 20px;
+         text-align: center;
+      }
+
+         .col-md-5 h4 {
+            padding-bottom: 30px;
+            margin-left: -28px;
+         }
+
+      .optionInfoCols Tipped {
+         background-color: #fff;
+         padding: 20px;
+         text-align: left;
+      }
+
+
+      #divAccreditedInfo.whiteBg {
+         padding: 20px 30px 10px 30px;
+         margin-bottom: 20px;
+      }
+
+      .selectGuardian .whiteBg {
+         padding: 20px 30px 40px 30px;
+      }
+
+      .guardianList {
+         margin-bottom: 20px;
+      }
+
+      .guardianName {
+         font-size: 18px;
+         font-style: italic;
+         margin-bottom: 20px;
+      }
+
+      span#lblRelation {
+         text-transform: lowercase;
+         font-size: 14px;
+         margin-left: 5px;
+      }
+
+      a#lbtnRemove {
+         display: block;
+         font-size: 15px;
+         font-style: normal;
+         width: 50px;
+      }
+
+      .form {
+         text-align: left;
+         padding: 0px 0px;
+         background: transparent;
+         margin-bottom: 0;
+      }
+      /*
+      .form label {
+          font-size: 14px;
+          margin-bottom: 5px;
+      }
+      */
+      .select2-container--default .select2-selection--single .select2-selection__placeholder {
+         font-size: 14px;
+      }
+
+      .select2-container--default .select2-selection--single .select2-selection__rendered, .form input[type="text"], .form input[type="password"], .form input[type="email"], .form textarea, .form .select2-container {
+         width: 100% !important;
+         font-size: 14px;
+      }
+
+      .noteIcon {
+         font-size: 50px;
+         display: block;
+         text-align: center;
+      }
+
+      .selectGuardian p {
+         display: block;
+      }
+
+      span.RadioButton {
+         margin-bottom: 0px;
+      }
+
+      label {
+         color: inherit;
+      }
+
+      @media (max-width: 768px) {
+         .col-md-5 h4 {
+            margin-left: -36px;
+         }
+
+         .whiteContainer span.stepCircle {
+            margin: -20px auto 10px auto;
+         }
+      }
+
+      @media (max-width: 425px) {
+         .whiteContainer {
+            margin-top: -50px;
+         }
+
+         /*h2 {
+            margin-top: -40px;
+         }*/
+      }
+
+      @media (max-width: 375px) {
+      }
+
+      @media (max-width: 320px) {
+         .col-md-5 h4 {
+            margin-left: -27px;
+         }
+
+         #divAccreditedInfo.whiteBg {
+            padding: 20px 20px 10px 20px;
+            margin-bottom: 20px;
+         }
+
+         .selectGuardian .whiteBg {
+            padding: 20px 20px 40px 20px;
+         }
+      }
+   </style>
+
+
+
+      <meta property="og:url" content="https://www.athome.abeka.com/">
+      <meta property="og:title" content="Abeka | Enrollments">
+      <meta property="og:description" content="Excellence in Education from a Christian Perspective">
+      <meta property="og:site_name" content="Abeka Dashboard">
+      <meta property="og:image" content="https://www.abeka.com/Images/ABBSocialShare.jpg">
+      <meta property="fb:app_id" content="1727410397523598">
+      <meta property="og:type" content="website">
+      <meta property="og:locale" content="en_US">
+   
+
+  <script async="" src="//www.google-analytics.com/analytics.js"></script><script>
+    window.GlobalVariables = window.GlobalVariables || {};
+    window.GlobalVariables.UserId = '27585734';
+   </script>
+   <script type="text/javascript">
+     let myVal = atob("SW5zdHJ1bWVudGF0aW9uS2V5PTEzMzEwNzI1LTA0MjUtNGQwYi1iZThiLTIxMjA0NzQwZGZhZTtJbmdlc3Rpb25FbmRwb2ludD1odHRwczovL2Vhc3R1cy04LmluLmFwcGxpY2F0aW9uaW5zaWdodHMuYXp1cmUuY29tLw==");
+     !function(T,l,y){var S=T.location,k="script",D="connectionString",C="ingestionendpoint",I="disableExceptionTracking",E="ai.device.",b="toLowerCase",w="crossOrigin",N="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"5",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[b](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,u,p,l;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][b]()]=i[1])}if(!e[C]){var r=e.endpointsuffix,o=r?e.location:null;e[C]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[D]||d[D]||"",u=s[C],p=u?u+"/v2/track":d.endpointUrl,(l=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=p,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),l.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,p)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:N,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(N,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(l,p))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(k);n.src=h;var e=y[w];return!e&&""!==e||"undefined"==n[w]||(n[w]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(k)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[I]&&!0!==s[I]){var c="onerror";t(["_"+c]);var u=T[c];T[c]=function(e,t,n,a,i){var r=u&&u(e,t,n,a,i);return!0!==r&&m["_"+c]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);function a(){y.onInit&&y.onInit(n)}(T[t]=n).queue&&0===n.queue.length?(n.queue.push(a),n.trackPageView({})):a()}(window,document,{
+       src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", // The SDK URL Source
+       crossOrigin: "anonymous", // When supplied this will add the provided value as the cross origin attribute on the script tag
+       cfg: { // Application Insights Configuration
+         connectionString : myVal
+     }});
+     let acct = '27585734';
+     if (typeof(appInsights) != "undefined" && acct != '' && acct != 'guest') {
+       appInsights.setAuthenticatedUserContext(acct);
+     }
+   </script>
+   <script src="/Includes/javascript/jquery-3.5.1.js?update=EH20201118"></script>
+   <script src="/Includes/javascript/jquery-migrate-3.3.2.min.js"></script>
+   <script src="/Includes/javascript/jquery-ui-1.12.1.min.js"></script>
+   <script src="/Includes/javascript/jquery.swiftype.search.js"></script>
+   <script src="/Includes/javascript/jquery.swiftype.autocomplete.js?update=1"></script>
+   <script src="/Includes/javascript/slidebars-0.10.3.min.js"></script>
+   <script src="/Includes/javascript/wow/wow.js"></script>
+   <script src="/Includes/javascript/jquery-custom.js?update=1"></script>
+   <script src="/Includes/javascript/CommonScripts.js?update=TA9821"></script>
+   <script src="/Includes/javascript/sly.js"></script>
+   <script src="/Includes/javascript/jquery.confirm.min.js?update=1"></script>
+   <script src="/Includes/javascript/ZeroClipboard.js"></script>
+   <script src="/Includes/javascript/jquery.mousewheel.js"></script>
+   <script src="/Includes/javascript/_min/select2.full.min.js"></script>
+   <script src="/Includes/javascript/stacktable.js"></script>
+   <script src="/Includes/javascript/jquery.mCustomScrollbar.concat-3.1.7.min.js"></script>
+   <script src="/Includes/javascript/jquery.cookie.js?update=2"></script>
+   <script src="/Includes/javascript/moment-2.24.0.min.js"></script><!-- Parses dates correctly -->
+   <script src="//test.static.abeka.com/Shared/JavaScript/SiteIdentifier.js"></script>
+   
+
+
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="/Includes/javascript/bootstrap-3.4.1.min.js?update=EH20201118"></script>
+
+   <script>
+      $(document).ready(function () {
+
+       $('.modal').on('show.bs.modal', function() {
+         window.setTimeout((function() {$(".modal-backdrop").appendTo("#aspnetForm");}), 50);
+       })
+     });
+   </script>
+   <script src="/Includes/javascript/jquery.matchHeight-0.7.2.min.js"></script>
+
+   <script>
+      $(function () {
+         // Swiftype autosuggest initialization
+         $('#txtSearch').swiftype({
+            renderFunction: customAutosuggestRender,
+            resultContainingElement: '.searchRelated.searchInput',
+            engineKey: "_61FC3EPeaa525sDCiiM",
+            highlightFields: { 'page': { 'sections': { 'size': 50, 'fallback': true } } }
+         })
+
+         // Detect a search, and go to the search page.
+         $('#frmMainSearch').on("submit", function (e) {
+            e.preventDefault(); // Go to the search page manually instead
+            let query = $('#txtSearch').val();
+            window.location = "/Search.aspx#stq=" + query; // Send the search query as a hash (this is what Swiftype does)
+         });
+
+         // Mobile Swiftype autosuggest
+         $('#txtSearchMobile').swiftype({
+            renderFunction: customAutosuggestRender,
+            resultContainingElement: '.mobile-search-form-wrapper',
+            engineKey: "_61FC3EPeaa525sDCiiM",
+            highlightFields: { 'page': { 'sections': { 'size': 50, 'fallback': true } } }
+         })
+
+         // Mobile search detection
+         $('.mobile-search-form-wrapper').on('submit', function (e) {
+            e.preventDefault();
+            let query = $('#txtSearchMobile').val();
+            window.location = "/Search.aspx#stq=" + query;
+         });
+      });
+
+      (function ($) {
+         $(document).ready(function () {
+            $.slidebars();
+         });
+      })(jQuery);
+
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown('toggle');
+     });
+
+     $(document).ready(function () {
+        var ua = navigator.userAgent.toLowerCase();
+        // Android 4.4 and lower
+        if ((ua.indexOf("android") !== -1) &&
+            (ua.indexOf("chrome")   == -1) &&
+            (ua.indexOf("firefox")  == -1) &&
+            (ua.indexOf("iemobile") == -1) &&
+            (ua.indexOf("opera")    == -1))
+        {
+           $("#banner").css('display', 'block');
+           $("#browserLink").attr('href', 'https://www.google.com/chrome/');
+        }
+
+        if ($('#banner').is(':visible'))
+        {
+            $('#Menu').css('position', 'relative');
+            $('#nav-toggle').css('top', '20px');
+        }
+
+        // Temporary Closure Announcement
+        getAnnouncement();
+     });
+   </script>
+
+    
+    <script>
+        
+        (function () {
+            let getAdvancedConfig_old = window.getAdvancedConfig;
+            window.getAdvancedConfig = function() {
+                return $.extend(true,
+                    getAdvancedConfig_old(),
+                    {
+                        form: {
+                            firstname: ' ',
+                            email: 'rcg+27585734@pcci.edu'
+                        }
+                    });
+            }
+        })();
+        
+    </script>
+
+   
+   
+   <meta name="ABA_Tour" content="NO_TOUR">
+   
+   <script>
+      //<![CDATA[
+      var creditType = 'Accredited';
+
+      function mediaFormat_Selected() {
+         if ($('#csvMedia').is(":visible")) {
+            if ($('[id$=rbtnStreaming]').is(":checked") || $('[id$=rbtnDVD]').is(":checked") ||($('[id$=rbtnFlashDrives]').is(":checked"))) {
+               setVisibility($('#csvMedia'), false, 500);
+            }
+         }
+      }
+
+      function displayGuardianSelection(onload) {
+         if (onload) {
+            var slideDuration = 0;
+         }
+         else {
+            var slideDuration = 500;
+         }
+
+         if ($('[id$=rbtnAccredited]').length) {
+            if ($('[id$=rbtnAccredited]').is(":checked")) {
+               $('[id$=divGuardian]').slideDown(slideDuration);
+            }
+            else {
+               $('[id$=divGuardian]').slideUp(slideDuration);
+            }
+         }
+         else if (creditType === "Accredited") {
+             $('[id$=divGuardian]').css("margin-top", "20px");
+             $('[id$=divGuardian]').slideDown(slideDuration);
+         }
+         else {
+            $('[id$=divGuardian]').slideUp(slideDuration);
+         }
+
+         if ($('#csvProgram').is(":visible")) {
+            if ($('[id$=rbtnAccredited]').is(":checked") || $('[id$=rbtnIndependent]').is(":checked") || creditType !== "") {
+               setVisibility($('#csvProgram'), false, slideDuration);
+            }
+         }
+      }
+
+      function displayAssessmentSelection(onload) {
+         var studentGrade = '12';
+         var courseLoad = 'F';
+         var slideDuration = (onload ? 0 : 500);
+
+         if ($('[id$=pnlTesting]').length) {
+            if (($('[id$=rbtnAccredited]').is(":checked") ||  creditType === "Accredited") && ((courseLoad == "F" && 7 <= studentGrade && studentGrade <= 12) || (courseLoad == "C" && 9 <= studentGrade && studentGrade <= 12))) {
+               $('[id$=pnlTesting]').slideDown(slideDuration);
+            }
+            else {
+               $('[id$=pnlTesting]').slideUp(slideDuration);
+            }
+         }
+      }
+
+      function assessmentType_Selected() {
+         if ($('#csvDelivery').is(":visible")) {
+            if ($('[id$=rbtnDigital]').is(":checked") || $('[id$=rbtnPaper]').is(":checked")) {
+               setVisibility($('#csvDelivery'), false, 500);
+            }
+         }
+      }
+
+      $(document).ready(function ($) {
+         displayGuardianSelection(true);
+         displayAssessmentSelection(true);
+      });
+
+      jQuery(document).ready(function () { //Button Events
+         var btnCreateGuardian = document.getElementById($('#btnCreateGuardian').attr('id'));
+
+         $(btnCreateGuardian).on("click", function () {
+            $('#NewGuardianModal').attr("data-backdrop", "static");
+            $('#NewGuardianModal').attr("data-keyboard", "false");
+         });
+
+         $('.btnDismiss').on("click", function () {
+            try {
+               if ($(btnCreateGuardian).prop("value") == 'Please wait...') {
+                  return false;
+               }
+            } catch (e) { }
+         });
+
+         if ($('[id$=rbtnAccredited]').is(":checked") || creditType === "Accredited") {
+            checkAge();
+         }
+
+         $('select').on('change.select2', select2_Change);
+      });
+
+      function base_ClientValidated(sender, e) {
+         var list = sender.controlsToValidate;
+         for (var i = 0; i < list.length; i++) {
+            if (list[i].invalidClass) {
+               $(list[i].GetControl()).removeClass('FieldValid');
+               if (e.IsValid) {
+                  $(list[i].GetControl()).addClass('FieldValid');
+               }
+            }
+         }
+
+         if ($("#ddlGuardianTitle").val() != null) {
+            $("#ddlGuardianTitle").addClass('FieldValid');
+         }
+      }
+
+      function select2_Change(e) {
+         if (typeof select2_Change.running == 'undefined') {
+            select2_Change.running = false;
+         }
+         if (!select2_Change.running) {
+            var event;
+
+            select2_Change.running = true;
+
+            if (document.createEvent) {
+               event = document.createEvent('HTMLEvents');
+               event.initEvent('change', true, true);
+            } else {
+               event = document.createEventObject();
+               event.eventType = 'change';
+            }
+
+            event.eventName = 'change';
+
+            if (document.createEvent) {
+               e.target.dispatchEvent(event);
+            } else {
+               e.target.fireEvent('on' + event.eventType, event);
+            }
+
+            select2_Change.running = false;
+         }
+      }
+
+      function checkAge() {
+         var meetsAgeRequirement = true;
+         $.ajax({
+            url: "Options.aspx/CheckAgeRequirement",
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: '{ "ApplicationNumber" : "' + 1360215 + '" }',
+            success: function (data) {
+               meetsAgeRequirement = data.d;
+            }
+         }).done(function () {
+            if(meetsAgeRequirement == false) {
+               $("#ageRequirementMessage").removeClass('hidden');
+            } else {
+               $("#ageRequirementMessage").addClass('hidden');
+            }
+         });
+      }
+
+      function hidAgeMessage() {
+         $("#ageRequirementMessage").addClass('hidden');
+      }
+
+      function CheckDvd(isAvailable, isOnlyOptionAvailable = false) {
+         if (isAvailable) {
+            $('[id$=rbtnDVD]').attr('disabled', false);
+         } else {
+            $('[id$=rbtnDVD]').attr('disabled', true);
+            $('[id$=rbtnDVD]').prop('checked', false).change();
+         }
+
+         if (isOnlyOptionAvailable) {
+            $('[id$=DVDsOnly]').removeClass("hidden");
+            $('[id$=DVDsNotAvailable]').addClass("hidden");
+            $('[id$=rbtnDVD]').selected = true;
+         }
+         else if (isAvailable) {
+            $('[id$=DVDsOnly]').addClass("hidden");
+            $('[id$=DVDsNotAvailable]').addClass("hidden");
+         } else {
+            $('[id$=DVDsOnly]').addClass("hidden");
+            $('[id$=DVDsNotAvailable]').removeClass("hidden");
+         }
+      }
+
+      function CheckStreaming(isAvailable, isOnlyOptionAvailable = false) {
+         if (isAvailable) {
+            $('[id$=rbtnStreaming]').attr('disabled', false);
+         } else {
+            $('[id$=rbtnStreaming]').attr('disabled', true);
+            $('[id$=rbtnStreaming]').prop('checked', false).change();
+         }
+
+         if (isOnlyOptionAvailable) {
+            $('[id$=StreamingOnly]').removeClass("hidden");
+            $('[id$=StreamingNotAvailable]').addClass("hidden");
+            $('[id$=rbtnStreaming]').selected = true;
+         }
+         else if (isAvailable) {
+            $('[id$=StreamingOnly]').addClass("hidden");
+            $('[id$=StreamingNotAvailable]').addClass("hidden");
+         } else {
+            $('[id$=StreamingOnly]').addClass("hidden");
+            $('[id$=StreamingNotAvailable]').removeClass("hidden");
+         }
+      }
+
+      function CheckFlashDrives(isAvailable, isOnlyOptionAvailable = false) {
+         if (isAvailable) {
+            $('[id$=rbtnFlashDrives]').attr('disabled', false);
+         } else {
+            $('[id$=rbtnFlashDrives]').attr('disabled', true);
+            $('[id$=rbtnFlashDrives]').prop('checked', false).change();
+         }
+
+         if (isOnlyOptionAvailable) {
+            $('[id$=FlashDrivesOnly]').removeClass("hidden");
+            $('[id$=FlashDrivesNotAvailable]').addClass("hidden");
+            $('[id$=rbtnFlashDrives]').selected = true;
+         }
+         else if (isAvailable) {
+            $('[id$=FlashDrivesOnly]').addClass("hidden");
+            $('[id$=FlashDrivesNotAvailable]').addClass("hidden");
+         } else {
+            $('[id$=FlashDrivesOnly]').addClass("hidden");
+            $('[id$=FlashDrivesNotAvailable]').removeClass("hidden");
+         }
+      }
+
+      function SetupMediaFormats() {
+         var subject = '';
+         var isCredit;
+
+         if ($('[id$=rbtnAccredited]').length) {
+            if ($('[id$=rbtnAccredited]').is(":checked")) {
+               isCredit = "Y";
+            }
+            else {
+               isCredit = "N";
+            }
+         }
+         else if (creditType === "Accredited") {
+             isCredit = "Y";
+         }
+         else {
+            isCredit = "N";
+         }
+
+         $.ajax(
+            {
+               type: "POST",
+               url: 'Options.aspx/GetMediaFormatsAvailability',
+               contentType: "application/json; charset=utf-8",
+               dataType: 'json',
+               data: "{'isCredit' : '" + isCredit + "', 'studentGrade' : '" + 12 + "', 'subject' : '" + subject + "'}",
+               success: function (data) {
+                  CheckDvd        (data.d.HasDvd,          data.d.HasDvd && !data.d.HasStreaming && !data.d.HasFlashDrives);
+                  CheckStreaming  (data.d.HasStreaming,   !data.d.HasDvd &&  data.d.HasStreaming && !data.d.HasFlashDrives);
+                  CheckFlashDrives(data.d.HasFlashDrives, !data.d.HasDvd && !data.d.HasStreaming &&  data.d.HasFlashDrives);
+               }
+            });
+      }
+
+      //]]>
+       $(document).ready(function () {
+
+           SetupMediaFormats();
+           displayGuardianSelection();
+           displayAssessmentSelection();
+
+           if (creditType === "Accredited") {
+               checkAge();
+           }
+
+           if (creditType === "Unaccredited") {
+               hidAgeMessage();
+           }
+       })
+   </script>
+
+   <script>
+   //<![CDATA[
+      function setVisibility(itemID, show, duration) {
+         if (show) {
+            itemID.slideDown(duration);
+         }
+         else {
+            itemID.slideUp(duration);
+         }
+      }
+
+      function ScrollIntoItem(itemID) {
+         $('html, body').animate({ scrollTop: $('#' + itemID).offset().top - 50 }, 500);
+      }
+
+      function ScrollIntoItemDelay(itemID, delayTime) {
+         setTimeout(function ScrollTimer() { ScrollIntoItem(itemID); }, delayTime);
+      }
+
+      function ddlTempEnrollType() {
+         var ddlTempEnrollType = $('[id$=ddlTempEnrollType]');
+         var ddlTempGrade = $('[id$=ddlTempGrade]');
+         var ddlTempGradePreSelected = ddlTempGrade.val();
+         ddlTempGrade.empty();
+
+         if (ddlTempEnrollType.val() == "F") {
+            ddlTempGrade.append(
+                        $('<option></option>').val("14").text("K4")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("15").text("K5")
+                     );
+         }
+
+         if (ddlTempEnrollType.val() == "F" || ddlTempEnrollType.val() == "L" || ddlTempEnrollType.val() == "A") {
+            ddlTempGrade.append(
+                        $('<option></option>').val("1").text("Grade 1")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("2").text("Grade 2")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("3").text("Grade 3")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("4").text("Grade 4")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("5").text("Grade 5")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("6").text("Grade 6")
+                     );
+         }
+
+         if (ddlTempEnrollType.val() == "F" || ddlTempEnrollType.val() == "C") {
+            ddlTempGrade.append(
+                        $('<option></option>').val("7").text("Grade 7")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("8").text("Grade 8")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("9").text("Grade 9")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("10").text("Grade 10")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("11").text("Grade 11")
+                     );
+            ddlTempGrade.append(
+                        $('<option></option>').val("12").text("Grade 12")
+                     );
+         }
+
+         ddlTempGrade.val(ddlTempGradePreSelected);
+         if (ddlTempGrade.val() == null) {
+            $("#ddlTempGrade")[0].selectedIndex = 0;
+         }
+         ddlTempGrade.change();
+      }
+   //]]>
+   </script>
+
+   <script src="/Includes/javascript/jquery.gridster.scripts.js?update=917SM" class="iniGridsterSector"></script>
+   <script src="/Includes/javascript/sideControls.js"></script>
+   <script>
+      $(document).ready(function () {
+         $('.themeOption').on("click", function (event) {
+            event.preventDefault();
+            $(document).dashboardTheme($(this).attr('data-theme'));
+         }).dashboardTheme();
+      });
+   </script>
+<script src="https://js.monitor.azure.com/scripts/b/ai.2.min.js" crossorigin="anonymous"></script><script async="" src="https://static.hotjar.com/c/hotjar-608300.js?sv=6"></script><script async="" src="https://script.hotjar.com/modules.acfce7141cd3503e3221.js" charset="utf-8"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/widgets-core.min.js" charset="UTF-8"></script><style type="text/css">.cx-widget *{box-sizing:border-box;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}.cx-widget{font-family:Roboto;font-size:1em;transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;-webkit-transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;-moz-transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;-o-transition:background .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease}.cx-widget article,.cx-widget aside,.cx-widget details,.cx-widget figcaption,.cx-widget figure,.cx-widget footer,.cx-widget header,.cx-widget hgroup,.cx-widget main,.cx-widget nav,.cx-widget section,.cx-widget summary{display:block}.cx-widget audio,.cx-widget canvas,.cx-widget progress,.cx-widget video{display:inline-block;vertical-align:baseline}.cx-widget audio:not([controls]){display:none;height:0}.cx-widget [hidden],.cx-widget template{display:none}.cx-widget a{background:transparent;text-decoration:underline;background:0 0}.cx-widget abbr[title]{border-bottom:1px dotted}.cx-widget b,.cx-widget strong{font-weight:700}.cx-widget dfn{font-style:italic}.cx-widget h1{margin:.67em 0;font-size:2em}.cx-widget mark{background:#ff0}.cx-widget small{font-size:80%}.cx-widget sub,.cx-widget sup{position:relative;font-size:75%;line-height:0;vertical-align:baseline}.cx-widget sup{top:-.5em}.cx-widget sub{bottom:-.25em}.cx-widget img{border:0}.cx-widget svg:not(:root){overflow:hidden;-webkit-transform:scale(1);transform:scale(1)}.cx-widget figure{margin:1em 40px}.cx-widget hr{height:0;-moz-box-sizing:content-box;box-sizing:content-box}.cx-widget pre{overflow:auto}.cx-widget code,.cx-widget kbd,.cx-widget pre,.cx-widget samp{font-family:monospace,monospace;font-size:1em}.cx-widget button,.cx-widget input,.cx-widget optgroup,.cx-widget select,.cx-widget textarea{margin:0;font:inherit;color:inherit}.cx-widget button,.cx-widget select{text-transform:none}.cx-widget button,.cx-widget input[type=button],.cx-widget input[type=reset],.cx-widget input[type=submit]{-webkit-appearance:button;cursor:pointer}.cx-widget button[disabled],.cx-widget input[disabled]{cursor:default}.cx-widget button::-moz-focus-inner,.cx-widget input::-moz-focus-inner{padding:0;border:0}.cx-widget input{line-height:normal}.cx-widget input[type=checkbox],.cx-widget input[type=radio]{-moz-box-sizing:border-box;box-sizing:border-box;padding:0}.cx-widget input[type=number]::-webkit-inner-spin-button,.cx-widget input[type=number]::-webkit-outer-spin-button{height:auto}.cx-widget input[type=search]{-moz-box-sizing:content-box;box-sizing:content-box;-webkit-appearance:textfield}.cx-widget input[type=search]::-webkit-search-cancel-button,.cx-widget input[type=search]::-webkit-search-decoration{-webkit-appearance:none}.cx-widget fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid}.cx-widget textarea{overflow:auto}.cx-widget optgroup{font-weight:700}.cx-widget table{border-spacing:0;border-collapse:collapse}.cx-widget td,.cx-widget th{padding:0}.cx-widget th{text-align:left}.cx-widget label{margin-bottom:0!important;color:inherit!important}.cx-widget button{margin:0;font:inherit;overflow:visible;text-rendering:auto;letter-spacing:normal;word-spacing:normal;text-indent:0;-webkit-writing-mode:horizontal-tb}.cx-widget .cx-icon-debug .cx-icon-debug-set>div{display:inline-block;width:58px;padding:10px;margin:5px;font-size:.625em;text-align:center}.cx-widget .cx-icon-debug .cx-icon-debug-set>div span{white-space:nowrap}.cx-widget .cx-form-control{height:32px;border:1px solid;border-width:1px;border-style:solid}.cx-widget .cx-btn{display:inline-block;padding:5px 24px;margin-bottom:0;font-size:.75em;font-weight:700;line-height:1.66666667em;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;-o-user-select:none;user-select:none;background-image:none;border:1px solid;border-radius:2px;text-shadow:none}.cx-widget .cx-btn:focus{border-width:2px;padding-top:4px;padding-bottom:4px}.cx-widget .cx-full-screen-view{position:absolute;z-index:999999;top:0;left:0;height:100%;width:100%;padding:0;margin:0}.cx-widget fieldset{min-width:0;padding:0;margin:0;border:0}.cx-widget legend{display:block;width:100%;padding:0;margin-bottom:20px;font-size:1.125em;line-height:inherit;border:0;border-bottom:1px solid}.cx-widget label{display:inline;margin-bottom:5px;font-size:.75em;font-weight:700;line-height:1rem}.cx-widget input[type=search]{-moz-box-sizing:border-box;box-sizing:border-box}.cx-widget input[type=radio]{margin-top:4px;margin-right:5px;cursor:pointer;width:auto;display:inline;height:auto}.cx-widget input[type=radio].cx-radiobtn{display:none}.cx-widget input[type=radio].cx-radiobtn+span{position:relative;top:1px;display:inline;margin-right:7px;font-size:.9375em;line-height:.75em;cursor:pointer;outline:none}.cx-widget input[type=checkbox]{margin-top:4px;margin-right:5px;cursor:pointer;width:auto!important;float:left}.cx-widget input[type=checkbox].cx-form-control{margin-top:1px;height:auto}.cx-widget input[type=checkbox].cx-checkbox{display:none}.cx-widget input[type=checkbox].cx-checkbox+span{position:relative;top:1px;display:inline;margin-right:7px;font-size:.875em;line-height:1rem;cursor:pointer;outline:none}.cx-widget input[type=file]{display:block}.cx-widget input[type=range]{display:block;width:100%}.cx-widget select[multiple],.cx-widget select[size]{height:auto}.cx-widget input[type=checkbox]:focus,.cx-widget input[type=file]:focus,.cx-widget input[type=radio]:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}.cx-widget output{padding-top:5px}.cx-widget .cx-form-control,.cx-widget output{display:block;font-size:.75em;line-height:1.86666667em}.cx-widget .cx-form-control{width:100%;padding:4px 12px;background-image:none;border-radius:2px}.cx-widget .cx-form-control:focus{outline:0;border-width:2px}.cx-widget .cx-form-control[disabled],.cx-widget .cx-form-control[readonly],.cx-widget fieldset[disabled] .cx-form-control{cursor:not-allowed;opacity:1}.cx-widget textarea.cx-form-control{height:auto;resize:none}.cx-widget textarea.cx-form-control:focus{padding-top:3px;padding-bottom:3px}.cx-widget input[type=date]{line-height:2em}.cx-widget .cx-form-group{margin-bottom:15px}.cx-widget .cx-checkbox,.cx-widget .cx-radio{display:block;min-height:20px;margin-top:10px;margin-bottom:10px}.cx-widget .cx-checkbox label,.cx-widget .cx-radio label{display:inline;font-weight:400;cursor:pointer}.cx-widget .cx-checkbox-inline input[type=checkbox],.cx-widget .cx-checkbox input[type=checkbox],.cx-widget .cx-radio-inline input[type=radio],.cx-widget .cx-radio input[type=radio]{float:left}.cx-widget .cx-checkbox+.checkbox,.cx-widget .cx-radio+.radio{margin-top:-5px}.cx-widget .cx-checkbox-inline,.cx-widget .cx-radio-inline{display:inline-block;padding-left:20px;margin-bottom:0;font-weight:400;line-height:1.25em;vertical-align:middle;cursor:pointer}.cx-widget .cx-checkbox-inline+.cx-checkbox-inline,.cx-widget .cx-radio-inline+.cx-radio-inline{margin-top:0;margin-left:1px}.cx-widget .cx-checkbox-inline[disabled],.cx-widget .cx-checkbox[disabled],.cx-widget .cx-radio-inline[disabled],.cx-widget .cx-radio[disabled],.cx-widget fieldset[disabled] .cx-checkbox,.cx-widget fieldset[disabled] .cx-checkbox-inline,.cx-widget fieldset[disabled] .cx-radio,.cx-widget fieldset[disabled] .cx-radio-inline,.cx-widget fieldset[disabled] input[type=checkbox],.cx-widget fieldset[disabled] input[type=radio],.cx-widget input[type=checkbox][disabled],.cx-widget input[type=radio][disabled]{cursor:not-allowed}.cx-widget .cx-input-sm{height:32px;padding:5px 10px;font-size:.6875em;line-height:1.5;border-radius:3px}.cx-widget select.cx-input-sm{height:32px;line-height:2em}.cx-widget select[multiple].cx-input-sm,.cx-widget textarea.cx-input-sm{height:auto}.cx-widget .cx-input-lg{height:32px;padding:10px 16px;font-size:.875em;line-height:1.33em;border-radius:6px}.cx-widget select.cx-input-lg{height:32px;line-height:2em}.cx-widget select[multiple].cx-input-lg,.cx-widget textarea.cx-input-lg{height:auto}.cx-widget .ui-draggable-handle{-ms-touch-action:none;touch-action:none}@keyframes opacityZeroToFull{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes opacityIncreaseToFull{0%{opacity:.5}to{opacity:1}}.cx-widget:hover{z-index:1000000!important}.cx-widget .cx-mobile input.cx-form-control,.cx-widget .cx-mobile text-area.cx-form-control{font-size:1em}.cx-button-group{overflow:auto}.cx-buttons-single{text-align:center}.cx-buttons-single .cx-btn-default,.cx-buttons-single .cx-btn-primary{float:none}.cx-buttons-binary .cx-btn-primary{float:right}.cx-buttons-binary .cx-btn-default{float:left}.cx-buttons-primary .cx-btn-primary{float:right}.cx-buttons-primary .cx-text{float:left;margin-left:16px}.cx-buttons-default .cx-btn-default{float:left}.cx-buttons-default .cx-text{float:right;margin-right:16px}.cx-ac-wrapper{position:relative;width:100%}.cx-ac-wrapper input{padding-right:30px}.cx-ac-dropdown-menu{position:absolute;top:100%;left:0;right:0;z-index:1;padding:4px 0;cursor:pointer;display:none;border:1px solid}.cx-ac-suggestion{padding:8px 12px}.cx-countdown{font-size:1.5em;font-weight:300}.cx-countdown .cx-icon{display:inline-block;width:16px;height:16px;margin-right:7px}.cx-mobile .cx-countdown .cx-icon{width:18px;height:18px}.cx-screen-reader-only{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}.cx-common-screen-reader{width:1px;height:1px;overflow:hidden;text-indent:-9999px;border:0}.cx-widget.cx-desktop .cx-input-focus{border-width:1px!important;box-shadow:0 2px 2px #23adff;transition:all .2s ease-out;border-color:#75a8ff!important}.cx-widget.cx-desktop .cx-input-focus:focus{outline:none}</style><style type="text/css">.cx-common-container.cx-loading .cx-loading-screen,.cx-common-container.cx-loading .cx-smokescreen{display:block}.cx-common-container.cx-waiting .cx-loading-screen{display:block;pointer-events:none;background:none}.cx-loading-screen{display:none;position:absolute;top:0;left:0;height:100%;width:100%}.cx-loading-container{display:none;position:relative}.cx-loading-container .cx-loading-icon,.cx-loading-screen .cx-loading-icon{display:inline-block;height:50px;width:50px;left:-25px;margin-left:50%;position:relative;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.cx-loading-container svg,.cx-loading-screen svg{-webkit-animation:cxloadingspin 4s linear infinite;-moz-animation:cxloadingspin 4s linear infinite;animation:cxloadingspin 4s linear infinite}@-moz-keyframes cxloadingspin{0%{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(1turn)}}@-webkit-keyframes cxloadingspin{0%{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(1turn)}}@keyframes cxloadingspin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.cx-common-container,.cx-drop-shadow{-webkit-box-shadow:0 0 21px 2px rgba(0,0,0,.2);box-shadow:0 0 21px 2px rgba(0,0,0,.2)}.cx-common-container{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}.cx-common-container button,.cx-common-container form{outline:none}.cx-common-container *{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}.cx-common-container ::-webkit-scrollbar{width:5px;height:5px}.cx-common-container .cx-titlebar{clear:both;border-width:0 0 1px;border-style:solid;padding:14px 20px;background-color:inherit}.cx-common-container .cx-titlebar .cx-icon{float:left;width:24px;height:24px;margin-top:2px}.cx-common-container .cx-titlebar .cx-title{display:inline-block;font-size:1.5em;margin:0 0 0 8px;font-weight:lighter}.cx-common-container .cx-titlebar .cx-close{float:right}.cx-common-container .cx-titlebar .cx-close .cx-button-close{font-size:1em}.cx-common-container .cx-body{padding:24px 24px 0;overflow:auto;clear:both;position:relative}.cx-common-container .cx-body ::-webkit-scrollbar{width:5px;height:5px}.cx-common-container .cx-button-container{font-size:.75em;line-height:1em}.cx-common-container .cx-button-container .cx-button-group .cx-btn{margin:12px 0 0}.cx-common-container .cx-button-container .cx-button-group .cx-text{margin:20px 0;line-height:1em}.cx-common-container .cx-dialog-container,.cx-common-container .cx-smokescreen{position:absolute;top:0;left:0;height:100%;width:100%;display:none}.cx-common-container .cx-dialog-container{padding:48px 96px;font-size:.875em}.cx-common-container .cx-dialog-container .cx-dialog{border:1px solid;padding:24px;top:28px;position:relative;display:none}.cx-common-container .cx-footer{padding:14px 24px 18px;background-color:inherit}.cx-common-container .cx-footer .cx-powered-by{font-size:.625em}.cx-common-container .cx-branding{padding:10px 12px 26px 15px}.cx-common-container .cx-branding .cx-icon{float:left;width:16px;height:16px}.cx-common-container .cx-email-link{font-weight:700}.cx-common-container .cx-powered-by .cx-icon{position:relative;top:2px}.cx-common-container .cx-powered-by .cx-icon svg{width:59px;height:14px}.cx-common-container .cx-buttons-window-control{position:absolute;top:12px;right:12px;font-size:1em;overflow:hidden}.cx-common-container .cx-buttons-window-control button{display:none;padding:0;background-color:transparent;border:0;width:20px;height:20px;padding:2px;margin-left:6px}.cx-common-container .cx-buttons-window-control button:focus{border:1px solid;border-width:2px;padding:1px}.cx-footer .cx-button-group .cx-button-group{margin-bottom:0}.cx-button-group{overflow:auto}.cx-buttons-single{text-align:center}.cx-buttons-single .cx-btn-default,.cx-buttons-single .cx-btn-primary{float:none}.cx-buttons-binary .cx-btn-primary{float:right}.cx-buttons-binary .cx-btn-default{float:left}.cx-buttons-primary .cx-btn-primary{float:right}.cx-buttons-primary .cx-text{float:left;margin-left:16px}.cx-buttons-default .cx-btn-default{float:left}.cx-buttons-default .cx-text{float:right;margin-right:16px}.cx-common-container.cx-close .cx-buttons-window-control button.cx-button-close,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-maximize,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-minimize{display:inline-block}.cx-common-container.cx-minimized .cx-buttons-window-control .cx-button-maximize svg{-ms-transform:rotate(180deg);-webkit-transform:rotate(180deg);transform:rotate(180deg);border-bottom:1px transparent}.cx-common-container.cx-mobile .cx-btn{padding:5px 14px}.cx-common-container.cx-mobile .cx-titlebar{padding:9px 11px}.cx-common-container.cx-mobile .cx-titlebar .cx-icon{margin-left:13px}.cx-common-container.cx-mobile .cx-buttons-window-control{top:7px;right:0;overflow:visible!important}.cx-common-container.cx-mobile .cx-buttons-window-control>button{margin-right:10px;padding:4px;width:24px;height:32px}.cx-common-container.cx-mobile .cx-buttons-window-control>button:focus{padding:3px}.cx-common-container.cx-mobile .cx-button-container .cx-text{margin:16px 9px 16px 0}.cx-common-container.cx-mobile .cx-footer{border-width:1px 0 0;border-style:solid;width:100%;position:absolute;bottom:0;left:0}.cx-common-container.cx-mobile .cx-dialog-container{padding:20px}</style><style type="text/css">.cx-common-container.cx-close .cx-buttons-window-control button.cx-button-close,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-maximize,.cx-common-container.cx-minimize .cx-buttons-window-control button.cx-button-minimize{display:inline-block}</style><style type="text/css">.cx-common-container.cx-overlay.cx-desktop{padding:28px 48px 0;min-width:688px;width:auto}.cx-common-container.cx-overlay.cx-desktop .cx-button-group{padding-bottom:0}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar{border:0;padding:0 0 17px}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar .cx-icon{float:left;width:24px;height:24px;margin-right:12px;margin-top:0}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar .cx-title{margin-top:0;margin-left:0;padding:0;line-height:1.75em;font-size:1.5em}.cx-common-container.cx-overlay.cx-desktop .cx-titlebar .cx-subtitle{font-size:.875em;line-height:2.5em;clear:both}.cx-common-container.cx-overlay.cx-desktop .cx-body{padding:17px 0;min-height:66px;border-width:1px 0;border-style:solid}.cx-common-container.cx-overlay.cx-desktop .cx-footer{padding:8px 0 24px}.cx-common-container.cx-overlay.cx-desktop .cx-button-container{margin-bottom:12px}.cx-widget.ow-modal.cx-mobile{top:inherit!important;right:inherit!important;height:100%;width:100%;position:fixed;z-index:1000000!important}.cx-widget.ow-modal.cx-mobile.ow-full-screen{margin-left:0!important;left:0!important;bottom:0!important}.cx-widget.ow-modal.ow-fit-content{top:50px!important;height:auto;width:auto;max-width:96%;z-index:1000020!important}.cx-common-container.cx-overlay.cx-mobile{min-width:auto}.cx-common-container.cx-overlay.cx-mobile .cx-subtitle{font-size:.875em;line-height:2.5em;clear:both}.cx-common-container.cx-overlay.cx-mobile .cx-footer{padding:14px 24px 18px}.cx-common-container.cx-overlay.cx-mobile.cx-portrait{padding:0;height:100%;width:100%}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-close{padding:4px 8px;font-size:1.5em}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-body{max-height:none;padding:16px 24px 17px;border-width:1px 0;border-style:solid}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-body .cx-wrapper{height:100%;max-height:none}.cx-common-container.cx-overlay.cx-mobile.cx-portrait .cx-button-container .cx-button-group .cx-btn{margin:8px 24px}.cx-common-container.cx-overlay.cx-mobile.cx-landscape{height:100%;width:100%;padding:0}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-close{padding:4px 8px;font-size:1.5em}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-body{border-width:0;border-style:solid;padding:16px 24px 17px;border-top:0}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-body .wrapper{max-height:none;height:100%}.cx-common-container.cx-overlay.cx-mobile.cx-landscape .cx-button-container .cx-button-group .cx-btn{height:32px;margin:8px 24px}@media screen and (max-width:1099px) and (min-width:650px){.cx-common-container.cx-overlay.cx-desktop{min-width:550.4px}}</style><style type="text/css">.cx-common-container.cx-toast .cx-button-container{padding:0 24px}</style><style type="text/css">.cx-widget.cx-theme-dark{color:#fdfdfd;background-color:#33383d;scrollbar-face-color:#a3a8ae;scrollbar-track-color:#212529;scrollbar-arrow-color:#a3a8ae}.cx-widget.cx-theme-dark .cx-theme{background-color:#33383d;color:#fdfdfd;border-color:#222529!important}.cx-widget.cx-theme-dark .cx-overlay{background-color:#33383d}.cx-widget.cx-theme-dark .cx-svg-icon-tone1{fill:#fdfdfd}.cx-widget.cx-theme-dark .cx-svg-icon-tone2{fill:#8c8c8c}.cx-widget.cx-theme-dark .cx-svg-icon-shadow1{fill:#000;opacity:.2}.cx-widget.cx-theme-dark .cx-svg-icon-shadow2{fill:#000;opacity:.1}.cx-widget.cx-theme-dark *{border-color:#222529}.cx-widget.cx-theme-dark .cx-titlebar .cx-title{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-buttons-window-control .cx-svg-icon-tone1,.cx-widget.cx-theme-dark .cx-input-icon-overlay .cx-svg-icon-tone1{fill:#98a7b8}.cx-widget.cx-theme-dark a,.cx-widget.cx-theme-dark a:hover,.cx-widget.cx-theme-dark label{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-icon-alert-circle{color:#f53131}.cx-widget.cx-theme-dark .cx-branding,.cx-widget.cx-theme-dark .cx-footer{color:#98a7b8}.cx-widget.cx-theme-dark .cx-branding *,.cx-widget.cx-theme-dark .cx-footer *{fill:#98a7b8}.cx-widget.cx-theme-dark .cx-form-control{background-color:#444a52;color:#fdfdfd}.cx-widget.cx-theme-dark .cx-form-control.cx-error{border-color:#f53131!important}.cx-widget.cx-theme-dark .cx-form-control::placeholder{color:#c5ccd6}.cx-widget.cx-theme-dark .cx-form-control:-moz-placeholder,.cx-widget.cx-theme-dark .cx-form-control::-moz-placeholder{color:#c5ccd6;opacity:1}.cx-widget.cx-theme-dark .cx-form-control:-ms-input-placeholder{color:#c5ccd6}.cx-widget.cx-theme-dark .cx-form-control::-webkit-input-placeholder{color:#c5ccd6}.cx-widget.cx-theme-dark .cx-btn:focus,.cx-widget.cx-theme-dark .cx-button-group button:focus,.cx-widget.cx-theme-dark .cx-form-control:not(.cx-error):focus,.cx-widget.cx-theme-dark input:focus,.cx-widget.cx-theme-dark textarea:focus{border-color:#75a8ff!important}.cx-widget.cx-theme-dark input,.cx-widget.cx-theme-dark select,.cx-widget.cx-theme-dark textarea{background-color:#444a52;color:#fdfdfd;border-color:#758384}.cx-widget.cx-theme-dark .intl-tel-input .selected-flag{border-color:#75a8ff}.cx-widget.cx-theme-dark .cx-btn-default{background:none;border-color:#222529!important;color:#fdfdfd;background-color:#222529}.cx-widget.cx-theme-dark .cx-btn.cx-disabled{background:#ccc}.cx-widget.cx-theme-dark .cx-btn-primary{color:#fdfdfd;border-color:#2e69db!important;background:#5081e1;background:-moz-linear-gradient(top,#5081e1 0,#4375d6 100%);background:-webkit-linear-gradient(top,#5081e1,#4375d6);background:linear-gradient(180deg,#5081e1 0,#4375d6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="@bg_color_4",endColorstr="@bg_color_5",GradientType=0)}.cx-widget.cx-theme-dark .cx-btn-primary:focus,.cx-widget.cx-theme-dark .cx-button-group .cx-btn-primary:focus{border-color:#dae6fc!important}.cx-widget.cx-theme-dark .cx-ac-dropdown-menu{background:#33383d;border-color:#222529!important}.cx-widget.cx-theme-dark .cx-ac-suggestion.cx-active,.cx-widget.cx-theme-dark .cx-ac-suggestion:hover{background-color:#75a8ff;color:#fdfdfd}.cx-widget.cx-theme-dark ::-webkit-scrollbar-thumb{background:#a3a8ae}.cx-widget.cx-theme-dark .cx-smokescreen{background-color:#33383d;opacity:.7}.cx-widget.cx-theme-dark .cx-dialog-container .cx-dialog{background-color:#33383d;border-color:#222529!important}.cx-widget.cx-theme-dark .cx-theme-background{background-color:#33383d}.cx-widget.cx-theme-dark .cx-theme-border{border:1px solid #222529!important}.cx-widget.cx-theme-dark .cx-theme-text{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-theme-icon-interactive1 svg .cx-svg-icon-tone1{fill:#5081e1}.cx-widget.cx-theme-dark .cx-theme-icon-positive svg .cx-svg-icon-tone1{fill:#4ac764}.cx-widget.cx-theme-dark .cx-theme-icon-negative svg .cx-svg-icon-tone1{fill:#f53131}.cx-widget.cx-theme-dark .cx-theme-icon-warning svg .cx-svg-icon-tone1{fill:#f8a740}.cx-widget.cx-theme-dark .cx-warning{color:#f53131!important}.cx-widget.cx-theme-dark .cx-warning .cx-icon svg *{fill:#f53131!important}.cx-widget.cx-theme-dark .cx-countdown{color:#fdfdfd}.cx-widget.cx-theme-dark .cx-countdown .cx-icon svg *{fill:#fdfdfd}</style><style type="text/css">.cx-widget.cx-theme-light{color:#444a52;background-color:#fdfdfd;scrollbar-face-color:#ccc}.cx-widget.cx-theme-light .cx-theme{background-color:#fdfdfd;color:#444a52;border-color:#dae1e8!important}.cx-widget.cx-theme-light .cx-overlay{background-color:#fdfdfd}.cx-widget.cx-theme-light .cx-svg-icon-tone1{fill:#ff4f1f}.cx-widget.cx-theme-light .cx-svg-icon-tone2{fill:#8c8c8c}.cx-widget.cx-theme-light .cx-svg-icon-shadow1{fill:#000;opacity:.2}.cx-widget.cx-theme-light .cx-svg-icon-shadow2{fill:#000;opacity:.1}.cx-widget.cx-theme-light *{border-color:#dae1e8}.cx-widget.cx-theme-light .cx-titlebar .cx-title{color:#444a52}.cx-widget.cx-theme-light .cx-buttons-window-control .cx-svg-icon-tone1{fill:#8795a6}.cx-widget.cx-theme-light .cx-input-icon-overlay .cx-svg-icon-tone1{fill:#98a7b8}.cx-widget.cx-theme-light .cx-input-group-btn .cx-svg-icon-tone1{fill:#fdfdfd}.cx-widget.cx-theme-light label{color:#444a52}.cx-widget.cx-theme-light a,.cx-widget.cx-theme-light a:hover{color:#000}.cx-widget.cx-theme-light .cx-icon-alert-circle{color:#f53131}.cx-widget.cx-theme-light .cx-branding,.cx-widget.cx-theme-light .cx-footer{color:#66759b}.cx-widget.cx-theme-light .cx-branding *,.cx-widget.cx-theme-light .cx-footer *{fill:#66759b}.cx-widget.cx-theme-light .cx-form-control.cx-error{border-color:#f53131!important}.cx-widget.cx-theme-light .cx-form-control::placeholder{color:#6f7491}.cx-widget.cx-theme-light .cx-form-control:-moz-placeholder,.cx-widget.cx-theme-light .cx-form-control::-moz-placeholder{color:#6f7491;opacity:1}.cx-widget.cx-theme-light .cx-form-control:-ms-input-placeholder{color:#6f7491}.cx-widget.cx-theme-light .cx-form-control::-webkit-input-placeholder{color:#6f7491}.cx-widget.cx-theme-light .cx-btn:focus,.cx-widget.cx-theme-light .cx-button-group button:focus,.cx-widget.cx-theme-light .cx-form-control:not(.cx-error):focus,.cx-widget.cx-theme-light input:focus,.cx-widget.cx-theme-light textarea:focus{border-color:#5791fd!important}.cx-widget.cx-theme-light input,.cx-widget.cx-theme-light select,.cx-widget.cx-theme-light textarea{background-color:#fdfdfd;color:#444a52;border-color:#94948a}.cx-widget.cx-theme-light .intl-tel-input .selected-flag{border-color:#5791fd}.cx-widget.cx-theme-light .cx-btn-default{background:none;border-color:#dae1e8!important;color:#fdfdfd;background-color:#555d66}.cx-widget.cx-theme-light .cx-btn.cx-disabled{background:#ccc}.cx-widget.cx-theme-light .cx-btn-primary{color:#fdfdfd;border-color:#2e69db!important;background:#566dd9;background:-moz-linear-gradient(top,#566dd9 0,#4375d6 100%);background:-webkit-linear-gradient(top,#566dd9,#4375d6);background:linear-gradient(180deg,#566dd9 0,#4375d6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="@bg_color_4",endColorstr="@bg_color_5",GradientType=0);background-color:#566dd9}.cx-widget.cx-theme-light .cx-btn-default:focus,.cx-widget.cx-theme-light .cx-btn-primary:focus,.cx-widget.cx-theme-light .cx-button-group .cx-btn-default:focus,.cx-widget.cx-theme-light .cx-button-group .cx-btn-primary:focus{border-color:#000!important}.cx-widget.cx-theme-light .cx-ac-dropdown-menu{background:#fdfdfd;border-color:#dae1e8!important}.cx-widget.cx-theme-light .cx-ac-suggestion.cx-active,.cx-widget.cx-theme-light .cx-ac-suggestion:hover{background-color:#5791fd;color:#fdfdfd}.cx-widget.cx-theme-light ::-webkit-scrollbar-thumb{background:#939399}.cx-widget.cx-theme-light .cx-smokescreen{background-color:#fdfdfd;opacity:.7}.cx-widget.cx-theme-light .cx-dialog-container .cx-dialog{background-color:#fdfdfd;border-color:#dae1e8!important}.cx-widget.cx-theme-light .cx-theme-background{background-color:#fdfdfd}.cx-widget.cx-theme-light .cx-theme-border{border:1px solid #dae1e8!important}.cx-widget.cx-theme-light .cx-theme-text{color:#444a52}.cx-widget.cx-theme-light .cx-theme-icon-interactive1 svg .cx-svg-icon-tone1{fill:#5081e1}.cx-widget.cx-theme-light .cx-theme-icon-positive svg .cx-svg-icon-tone1{fill:#34a84f}.cx-widget.cx-theme-light .cx-theme-icon-negative svg .cx-svg-icon-tone1{fill:#f53131}.cx-widget.cx-theme-light .cx-theme-icon-warning svg .cx-svg-icon-tone1{fill:#d47f2f}.cx-widget.cx-theme-light .cx-warning{color:#f53131!important}.cx-widget.cx-theme-light .cx-warning .cx-icon svg *{fill:#f53131!important}.cx-widget.cx-theme-light .cx-countdown{color:#444a52}.cx-widget.cx-theme-light .cx-countdown .cx-icon svg *{fill:#444a52}.cx-widget.cx-theme-light .cx-loading-container .cx-loading-icon svg g g,.cx-widget.cx-theme-light .cx-loading-screen .cx-loading-icon svg g g{stroke:#2b74ff}.cx-widget.cx-theme-light .cx-loading-container .cx-loading-icon svg g:first-child g,.cx-widget.cx-theme-light .cx-loading-screen .cx-loading-icon svg g:first-child g{stroke:#72799d}</style><style type="text/css"></style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/webchat.min.js" charset="UTF-8"></script><style type="text/css">.cx-webchat{position:fixed;bottom:0;width:320px;z-index:999997}.cx-webchat .cx-body{padding:0;overflow:visible;position:relative}.cx-webchat .cx-parentDisable{opacity:.2}.cx-webchat .cx-spinner{display:none;z-index:2;position:relative;top:100%;left:45%}.cx-webchat .cx-history-loading{padding:16px}.cx-webchat .cx-history-loading .cx-loading-icon{width:26px;height:26px;top:14px;left:-16px}.cx-webchat i.fonticon.icon-alert-triangle{color:#f8a740;display:inline}.cx-webchat p.cx-reason{display:inline}.cx-webchat .cx-hidden-message{display:none}.cx-webchat.cx-minimized .cx-body,.cx-webchat.cx-minimized .cx-footer{display:none!important}.cx-webchat.cx-mobile.cx-minimized{height:auto!important}.cx-webchat.cx-mobile{top:inherit!important;right:inherit!important;bottom:0!important;left:0!important;height:100%!important;width:100%!important}.cx-webchat.cx-mobile .cx-form{border-width:0;border-style:none;padding:24px;overflow:hidden;-webkit-overflow-scrolling:touch}.cx-webchat.cx-mobile .cx-footer{display:none}@media screen and (min-device-width:360px) and (max-device-height:640px) and (-webkit-min-device-pixel-ratio:2) and (orientation:landscape),screen and (min-device-width:1200px){.cx-webchat.cx-mobile .cx-tooltip-menu{right:40px}}@-moz-document url-prefix(){@media screen and (min--moz-device-pixel-ratio:2) and (orientation:landscape){.cx-webchat.cx-mobile .cx-tooltip-menu{right:40px}}}.cx-webchat.cx-mobile .ie10up .cx-tooltip-menu,.cx-webchat.cx-mobile _:-ms-lang(x) .cx-tooltip-menu{right:40px}.cx-webchat.cx-mobile.cx-transcript-view .cx-footer{display:none!important}.cx-webchat.cx-theme-light .cx-message.cx-you .cx-bubble{background-color:#f2f4f7}.cx-webchat.cx-theme-light .cx-message.cx-them .cx-bubble{background-color:#ffc7b9}.cx-webchat.cx-theme-light .cx-message.cx-you .cx-bubble-arrow svg *{fill:#f2f4f7}.cx-webchat.cx-theme-light .cx-message.cx-them .cx-bubble-arrow svg *{fill:#ffc7b9}.cx-webchat.cx-theme-light .cx-time{color:#5c5c5b}.cx-webchat.cx-theme-light .cx-bubble-arrow svg{fill:#f2f4f7}.cx-webchat.cx-theme-light .cx-menu .cx-branding-icon svg *{fill:#8794ac}.cx-webchat.cx-theme-light .cx-input-container .cx-menu li .cx-char-count:focus,.cx-webchat.cx-theme-light .cx-input-container .cx-menu li .cx-icon:focus svg{border:1px solid #5292fc;border-width:2px}.cx-webchat.cx-theme-light .cx-input-container .cx-emoji-menu li,.cx-webchat.cx-theme-light .cx-input-container .cx-menu li{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}.cx-webchat.cx-theme-light .cx-carousel .cx-next,.cx-webchat.cx-theme-light .cx-carousel .cx-previous{border-color:#8795a6}.cx-webchat.cx-theme-light .cx-carousel .cx-next:focus,.cx-webchat.cx-theme-light .cx-carousel .cx-previous:focus{border-color:#5292fc}.cx-webchat.cx-theme-light .cx-menu li .cx-char-count{color:#75757b}.cx-webchat.cx-theme-light .cx-char-count.cx-warning{color:#ea0b2e!important}.cx-webchat.cx-theme-light .cx-emoji-item:hover{background-color:#dfdfdf}.cx-webchat.cx-theme-light .cx-emoji-item:active{background-color:#ccc}.cx-webchat.cx-theme-dark .cx-menu .cx-branding-icon svg *{fill:#98a7b8}.cx-webchat.cx-theme-dark .cx-char-count.cx-warning{color:#f9768c!important}.cx-webchat.cx-theme-dark .cx-transcript .cx-filename,.cx-webchat.cx-theme-dark .cx-transcript .cx-filesize,.cx-webchat.cx-theme-dark .cx-transcript .cx-message-text,.cx-webchat.cx-theme-dark .cx-transcript .cx-name{color:#fdfdfd!important}.cx-webchat.cx-theme-dark .cx-transcript .cx-message{border-color:#222529}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-you .cx-bubble{background-color:#4a525b}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-them .cx-bubble{background-color:#3168d2}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-you .cx-bubble-arrow svg *{fill:#4a525b}.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-them .cx-bubble-arrow svg *{fill:#3168d2}.cx-webchat.cx-theme-dark .cx-transcript .cx-time{color:#fff}.cx-webchat.cx-theme-dark .cx-alert>.cx-wrapper{background-color:#33383d;border-color:#222529;color:#fdfdfd}.cx-webchat.cx-theme-dark .cx-alert b.cx-link{color:#3963b8;word-break:break-all}.cx-webchat.cx-theme-dark .cx-webchat-smokescreen{background-color:#33383d}.cx-webchat.cx-theme-dark .cx-webchat .cx-tooltip-menu.cx-emoji .cx-option{color:#33383d}.cx-webchat.cx-theme-dark .cx-input-container .cx-menu li .cx-char-count:focus,.cx-webchat.cx-theme-dark .cx-input-container .cx-menu li .cx-icon:focus svg{border:1px solid #75a8ff;border-width:2px}.cx-webchat.cx-theme-dark .cx-input-container .cx-emoji-menu li,.cx-webchat.cx-theme-dark .cx-input-container .cx-menu li{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}.cx-webchat.cx-theme-dark .cx-carousel .cx-next:focus,.cx-webchat.cx-theme-dark .cx-carousel .cx-previous:focus{border-color:#75a8ff}.cx-webchat.cx-theme-dark .cx-emoji-item:hover{background-color:#444a52}.cx-webchat.cx-theme-dark .cx-emoji-item:active{background-color:#666f7a}.cx-webchat *{box-sizing:border-box}.cx-webchat .cx-alert{display:none;z-index:999999;position:absolute;top:0;left:0;width:100%}.cx-webchat .cx-alert.cx-normal-alert .cx-buttons-binary{display:none}.cx-webchat .cx-alert.cx-normal-alert .cx-button-single{display:block;text-align:center}.cx-webchat .cx-alert.cx-binary-alert .cx-binary-button{display:block}.cx-webchat .cx-alert.cx-binary-alert .cx-button-single{display:none}.cx-webchat .cx-alert>.cx-wrapper{margin:0 16px;background-color:#fff;padding:0 24px 24px;border:1px solid #eee}.cx-webchat .cx-alert>.cx-wrapper .cx-warning{padding-top:12px}.cx-webchat .cx-alert>.cx-wrapper .cx-warning .cx-icon{display:inline-block;vertical-align:bottom;height:24px;width:24px}.cx-webchat .cx-alert.cx-async-chat-end{position:relative}.cx-webchat .cx-webchat-smokescreen{background-color:#fff;opacity:.8;z-index:999998}.cx-webchat .cx-overlay,.cx-webchat .cx-webchat-smokescreen{display:none;height:100%;position:absolute;top:0;left:0;width:100%}.cx-webchat .cx-overlay{background-color:inherit;padding:20px;z-index:999999;-webkit-box-shadow:0 8px 11px -4px rgba(0,0,0,.3);box-shadow:0 8px 11px -4px rgba(0,0,0,.3)}.cx-webchat .cx-form{padding:24px 24px 0;border-width:0}.cx-webchat .cx-form table{width:100%;margin-bottom:16px}.cx-webchat .cx-form table td{width:100%;padding:4px 0}.cx-webchat .cx-form table th{padding-right:8px}.cx-webchat .cx-form .cx-button-group{padding-bottom:0}.cx-webchat .cx-form .cx-form-group{margin-bottom:8px}.cx-webchat .cx-form th .cx-control-label{white-space:nowrap!important}.cx-webchat .cx-form-wrapper{overflow:auto;position:relative;-webkit-overflow-scrolling:touch}.cx-webchat .cx-transcript{overflow-y:auto;overflow-x:hidden;height:312px;font-size:.75em;line-height:18px;display:none;-webkit-overflow-scrolling:touch;overscroll-behavior:none;position:relative;font-weight:300;padding:0 24px}.cx-webchat .cx-transcript .cx-push-url a{color:#75a8ff!important}.cx-webchat .cx-transcript .cx-message{min-height:48px;margin:0;box-sizing:border-box;position:relative}.cx-webchat .cx-transcript .cx-message .cx-bubble{padding:10px 15px;padding:16px}.cx-webchat .cx-transcript .cx-message .cx-bubble-arrow{position:absolute;top:12px}.cx-webchat .cx-transcript .cx-message .cx-name{font-weight:bolder;color:#222;padding-right:5px;display:inline-block;width:100%;white-space:nowrap;overflow:hidden!important;text-overflow:ellipsis}.cx-webchat .cx-transcript .cx-message .cx-time{display:block;font-size:.92em}.cx-webchat .cx-transcript .cx-message.cx-date{text-align:center;min-height:18px;line-height:12px;padding:3px 12px;border:1px solid #dae1e8;border-radius:14px;max-width:fit-content;margin:12px auto;display:table}.cx-webchat .cx-transcript .cx-message .cx-message-text{word-wrap:break-word;display:block}.cx-webchat .cx-transcript .cx-message .cx-message-text>p{margin:0;white-space:pre-line}@-moz-document url-prefix(){.cx-webchat .cx-transcript .cx-message .cx-message-text>p{white-space:pre-wrap}}.cx-webchat .cx-transcript .cx-message .cx-message-text>p img{width:100%}.cx-webchat .cx-transcript .cx-message .cx-avatar-wrapper{width:24px;position:absolute;top:2px}.cx-webchat .cx-transcript .cx-message .cx-avatar img{width:auto;height:100%}.cx-webchat .cx-transcript .cx-message>div.cx-NewTextBubble{-webkit-animation:NewTextBubble .5s 1;animation:NewTextBubble .5s 1}.cx-webchat .cx-transcript .cx-avatar{height:24px;width:24px}.cx-webchat .cx-transcript .cx-name{font-weight:bolder;color:#222;white-space:nowrap;text-overflow:ellipsis}.cx-webchat .cx-transcript .cx-time{font-size:11px;display:block;margin-bottom:5px}.cx-webchat .cx-transcript .cx-rich-message .cx-avatar{float:left}.cx-webchat .cx-transcript .cx-rich-message .cx-name{display:inline-block;margin:5px 0 0 10px}.cx-webchat .cx-transcript .cx-message.cx-system{background:none;padding:0;margin:13px 0}.cx-webchat .cx-transcript .cx-message.cx-system .cx-message-text,.cx-webchat .cx-transcript .cx-message.cx-system .cx-time{min-height:18px}.cx-webchat .cx-transcript .cx-message.cx-system .cx-bubble{padding:0;background-color:transparent}.cx-webchat .cx-transcript .cx-message.cx-system .cx-avatar-wrapper,.cx-webchat .cx-transcript .cx-message.cx-system .cx-bubble-arrow,.cx-webchat .cx-transcript .cx-message.cx-system .cx-name{display:none}.cx-webchat .cx-transcript .cx-message.cx-them{border:0;color:#000;padding:6px 0;text-align:left}.cx-webchat .cx-transcript .cx-message.cx-them .cx-bubble{margin-left:40px;text-align:left;margin-top:0;border-radius:0 14px 14px 14px}.cx-webchat .cx-transcript .cx-message.cx-them .cx-bubble-arrow{left:33px}.cx-webchat .cx-transcript .cx-message.cx-them .cx-bubble-arrow .cx-right{display:none}.cx-webchat .cx-transcript .cx-message.cx-them .cx-avatar-wrapper{left:0}.cx-webchat .cx-transcript .cx-message.cx-you{border:0;color:#000;padding:6px 0;text-align:right}.cx-webchat .cx-transcript .cx-message.cx-you .cx-name{display:none}.cx-webchat .cx-transcript .cx-message.cx-you .cx-bubble{margin-top:0;margin-right:7px;text-align:left;border-radius:14px 0 14px 14px}.cx-webchat .cx-transcript .cx-message.cx-you .cx-bubble-arrow{right:-7px}.cx-webchat .cx-transcript .cx-message.cx-you .cx-avatar-wrapper,.cx-webchat .cx-transcript .cx-message.cx-you .cx-bubble-arrow .cx-left{display:none}.cx-webchat .cx-transcript .cx-message.cx-injected{border:0;padding:6px 0}.cx-webchat .cx-transcript .cx-message-group>.cx-message{padding:0!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant{margin-bottom:6px!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-avatar-wrapper,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-bubble-arrow,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-name,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-time{display:none!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant .cx-bubble{border-radius:10px;margin:0 0 0 40px}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant.cx-them:first-child .cx-avatar-wrapper{display:block!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant.cx-you .cx-bubble{margin:0!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:first-child .cx-bubble-arrow,.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:first-child .cx-name{display:block!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:first-child .cx-bubble{border-top-left-radius:14px!important;border-top-right-radius:14px!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:last-child .cx-time{display:block!important}.cx-webchat .cx-transcript .cx-message-group>.cx-message.cx-participant:last-child .cx-bubble{border-bottom-left-radius:14px!important;border-bottom-right-radius:14px!important}.cx-webchat .cx-isTyping{color:#222;font-size:.6875em;font-style:italic}.cx-webchat div.cx-input-container{display:none;width:100%;padding:14px 16px 14px 24px;border-width:1px;border-style:solid}.cx-webchat div.cx-input-container .cx-textarea-cell{position:relative}.cx-webchat div.cx-input-container .cx-message-input{width:100%;resize:none;height:20px;line-height:20px;font-size:.75em;margin-bottom:14px;padding:0;font-weight:400;overflow:hidden;border:0;background-color:transparent;padding-right:40px}.cx-webchat div.cx-input-container .cx-input.cx-disabled{opacity:.5}.cx-webchat .cx-settings-group{display:none}.cx-webchat .cx-end{color:#fff;line-height:2.5625em;text-align:right;height:40px;position:absolute;top:13px;right:24px;-webkit-transition:opacity .22s ease-in-out;-moz-transition:opacity .22s ease-in-out;-o-transition:opacity .22s ease-in-out;transition:opacity .22s ease-in-out;display:none;display:none!important}.cx-webchat .cx-end:hover{cursor:pointer;opacity:.8;opacity:1}.cx-webchat .cx-send{height:20px;width:24px;top:0}.cx-webchat .cx-send,.cx-webchat .cx-start-cobrowse{display:none;position:absolute;right:0;cursor:pointer}.cx-webchat .cx-start-cobrowse{bottom:114px;background-color:#e3b33b;padding:3px 3px 3px 4px;border-radius:5px 0 0 0;color:#fff;font-size:.8125em}.cx-webchat .cx-a-disabled{color:currentColor;display:inline-block;pointer-events:none;text-decoration:none;cursor:not-allowed;opacity:.5;outline:none}.cx-webchat .cx-scroll-disabled{overflow:hidden}.cx-webchat .cx-countdown{font-size:2em}.cx-webchat-counter{display:none}.cx-webchat.cx-minimized .cx-webchat-counter{display:inline-block;border-radius:5px;background-color:#e3264f;color:#fff;font-size:.625em;padding:4px;text-align:center;margin-left:12px;cursor:pointer;min-width:25px;float:right}.cx-widget p .cx-file-transfer-block{display:block;height:110px}.cx-widget .cx-parentDisable{opacity:.2}.cx-widget span.cx-user-detail.cx-name{vertical-align:middle}.cx-widget .cx-user-detail .cx-filesentmsg,.cx-widget span.cx-user-detail.cx-name{width:auto!important;display:inline-block!important}.cx-widget .cx-filename{display:block}.cx-widget .cx-warning .cx-reason>strong>p.filename{margin-left:26px;margin-bottom:10px;margin-top:10px}.cx-widget .cx-warning .cx-reason .cx-advice{margin-left:28px}.cx-widget .cx-lastrow{display:inline-block;clear:both}.cx-widget .cx-lastrow>span{display:inline-block}.cx-widget .cx-download-btn{margin-top:4px!important;padding:5px!important;max-height:30px;width:80px;font-size:1em}.cx-widget .cx-filesize{margin-left:20px}.cx-widget.cx-webchat-chat-button{right:0;top:40%;font-weight:700;padding:10px 10px 4px!important;cursor:pointer}.cx-widget.cx-webchat-chat-button .cx-icon{height:23px;width:23px;margin-right:2px;display:inline-block}.cx-widget.cx-webchat-chat-button>span{white-space:nowrap;margin-bottom:-6px}.cx-widget.cx-webchat-chat-button .cx-chat-button-label{vertical-align:super}.cx-webchat.cx-mobile .cx-message-input{margin-top:10px!important;margin-bottom:16px!important;padding-right:51px!important;font-size:1em!important;line-height:1.125em!important;overflow:auto!important}.cx-webchat.cx-mobile .cx-send{right:16px}.cx-webchat.cx-mobile .cx-menu>li>.cx-menu-item{height:24px;width:24px;margin-right:20px}.cx-webchat.cx-mobile .cx-input-container{padding-top:6px!important;padding:14px 0 14px 24px!important}.cx-webchat.cx-mobile.cx-landscape .cx-message-input{margin-bottom:10px!important;padding-right:60px!important}.cx-webchat.cx-mobile.cx-landscape .cx-textarea-cell{width:100%}.cx-webchat.cx-mobile.cx-landscape .cx-branding-icon{position:relative!important;right:auto!important}.cx-webchat.cx-mobile.cx-landscape .cx-input-container{display:flex!important;padding-bottom:6px!important}.cx-webchat.cx-mobile.cx-landscape .cx-send{top:9px;right:24px}.cx-webchat.cx-mobile.cx-landscape .cx-menu-cell{margin-top:7px}.cx-webchat .cx-menu{display:flex;list-style:none;margin:0;padding:0;width:100%;min-height:16px}.cx-webchat .cx-menu>li>.cx-menu-item{display:inline-block;list-style:none;height:20px;width:20px;padding:2px;margin-right:18px;cursor:pointer;outline-style:none}.cx-webchat .cx-menu>li>.cx-menu-item:focus{padding:1px}.cx-webchat .cx-menu li:last-child{margin-right:0}.cx-webchat .cx-menu li .cx-inert{cursor:default}.cx-webchat .cx-menu li .cx-char-count{width:auto;font-style:italic;font-size:.6875em;line-height:18px;color:#aaa}.cx-webchat .cx-menu li .cx-branding-icon{position:absolute;right:10px}.cx-webchat .cx-menu li .cx-icon.cx-disabled:not(.cx-branding-icon){pointer-events:none;opacity:.5}.cx-webchat.cx-disabled .cx-char-count,.cx-webchat.cx-disabled .cx-message-input,.cx-webchat.cx-disabled .cx-send{visibility:hidden}.cx-webchat.cx-disabled .cx-input-container .cx-icon{opacity:.5}.cx-webchat.cx-disabled .cx-menu{pointer-events:none}.cx-webchat.cx-disabled.cx-theme-dark .cx-input-container{background:#4a525b;pointer-events:none}.cx-webchat.cx-disabled.cx-theme-light .cx-input-container{background:#f2f4f7;pointer-events:none}.cx-webchat .cx-emoji-menu{white-space:nowrap;border:1px solid;padding:0;margin:0 0 14px}.cx-webchat .cx-emoji-menu li,.cx-webchat .cx-emoji-menu span{padding:15px 5px;display:inline-block}.cx-webchat .cx-emoji-menu li:first-child,.cx-webchat .cx-emoji-menu span:first-child{padding-left:10px}.cx-webchat .cx-emoji-menu li:last-child,.cx-webchat .cx-emoji-menu span:last-child{padding-right:10px}.cx-emoji-selection-menu,.cx-tooltip-menu{display:inline-block;position:relative;outline-style:none}.cx-emoji-selection-menu{bottom:0;left:0;max-height:128px;overflow:auto;border-top:1px solid}.cx-webchat .cx-emoji-table{overflow-y:auto;overflow-x:hidden;padding:0;margin:0}.cx-webchat .cx-emoji-table .cx-emoji-item{padding:6px 6px 3px;display:inline-block;cursor:pointer;font-size:25px;width:12.5%;text-align:center}.cx-webchat .cx-overlay .cx-idle-alert{font-size:.75em;text-align:center}.cx-webchat.cx-mobile .cx-overlay .cx-idle-alert{font-size:.875em}.cx-webchat .cx-overlay .cx-idle-countdown{text-align:center;padding:10px}@keyframes NewMessage{to{background-color:#2293f9!important}}@-webkit-keyframes NewMessage{to{background-color:#2293f9!important}}@keyframes NewTextBubble{0%{opacity:0}to{opacity:1}}@-webkit-keyframes NewTextBubble{0%{opacity:0}to{opacity:1}}.cx-emoji-hasmenu{height:20px}</style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/richmediabridge.min.js" charset="UTF-8"></script><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/webchatservice.min.js" charset="UTF-8"></script><style type="text/css">.cx-carousel{display:block;position:relative;width:100%;height:auto;clear:both}.cx-carousel .cx-carousel-container{height:inherit;width:inherit}.cx-carousel .cx-carousel-container .cx-slide{display:none;float:left;width:100%;height:100%;position:relative;margin-left:-2000px;opacity:0}.cx-carousel .cx-carousel-container .cx-slide.active{margin:auto;opacity:1;display:block}.cx-carousel .cx-carousel-container .cx-animate-next{-webkit-animation:cx-slide-next .5s linear;-moz-animation:cx-slide-next .5s linear;animation:cx-slide-next .5s linear}.cx-carousel .cx-carousel-container .cx-animate-prev{-webkit-animation:cx-slide-prev .5s linear;-moz-animation:cx-slide-prev .5s linear;animation:cx-slide-prev .5s linear}@-moz-keyframes cx-slide-next{0%{-moz-transition:1s;left:350px;opacity:0}100%{-moz-transition:1s;left:0;opacity:1}}@-webkit-keyframes cx-slide-next{0%{-webkit-transition:1s;left:350px;opacity:0}100%{-webkit-transition:1s;left:0;opacity:1}}@keyframes cx-slide-next{0%{-webkit-transition:1s;transition:1s;left:350px;opacity:0}100%{-webkit-transition:1s;transition:1s;left:0;opacity:1}}@-moz-keyframes cx-slide-prev{0%{-moz-transition:1s;right:350px;opacity:0}100%{-moz-transition:1s;right:0;opacity:1}}@-webkit-keyframes cx-slide-prev{0%{-webkit-transition:1s;right:350px;opacity:0}100%{-webkit-transition:1s;right:0;opacity:1}}@keyframes cx-slide-prev{0%{-webkit-transition:1s;transition:1s;right:350px;opacity:0}100%{-webkit-transition:1s;transition:1s;right:0;opacity:1}}.cx-carousel .cx-next,.cx-carousel .cx-previous{cursor:pointer;position:absolute;top:70px;width:auto;border-style:solid;border-color:#98A7B8;background:none;border-width:0 2px 2px 0;padding:6px;margin:0 10px}.cx-carousel .cx-next{right:-22px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-ms-transform:rotate(-45deg)}.cx-carousel .cx-previous{left:-22px;transform:rotate(135deg);-webkit-transform:rotate(135deg);-moz-transform:rotate(135deg);-ms-transform:rotate(135deg)}.cx-carousel .cx-next[disabled],.cx-carousel .cx-previous[disabled]{border-color:#aeb0b2;cursor:default}.cx-carousel .cx-next:focus,.cx-carousel .cx-previous:focus{outline:none}</style><style type="text/css">.cx-rich-media a{text-decoration:none;color:blue}.cx-rich-media a,.cx-rich-media .cx-list a,.cx-rich-media .cx-generic a{color:#3333FB}.cx-rich-media a:focus,.cx-rich-media .cx-list a:focus,.cx-rich-media .cx-generic a:focus{color:#3333FB;text-decoration:underline}.cx-rich-media .cx-clickable{cursor:pointer}.cx-rich-media a:hover{text-decoration:underline;color:darkblue}.cx-rich-media.cx-quick-replies .cx-quick-reply{margin:5px;border-radius:10px;overflow:hidden;display:inline-block;cursor:pointer}.cx-rich-media.cx-quick-replies .cx-quick-reply>img{float:left;height:25px;width:25px;display:none}.cx-rich-media.cx-quick-replies .cx-quick-reply>div{display:inline-block;padding:3px 10px}.cx-rich-media .cx-markdown img{width:100%}.cx-rich-media .cx-generic{color:black;border-radius:15px;border:1px solid #DAE1E8;overflow:hidden;background-color:#FFF;margin:15px 0;padding:12px}.cx-rich-media .cx-generic a{text-decoration:none}.cx-rich-media .cx-generic .cx-main-image{display:none;height:auto;width:100%}.cx-rich-media .cx-generic video{display:none;height:auto;width:100%;background-color:black}.cx-rich-media .cx-generic h1{color:black;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-generic h2{color:#000;font-size:1em;padding:5px 0 0 0;margin:0;font-weight:normal}.cx-rich-media .cx-generic .cx-components{margin:0}.cx-rich-media .cx-generic .cx-components .cx-component{margin-bottom:5px;display:block}.cx-rich-media .cx-generic .cx-components .cx-component:last-child{margin-bottom:0}.cx-rich-media .cx-generic.cx-media{padding:0;border:0}.cx-rich-media .cx-generic.cx-media .cx-bottom-half{color:black;border-radius:15px;border:1px solid #DAE1E8;overflow:hidden;margin:0;padding:12px;border-radius:0 0 15px 15px;border-width:0 1px 1px 1px}.cx-rich-media .cx-button{display:block;width:100%;background-color:#3168D2;border-radius:2px;border-width:0;padding:5px;font-weight:bold;color:#FFF}.cx-rich-media .cx-button:hover{background-color:#2753A8}.cx-rich-media .cx-button:focus{border-color:#022A73;border-width:2px}.cx-rich-media .cx-link{color:black}.cx-rich-media .cx-list{color:black;border-radius:15px;border:1px solid #DAE1E8;overflow:hidden;background-color:#FFF;margin:15px 0;padding:12px}.cx-rich-media .cx-list h1{color:black;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-list h2{color:#000;font-size:1em;padding:5px 0 10px;margin:0;font-weight:normal}.cx-rich-media .cx-list .cx-list-item:first-child{border-top:1px solid #ccc}.cx-rich-media .cx-list .cx-list-item:hover{background-color:#f2f2f2;color:black;text-decoration:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big{display:flex}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-media-container{flex-basis:100%}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-media{max-width:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-text{padding-top:10px}.cx-rich-media .cx-list .cx-list-item{display:flex;color:black;padding:12px 0;border-bottom:1px solid #ccc;text-decoration:none}.cx-rich-media .cx-list .cx-list-item .cx-media{flex-shrink:0;max-width:70px}.cx-rich-media .cx-list .cx-list-item .cx-media img{display:none;padding:0;margin:0;width:100%;height:auto}.cx-rich-media .cx-list .cx-list-item .cx-text{padding-left:12px;flex-shrink:1}.cx-rich-media .cx-list .cx-list-item h3{margin:0 0 8px 0}.cx-rich-media .cx-list .cx-list-item p{margin:0}.cx-rich-media .cx-list .cx-list-item .cx-selectors{display:none}.cx-rich-media .cx-list.cx-single-select fieldset{margin:0;padding:0;border:0}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors{display:block;padding-left:1px}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input,.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors label{background-color:transparent}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors label{display:flex;height:100%}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='checkbox'],.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='radio']{align-self:center}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors label[name='rm-list-checkbox'],.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='checkbox']{display:none}.cx-rich-media .cx-list.cx-single-select .cx-list-item .cx-selectors input[type='radio']{display:block}.cx-rich-media .cx-list.cx-single-select .cx-submit{margin-top:10px}.cx-rich-media .cx-components .cx-text{color:black}.cx-rich-media .cx-spacer{height:10px}.cx-rich-media .cx-image-component{height:auto;width:100%}.cx-rich-media .cx-attachment-link img{height:auto;width:100%;margin:15px 0}</style><style type="text/css">.cx-webchat .cx-rich-media a{text-decoration:none;color:blue}.cx-webchat .cx-rich-media .cx-clickable{cursor:pointer}.cx-webchat .cx-rich-media a:hover{text-decoration:underline;color:#00008b}.cx-webchat .cx-rich-media.cx-quick-replies{position:relative;bottom:0;z-index:2;text-align:right}.cx-rich-media.cx-quick-replies .cx-quick-reply{margin:5px;border-radius:10px;overflow:hidden;display:inline-block;cursor:pointer}.cx-rich-media.cx-quick-replies .cx-quick-reply>img{float:left;height:25px;width:25px;display:none}.cx-rich-media.cx-quick-replies .cx-quick-reply>div{display:inline-block;padding:3px 10px}.cx-rich-media .cx-markdown img{width:100%}.cx-widget.cx-theme-light .cx-rich-media.cx-quick-replies .cx-quick-reply{color:#000;background-color:#fdfdfd;border:1px solid #c3cad4}.cx-widget.cx-theme-light .cx-rich-media.cx-quick-replies .cx-quick-reply:hover{color:#000;background-color:#f2f4f7;border:1px solid #9baab9}.cx-widget.cx-theme-dark .cx-rich-media.cx-quick-replies .cx-quick-reply{background-color:#33383d!important;color:#fdfdfd!important;border:1px solid #778290!important}.cx-widget.cx-theme-dark .cx-rich-media.cx-quick-replies .cx-quick-reply:hover{background-color:#4a525b!important;color:#fdfdfd!important;border:1px solid #fff!important}.cx-rich-media .cx-generic{color:#000;border-radius:15px;border:1px solid #dae1e8;overflow:hidden;background-color:#fff;margin:15px 0;padding:12px}.cx-rich-media .cx-generic a{text-decoration:none}.cx-rich-media .cx-generic .cx-main-image,.cx-rich-media .cx-generic video{display:none;height:auto;width:100%}.cx-rich-media .cx-generic video{background-color:#000}.cx-rich-media .cx-generic h1{color:#000;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-generic h2{color:#000;font-size:1em;padding:5px 0 0;margin:0;font-weight:400}.cx-rich-media .cx-generic .cx-components{margin:0}.cx-rich-media .cx-generic .cx-components .cx-component{margin-bottom:5px;display:block}.cx-rich-media .cx-generic .cx-components .cx-component:last-child{margin-bottom:0}.cx-rich-media .cx-generic.cx-media{padding:0;border:0}.cx-rich-media .cx-generic.cx-media .cx-bottom-half{color:#000;border-radius:15px;border:1px solid #dae1e8;overflow:hidden;margin:0;padding:12px;border-radius:0 0 15px 15px;border-width:0 1px 1px}.cx-rich-media .cx-button{display:block;width:100%;background-color:#3168d2;border-radius:2px;border-width:0;padding:5px;font-weight:700;color:#fff}.cx-rich-media .cx-button:hover{background-color:#2753a8}.cx-rich-media .cx-link{color:#000}.cx-rich-media .cx-list{color:#000;border-radius:15px;border:1px solid #dae1e8;overflow:hidden;background-color:#fff;margin:15px 0;padding:12px}.cx-rich-media .cx-list h1{color:#000;font-size:1.4em;margin:0;padding:0}.cx-rich-media .cx-list h2{color:#000;font-size:1em;padding:5px 0 10px;margin:0;font-weight:400}.cx-rich-media .cx-list .cx-list-item:first-child{border-top:1px solid #ccc}.cx-rich-media .cx-list .cx-list-item:hover{background-color:#f2f2f2;color:#000;text-decoration:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big{display:flex}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-media{max-width:none}.cx-rich-media .cx-list .cx-list-item.cx-list-item-big .cx-text{padding-top:10px}.cx-rich-media .cx-list .cx-list-item{display:flex;color:#000;padding:12px 0;border-bottom:1px solid #ccc;text-decoration:none}.cx-rich-media .cx-list .cx-list-item .cx-media{flex-shrink:0;max-width:70px}.cx-rich-media .cx-list .cx-list-item .cx-media img{display:none;padding:0;margin:0;width:100%;height:auto}.cx-rich-media .cx-list .cx-list-item .cx-text{padding-left:12px;flex-shrink:1}.cx-rich-media .cx-list .cx-list-item h3{margin:0 0 8px}.cx-rich-media .cx-list .cx-list-item p{margin:0}.cx-rich-media .cx-list .cx-list-item .cx-selectors{display:none}.cx-rich-media .cx-components .cx-text{color:#000}.cx-rich-media .cx-spacer{height:10px}.cx-rich-media .cx-image-component{height:auto;width:100%}.cx-rich-media .cx-attachment-link img{height:auto;width:100%;margin:15px 0}</style><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/webchatservicenextgen.mod.js" charset="UTF-8"></script><script type="text/javascript" src="https://apps.usw2.pure.cloud/widgets/9.0/plugins/pure-cloud-v2-sockets-transport.mod.js" charset="UTF-8"></script></head>
+<body data-swiftype-index="false" class="isDesktop modal-open" data-browser="Chrome 98">
+   
+    <div id="sb-site">
+        <form id="frmMainSearch">
+          <div class="searchWrapper">
+             <div class="searchBox searchRelated" id="search">
+                <input id="txtSearch" type="text" class="searchRelated searchInput" placeholder="What can we help you find?" autocomplete="off">
+                <input id="btnSearch" type="submit" class="themeBG searchRelated" value="Search">
+             </div>
+            </div>
+        </form>
+        <form method="post" action="./Options.aspx" id="aspnetForm">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="L3zlVDVBQNU4Cr4Ai2J/UEyiMUUhmIvgVXayWd3fdGTSU6wElrCYo7SywA2GEDLEfkOtT+ayvdqxic/QGVuSUhy+dpPPmYia0sQh0/M8e94XRWwsuNw82m1XZbT6rF1s15Vis1ZQleonPylwpR5Yv9AfWefKDxscubyfBLIL3tYIXUtay+fHgFT+djsNCwgjmAmywExpA79yo4GwbZCTqVBiUG/Gg88q5yvljhHl4QrRcrdkbkukpN3bI45Z7Sv7L3nju70e60yw4+NrC72yQvMWcooMBrzXGeSsUPXsgGnqy6fboQpl20sWWMMA78JtmHrZ9u51rZAZvoRN7BASPO1b9zBA5ocf48WDKhN79MvokvoX+Jxu/8wQYwg5O4lg8gVAMU8Of6AmpeOLVQN3G6qQyt6KB2S/ixHsVlgOVQl3Gib/fAEXZap5nFEIlMax0dhkfpuS8jkDG+/vAvIYWZ9b1w2nkPHyuUugqMzDSJYbhYuWd41JFySq4j2aBSWdxfXuOeD6nt7Z3w6P2CE7qGaiWL9b97p8ZKf3HESw3EF7NkHjwjC//wC/jP2DjSBgYWocyjxqXpbXNeJMol4oS7HaH4ctqt+Ag7yBD7fjnkdLKuPGq1XhIF53ao21TEimfgg7wxXfLPPaQ5OKaWM/Vxu9eh1WKRb6+yB6DCJ+YIcl+NA9SZy+YxEAsrxo4KD2LZNxvDBBMlwjwVdoJzzevD3b71eUBifhuei9Gi7AAQZtv2pp4Exa/tANJuys2CucL8pMQwd6uphgKgqSSHZ4iHLUfuDnrK5o5resfOnbfMmQHGJj9M+mmH8DN0qkWq6as2t8KJ3VuPz7d52nVtj4E+NrzB2uDp9ra2xfVU0/mA3j/Q3cYcDQ/Utcs6Ukxk/K15f8jSX4uVV2hpsuTOVZRo2suKP/vYUrxzx46vxEo1d83Ja9/kYOKo7hNPtjaD9unBhGrTe73cWAxOtPv1E3Nw5czbFD32C5ViQumQZBTbNpX1uTeKx+z0jG0CuTl0JDalx7ULzg3Fsu8sD9IHsijLEzsAa2+K0MraBtbec7j6goi9PO9+gzzPPzYWM/cg/2Y50hqg2nks+hPiu4yqRReMuLdAD9TPEN6kpJA/oGuRZ8tXBNQesn6dWEMcugCZB5iWBrAeOvNZqtUaPQWb6tz3TeqzsSv39Ey1LVrjjdVM5M62Hx+GflkhRtuU/qsWHSuYkcPYeW9xFhlt0EVfKMPNhL3s769M8LptP68rVU0JT0wQ/+2iFgNPn/zi96iF5f8lxI2f4BQkqDaxF1eHV7RGsOLxb4j57vH2jvkciMo/RIM/R1XrEUwhnkKDOTl2uoj1ivV7tgbSRind4lyUpKF/KX3GR/YWgY6LFMdkzLzmxaDG3k78LSCgp1+FA9URABcq5cvCOwSegVc6aULn65AvtZ/owodJhbYotnorj9YQ4SqsJKddCBt08pZtnuy8mXM17dCfJzDZwua+041/q1WGTornO8nnv+I9tYisxEk7Z2DPsVx3P51DcUtke/ZsbvM6whFNHihh8Xd5ZIY8EveRJ1kUiKKxxnmR6mOKoDFCWeCJ0/vr9fFHH3t7NoESq3gELHsMVAKS0IVF9bwVjDvk7CpIg3mL4h08tZMoDuaEQ2f6I45xFPzoh+lltVRyiEv0cs3xDonw8IEJCAahxhSyu+yW8lmNKIqstpRxnf5qv4C//x18F/+bNPDsYK5wWPt03UTxVo5vf3wflRk8kp9KqB737NRzMvSbqid9Nyb1mzCsoz8Jv7MryrLTnK3OfiXNqgp6w6W6UbCqWajjni1jKL76MzHUHPKBLlYlOWw65VGxWt3Hdq9MZWM+C4tceB7TCZ916w2iyxZGNzEk7Ala1IyiJM62HmOHqPFnAMicgDYHMhIvfBj1xXmKRr07MeQriIPjOiaiC7Wa0A3JOqzCGdCu67FBP/AcE9EZPDaB5AYyQmVo1tYtOHZJ41/2mu5R6wL0hgOBdhLvwnMe8zn0ttmZMiR5ZDH+uJIk3irPeZamJy18ii+jBYXjwrT2KJieXDJ5talhqeD8CgqEPDl1ouoXSkxU7DZtOSizgJseayL/JQQoz9YQZiQnk0ayDV1FRKf7HSVPA9S7WV6uxxMR6QEFK4b4cRw6CVUnQelTYFi5qqzqEvHDkV/+13qfXHMFebH99D2yTZK8BlPdoV/lM4+WfsTx56oQ8o14prfMLhamNWL3Lo63eK/FiIOG3xHPjSJG6WuZ3xLmh9RqCHGamjUh+QPZBpndm95ng3qz9v/RLYqHxLMNXZWDD0DL4gH9VpF6AVPBbsVZ6/MDcgVohTK+lP7evqM9cPswLBCsdzIthj1kEWL0uEg3UBCU9Zu+mr3zuoT2MyaAv+8F+oOvfFKxrGeLDsTpPZUkpjk486tc4DLYCRs8G9bN7NV0SWasWAzA+r1wsNG45B/qmwQI5+RttgLmyLq4jDbGEwCb2Id2JQS02gB8zL46LL8sNSet+oLPpVdJEbpFx5coiv59U8T1HON8DlCh5mcw3CoqfjqyzLQjDvMmiehwNdwz2Yt9pAzTdwy2u1ECGSxTBmGgi/j3BRIOozxSOg6xb2hxK/FWTfJ1vFBpOpR6L0eK7sD2VZ4kyxNmvJiEQVfRTCGHTI73jcILrhVvbTipEb+IdNmHyLZJu7htxJJ6lQ1cXuBIAnrjUI9QMDtigNnSYo2NB0EuGBvdUKNqNAgCxJWlq8nkxvZCjuThRWQFkeD8XodZ1YpaT8yT+Lk6vPMOubayoRDOdg1vX0pevP6Ft2HRLpK61yt456gKsJ76LsrUynl/6qOCjMRrq2KZHdtt8f0JN5KEnqbti/yG7fCQyvPC/3yrTQ+JAJsUonYJKPFK2X8F5xdbdHtUy5jvjHXm71AtZmkeaTfDSLEY61bcD6jGOJ0WwKsGlvaFyVRCaczfSighE6tNcQ4zpCUdf/hVoSclPrNYpV2YiX6rxSuPcVpZgQ85mRoi8BCnJlrdQ+bShWammANozwEgx7SBVVNQSJLx5eJR/Y+EZ+Ho2QUnFTePu5/hSRzAriMu+fsAglKWB0sYp/p6QOLIk+fc38HvBNJs/ujVsBGmQZPZhBE0dcul8KORcls6reXsveBlQCPdwqGxx4UOSZ1hWc7HjPOv40fLT/MyjPPDMDjgFPb30FLB8t8VKrU/6OYhybIgjOathF27GxGfw8+RP5wrCsE4MjeNnmfl5DGJ+hgabk7b5pEXvstkVPG/PiKzz/0QFVVNOHIaIFkxZKGOU9dNcfPZK2k1L1Zy4MjDbAU6HV7yHEn+s3suZmJtCajHkmAQib8fA4WFFgEb3LkNTHg59hxKKid2JMLQm4IS8FBEW/gC6r/FhSyqId+zMoUEYn7c3Dp0hXMxJnYgoKJ0B0GyBx8LS5xK1spwfG6x7fXVwNjY27JSg=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZO5kuqXC2rYKCCtTL0uyf1MZL-swwXaqy_dkdmkzP6QrMOL8fNyAW9g8YIMKKc1-Kg2&amp;t=637729404413207958" type="text/javascript"></script>
+
+
+<script src="/WebResource.axd?d=zMZiFpoV05km13SjPpaDuSo0vsHroz2Ava_73_Bs83ZSPjLH87lUZtutlNY2Rr3vR3qEPVImBoSnj1yLq13cmK3x-_QoGASGeUbN4S4wWuY1&amp;t=637665325742576863" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var pccdebugboxerrorcolor = "#FFFF00";var pccdebugboxspecialcolor = "#FF0000";var pccdebugboxempty = true;var pccdebugboxenabled = false;//]]>
+</script>
+
+<script src="/WebResource.axd?d=KjOUUNeShA_p4DhYWydoe-E69qRQOdBxHHYGeoRSO2Jbhlvut95zt7KYI85cH3a_eh-KurBH-ieTaj-qtaQBtPMDQzfAlSjivmZni6tVDVo1&amp;t=637665325742576863" type="text/javascript"></script>
+<script src="/WebResource.axd?d=GAM4vFdCwL9nH6ZiFVpfdQG7z4EtG5zblOgjfQ94v6JET1ztkPUD9sJEUTgzLHSTwsUrrmoG9ktGYs7U-vCH54xUsSE8RkFeNUZg3RLsSb8B9jYUnW_6RFUEpH2dpH790&amp;t=637665325742576863" type="text/javascript"></script>
+<script src="/WebResource.axd?d=AamzAun8PVUJpVG3S_uPXOiWdMgblQMue85s-0S0DdqJ31gBBAcSKqowHcBfgR2ABFPDyolcIDjxebSIOgwaV4BixEc8NjJY5DxbzYQ8EzPnfmczXf9-TFYwKAcZZm-m0&amp;t=637665325742576863" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D0C627A0">
+	<input type="hidden" name="__SCROLLPOSITIONX" id="__SCROLLPOSITIONX" value="0">
+	<input type="hidden" name="__SCROLLPOSITIONY" id="__SCROLLPOSITIONY" value="0">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="4glcVTK/9h56FYgF/d25jzGkv8brUDBAYFWBx7r5pP7CILmlRJMZiPiX1Prt1RveNZyljzZfq4ZVCJqg8NS26Yrlpc61bkBP44uCYCqlsBGDutGM0brwVAGIm1QzwX3mbys9C3Hju0pXhjX5zVM1e2TItaCxsabvSxUBvIl7QZe0R/nj6mcCI4vhRF/pSIqOU8k0d1ke1jP6zAQSsCyr1Vlegxu+rBR1KJiz03mOPyySSCFRKLeo+4tzUQqIwKB2zE7/RWNy62upCamArm0w4eQL1dHSFKN7Cd0U3G5oEN37M7aLk0vtJ0ePTYniu1u6DfybzgFTGhdG575QNN842DcD4fjVT8QJ4S+BQCA0X/iCipQQPntGutjvjWjxk5tFpMH9ENu0DtcazGiLWehDo47ix8eKPT7v/HXcMOy/N37viek/VK+La9qhKVSWDii5Cwk6xAb28InbKvEzPUGXjqdMagk+bxw/AzzeuXjvCQ2NSmMLpT587I+GfaL6VMeW3eYQNttLUPET+Ddr1OEukMZ+qq0EWvyrF8WK4Ka/y45w8VkYX0KjJfvaLHKp48mxgkqKdFEra3xs3zkFV4gOpB9oiRpLk8mVeNQASzI/P5US1QZkGx9K2zIP8YECWp2art35hv1JdjaNfiEwDJz+6NWmNQGUP8cWOxv1fUlTifwwwDj3vQ55TqimGebX7E4wN/RCRGNFzp8FvQxSLmkOHhHofoJk2oDMIvk2gEW7qSHER2Jbvlof0rtdP65ssQ5bvlszG0QZwRzy7KUqx8x/88wTaEv4uWICE8zmoHeRmYxQqFRvXI+EUHn9vNTo1FuW1YZ7Jtl7EFcC1HrUQC6lg2JibbbN4e50MH0dsLyynlU=">
+</div>
+      
+   <div class="StickSideButtons">
+         <div id="themePicker" class="sideScreenTabBody" data-toggleinout="in">
+         	<div class="themeBg" id="t1id" style="display:none"></div>
+         	<div class="themeComplementBG" id="t2id" style="display:none"></div>
+            <div class="sideScreenThemes">
+               <div class="sideScreenTab"></div>
+               <a data-theme="Pink" class="themeOption gridsterBTN-pink"></a>
+               <a data-theme="Orange" class="themeOption gridsterBTN-orange"></a>
+               <a data-theme="Green" class="themeOption gridsterBTN-green"></a>
+               <a data-theme="Teal" class="themeOption gridsterBTN-teal"></a>
+               <a data-theme="Blue" class="themeOption gridsterBTN-blue"></a>
+               <a data-theme="Purple" class="themeOption gridsterBTN-purple"></a>
+            </div>
+         </div>
+   </div>
+   
+   
+
+            <!-- noindex -->
+            <!--========================================================
+                                      HEADER
+            =========================================================-->
+            <div id="header" class="bg_5">
+             <span id="isolatedBanner"></span>
+             
+   
+
+             <div id="banner" style=" clear: both; text-align:center; position: relative; display: none;">
+               <p style="background-color: #ffd700; color: black; padding-top: 5px; padding-bottom: 5px; font-family:Arial, Helvetica, sans-serif; margin-bottom: 0px">
+                  Your browser is out of date. Please
+                  <a id="browserLink" href="https://www.google.com/chrome/" style="color: black"><strong>update your browser</strong></a>
+                  for increased security and the best site experience. <br>
+               </p>
+            </div>
+
+            <div class="row bg_2a loginContainer">
+               <div class="container">
+                  <div class="TopLeftLinks">
+                     <a href="https://test.abeka.com" class="backToAbeka"><span>abeka.com</span></a>
+                  </div>
+                  <div class="TopRightLinks">
+                  <div id="Panel1">
+	
+                  
+                  <div id="AccountGreeting" class="dropdown AccountGreeting">
+                     <a data-toggle="dropdown" class="MobileArrow" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="openCloseArrow"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                        Hello
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="AccountGreeting">
+                        <li><a href="/Account/Settings.aspx">Settings</a></li>
+                           <li class="login loggedIn">
+                           <a class="dropdownLoginButton" href="/Logout.aspx">Log out</a>
+                        </li>
+                        <li><img src="/images/Graphics/AbekacomItems.jpg" alt="Abeka Menu Items"></li>
+                        <li><a href="https://test.abeka.com/ABekaOnline/CustomerService/AccountInfo.aspx ">My Account</a></li>
+                        <li><a href="https://test.abeka.com/ABekaOnline/ViewCart.aspx">Cart</a></li>
+                        <li><a href="https://test.abeka.com/ABekaOnline/Checkout/">Checkout</a></li>
+                        <li><a href="https://test.abeka.com/ContactInfo.aspx">Contact Us</a></li>
+
+                     </ul>
+                  </div>
+                  
+</div>
+                  </div>
+               </div>
+            </div>
+                <div class="row">
+               <div class="container menuContainer">
+                  <div id="fixed-top-left" style="margin-top: 8px; float: left;"> <span class="sb-toggle-left"></span></div> <!--added for mobile menu-->
+                  <div class="logo">
+                     <a href="/Account/" id="logoRedirect">
+
+                      
+                      <img src="//static.abeka.com/Abeka/images/Logo/logo.svg" id="imgSchool" alt="Abeka">
+
+                    </a>
+                  </div>
+                  
+<div id="Menu"> <a href="#" id="pull"></a> <span class="sb-toggle-left" id="nav-toggle"> <span></span> </span>
+	<ul class="meganizr mzr-fade">
+		
+			<li aria-haspopup="true" class="mzr-drop">
+<!--				<a href="/Account/" class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>-->
+				<a class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>
+				<ul class="mzr-content smallIconList" style="top: auto!important;">
+					<li>
+						<div class="menuContainer iconList article noBorder">
+							<div class="articleColumn mobileHidden">
+								
+							</div>
+							<div class="articleColumn">
+								<h3 class="articleHead">Dashboard</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Account/"> <span class="LinkwImage">&nbsp;&nbsp;Home</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Calendar/Calendar.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Calendar</span></a></h2>
+									</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Notifications.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Notifications</span></a></h2>
+										</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Students/Default.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Students</span></a></h2>
+										</li>
+									
+								</ul>
+							</div>
+					
+							<div class="articleColumn">
+								<h3 class="articleHead">My Orders</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/Enrollments/"> <span class="LinkwImage">Enrollments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalAssessments/"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalArt/"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTextbooks/"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTeachingAids/"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+									</li>
+								</ul>
+							</div>
+					
+						</div>
+					</li>
+				</ul>
+			</li>
+		
+		<li aria-haspopup="true" class="mzr-drop"><a class="MobileArrow mainMenu academy hasSubList">Academy</a>
+			<ul class="mzr-content smallIconList" style="top: auto!important;">
+				<!--
+            <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">About</h3>
+							<ul>
+								<li><a href="/about/AccreditationStatement.aspx"> <span class="LinkwImage">Accreditation</span></a></li>
+								<li><a href="/about/MissionPurpose.aspx"> <span class="LinkwImage">Mission, Purpose, and Philosophy</span></a></li>
+								<li><a href="/About/WhatWeBelieve.aspx"> <span class="LinkwImage">What We Believe</span></a></li>
+								<li><a href="https://test.abeka.com/OurApproach.aspx"> <span class="LinkwImage">Objectives + Learning Outcomes</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Academics</h3>
+							<ul>
+								<li><a href="/About/Overview.aspx"> <span class="LinkwImage">Overview</span></a></li>
+								<li><a href="/academic/graduation.aspx"> <span class="LinkwImage">Graduation</span></a></li>
+                                <li><a href="/Fulfillment/Graduation/"> <span class="LinkwImage">Petition to March</span></a></li>
+								
+								<li><a href="/GraduationEvent/"> <span class="LinkwImage">Graduation 2021 Ceremonies</span></a></li>
+
+								<li><a href="/Resources/Rings.aspx"> <span class="LinkwImage">Class Rings</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Teachers.aspx"> <span class="LinkwImage">Teacher Bios</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Courses/"> <span class="LinkwImage">Course Descriptions</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Resources</h3>
+							<ul>
+								
+								
+								<li><a href="https://test.abeka.com/Resources/SampleVideos.aspx"> <span class="LinkwImage">Sample Videos</span></a></li>
+								
+								<li><a href="https://test.abeka.com/HomeSchool/ScopeAndSequence.aspx"> <span class="LinkwImage">Scope and Sequence</span></a></li>
+								<!----> 
+
+								<!--<li><a href="#">Curriculum Song Downloads</a></li>
+											 <li><a href="#">Science Lab Outlines</a></li>-->
+
+								
+							</ul>
+						</div>
+
+						<!--<li class="mzr-drop mzr-drop-right"><a href="#">Gear</a>
+
+									 <ul>
+											 <li><a href="#">Tshirts</a></li>
+											 <li><a href="#">Cups</a></li>
+											 <li><a href="#">Letters</a></li>
+											 <li><a href="#">Jackets</a></li>
+											 <li><a href="#">Bags</a></li>
+											 <li><a href="/Resources/Rings.aspx">Rings</a></li>
+										 </ul>
+
+								 </li> --> 
+
+					</div>
+				</li>
+			</ul>
+		</li>
+	
+		<li class="marginB-0">
+			<a class="MobileArrow mainMenu connect hasSubList" href="https://test.abeka.com/ContactInfo.aspx" target="blank" style="cursor:pointer !important;">Contact Us</a>
+		</li>
+	
+		<li aria-haspopup="true" class="mzr-drop">
+			<a class="MobileArrow mainMenu help hasSubList">Help</a>
+			<ul class="mzr-content smallIconList  HelpMarginFix  " style="top: auto!important;">
+				
+				<!--          <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+            <div class="menuContainer iconList article noBorder">--> 
+				
+				<!--
+               <h3 class="articleHead">Guides</h3>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Calendar">
+                     <span class="LinkwImage">Calendar</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Dashboard">
+                     <span class="LinkwImage">Dashboard</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=My-Students">
+                     <span class="LinkwImage">My Students</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Notifications">
+                     <span class="LinkwImage">Notifications</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Video-Streaming">
+                     <span class="LinkwImage">Video Streaming</span></a></h2>
+               </li>
+
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx">
+                     <span class="LinkwImage">More <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                  </a></h2>
+               </li>
+--> 
+				
+				<!--
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Assessments.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Assessments</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Art.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Clip Art</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Textbooks.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Books</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/TeachingAids.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Teaching Aids</span></a></h2>
+            </li>
+          
+          --> 
+				<!--            </div>-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">FAQs</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AcademicsFAQs.aspx"> <span class="LinkwImage">Academics</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AdmissionsFAQs.aspx"> <span class="LinkwImage">Admissions</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/ArtFAQs.aspx"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsFAQs.aspx"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsTrialFAQ.aspx"> <span class="LinkwImage">Digital Assessments Trial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TextbooksFAQs.aspx"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TeachingAidsFAQs.aspx"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/DVDReturnsFAQ.aspx"> <span class="LinkwImage">DVD Returns</span></a></h2>
+								</li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead NoHeader">&nbsp;</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/EnrollmentFAQs.aspx"> <span class="LinkwImage">Enrollment</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/FinancialFAQs.aspx"> <span class="LinkwImage">Financial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/GradingFAQs.aspx"> <span class="LinkwImage">Grading</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/StudentFAQs.aspx"> <span class="LinkwImage">Student</span></a></h2>
+								</li>
+								
+									<li>
+										<h2 class="GroupTitlelink"><a href="/Help/Video.aspx"> <span class="LinkwImage">Video Streaming</span></a></h2>
+									</li>
+								
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx"> <span class="LinkwImage">Tour</span></a></h2>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</li>
+		
+		<!--
+    <li id="mobthemepicker">
+        <button data-theme="Pink" class="themeOption gridsterBTN-pink"></button>
+        <button data-theme="Orange" class="themeOption gridsterBTN-orange"></button>
+        <button data-theme="Green" class="themeOption gridsterBTN-green"></button><br>
+        <button data-theme="Teal" class="themeOption gridsterBTN-teal"></button>
+        <button data-theme="Blue" class="themeOption gridsterBTN-blue"></button>
+        <button data-theme="Purple" class="themeOption gridsterBTN-purple"></button>
+    </li>
+-->
+		
+		<li style="float: right;"><a class="searchButton" onclick="toggleSearch();"> <span class="searchIcon" aria-hidden="true"></span> </a></li>
+	</ul>
+	
+	<!-- end Meganizr Menu HTML --> 
+</div>
+
+
+               </div>
+                </div>
+            </div>
+
+            <!--========================================================
+                                      CONTENT
+            =========================================================-->
+            <!-- /noindex -->
+            <section id="content" data-swiftype-index="true">
+                
+   <div class="themeChooser"></div>
+   
+<div class="highschool">
+   
+
+   <div id="pnlProgressBar" class="container">
+	
+      <div class="wrapper2 breadcrumbWrapper">
+         <div class="row">
+            <div class="grid_12">
+               
+      <ul class="bubble-crumb dark-crumb default-crumb flex-none-crumb" id="EnrollmentProgressCrumb">
+         
+      <li data-step="Student" class="complete-crumb">
+         <div class="crumb-inner">
+            <em> 1 </em>
+            <p class="titletip" style=""> Student </p>
+         </div>
+      </li>
+   
+      <li data-step="Options" class="active-crumb">
+         <div class="crumb-inner">
+            <em class="themeBg"> 2 </em>
+            <p class="titletip" style="background-color: rgb(146, 39, 143); border-color: rgb(146, 39, 143);"> Options </p>
+         </div>
+      </li>
+   
+      <li data-step="Courses">
+         <div class="crumb-inner">
+            <em> 3 </em>
+            <p class="titletip" style=""> Courses </p>
+         </div>
+      </li>
+   
+      <li data-step="BeginDate">
+         <div class="crumb-inner">
+            <em> 4 </em>
+            <p class="titletip" style="">Begin Date</p>
+         </div>
+      </li>
+   
+      <li data-step="Agreement">
+         <div class="crumb-inner">
+            <em> 5 </em>
+            <p class="titletip" style=""> Agreement </p>
+         </div>
+      </li>
+   
+      <li data-step="Review">
+         <div class="crumb-inner">
+            <em> 6 </em>
+            <p class="titletip" style=""> Review </p>
+         </div>
+      </li>
+   
+      </ul>
+   
+
+<script>
+   $(document).ready(function () {
+      $('#EnrollmentProgressCrumb').bubbleCrumbs({
+         "size": "default",
+         "activate": (document.location.pathname.match(/[^\/]+$/)[0]).split('.')[0],
+         "title": false,
+         "tooltips": true,
+         "onClick": function (that, bubble) {
+            if (bubble.iscomplete) {
+               window.location.href = bubble.data('step') + ".aspx"
+            }
+         },
+         "titleShift": [
+         ["BeginDate", "Begin Date"]
+      ]
+      });
+   });
+</script>
+            </div>
+         </div>
+      </div>
+   
+</div>
+   
+   
+   <div class="container">
+      <div class="wrapper2">
+         <div class="row">
+            <div class="grid_12">
+               <div id="pnlErrors" class="FormValidationSummary">
+	
+                  
+               
+</div>
+                <h1>Enrollment Options</h1>
+               <p class="studentAppInfo">
+                  <span id="lblStudentName">ATM202202101512’s </span>
+                  <span id="lblAppInfo"><span class="enrollment">Grade 12 Accredited Enrollment</span><span class="enrollmentDetails">Full Year, Full Grade, with Book Kit</span></span> 
+               </p>
+               <div id="vlsPageErrors" class="ValidationSummary" style="display:none;">
+
+</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="container">
+      <div class="wrapper2 sectionWrap">
+         <div class="row">
+            <div class="grid_12">
+               
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="whiteContainer whiteContainerArrow">
+      <div class="container">
+         <div class="wrapper2 sectionWrap">
+            <div class="row">
+               <div class="grid_12">
+                  <div id="pnlMedia" class="panelBlock">
+	
+                     <h2>Select Media Format</h2>
+                     <span id="csvMedia" class="Validator" style="display:none;">Please select a media type.</span>
+                     <div id="divStreaming" class="col-md-5">
+                        <h4 class="paddingB-30">
+                           <label>
+                              <span class="RadioButton" associatedcontrolid="labelStreamingHeader"><div class="theme-radio"><input id="rbtnStreaming" type="radio" name="ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$rbnMedia" value="rbtnStreaming" onclick="mediaFormat_Selected();" data-overlay="true" style="z-index: 99999;"><div class="theme-radio-filler"></div></div></span>
+                              <span id="labelStreamingHeader" class=" ">Streaming</span>
+                              <span id="StreamingNotAvailable" class="noteSmall hidden hidden">(not currently available)</span>
+                           </label>
+                        </h4>
+                        <div class="optionInfoCols Tipped themeBg15 themeColor15 wow fadeInUp animated animated" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                           <p>
+                              If you choose streaming, you’ll have access to all the same lessons as on DVD. Make sure to test how it works with your Internet, especially if you’ll be streaming lessons for more than one child at a time.<br>
+                              <a href="https://test.abeka.com/Resources/SampleVideos.aspx" target="_blank">Test Video Streaming</a>
+                           </p>
+                        </div>
+                     </div>
+                     <div class="col-md-2">
+                        <p>OR</p>
+                     </div> 
+                     <div id="divDVD" class="col-md-5">
+                        <h4 class="paddingB-30">
+                           <label>
+                              <span class="RadioButton" associatedcontrolid="labelDVDHeader"><div class="theme-radio"><input id="rbtnDVD" type="radio" name="ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$rbnMedia" value="rbtnDVD" onclick="mediaFormat_Selected();" data-overlay="true" style="z-index: 99999;"><div class="theme-radio-filler"></div></div></span>
+                              <span id="labelDVDHeader">DVD</span>
+                              <span id="DVDsNotAvailable" class="noteSmall hidden hidden">(not currently available)</span>
+
+                           </label>
+                        </h4>
+                        <div class="optionInfoCols Tipped themeBg15 themeColor15 wow fadeInUp animated animated" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                           <div id="divDVDBaseText">                              
+                              <p>If you choose DVD, you’ll be able to print out prepaid return labels to send them back for free.</p>
+                           </div>
+                           
+                        </div>
+                     </div>
+                     
+                  
+</div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="container">
+      <div class="wrapper2 sectionWrap">
+         <div class="row">
+            <div class="grid_12">
+               
+               <div id="divGuardian" class="selectGuardian" style="margin-top: 20px;">
+                  <div id="divAccreditedInfo" class="whiteBg" style="display:none;">
+                     <i class="fa fa-info-circle noteIcon themeColor" aria-hidden="true"></i>
+                     <p style="text-align: center;">
+                      Are you reenrolling a student in the accredited program? 
+                     </p>
+					  <p style="text-align: center;">Enrollments are accepted year-round but will be held if submitted before the prior year is 3/4 complete. (That’s after the 3rd grading period in grades 4–11 and after the 4th grading period in K5–grade 3.)</p>
+					  <!--<p style="text-align: center;">
+                     Students in grades 4&#8211;11 may reenroll for next year once the current year&#8217;s work is completed through the third grading period. Students in K5&#8211;3rd grade may reenroll after the current year&#8217;s work is completed through the fourth grading period. 
+                     </p>
+                      <p style="text-align: center;">
+                     Reenrollment applications submitted before then will be held until the completion requirement is met.
+                     </p>-->
+                  </div>
+                  <div class="whiteBg">
+                     <h3>Confirm or Add Parents/Guardians</h3>
+                     <span id="csvRelationship" class="Validator" style="display:none;">Please select relationship to student.</span>
+                     
+                           
+                           <p>
+                              Add parents/legal guardians below including yourself.
+                     The parents/guardians you list will have permission to access the student’s account/information.
+                     Parents/guardians will be able to speak with customer service about this student’s enrollment and grades.
+                           </p>
+                        
+                     <div class="buttons">
+                        <a id="aNewGuardianModal" data-toggle="modal" data-keyboard="false" data-target="#NewGuardianModal" class="gridsterBTN">Add New Parent/Guardian</a> 
+                         
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div id="pnlTesting" class="panelBlock">
+	
+      <div class="sectionAngleMidPage"></div>
+      <div class="whiteContainer">
+         <div class="container">
+            <div class="wrapper2 sectionWrap">
+               <div class="row">
+                  <div class="grid_12">
+                     <h2>Select Assessment Type</h2>
+                     <span id="csvDelivery" class="Validator" style="display:none;">Please select a assessment type.</span>
+                     <div id="divDigital" class="col-md-5">
+                        <h4>
+                           <label>
+                              <span class="RadioButton" associatedcontrolid="labelDigitalTestHeader"><div class="theme-radio"><input id="rbtnDigital" type="radio" name="ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$rbnTesting" value="rbtnDigital" onclick="assessmentType_Selected();" data-overlay="true" style="z-index: 99999;"><div class="theme-radio-filler"></div></div></span>
+                              <span id="labelDigitalTestHeader">Digital Assessments</span>
+                           </label>
+                        </h4>
+                        <div class="optionInfoCols Tipped themeBg15 themeColor15 wow fadeInUp animated" data-wow-delay=".2s" style="visibility: hidden; animation-delay: 0.2s; animation-name: none;">
+                           <p>
+                              You’ll get the same tests and quizzes as in the paper version,
+                              but they’re done online. They’re easy to use and save you time since most
+                              question types are graded for you. Any courses without digital versions can be done 
+                              on paper and uploaded to our office.
+                           </p>
+                        </div>
+                     </div>
+                     <div class="col-md-2">
+                        <p>OR</p>
+                     </div>
+                     <div id="divPaper" class="col-md-5">
+                        <h4>
+                           <label>
+                              <span class="RadioButton" associatedcontrolid="labelPaperTestHeader"><div class="theme-radio"><input id="rbtnPaper" type="radio" name="ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$rbnTesting" value="rbtnPaper" onclick="assessmentType_Selected();" data-overlay="true" style="z-index: 99999;"><div class="theme-radio-filler"></div></div></span>
+                              <span id="labelPaperTestHeader" class=" ">Paper Tests &amp; Quizzes</span>
+                           </label>
+                        </h4>
+                        <div class="optionInfoCols Tipped themeBg15 themeColor15 wow fadeInUp animated" data-wow-delay=".2s" style="visibility: hidden; animation-delay: 0.2s; animation-name: none;">
+                           <p>You’ll get printed copies of the test and quiz books and keys you need.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   
+</div>
+   <div class="container">
+      <div class="wrapper2">
+         <div class="row">
+            <div class="grid_12">
+               <div class="buttons">
+                  <a id="btnBack" class="gridsterBTN-Alt" href="javascript:void(0);">Back</a>
+                  <a id="btnNext" class="gridsterBTN-themed" href="javascript:void(0);">Next</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+</div>
+
+
+            </section>
+         <div class="sectionAngleDown" id="div_footer"></div>
+            <!-- noindex -->
+            <!--========================================================
+                                      FOOTER
+            =========================================================-->
+
+
+            
+
+<footer id="footer">
+   <div class="container">
+      <div class="wrapper4">
+         <div class="row">
+            <div class="col-md-12">
+               <p>
+               <span style="white-space:nowrap;">Abeka,</span>
+               <span style="white-space:nowrap;">P.O. Box 19100,</span>
+               <span style="white-space:nowrap;">Pensacola, FL&nbsp;&nbsp;32523-9100</span><br>
+               <span style="white-space:nowrap;">1-877-223-5226</span></p>
+
+               <p>Copyright © 2022 Pensacola Christian College. All rights reserved.</p>
+           
+               <p><a href="//test.abeka.com/privacypolicy.aspx">Privacy Policy</a><span class="bullet">&nbsp;&nbsp;•&nbsp;&nbsp;</span><a href="//test.abeka.com/TermsOfUse.aspx">Terms of Use</a><span class="bullet">&nbsp;&nbsp;•&nbsp;&nbsp;</span><a href="//test.abeka.com/HomeSchoolEnrollmentAgreement.aspx">Homeschool Enrollment Agreement</a>
+               </p>
+            </div>
+         </div>
+      </div>
+   </div> 
+</footer>
+
+
+            <script src="/Includes/javascript/script.js?update=3"></script><script src="/Includes/javascript/jquery.cookie.js?update=2"></script><script src="/Includes/javascript/device.min.js"></script><script src="/Includes/javascript/tmstickup.js"></script><script src="/Includes/javascript/jquery.easing-1.4.2.min.js"></script><script src="/Includes/javascript/jquery.ui.totop.js?update=1"></script><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+            <!-- /noindex -->
+         
+   
+   
+   <div id="NewGuardianModal" class="modal fade in" role="dialog" style="display: block;">
+      <div class="modal-dialog">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close btnDismiss" data-dismiss="modal">×</button>
+               <h4 class="modal-title themeColor">Add New Parent/Guardian</h4>
+            </div>
+            <div class="modal-body form">
+               <div id="vlsCreateGuardianErrors" class="ValidationSummary" style="display:none;">
+
+</div>
+               <span id="csvCreateGuardianValid" class="Validator" style="display:none;">Guardian already exists. To add this guardian please use the 'Confirm Existing Parent/Guardian' button</span>
+
+               
+
+               <div class="row">
+                  <div class="col-sm-4">
+                     <label for="ddlGuardianTitle" class="RequiredFieldLabel">Title</label>
+                     
+
+                     <select name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$ddlGuardianTitle" id="ddlGuardianTitle" class="DropDown select-dropdown-ml form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+	<option selected="selected" value="X">Select</option>
+	<option value="1">Mr</option>
+	<option value="2">Mrs</option>
+	<option value="3">Miss</option>
+	<option value="5">Rev</option>
+	<option value="6">Dr</option>
+	<option value="9">Evangelist</option>
+	<option value="10">Pastor</option>
+	<option value="20">Chaplain</option>
+	<option value="21">Director</option>
+
+</select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 192px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ddlGuardianTitle-container"><span class="select2-selection__rendered" id="select2-ddlGuardianTitle-container" title="Select">Select</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                     <div>
+                        <span id="rfvTitle" class="Validator" style="display:none;">Title is required</span>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-8">
+                     <label for="txtGuardianFirstName" class="RequiredFieldLabel">First Name</label>
+                     <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$txtGuardianFirstName" id="txtGuardianFirstName" class="form-control" maxlength="18" type="text" onfocus="this.select();" style="width:0em;">
+                     <div>
+                        <span id="rfvGuardianFirstName" class="Validator" style="display:none;">First Name is required</span>
+                        <span id="csvGuardianFirstName" class="Validator" style="display:none;">Please use only regular characters</span>
+                     </div>
+                  </div>
+               </div>
+
+               <label for="txtGuardianLastName" class="RequiredFieldLabel">Last Name</label>
+               <input name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$txtGuardianLastName" id="txtGuardianLastName" maxlength="15" type="text" onfocus="this.select();" style="width:0em;">
+
+               <div>
+                  <span id="rfvGuardianLastName" class="Validator" style="display:none;">Last Name is required</span>
+                  <span id="csvGuardianLastName" class="Validator" style="display:none;">Please only use regular characters</span>
+               </div>
+
+               <div>
+                  <label class="RequiredFieldLabel">Relation to Student</label>
+                  <div class="guardianDDL">
+                     <select name="ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$ddlNewRelation" id="ddlNewRelation" class="form-control DropDown select-dropdown-xm select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+	<option selected="selected" value="X">Select</option>
+	<option value="FATHER">Father</option>
+	<option value="MOTHER">Mother</option>
+	<option value="GRANDPARENT">Grandparent</option>
+	<option value="AUNT">Aunt</option>
+	<option value="UNCLE">Uncle</option>
+	<option value="STEPFATHER">Stepfather</option>
+	<option value="STEPMOTHER">Stepmother</option>
+	<option value="SIBLING">Sibling</option>
+	<option value="STUDENT'S SPOUSE">Student's Spouse</option>
+	<option value="EMANCIPATED STUDENT">Emancipated Student</option>
+	<option value="HOME SCHOOL TEACHER">Homeschool Teacher</option>
+	<option value="FRIEND">Friend</option>
+	<option value="GUARDIAN">Guardian</option>
+	<option value="PASTOR">Pastor</option>
+	<option value="SECRETARY">Secretary</option>
+
+</select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 225px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ddlNewRelation-container"><span class="select2-selection__rendered" id="select2-ddlNewRelation-container" title="Select">Select</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                     <span id="rfvNewRelation" class="Validator" style="display:none;">Relation to student is required</span>
+                  </div>
+               </div>
+
+               <div class="modal-footer">
+                  <a id="btnCreateGuardian" class="gridsterBTN" href="javascript:void(0);">Add</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div id="ExistingGuardianModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close btnDismiss" data-dismiss="modal">×</button>
+               <h4 class="modal-title themeColor">Confirm Existing Parent/Guardian</h4>
+            </div>
+            <div class="modal-body form">
+               
+            </div>
+            <div class="modal-footer">
+               <a id="btnAssignGuardian" class="gridsterBTN" href="javascript:void(0);">Confirm</a>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   
+
+
+        
+
+<script type="text/javascript">
+//<![CDATA[
+
+theForm.oldSubmit = theForm.submit;
+theForm.submit = WebForm_SaveScrollPositionSubmit;
+
+theForm.oldOnSubmit = theForm.onsubmit;
+theForm.onsubmit = WebForm_SaveScrollPositionOnSubmit;
+
+var _ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnBack = new OneClickLinkButton({
+    linkButton:'btnBack',
+    causesValidation:true,
+    confirmText:'',
+    disabledText:'Please wait...',
+    disableGroup:'',
+    eventTarget:'__EVENTTARGET',
+    postFunction:function() { __doPostBack('ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnBack',''); },
+    validationGroup:'',
+    disabledCssClass:'gridsterBTN-Alt gridsterBTNLoading'
+});
+var _ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnNext = new OneClickLinkButton({
+    linkButton:'btnNext',
+    causesValidation:true,
+    confirmText:'',
+    disabledText:'Please wait...',
+    disableGroup:'',
+    eventTarget:'__EVENTTARGET',
+    postFunction:function() { __doPostBack('ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$btnNext',''); },
+    validationGroup:'',
+    disabledCssClass:'gridsterBTN-themed gridsterBTNLoading'
+});
+    new Validation.ValidationSummary({
+        displayMode:'BulletedList',
+        footerText:'',
+        headerText:'',
+        placeholder:'vlsPageErrors',
+        showSummaryWhen:'Always',
+        name:'ctl00$ctl00$ctl00$cphMainContent$cphMainContent$cphMainContent$vlsPageErrors',
+        scrollToTop:true,
+        triggers:[
+        ]
+    });
+var _ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$btnCreateGuardian = new OneClickLinkButton({
+    linkButton:'btnCreateGuardian',
+    causesValidation:true,
+    confirmText:'',
+    disabledText:'Please wait...',
+    disableGroup:'',
+    eventTarget:'__EVENTTARGET',
+    postFunction:function() { __doPostBack('ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$btnCreateGuardian',''); },
+    validationGroup:'',
+    disabledCssClass:'gridsterBTN-themed gridsterBTNLoading'
+});
+    new Validation.ValidationSummary({
+        displayMode:'BulletedList',
+        footerText:'',
+        headerText:'',
+        placeholder:'vlsCreateGuardianErrors',
+        showSummaryWhen:'Always',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$vlsCreateGuardianErrors',
+        scrollToTop:true,
+        triggers:[
+            {
+                control:_ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$btnCreateGuardian,
+                clientEvent:'click'
+            }
+        ]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'X',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'ddlGuardianTitle',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$ddlGuardianTitle_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$vlsCreateGuardianErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Title is required',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$rfvTitle',
+        validatorIndex:6,
+        placeholder:'rfvTitle',
+        text:'Title is required',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtGuardianFirstName',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$txtGuardianFirstName_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$vlsCreateGuardianErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'First Name is required',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$rfvGuardianFirstName',
+        validatorIndex:7,
+        placeholder:'rfvGuardianFirstName',
+        text:'First Name is required',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtGuardianLastName',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$txtGuardianLastName_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$vlsCreateGuardianErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Last Name is required',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$rfvGuardianLastName',
+        validatorIndex:9,
+        placeholder:'rfvGuardianLastName',
+        text:'Last Name is required',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'X',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'ddlNewRelation',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$ddlNewRelation_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$vlsCreateGuardianErrors',
+            displayErrorInSummary:true
+        }],
+        clientValidated:base_ClientValidated,
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'Relation to student is required',
+        labelInvalidClass:'',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$rfvNewRelation',
+        validatorIndex:11,
+        placeholder:'rfvNewRelation',
+        text:'Relation to student is required',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    Validation.allGroups['ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$vlsCreateGuardianErrors'].InitializationComplete();
+
+var _ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$btnAssignGuardian = new OneClickLinkButton({
+    linkButton:'btnAssignGuardian',
+    causesValidation:true,
+    confirmText:'',
+    disabledText:'Please wait...',
+    disableGroup:'',
+    eventTarget:'__EVENTTARGET',
+    postFunction:function() { __doPostBack('ctl00$ctl00$ctl00$cphModals$cphModals$cphModals$btnAssignGuardian',''); },
+    validationGroup:'',
+    disabledCssClass:'gridsterBTN-themed gridsterBTNLoading'
+});//]]>
+</script>
+<div class="modal-backdrop fade in"></div></form>
+    </div>
+    <div class="sb-slidebar sb-left">
+        <!-- Your left Slidebar content. -->
+    <form class="mobile-search-form-wrapper"><input id="txtSearchMobile" type="text" class="searchRelated searchInput" placeholder="What can we help you find?" name="txtSearch" autocomplete="off"><button id="btnSearchMobile" type="submit"><span class="searchIcon" aria-hidden="true"></span></button></form><ul class="mobile-menu">
+		
+			<li aria-haspopup="true" class="mzr-drop">
+<!--				<a href="/Account/" class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>-->
+				<a class="MobileArrow mainMenu dashboard hasSubList" style="cursor:pointer !important;">Dashboard</a>
+				<ul class="mzr-content smallIconList" style="top: auto !important; display: none;">
+					<li>
+						<div class="menuContainer iconList article noBorder">
+							<div class="articleColumn mobileHidden">
+								
+							</div>
+							<div class="articleColumn">
+								<h3 class="articleHead">Dashboard</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Account/"> <span class="LinkwImage">&nbsp;&nbsp;Home</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Calendar/Calendar.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Calendar</span></a></h2>
+									</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Notifications.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Notifications</span></a></h2>
+										</li>
+									
+										<li class="longMenuList">
+											<h2 class="GroupTitlelink"><a href="/Account/Students/Default.aspx"> <span class="LinkwImage">&nbsp;&nbsp;Students</span></a></h2>
+										</li>
+									
+								</ul>
+							</div>
+					
+							<div class="articleColumn">
+								<h3 class="articleHead">My Orders</h3>
+								<ul>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/Enrollments/"> <span class="LinkwImage">Enrollments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalAssessments/"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalArt/"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTextbooks/"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+									</li>
+									<li class="longMenuList">
+										<h2 class="GroupTitlelink"><a href="/Fulfillment/DigitalTeachingAids/"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+									</li>
+								</ul>
+							</div>
+					
+						</div>
+					</li>
+				</ul>
+			</li>
+		
+		<li aria-haspopup="true" class="mzr-drop"><a class="MobileArrow mainMenu academy hasSubList">Academy</a>
+			<ul class="mzr-content smallIconList" style="top: auto !important; display: none;">
+				<!--
+            <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">About</h3>
+							<ul>
+								<li><a href="/about/AccreditationStatement.aspx"> <span class="LinkwImage">Accreditation</span></a></li>
+								<li><a href="/about/MissionPurpose.aspx"> <span class="LinkwImage">Mission, Purpose, and Philosophy</span></a></li>
+								<li><a href="/About/WhatWeBelieve.aspx"> <span class="LinkwImage">What We Believe</span></a></li>
+								<li><a href="https://test.abeka.com/OurApproach.aspx"> <span class="LinkwImage">Objectives + Learning Outcomes</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Academics</h3>
+							<ul>
+								<li><a href="/About/Overview.aspx"> <span class="LinkwImage">Overview</span></a></li>
+								<li><a href="/academic/graduation.aspx"> <span class="LinkwImage">Graduation</span></a></li>
+                                <li><a href="/Fulfillment/Graduation/"> <span class="LinkwImage">Petition to March</span></a></li>
+								
+								<li><a href="/GraduationEvent/"> <span class="LinkwImage">Graduation 2021 Ceremonies</span></a></li>
+
+								<li><a href="/Resources/Rings.aspx"> <span class="LinkwImage">Class Rings</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Teachers.aspx"> <span class="LinkwImage">Teacher Bios</span></a></li>
+								<li><a href="https://test.abeka.com/Academic/Courses/"> <span class="LinkwImage">Course Descriptions</span></a></li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead">Resources</h3>
+							<ul>
+								
+								
+								<li><a href="https://test.abeka.com/Resources/SampleVideos.aspx"> <span class="LinkwImage">Sample Videos</span></a></li>
+								
+								<li><a href="https://test.abeka.com/HomeSchool/ScopeAndSequence.aspx"> <span class="LinkwImage">Scope and Sequence</span></a></li>
+								<!----> 
+
+								<!--<li><a href="#">Curriculum Song Downloads</a></li>
+											 <li><a href="#">Science Lab Outlines</a></li>-->
+
+								
+							</ul>
+						</div>
+
+						<!--<li class="mzr-drop mzr-drop-right"><a href="#">Gear</a>
+
+									 <ul>
+											 <li><a href="#">Tshirts</a></li>
+											 <li><a href="#">Cups</a></li>
+											 <li><a href="#">Letters</a></li>
+											 <li><a href="#">Jackets</a></li>
+											 <li><a href="#">Bags</a></li>
+											 <li><a href="/Resources/Rings.aspx">Rings</a></li>
+										 </ul>
+
+								 </li> --> 
+
+					</div>
+				</li>
+			</ul>
+		</li>
+	
+		<li class="marginB-0">
+			<a class="MobileArrow mainMenu connect hasSubList" href="https://test.abeka.com/ContactInfo.aspx" target="blank" style="cursor:pointer !important;">Contact Us</a>
+		</li>
+	
+		<li aria-haspopup="true" class="mzr-drop">
+			<a class="MobileArrow mainMenu help hasSubList">Help</a>
+			<ul class="mzr-content smallIconList  HelpMarginFix  " style="top: auto !important; display: none;">
+				
+				<!--          <div class="article menuImgLeft desktop-only">
+               <img style="padding-top: 0px;" src="/images/menuImages/video.jpg" />
+            </div>
+            <div class="menuContainer iconList article noBorder">--> 
+				
+				<!--
+               <h3 class="articleHead">Guides</h3>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Calendar">
+                     <span class="LinkwImage">Calendar</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Dashboard">
+                     <span class="LinkwImage">Dashboard</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=My-Students">
+                     <span class="LinkwImage">My Students</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Notifications">
+                     <span class="LinkwImage">Notifications</span></a></h2>
+               </li>
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx?q=Video-Streaming">
+                     <span class="LinkwImage">Video Streaming</span></a></h2>
+               </li>
+
+               <li>
+                  <h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx">
+                     <span class="LinkwImage">More <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                  </a></h2>
+               </li>
+--> 
+				
+				<!--
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Assessments.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Assessments</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Art.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Clip Art</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/Textbooks.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Books</span></a></h2>
+            </li>
+          
+          
+            <li>
+              <h2 class="GroupTitlelink"><a href="/Digital/TeachingAids.aspx"><span class="LinkwImage">&nbsp;&nbsp;Digital Teaching Aids</span></a></h2>
+            </li>
+          
+          --> 
+				<!--            </div>-->
+				<li>
+					<div class="menuContainer iconList article noBorder">
+						<div class="articleColumn">
+							<h3 class="articleHead">FAQs</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AcademicsFAQs.aspx"> <span class="LinkwImage">Academics</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AdmissionsFAQs.aspx"> <span class="LinkwImage">Admissions</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/ArtFAQs.aspx"> <span class="LinkwImage">Digital Clip Art</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsFAQs.aspx"> <span class="LinkwImage">Digital Assessments</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/AssessmentsTrialFAQ.aspx"> <span class="LinkwImage">Digital Assessments Trial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TextbooksFAQs.aspx"> <span class="LinkwImage">Digital Textbooks</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/TeachingAidsFAQs.aspx"> <span class="LinkwImage">Digital Teaching Aids</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/DVDReturnsFAQ.aspx"> <span class="LinkwImage">DVD Returns</span></a></h2>
+								</li>
+							</ul>
+						</div>
+						<div class="articleColumn">
+							<h3 class="articleHead NoHeader">&nbsp;</h3>
+							<ul>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/EnrollmentFAQs.aspx"> <span class="LinkwImage">Enrollment</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/FinancialFAQs.aspx"> <span class="LinkwImage">Financial</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/GradingFAQs.aspx"> <span class="LinkwImage">Grading</span></a></h2>
+								</li>
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Help/StudentFAQs.aspx"> <span class="LinkwImage">Student</span></a></h2>
+								</li>
+								
+									<li>
+										<h2 class="GroupTitlelink"><a href="/Help/Video.aspx"> <span class="LinkwImage">Video Streaming</span></a></h2>
+									</li>
+								
+								<li>
+									<h2 class="GroupTitlelink"><a href="/Resources/HelpCenter.aspx"> <span class="LinkwImage">Tour</span></a></h2>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</li>
+		
+		<!--
+    <li id="mobthemepicker">
+        <button data-theme="Pink" class="themeOption gridsterBTN-pink"></button>
+        <button data-theme="Orange" class="themeOption gridsterBTN-orange"></button>
+        <button data-theme="Green" class="themeOption gridsterBTN-green"></button><br>
+        <button data-theme="Teal" class="themeOption gridsterBTN-teal"></button>
+        <button data-theme="Blue" class="themeOption gridsterBTN-blue"></button>
+        <button data-theme="Purple" class="themeOption gridsterBTN-purple"></button>
+    </li>
+-->
+		
+		<li style="float: right;"><a class="searchButton" onclick="toggleSearch();"> <span class="searchIcon" aria-hidden="true"></span> </a></li>
+	</ul></div>
+
+<!-- Hotjar Tracking Code for abeka.com -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+    h._hjSettings = { hjid: 608300, hjsv: 6 };
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script'); r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
+
+<!-- Begin Genesys Chat Elements -->
+<div class="genesys-button-wrapper">
+  
+</div>
+<!-- End Genesys Chat -->
+
+
+<div class="swiftype-widget"><div class="autocomplete" style="position: absolute; z-index: 9999; top: 46px; left: 0px; width: 323px; display: none;"><ul></ul></div></div><div class="swiftype-widget"><div class="autocomplete" style="position: absolute; z-index: 9999; top: 1px; left: 0px; width: 0px; display: none;"><ul></ul></div></div><a href="#" id="toTop" class="fa fa-arrow-circle-up" style="display: inline-block;"></a><iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-acca23410e696f2ca3087d947271c3d0.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300,100"></body></html>

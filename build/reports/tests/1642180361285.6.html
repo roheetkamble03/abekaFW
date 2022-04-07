@@ -1,0 +1,717 @@
+<html lang="en"><head id="ctl00_Head1"><title>
+	Login
+</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no">
+
+   <!-- CSS -->
+   <link href="/Includes/css/reset.css" rel="stylesheet"><link href="/Includes/css/bootstrap.css" rel="stylesheet"><link href="/Includes/css/grid.css" rel="stylesheet">
+   <link href="//test.academy.abeka.com/Images/favicons/favicon.ico?update=1" type="image/x-icon" rel="icon">
+   <link href="//test.academy.abeka.com/Includes/css/style.css?update=1" rel="stylesheet">
+   <link href="//test.academy.abeka.com/Includes/css/jquery-ui2014.css?update=1" rel="stylesheet">
+   <link href="//test.academy.abeka.com/Includes/css/AcademicColors.css?v=1" rel="stylesheet">
+   <link href="//test.academy.abeka.com/Includes/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+   <link href="//test.academy.abeka.com/Includes/css/jquery.confirm.css" rel="stylesheet">
+   <link href="/Includes/css/ABALoginAnimation.css" rel="stylesheet">
+   <link href="//test.academy.abeka.com/Includes/css/form.css" rel="stylesheet">
+   <link href="/Includes/css/bootstrap.css" rel="stylesheet"><link href="/Includes/css/selectize-0.12.6.css" rel="stylesheet"><link href="/Includes/css/register.css?update=416BT" rel="stylesheet"><link href="/Includes/css/Site.css?update=MM81420" rel="stylesheet"><link href="/Includes/css/abeka.css" rel="stylesheet">
+   <style>
+       /* Selectize menus */
+       .selectize-dropdown,
+       .selectize-input,
+       .selectize-input input {
+          line-height: 30px;
+       }
+
+      .row.bg_2a.loginContainer {
+          height: 30px;
+      }
+      .container {
+          margin-bottom: 90px;
+      }
+      footer .grid_12 {
+          margin-left: 0px;
+      }
+   </style>
+
+   
+
+        <style>
+            .ABA #content {
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-attachment: fixed;
+            }
+            .fieldButton {
+                padding-left: 5px;
+                margin-bottom: 20px;
+            }
+            div#forgotPass p, div#newAccount p {
+                margin-bottom: 0px;
+            }
+            div#forgotPass {
+                margin-bottom: 10px;
+            }
+            .errors span {
+                margin-bottom: 16px;
+            }
+            #pnlReturningCustomerLogin {
+                margin-top:26px;
+            }
+
+            p {
+                font-size: 16px;
+                padding: 10px 5%;
+                line-height: 22px;
+                padding-top: 0px;
+            }
+            #backToLogin {
+                display:none;
+                margin-top:20px;
+            }
+            .noTransition {
+                transition:none;
+            }
+            .btn-default:focus {
+                color: #FFF !important;
+                background: #4BC1EB;
+            }
+            .loginReason {
+                padding-top: 26px;
+            }
+            .abbMessage {
+                color: #545454;
+                font-style: italic;
+                font-size: 22px;
+                line-height: 30px;
+            }
+            .loginHelp {
+                cursor: pointer;
+                font-size: 1.2em;
+                color: #999;
+                margin-left: 10px;
+            }
+            @media(max-width: 767px) {
+                .modal-title {
+                    font-size: 80%;
+                }
+            }
+            #lbnResetUserPassword {
+                margin-left: 20px;
+                display: none;
+            }
+            section#content {
+                min-height: 400px;
+            }
+            @media(max-width: 480px) {
+                .modal-title {
+                    font-size: 60%;
+                    margin-top: 30px;
+                }
+                body.isMobile .modal-content .modal-body {
+				    top: 100px;
+				}
+				body.isMobile .modal-content h1.modal-title{
+					margin-top: 40px !important;
+				}
+                .ImpNavLinks {
+                    display: inline-block;
+                }
+                #lbnResetUserPassword {
+                    margin-left: 20px;
+                }
+            }
+
+            /* Fix a padding overflow/centering issue */
+            .container {
+               padding-left: 0;
+               padding-right: 0;
+            }
+
+        </style>
+
+
+   <!-- JS -->
+   <script async="" src="//www.google-analytics.com/analytics.js"></script><script>
+      var isTestSystem = true;
+   </script>
+   <script src="/Includes/javascript/jquery-3.5.1.min.js"></script>
+   <script src="/Includes/javascript/jquery-ui-1.12.1.js?update=DL6192020"></script><!-- Calendar -->
+   <script src="/Includes/javascript/selectize.standalone-0.12.6.js?update=DL6222020"></script><!-- Dropdowns -->
+   <script src="/Includes/javascript/bootstrap.min.js"></script><!-- Modals -->
+   <script src="/Includes/javascript/local.js?update=1"></script><!-- Styles checkboxes -->
+   <script>
+      $(document).ready(function(){
+          //$('.equal').matchHeight();
+          $('.modal').on('show.bs.modal', function() {
+              window.setTimeout((function() {$(".modal-backdrop").appendTo("#aspnetForm");}), 50);
+          })
+      });
+   </script>
+
+   
+    <script>
+        $(function(){window.history.replaceState&&window.history.replaceState(null,null,window.location.href)});
+    </script>
+    
+    <script>
+        jQuery(document).ready(function () {
+            DebugBox.WriteDebug("Auto Fill Link: <a href=\"javascript:void(0);\" onclick=\"try { document.getElementById('txtGuestPhoneNumber').value = Math.round((Math.random() * 1000000000000) % 9999999999); document.getElementById('txtGuestEmailAddress').value = Math.round((Math.random() * 1000000000000) % 9999999999) + '@pcci.edu'; } catch (ex) {}\">asdf</a>");
+            DebugBox.WriteDebug("Next Page: <a href=\"javascript:void(0);\" onclick=\"try { document.getElementById('lbnCheckForAccount').trigger('click'); } catch (ex) {}\">lkj</a>");
+        });
+    </script>
+    
+    <script>
+        $(document).ready(function () {
+
+            // Refresh the page if the user navigates to Login.aspx when logged in.
+            if (!('' == null || '' == ""))
+               {
+               var isLoggedIn = sessionStorage.getItem('LoggedIn');
+               if (!(isLoggedIn == null || isLoggedIn == ""))
+                  {
+                     window.location = window.location.href;
+                  }
+            }
+
+            // Workaround for an issue with iPhone 6/6S running iOS 8/9 where Safari 8 
+            // shows the bottom half of the login page when it loads
+            window.onload = function () { window.scrollTo(0,0); }
+
+            var loginKeyDown = function (event) {
+                $("#lblAuthenticationFailed").hide();
+                if (document.getElementById('lbnEmailResetLink').className == "btn btn-default") {
+                    $('#lbnEmailResetLink').show();
+                }
+
+                if (event.keyCode == 13) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    $("#lblAuthenticationFailed").hide();
+                    if (pnlPassword.css('display') == 'none'){
+                        $('#txtEmailAddress').removeClass('FieldError');
+                        document.getElementById('ctl00_cphMainContent_csvAccountNumber').style.display = "none";
+                        eval(unescape($('#lbnEmailResetLink').prop('href')));
+                    } else {
+                        _ctl00$cphMainContent$lbnLogin.simulateClick();
+                    }
+                }
+            };
+
+            $("#txtEmailAddress").on("keydown", loginKeyDown);
+            $("#txtPassword").on("keydown", loginKeyDown);
+
+            $("#lbnLogin").on("click", function()
+            {
+                $("#lblAuthenticationFailed").hide();
+            });
+
+            switch ($('#hdnExpandedSection').val()) {
+                case 'pnlReturningCustomerLogin':
+                    $('#h2ReturningCustomerLogin').trigger("click");
+                    break;
+                case 'pnlNewCustomerLogin':
+                    $('#h2NewCustomerLogin').trigger("click");
+                    break;
+                default:
+                    break;
+            }
+
+            $("#spanNoEmailActivate").hide();
+
+            var doAcctReminder = function (x) {
+                var $acctrem = jQuery('#tblAccountReminder').parent();
+                if ($('#pnlPasswordReminder').parent().css('display') != 'none' && x != 'norecurse') {
+                    doPassReminder('norecurse');
+                }
+                $acctrem.stop(true, true).animate({ width: 'toggle' },
+                    {
+                        complete: function () {
+                            if ($acctrem.css('display') != 'none') {
+                                $('#tbcAccountReminder').removeClass('closed').addClass('open');
+                                $('#hdnExpandedPanel').val('tblAccountReminder');
+                            } else {
+                                $('#tbcAccountReminder').removeClass('open').addClass('closed');
+                                $('#txtEmailAddress').trigger("focus");
+                            }
+                        }
+                    });
+            };
+
+            var doPassReminder = function (x) {
+                var $acctrem = jQuery('#pnlPasswordReminder').parent();
+                if ($('#tblAccountReminder').parent().css('display') != 'none' && x != 'norecurse') {
+                    doAcctReminder('norecurse');
+                }
+                $acctrem.stop(true, true).animate({ width: 'toggle' },
+                    {
+                        complete: function () {
+                            if ($acctrem.css('display') != 'none') {
+                                $('#tbcPasswordReminder').removeClass('closed').addClass('open');
+                                $('#hdnExpandedPanel').val('pnlPasswordReminder');
+                            } else {
+                                $('#tbcPasswordReminder').removeClass('open').addClass('closed');
+                                $('#txtEmailAddress').trigger("focus");
+                            }
+                        }
+                    });
+            };
+
+            $('#tbcAccountReminder').on("click", doAcctReminder);
+            //jQuery('#lnkAccountReminder').on("click", doAcctReminder);
+            $('#tbcPasswordReminder').on("click", doPassReminder);
+
+            var defaultPanel = $('#hdnExpandedPanel').val();
+
+            doAcctReminder();
+            doPassReminder();
+
+            if (defaultPanel == 'tblAccountReminder') {
+                $('#tbcAccountReminder').addClass('open');
+            } else {
+                $('#tbcAccountReminder').addClass('closed');
+                $('#tblAccountReminder').parent().hide();
+            }
+            if (defaultPanel == 'pnlPasswordReminder') {
+                $('#tbcPasswordReminder').addClass('open');
+            } else {
+                $('#tbcPasswordReminder').addClass('closed');
+                $('#pnlPasswordReminder').parent().hide();
+            }
+            if (defaultPanel != 'tblAccountReminder' && defaultPanel != 'pnlPasswordReminder') {
+                $('#tblAccountReminder').parent().hide();
+                $('#pnlPasswordReminder').parent().hide();
+            }
+
+            window.onload = function () {
+                if (document.getElementById('lbnEmailResetLink').className == "btn btn-default") {
+                    $('#lblAccountNumber').hide();
+                    if ($('#lblAuthenticationFailed').text().substring(0, 51) == "We cannot find an account with that e-mail address.") {
+                        $('#lbnEmailResetLink').hide();
+                    }
+                }
+            }
+
+            var txtEmailAddress = $('#txtEmailAddress');
+
+            var enteredEmailAddress = document.getElementById('txtEmailAddress').value;
+            if (Boolean(enteredEmailAddress)) {
+               $('#txtPassword').trigger("focus");
+            } else {
+               txtEmailAddress.trigger("focus");
+            }
+
+            var lbnEmailResetLink = $('#lbnEmailResetLink'),
+                pResetPasswordInstructions = $('#pResetPasswordInstructions'),
+                pnlPassword = $('#pnlPassword'),
+                pnlLoginButtonContainer = $('#pnlLoginButtonContainer'),
+                newAccount = $('#newAccount'),
+                backToLogin = $('#ReturnLogin'),
+                lblAuthenticationFailed = $('#lblAuthenticationFailed');
+            lbnEmailResetLink.on('click', function(e) {
+                var r = /^[a-zA-Z0-9_%+!#$&'*/=?^`{|}~-]+(?:\.[a-zA-Z0-9_%+!#$&'*/=?^`{|}~-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]+$/i;
+                if (!r.exec(txtEmailAddress.val())) {
+                    if (pResetPasswordInstructions.css('display') == 'none') {
+                        // This block should only get executed when the user moves
+                        // from the Login "screen" to the Reset Password "screen"
+                        // after clicking the "Reset Password" link on the Login page
+                        e.preventDefault();
+                        lblAuthenticationFailed.hide();
+                        pnlPassword.css('display', 'none');
+                        pnlLoginButtonContainer.css('display', 'none');
+                        newAccount.css('display', 'none');
+                        pResetPasswordInstructions.css('display', '');
+                        backToLogin.css('display', 'block');
+                        $(this).removeClass("link").addClass("btn btn-default");
+                        $('#lblAccountNumber').hide();
+                    }
+                    else {
+                        // This block should get executed when the "Reset Password"
+                        // link is clicked on the Reset Password "screen"
+                    }
+                    txtEmailAddress.trigger("focus");
+                }
+            });
+            if (false) {
+                pnlPassword.css('display', 'none');
+                pnlLoginButtonContainer.css('display', 'none');
+                newAccount.css('display', 'none');
+                backToLogin.css('display', 'block');
+                lbnEmailResetLink.removeClass("link").addClass("btn btn-default");
+                pResetPasswordInstructions.css('display', '');
+        }
+        else {
+                pResetPasswordInstructions.css('display', 'none');
+        }
+        });
+
+        function txtEmailAddress_ClientValidate(sender, e)
+        {
+            $('#lblAuthenticationFailed').hide(); // Hide the "email address not found" message (should revisit when time permits)
+            
+            var username = document.getElementById('txtEmailAddress').value;
+            e.IsValid = username.length > 0 && username.length <= 60;
+
+            // Verify the account is active
+            PCC.Utilities.ExecutePageMethod('IsAccountActive',
+                {
+                    username: username
+                },
+                function (result) {
+                    if (result.Message == 'Inactive') {
+                        $('#lblAuthenticationFailed').hide();
+                        $('a#lbnLogin.CircleButton').addClass('DisableButton');
+                        $('#pnlPassword').hide();
+                        // We don't want to show the activation message on the Reset Password "page"
+                        if (document.getElementById('lbnEmailResetLink').className == 'link') {
+                            $('#ActivationMessage').removeClass('hidden');
+                            $('#lbnLogin').removeClass();
+                        }
+                    } else {
+                        // We don't want to show the password panel on the Reset Password "page"
+                        if (document.getElementById('lbnEmailResetLink').className == 'link') {
+                            $('#pnlPassword').show();
+                        }
+                        $('a#lbnLogin.CircleButton').removeClass('DisableButton');
+                        $('#ActivationMessage').addClass('hidden');
+                        $('#txtPassword').trigger("focus");
+                    }
+                },
+                function () { });
+        }
+
+        function displayHelp() {
+            $(document).ready(function () {
+                $('#ctl00_cphModals_loginHelpModal').modal('show');
+            });
+        }
+
+        function RemoveSessionStorage(keyName) {
+           sessionStorage.removeItem(keyName);
+        }
+
+        function ClearSessionVariable()
+        {
+           '';
+        }
+
+    </script>
+    
+    <script>
+        // JCB: Rewrote the below javascript to use jQuery to keep it from erroring when '#content' doesn't exist
+        $(document).ready(function () {
+            var myImages = ["images/image0.jpg", "images/image1.jpg", "images/image4.jpg", "images/image5.jpg", "images/image6.jpg", "images/image7.jpg"];
+            var newImgNumber = Math.floor(Math.random() * myImages.length);
+            $('#content').css('background-image', 'url('+myImages[newImgNumber]+')');
+        });
+    </script>
+    </head>
+<body class="ABA">
+    <div id="sb-site">
+        <form name="aspnetForm" method="post" action="./Login.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="yabygo1EhGVymOBT8zD8MmSKxpNlWwOCBhLNGNEYr548EZIGWYt+qr0n8K/5Dw3rRuqcDTE9FMlAlZdDd43Vy1W29Q3nXvWp/dPMakuE07MMR+qzDS/me2C0xb/eDZnJ1IMq7AVO0nAebzowo2pVZsYdY6D4kIFh9hhXB8511XXlyUl8AYaSU5WMuqboOW6iVObME4O199zHPaAbeA9sjq8PmRLzqD4T+e2Sv8wIv0vjZkdq5M/Tg3vKFXjMvszHeU70a3ucU7CB35mZ7A5Ixj615VQhUyDTfjtTQk1YM/oHBtiq8N19+SiOcyZww2HhjAr6jdvAjxNrzHMvtWVdsF0kAlVkn6xdN+DlQE+U1o3n5QQRUahm+ixLGaNOFRM2SSlWboRCBtIhv8qpTWqoEzdPf8k6ICuyfb0ZiQ6Z+i4=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+
+<script src="/WebResource.axd?d=KjOUUNeShA_p4DhYWydoezoZEaWn8cJGbhbNIDE7DOMlnP5J6a_c-pWYBir_uNrihLJQ6f4O4LdXXPq32-dK6M5LfMKkvuF8dJaXAWRf_kI1&amp;t=637665325862207265" type="text/javascript"></script>
+<script src="/WebResource.axd?d=zMZiFpoV05km13SjPpaDudrz2bp-ISn-d7hYP01LNaNDl0u7aHAuwXzwdYClGSBWw6ZQaXp7jtLvvmYqcH76CI8DpK6pDg7p1AInqd3fFUo1&amp;t=637665325862207265" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var pccdebugboxerrorcolor = "#FFFF00";var pccdebugboxspecialcolor = "#FF0000";var pccdebugboxempty = true;var pccdebugboxenabled = false;//]]>
+</script>
+
+<script src="/WebResource.axd?d=GAM4vFdCwL9nH6ZiFVpfddNFe6k7ctVoWvIZuZ2DDgt8enIkChwf-jt6F665Uo46v59CfOqzABaytItrct8Yoh0-5L6XpC51_wvBq80HGEOSn6IcVKfi7XY68PO6XLDV0&amp;t=637665325862207265" type="text/javascript"></script>
+<script src="/WebResource.axd?d=AamzAun8PVUJpVG3S_uPXNwTaz6091xF03y_AdC_YVbZMuNhT8YUzo_K29umon9ckj_92v4byFy_gV1-L_ZQe4904Ms_HwxD_FfprN51MV7cnzPec25Q7Hnx1WBRJ17p0&amp;t=637665325862207265" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="C2EE9ABB">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="P88BeUvEo0BPWyp5v3T/iJhGEJRvFt7KDnfOq9Jx+5lVphWLlrof5eQ6BYr30+xwfYf4GVwTgTvHISG4huCuwykwABPr5x1MpJJWQkMtmtck5SQYhAOfvW4HvNorVveo0d0gIUAQmR9TafajPJZ18CPRO7YqL5yu3v1I62q+c1vyjARis2PomkYWzGzrw6wR4FSbAJcTyc829ypAl8MBLw==">
+</div>
+            
+            <!-- noindex -->
+            <!--========================================================
+                                      HEADER
+            =========================================================-->
+            <div id="header" class="bg_5">
+                <span id="ctl00_isolatedBanner"></span>
+                <div class="row bg_2a loginContainer">
+                    <div class="container">
+
+                    </div>
+                </div>
+            </div>
+
+            <!--========================================================
+                                      CONTENT
+            =========================================================-->
+            <!-- /noindex -->
+            <section id="content" style="background-image: url(&quot;images/image6.jpg&quot;);">
+            <div id="lblCheckingAccount"></div>
+                
+    
+        <div class="container">
+         <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+           <div class="white-box form">
+            <div class="logincontainer">
+                <div class="header-logo"></div>
+                    <div class="loginReason">
+                        
+                    </div>
+
+                    <div id="pnlReturningCustomerLogin">
+                        <!-- Username -->
+                        <p id="pResetPasswordInstructions" style="display: none;">Enter your e-mail address to receive a password-reset link.</p>
+
+                        
+
+                        <div class="username form-group">
+                            <!-- Username Label -->
+                            <div id="tbcUsernameLabel">
+                                <label for="txtEmailAddress" id="lblAccountNumber" class=" ">E-mail or Student Username</label>
+                                <!-- Username Field -->
+                                <span><input name="ctl00$cphMainContent$txtEmailAddress" type="text" maxlength="60" id="txtEmailAddress" class="form-control" placeholder=" E-mail Address" autocomplete="username"></span>
+
+                                <span id="ctl00_cphMainContent_csvAccountNumber" class="ErrorMessage" style="display:none;">Please enter a username between 1 and 60 characters long.</span>
+
+                            </div>
+                        </div>
+                        <!-- Password -->
+                        <div id="pnlPassword" class="password form-group">
+                            <!-- Password Label -->
+                            <div id="tbcPasswordLabel">
+                                <label for="txtPassword" id="ctl00_cphMainContent_lblPassword" class=" ">Password</label>
+                                <!-- Password Field -->
+                                <span id="tbcPasswordField">
+                                    <input name="ctl00$cphMainContent$txtPassword" type="password" id="txtPassword" class="form-control" placeholder=" Password" autocomplete="current-password">
+                                </span>
+                                <span id="ctl00_cphMainContent_rfvPassword" class="ErrorMessage" style="display:none;">Please enter your password.</span>
+                            </div>
+                        </div>
+
+                        <!-- Authentication Failed Label -->
+                        <div class="error">
+                            
+                        </div>
+                        <!-- Label for activation message -->
+                        <div id="ActivationMessage" class="hidden">
+                            <span id="lblActivationMessage">To place orders online you must verify your e-mail address by </span>
+                            <a id="lbnActivationMessage" class="linkNoArrow" href="javascript:__doPostBack('ctl00$cphMainContent$lbnActivationMessage','')">
+                                <span>resetting your password.</span>
+                            </a>
+                        </div>
+
+                        <!-- Login Button -->
+                        <div id="pnlLoginButtonContainer" class="fieldButton">
+                            <a id="lbnLogin" class="CircleButton" href="javascript:void(0);"></a>
+                            
+                        </div>
+                        <!-- Forgot Password / New Account -->
+                        <div id="divAcctMgmt" style="text-align:center;">
+                            <span id="forgotPass">
+                                <a id="lbnEmailResetLink" class="link" href="javascript:__doPostBack('ctl00$cphMainContent$lbnEmailResetLink','')">
+                                    <span>Reset Password</span>
+                                </a>
+                            </span>
+
+                            <span id="newAccount" onclick="RemoveSessionStorage('LoggedIn'); ClearSessionVariable();">
+                                <a id="ctl00_cphMainContent_hplNewAccount" class="link" href="/Register.aspx">
+                                <span>Create Account</span>
+                                </a>
+                            </span>
+
+                           <div id="ReturnLogin" class="ReturnLogin">
+
+                                <a href="Login.aspx" class="link linkNoArrow">
+                                    <span>Return to Login</span>
+                                </a>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+             </div>
+           </div> <!--End White Box-->
+          </div> <!--End centre column-->
+         </div>
+        </div>
+        
+
+                <div class="sectionAngleDown"></div>
+            </section>
+            <!-- noindex -->
+            <!--========================================================
+                                      FOOTER
+            =========================================================-->
+            <footer id="footer">
+                <div class="container">
+                  <div class="wrapper4">
+                    <div class="row">
+                      <div class="col-md-12">
+						   <p>
+						   <span style="white-space:nowrap;">Abeka,</span>
+						   <span style="white-space:nowrap;">P.O. Box 19100,</span>
+						   <span style="white-space:nowrap;">Pensacola, FL&nbsp;&nbsp;32523-9100</span><br>
+						   <span style="white-space:nowrap;">1-877-223-5226</span></p>
+
+						   <p>Copyright © 2022 Pensacola Christian College. All rights reserved.</p>
+
+                         <p><a href="//test.abeka.com/PrivacyPolicy.aspx">Privacy Policy</a><span class="bullet">&nbsp;&nbsp;•&nbsp;&nbsp;</span><a href="//test.abeka.com/TermsOfUse.aspx">Terms of Use</a>
+                       </p>
+
+                      </div>
+                    </div>
+                </div>
+               </div>
+            </footer>
+            <!-- /noindex -->
+        
+
+<script type="text/javascript">
+//<![CDATA[
+
+var _ctl00$cphMainContent$lbnLogin = new OneClickLinkButton({
+    linkButton:'lbnLogin',
+    causesValidation:true,
+    confirmText:'',
+    disabledText:'',
+    disableGroup:'',
+    eventTarget:'__EVENTTARGET',
+    postFunction:function() { __doPostBack('ctl00$cphMainContent$lbnLogin',''); },
+    validationGroup:'',
+    disabledCssClass:'DisableButton'
+});
+    new Validation.ValidationGroup({
+        name:'ctl00$cphMainContent$vlgLogin',
+        scrollToTop:true,
+        triggers:[
+            {
+                control:_ctl00$cphMainContent$lbnLogin,
+                clientEvent:'click'
+            }
+        ]
+    });
+    new Validation.RequiredFieldValidator({
+        initialValue:'',
+        trimWhiteSpace:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtPassword',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$cphMainContent$txtPassword_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$cphMainContent$vlgLogin',
+            displayErrorInSummary:true
+        }],
+        associatedLabel:'ctl00_cphMainContent_lblPassword',
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'',
+        labelInvalidClass:'FieldErrorLabel',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$cphMainContent$rfvPassword',
+        validatorIndex:1,
+        placeholder:'ctl00_cphMainContent_rfvPassword',
+        text:'Please enter your password.',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    new Validation.ValidationGroup({
+        name:'ctl00$cphMainContent$vlgEmailReminder',
+        scrollToTop:true,
+        triggers:[
+        ]
+    });
+    new Validation.CustomValidator({
+        clientValidate:'txtEmailAddress_ClientValidate',
+        validateEmptyText:true,
+        controlToValidate:new Validation.ControlToValidate({
+            control:'txtEmailAddress',
+            GetValue:Validation.DefaultGetValue,
+            GetControl:Validation.DefaultGetControl,
+            SetFocus:Validation.DefaultSetFocus,
+            autoValidateEvent:'change',
+            validClass:'',
+            invalidClass:'FieldError',
+            valueLastValidatedHiddenField:'ctl00$cphMainContent$txtEmailAddress_ValueLastValidated'
+        }),
+        groups:[{
+            name:'ctl00$cphMainContent$vlgLogin',
+            displayErrorInSummary:true
+        },{
+            name:'ctl00$cphMainContent$vlgEmailReminder',
+            displayErrorInSummary:true
+        }],
+        associatedLabel:'lblAccountNumber',
+        autoValidate:true,
+        display:'Dynamic',
+        enabled:true,
+        errorMessage:'',
+        labelInvalidClass:'FieldErrorLabel',
+        labelValidClass:'',
+        level:'Error',
+        name:'ctl00$cphMainContent$csvAccountNumber',
+        validatorIndex:0,
+        placeholder:'ctl00_cphMainContent_csvAccountNumber',
+        text:'Please enter a username between 1 and 60 characters long.',
+        setFocusOnError:true,
+        validateFirst:[]
+    });
+    Validation.allGroups['ctl00$cphMainContent$vlgLogin'].InitializationComplete();
+
+    Validation.allGroups['ctl00$cphMainContent$vlgEmailReminder'].InitializationComplete();
+//]]>
+</script>
+</form>
+        
+    <div id="ctl00_cphModals_loginHelpModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close btnDismiss" data-dismiss="modal">×</button>
+                    <h1 class="modal-title">Having trouble logging in?</h1>
+                </div>
+                <div class="modal-body">
+                    <h3 class="marginB-0">Teachers, Administrators, &amp; Parents</h3>
+                    <p>Use your <strong>e-mail address</strong> and password to log in.<br>
+                    <small style="font-size: small"><a href="http://www.abeka.com/ContactInfo.aspx">Contact us</a> if you've been using an account number and aren't sure what your e-mail address is for your account.</small></p>
+                    
+                    <h3 class="marginB-0">Students</h3>
+                    <p>Click on <a href="https://athome.abeka.com/Video2/Streaming/Default.aspx">Student Video Lessons</a> from the abeka.com log-in menu, then use your <strong>username</strong> and password to log in.<br>
+                    <small style="font-size: small">If someone else is already logged in, they need to log out first.</small><br>
+                    <small style="font-size: small">If you can't remember your username, ask your parent/teacher. They can find it on the dashboard under <a href="http://athome.abeka.com/Account/Students/Default.aspx">My Students</a> in the log-in information section for you.</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</body></html>

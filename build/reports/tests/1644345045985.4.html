@@ -1,0 +1,326 @@
+<html lang="en" class=" webkit chrome mac js no-touch-device"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+    <title>Test Taker</title>
+    <link rel="shortcut icon" href="linkit.ico">
+    <style>
+    .accessibility {
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      width: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0
+    }
+
+  </style>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.gstatic.com/recaptcha/releases/BycHQdSIhzR_1EcOLw2mOzYQ/recaptcha__en.js" crossorigin="anonymous" integrity="sha384-CBseaeeBL63Ovo8Nn/7Kb8uMCUb9/SGDK8ZbOQuvJZG+Sk6CQ+r5Eovq3l7gHyte"></script><script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+    <script type="text/javascript">
+    var Loader = Loader || {};
+
+    (function(app) {
+      app.getScript = function(url, success) {
+        var head = document.getElementsByTagName('head')[0],
+          done = false;
+        var script = document.createElement('script');
+        script.src = url;
+        // Attach handlers for all browsers
+        script.onload = script.onreadystatechange = function() {
+          if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+            done = true;
+            if (typeof success === 'function') {
+              success();
+            }
+          }
+        };
+        head.appendChild(script);
+      };
+    })(Loader);
+
+    var now = (new Date()).getTime();
+    Loader.getScript('../testtaker/newrelic.js?t=' + now);
+
+  </script><script src="../testtaker/newrelic.js?t=1644345016383"></script>
+    <script type="text/javascript">
+    var myurl = window.location.toString();
+    var params = {},
+      queryString = myurl.substring(myurl.indexOf('?') + 1),
+      regex = /([^&=]+)=([^&]*)/g,
+      m;
+    //Extract query string
+    while (m = regex.exec(queryString)) {
+      params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+
+    if (localStorage.getItem('interviewTestCode') != null) {
+      params.code = localStorage.getItem('interviewTestCode');
+    }
+
+    // Redirect to login page incase it is normal login.
+    if (localStorage.getItem('testCode') == null && localStorage.getItem('data') == null) {
+      if (params.q == undefined && params.k == undefined) {
+        window.location.href = "testtaker.html";
+      }
+    }
+
+
+    var allText = "",
+      currentVersion = "",
+      currentVersion2 = "",
+      fileGlobal;
+    var LanIp = '';
+
+    var GLOBAL = GLOBAL || {};
+    var Testtaker;
+
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", 'lastupdate.txt?t=' + (new Date).getTime(), true);
+    rawFile.onreadystatechange = function() {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          allText = rawFile.responseText;
+
+          currentVersion = '?t=' + allText.substring(0, allText.indexOf(","));
+          currentVersion2 = '&t=' + allText.substring(0, allText.indexOf(","));
+
+          var head = document.getElementsByTagName('head')[0];
+
+          var script = document.createElement('script');
+          script.src = "../testtaker/config.js" + currentVersion;
+          script.type = 'text/javascript';
+          head.appendChild(script);
+        }
+      }
+    }
+
+    rawFile.send(null);
+    window.onload = function() {
+      //Make sure config has been loaded
+      var checkGlobal = setInterval(function() {
+        if (Object.keys(GLOBAL).length) {
+          fileGlobal = GLOBAL;
+          if (GLOBAL.FORCE_SSL == true && window.location.protocol != "https:") {
+            window.location = window.location.href.replace('http', 'https');
+          } else {
+            var head = document.getElementsByTagName('head')[0];
+
+            var scriptMath = document.createElement('script');
+            scriptMath.src = "../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" + currentVersion2;
+            scriptMath.type = 'text/javascript';
+            scriptMath.id = 'mathjax-script-link';
+            head.appendChild(scriptMath);
+
+            var script = document.createElement('script');
+            script.src = "../testtaker/scripts/ckeditor/ckeditor.js?testtaker" + currentVersion2;
+            script.type = 'text/javascript';
+            head.appendChild(script);
+
+            var scriptGetIp = document.createElement('script');
+            scriptGetIp.src = '../testtaker/scripts/getip.js?testtaker' + currentVersion2;
+            scriptGetIp.type = 'text/javascript';
+            head.appendChild(scriptGetIp);
+
+            var script = document.createElement('script');
+            script.src = "../steal/steal.production.js?testtaker" + currentVersion2;
+            script.type = 'text/javascript';
+            head.appendChild(script);
+
+            var GGAnalytis = GLOBAL.CONFIG.GGAnalytis;
+            GGAnalytis = GGAnalytis == undefined ? "" : GGAnalytis;
+            var div = document.createElement('div');
+            div.innerHTML = GGAnalytis;
+            for(var i = 0; i < div.childNodes.length; i++ ){
+              var script = document.createElement('script');
+              if (div.childNodes[i].src) {
+                script.src = div.childNodes[i].src;
+              }
+              script.type = 'text/javascript';
+              script.async = div.childNodes[i].async || false;
+              script.textContent = div.childNodes[i].textContent || '';
+              head.appendChild(script);
+            }
+          }
+
+          clearInterval(checkGlobal);
+        }
+      }, 1000);
+
+    }
+
+    if (document.all && !document.addEventListener) {
+      //redirect to error page
+      window.location.href = "unsupport.htm" + currentVersion;
+    }
+
+  </script>
+  <script src="../testtaker/config.js?t=v318" type="text/javascript"></script><script src="../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;t=v318" type="text/javascript" id="mathjax-script-link"></script><script src="../testtaker/scripts/ckeditor/ckeditor.js?testtaker&amp;t=v318" type="text/javascript"></script><script src="../testtaker/scripts/getip.js?testtaker&amp;t=v318" type="text/javascript"></script><script src="../steal/steal.production.js?testtaker&amp;t=v318" type="text/javascript"></script><script src="https://www.googletagmanager.com/gtag/js?id=UA-38417035-1" type="text/javascript" async=""></script><script type="text/javascript"> window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-38417035-1");</script><style>.cke{visibility:hidden;}</style><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="stylesheet" href="https://test.linkit.com/testtaker/production.css?t=v318" type="text/css"><link rel="stylesheet" href="./scripts/mxgraph/src/css/common.css" charset="UTF-8" type="text/css"><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; border: 0; padding: 0; margin: 0}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0 !important; padding: 0 !important; margin: 0 !important; vertical-align: 0 !important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap ! important}
+.MathJax img {display: inline ! important; float: none ! important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block; overflow: hidden; width: 1px; height: 60ex}
+.MathJax .MathJax_EmBox {display: block; overflow: hidden; width: 1px; height: 60em}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Blank; src: url('about:blank')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+  <body class="testtaker"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div>
+    <div class="banner"></div>
+    <div data-role="page" class="bodycontent">
+      <h1 class="accessibility">Test Taker</h1>
+      <div id="header" class="linkit_header_module"><div class="browserSupport">
+  <p class="alert-content"></p>
+  <a href="javascript:void(0);" class="close" onclick="closeBrowserSupportAlert()">✕</a>
+</div>
+</div>
+
+      <div id="testTakingModule" style="display: block;" class="linkit_test_taking_module"><div id="testCompletedPanel" class="panel box-shadow panel-hide panel-center panel-center-nowrap">
+  <div class="header">Session Completed</div>
+	<div class="content" style="text-align:center">
+    <span class="heading header2" style="text-align:left">Your session is completed.</span>
+    <div id="takeAnotherTestButtonBackToPortal" class="takeAnotherTestButton btn btn-large btn-primary" style="display: none;">Return to Portal</div>
+    
+
+    
+        <div id="reviewTestButton" class="btn btn-large btn-primary">Review Session</div>
+    
+
+    
+        <div id="takeAnotherTestButton" class="takeAnotherTestButton btn btn-large btn-primary">Start Another Session</div>
+    
+    <div id="takeAnotherTestButtonLogout" class="takeAnotherTestButton btn btn-large btn-primary" style="display: none;">Exit</div>
+  </div>
+  <div class="footer"></div>
+  <div id="progressOverlay" class="overlay">
+    <div class="indeterminateProgressIndicator"></div>
+  </div>
+  <span id="simplemodal-placeholder" style="display: none;"></span>
+  <div id="testcodeDeactivated" class="popup box-shadow" style="display:none">
+    <div class="content">
+      <span class="heading header2">Your teacher has deactivated the session.</span>
+      <div id="yesCloseTestcodeDeactivated" class="btn btn-large btn-highlight">
+        <div class="button button-accept-white"></div> OK
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+</div>
+
+      <div id="studentLoginSelector" class="linkit_student_login_selector" style="display: none;"><div id="studentLoginSelectorPanel" class="">
+	<div class="panel">
+		<div class="header">Student Name</div>
+		<div class="content">
+			<h2 class="login_title">Select Your Name:</h2>
+
+			<div id="studentsList" class="container">
+				<ul class="list_wrapper mxui_data_list" aria-labelledby="studentsList"></ul>
+			</div>
+
+			<input id="cancelButton" type="button" value="Cancel" class="btn-logout">
+			<input id="selectButton" type="button" value="Select" class="btn-submit" disabled="true">
+		</div>
+		<div id="progressOverlay" class="overlay">
+			<div class="indeterminateProgressIndicator"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+      <div id="testLogin" class="linkit_student_test_login" style="display: none;"></div>
+      <div id="footer" style="bottom: 1px;"></div>
+    <div class="copyButton" style="display: none;">Copy</div><div class="pasteButton" style="display: none;">Paste</div></div>
+    <div class="calculator-scientific" style="display: none;">
+      <button class="calculator-close-button" title="Close the calculator" data-keystroke="@X" type="button">x</button>
+      <div class="calculator">
+        <input type="text" id="screen" maxlength="20">
+        <div class="calc-buttons">
+          <div class="functions-one">
+            <button class="button triggers">C</button>
+            <button class="button basic-stuff">(</button>
+            <button class="button basic-stuff">)</button>
+            <button class="button numbers">7</button>
+            <button class="button numbers">8</button>
+            <button class="button numbers">9</button>
+            <button class="button numbers">4</button>
+            <button class="button numbers">5</button>
+            <button class="button numbers">6</button>
+            <button class="button numbers">1</button>
+            <button class="button numbers">2</button>
+            <button class="button numbers">3</button>
+            <button class="button basic-stuff">±</button>
+            <button class="button numbers">0</button>
+            <button class="button basic-stuff">.</button>
+          </div>
+          <div class="functions-two">
+            <button class="button triggers">&lt;=</button>
+            <button class="button complex-stuff">%</button>
+            <button class="button complex-stuff">x !</button>
+            <button class="button complex-stuff">x^</button>
+            <button class="button basic-stuff">*</button>
+            <button class="button basic-stuff">/</button>
+            <button class="button complex-stuff">ln</button>
+            <button class="button complex-stuff">e</button>
+            <button class="button basic-stuff">+</button>
+            <button class="button complex-stuff">x ²</button>
+            <button class="button complex-stuff">log</button>
+            <button class="button complex-stuff">cos</button>
+            <button class="button basic-stuff">-</button>
+            <button class="button complex-stuff">√</button>
+            <button class="button complex-stuff">sin</button>
+            <button class="button complex-stuff">tan</button>
+            <button class="button triggers">=</button>
+            <button class="button complex-stuff">π</button>
+            <button class="button complex-stuff">∘</button>
+            <button class="button complex-stuff">rad</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+<link href="https://linkit-css.s3.amazonaws.com/TestTaker/Production/2479.css?t=v318" type="text/css" rel="stylesheet"><div class="calculator-popup ui-draggable" style="display: none; position: relative;"></div><div id="guidance" style="display: none;"><div></div></div><div class="palette-dialog ui-draggable ui-resizable" namecolor="black-white" style="top: 129px; left: 548px; width: 440px;"><div class="palette-tittle">Palettes</div><span class="close-popup"></span><p class="wrap-tab-button"><a class="tab tabselect" rel="tab2">Math/Science</a><a class="tab" rel="tab1">Spanish</a><a class="tab" rel="tab3">French</a></p><div class="button-wapper" id="tab2" style="display: block;"><h3>Math Symbols:</h3><ul class="keys-list" id="tabRow2_0"><li namecolor="black-white">+</li><li namecolor="black-white">-</li><li namecolor="black-white">÷</li><li namecolor="black-white">·</li><li namecolor="black-white">×</li><li namecolor="black-white">=</li><li namecolor="black-white">≠</li><li namecolor="black-white">≤</li><li namecolor="black-white">≥</li><li namecolor="black-white">°</li><li namecolor="black-white">′</li><li namecolor="black-white">″</li><li namecolor="black-white">√</li><li namecolor="black-white">~</li><li namecolor="black-white">≈</li><li namecolor="black-white">≅</li><li namecolor="black-white">±</li><li namecolor="black-white">∓</li><li namecolor="black-white">∠</li><li namecolor="black-white">⊥</li><li namecolor="black-white">∥</li><li namecolor="black-white">π</li><li namecolor="black-white">∞</li><li namecolor="black-white">∫</li><li namecolor="black-white">¢</li><li namecolor="black-white">⟶</li></ul><h3>Greek Letters:</h3><ul class="keys-list" id="tabRow2_1"><li namecolor="black-white">α</li><li namecolor="black-white">β</li><li namecolor="black-white">γ</li><li namecolor="black-white">Δ</li><li namecolor="black-white">η</li><li namecolor="black-white">θ</li><li namecolor="black-white">κ</li><li namecolor="black-white">λ</li><li namecolor="black-white">μ</li><li namecolor="black-white">ρ</li><li namecolor="black-white">Σ</li><li namecolor="black-white">σ</li><li namecolor="black-white">τ</li><li namecolor="black-white">ϕ</li><li namecolor="black-white">Ψ</li><li namecolor="black-white">Ω</li><li namecolor="black-white">ω</li><li namecolor="black-white">ℓ</li></ul><h3>Superscripts:</h3><ul class="keys-list" id="tabRow2_2"><li namecolor="black-white">⁰</li><li namecolor="black-white">¹</li><li namecolor="black-white">²</li><li namecolor="black-white">³</li><li namecolor="black-white">⁴</li><li namecolor="black-white">⁵</li><li namecolor="black-white">⁶</li><li namecolor="black-white">⁷</li><li namecolor="black-white">⁸</li><li namecolor="black-white">⁹</li><li namecolor="black-white">⁺</li><li namecolor="black-white">⁻</li></ul><h3>Subscripts:</h3><ul class="keys-list" id="tabRow2_3"><li namecolor="black-white">₀</li><li namecolor="black-white">₁</li><li namecolor="black-white">₂</li><li namecolor="black-white">₃</li><li namecolor="black-white">₄</li><li namecolor="black-white">₅</li><li namecolor="black-white">₆</li><li namecolor="black-white">₇</li><li namecolor="black-white">₈</li><li namecolor="black-white">₉</li><li namecolor="black-white">₊</li><li namecolor="black-white">₋</li></ul></div><div class="button-wapper" id="tab1"><ul class="keys-list" id="tabRow1_3"><li namecolor="black-white">Á</li><li namecolor="black-white">É</li><li namecolor="black-white">Í</li><li namecolor="black-white">Ó</li><li namecolor="black-white">Ú</li><li namecolor="black-white">Ü</li><li namecolor="black-white">Ñ</li><li namecolor="black-white">?</li><li namecolor="black-white">¿</li></ul><ul class="keys-list" id="tabRow1_4"><li namecolor="black-white">á</li><li namecolor="black-white">é</li><li namecolor="black-white">í</li><li namecolor="black-white">ó</li><li namecolor="black-white">ú</li><li namecolor="black-white">ü</li><li namecolor="black-white">ñ</li><li namecolor="black-white">!</li><li namecolor="black-white">¡</li></ul></div><div class="button-wapper" id="tab3"><ul class="keys-list" id="tabRow3_0"><li namecolor="black-white">Á</li><li namecolor="black-white">á</li><li namecolor="black-white">À</li><li namecolor="black-white">à</li><li namecolor="black-white">Â</li><li namecolor="black-white">â</li><li namecolor="black-white">ä</li></ul><ul class="keys-list" id="tabRow3_1"><li namecolor="black-white">É</li><li namecolor="black-white">é</li><li namecolor="black-white">È</li><li namecolor="black-white">è</li><li namecolor="black-white">Ê</li><li namecolor="black-white">ê</li><li namecolor="black-white">ë</li></ul><ul class="keys-list" id="tabRow3_2"><li namecolor="black-white">Í</li><li namecolor="black-white">í</li><li namecolor="black-white">Ì</li><li namecolor="black-white">ì</li><li namecolor="black-white">Î</li><li namecolor="black-white">î</li><li namecolor="black-white">ï</li></ul><ul class="keys-list" id="tabRow3_3"><li namecolor="black-white">Ó</li><li namecolor="black-white">ó</li><li namecolor="black-white">Ò</li><li namecolor="black-white">ò</li><li namecolor="black-white">Ô</li><li namecolor="black-white">ô</li><li namecolor="black-white">ö</li></ul><ul class="keys-list" id="tabRow3_4"><li namecolor="black-white">Ú</li><li namecolor="black-white">ú</li><li namecolor="black-white">Ù</li><li namecolor="black-white">ù</li><li namecolor="black-white">Û</li><li namecolor="black-white">û</li><li namecolor="black-white">ü</li></ul><ul class="keys-list" id="tabRow3_5"><li namecolor="black-white">Ç</li><li namecolor="black-white">ç</li></ul></div><div class="palette-cancel"><button class="button-cancel">Cancel</button></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div></div><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: STIXSizeOneSym, sans-serif;">ˆ</div><div id="simplemodal-overlay" class="simplemodal-overlay" style="opacity: 0.5; height: 726px; width: 1536px; position: fixed; left: 0px; top: 0px; z-index: 1001;"></div><div id="simplemodal-container" class="simplemodal-container" style="position: fixed; z-index: 1002; height: 260px; width: 730px; left: 403px; top: 233px;"><a class="modalCloseImg simplemodal-close" title="Close"></a><div tabindex="-1" class="simplemodal-wrap" style="height: 100%; outline: 0px; width: 100%; overflow: visible;"><div id="preloader" class="overlay-window box-shadow simplemodal-data" style="">
+    <div class="content">
+      <div id="preloaderProgress">
+        <div class="progressIndicator"></div>
+        <span class="heading header3"><span id="progressMessage">Your submission is being processed...</span></span>
+      </div>
+    </div>
+  </div></div></div></body></html>
